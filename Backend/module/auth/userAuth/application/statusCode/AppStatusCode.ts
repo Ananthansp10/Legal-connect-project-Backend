@@ -1,0 +1,8 @@
+
+
+export enum AppStatusCode{
+    SUCCESS_CODE=200,
+    INTERNAL_ERROR_CODE=500,
+    BAD_REQUEST_CODE=400,
+    ACCOUNT_BLOCKED=403
+}
