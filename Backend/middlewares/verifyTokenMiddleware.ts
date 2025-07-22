@@ -13,7 +13,7 @@ export const verifyToken=(req:Request,res:Response,next:NextFunction)=>{
         let decodeToken=jwt.decode(accessToken)
         if (decodeToken && typeof decodeToken !== 'string' && 'exp' in decodeToken) {
             const exp=(decodeToken as JwtPayload).exp
-            if(Date.now()>exp!){
+            if(Date.now()>exp!*1000){
                 try {
                     let verifyRefreshToken:any=jwt.verify(refreshToken,process.env.JWT_REFRESH_TOKEN_SECRET!)
                     let newAccessToken=jwt.sign({id:verifyRefreshToken.id,role:verifyRefreshToken.role},process.env.JWT_ACCESS_TOKEN_SECRET!,{expiresIn:"30m"})
