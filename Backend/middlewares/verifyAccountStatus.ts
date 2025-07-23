@@ -11,7 +11,7 @@ export const verifyAccountStatus=(userAccountCheckRepo:ICheckAccoutStatus)=>{
         const userId=(decodeToken as JwtPayload).id
 
         const findUser=await userAccountCheckRepo.findById(userId)
-
+        console.log(findUser)
         if(findUser && findUser.isBlock){
             res.status(AppStatusCode.ACCOUNT_BLOCKED).json({success:false,message:AppError.ACCOUNT_BLOCKED,isBlock:true})
             return
