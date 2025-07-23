@@ -1,6 +1,6 @@
 import { IOtpVerificationRepo } from "../../interface/repositories/otpVerificationRepositories";
-import { AppError } from "../error/AppEnumError";
-import { AppException } from "../error/errorException";
+import { AppError } from "../../../../../common/error/AppEnumError";
+import { AppException } from "../../../../../common/error/errorException";
 import bcrypt from 'bcrypt'
 import { IOtpVerificationApplication } from "../use-case-Interface/IOtpVerificationApplication";
 import { IUserSignupRepositorie } from "../../interface/repositories/userSignupRepositorie";

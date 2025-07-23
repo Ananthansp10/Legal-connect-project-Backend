@@ -4,8 +4,8 @@ import { IGoogleAuthRepositorie } from "../../interface/repositories/googleAuthR
 import { IGoogleAuthApplication } from "../use-case-Interface/IgoogleAuthApplication";
 import { UserSigninMapper as mapper } from "../mapper/userSigninMapper";
 import { GoogleAuthEntity } from "../../domain/googleAuthEntity";
-import { AppException } from "../error/errorException";
-import { AppError } from "../error/AppEnumError";
+import { AppException } from "../../../../../common/error/errorException";
+import { AppError } from "../../../../../common/error/AppEnumError";
 import { IUserSignup } from "../../domain/userRegisterEntity";
 
 export class GoogleAuthApplication implements IGoogleAuthApplication{
