@@ -1,5 +1,5 @@
-import { AppError } from "../../../userAuth/application/error/AppEnumError";
-import { AppException } from "../../../userAuth/application/error/errorException";
+import { AppError } from "../../../../../common/error/AppEnumError";
+import { AppException } from "../../../../../common/error/errorException";
 import { IHashService } from "../../../userAuth/infrastructure/services/IhashService";
 import { LawyerSignupRequestDto, LawyerSignupResponseDto } from "../../domain/dto/lawyerSignupDto";
 import { ILawyerSignup } from "../../domain/entity/lawyerEntity";

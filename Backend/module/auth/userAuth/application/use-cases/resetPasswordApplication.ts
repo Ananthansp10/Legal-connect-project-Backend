@@ -1,8 +1,8 @@
 import { IUserSignup } from "../../domain/userRegisterEntity";
 import { IHashService } from "../../infrastructure/services/IhashService";
 import { IResetPassword } from "../../interface/repositories/resetPasswordRepositorie";
-import { AppError } from "../error/AppEnumError";
-import { AppException } from "../error/errorException";
+import { AppError } from "../../../../../common/error/AppEnumError";
+import { AppException } from "../../../../../common/error/errorException";
 import { IResetPasswordApplication } from "../use-case-Interface/IresetPasswordApplication";
 import bcrypt from 'bcrypt'
 

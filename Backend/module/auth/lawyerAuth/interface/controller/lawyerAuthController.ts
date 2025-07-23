@@ -1,13 +1,14 @@
 import { ILawyerSignupApplication } from "../../application/lawyer-use-case-interface/IlawyerSignupApplication";
 import { Request,Response } from "express";
-import { AppStatusCode } from "../../../userAuth/application/statusCode/AppStatusCode";
-import { AppException } from "../../../userAuth/application/error/errorException";
-import { AppError } from "../../../userAuth/application/error/AppEnumError";
+import { AppStatusCode } from "../../../../../common/statusCode/AppStatusCode";
+import { AppException } from "../../../../../common/error/errorException";
+import { AppError } from "../../../../../common/error/AppEnumError";
 import { ICookieTokenService } from "../../../userAuth/infrastructure/services/IcookieTokenService";
 import { ILawyerSigninApplication } from "../../application/lawyer-use-case-interface/IlawyerSigninApplication";
 import { ILawyerForgotPasswordApplication } from "../../application/lawyer-use-case-interface/IlawyerForgotPasswordApplication";
 import { ILawyerChangePasswordApplication } from "../../application/lawyer-use-case-interface/IlawyerChangePasswordApplication";
 import { ILawyerResetPasswordApplication } from "../../application/lawyer-use-case-interface/IlawyerResetPasswordApplication";
+import jwt from 'jsonwebtoken'
 
 export interface MulterRequest extends Request {
   files?: Express.Multer.File[];
@@ -96,6 +97,9 @@ export class LawyerAuthController{
             if(error instanceof AppException){
                 res.status(error.statusCode).json({success:false,message:error.message})
             }else{
+                if(error instanceof jwt.JsonWebTokenError){
+                    res.status(AppStatusCode.UNAUTHORIZED).json({success:false,message:"Invalid token"})
+                }
                 res.status(AppStatusCode.INTERNAL_ERROR_CODE).json({success:false,message:AppError.UNKNOWN_ERROR})
             }
         }

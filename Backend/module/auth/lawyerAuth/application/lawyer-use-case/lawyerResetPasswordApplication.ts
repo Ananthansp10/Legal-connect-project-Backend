@@ -1,6 +1,6 @@
-import { AppError } from "../../../userAuth/application/error/AppEnumError";
-import { AppException } from "../../../userAuth/application/error/errorException";
-import { AppStatusCode } from "../../../userAuth/application/statusCode/AppStatusCode";
+import { AppError } from "../../../../../common/error/AppEnumError";
+import { AppException } from "../../../../../common/error/errorException";
+import { AppStatusCode } from "../../../../../common/statusCode/AppStatusCode";
 import { IHashService } from "../../../userAuth/infrastructure/services/IhashService";
 import { IChangePasswordRepositorie } from "../../interface/repositories/IchangePasswordRepositorie";
 import { ILawyerResetPasswordApplication } from "../lawyer-use-case-interface/IlawyerResetPasswordApplication";
