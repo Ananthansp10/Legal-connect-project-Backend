@@ -28,6 +28,10 @@ export class LawyerSigninApplication implements ILawyerSigninApplication{
             throw new AppException(AppError.ACCOUNT_BLOCKED,AppStatusCode.ACCOUNT_BLOCKED)
         }
 
+        if(lawyerExist && !lawyerExist.verified){
+            throw new AppException("Account Not verified",503)
+        }
+
         let isPasswordMatch=await bcrypt.compare(password,lawyerExist.password)
 
         if(!isPasswordMatch){
