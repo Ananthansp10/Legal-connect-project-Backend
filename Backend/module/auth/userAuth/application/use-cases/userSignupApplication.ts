@@ -5,8 +5,8 @@ import { IHashService } from "../../infrastructure/services/IhashService";
 import { IOtpService } from "../../infrastructure/services/IsaveOtp";
 import { ISendOtpMailService } from "../../infrastructure/services/IsendOtpMailService";
 import { IUserSignupRepositorie } from "../../interface/repositories/userSignupRepositorie";
-import { AppError } from "../error/AppEnumError";
-import { AppException } from "../error/errorException";
+import { AppError } from "../../../../../common/error/AppEnumError";
+import { AppException } from "../../../../../common/error/errorException";
 import { UserSignupMapper as userSignupMapper } from "../mapper/userSignupMapper";
 import { IUserSignupApplication } from "../use-case-Interface/IUserSignupApplicationRepo";
 

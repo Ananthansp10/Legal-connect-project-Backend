@@ -1,10 +1,10 @@
 import { IUserSignupApplication } from "../../application/use-case-Interface/IUserSignupApplicationRepo";
 import { Request,Response } from "express";
 import { IUserSignup } from "../../domain/userRegisterEntity";
-import { AppException } from "../../application/error/errorException";
-import { AppError } from "../../application/error/AppEnumError";
+import { AppException } from "../../../../../common/error/errorException";
+import { AppError } from "../../../../../common/error/AppEnumError";
 import { IOtpVerificationApplication } from "../../application/use-case-Interface/IOtpVerificationApplication";
-import { AppStatusCode } from "../../application/statusCode/AppStatusCode";
+import { AppStatusCode } from "../../../../../common/statusCode/AppStatusCode";
 import { IResendOtpApplication } from "../../application/use-case-Interface/IResendOtpApplication";
 import { IForgotPasswordApplication } from "../../application/use-case-Interface/IforgotPasswordApllication";
 import { IChangePasswordApplication } from "../../application/use-case-Interface/IchangePasswordApplication";

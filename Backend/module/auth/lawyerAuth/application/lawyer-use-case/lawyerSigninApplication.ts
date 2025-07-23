@@ -1,6 +1,6 @@
-import { AppError } from "../../../userAuth/application/error/AppEnumError";
-import { AppException } from "../../../userAuth/application/error/errorException";
-import { AppStatusCode } from "../../../userAuth/application/statusCode/AppStatusCode";
+import { AppError } from "../../../../../common/error/AppEnumError";
+import { AppException } from "../../../../../common/error/errorException";
+import { AppStatusCode } from "../../../../../common/statusCode/AppStatusCode";
 import { ITokenGeneration } from "../../../userAuth/infrastructure/services/ItokenGenerationService";
 import { LawyerSigninResponseDto } from "../../domain/dto/lawyerSigninDto";
 import { ILawyerSignup } from "../../domain/entity/lawyerEntity";

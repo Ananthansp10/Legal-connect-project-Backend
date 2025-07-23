@@ -1,8 +1,8 @@
 import { Request,Response,NextFunction } from "express";
 import { ICheckAccoutStatus } from "../module/auth/userAuth/interface/repositories/checkAccountStatusRepositorie";
 import jwt, { JwtPayload } from 'jsonwebtoken'
-import { AppStatusCode } from "../module/auth/userAuth/application/statusCode/AppStatusCode";
-import { AppError } from "../module/auth/userAuth/application/error/AppEnumError";
+import { AppStatusCode } from "../common/statusCode/AppStatusCode";
+import { AppError } from "../common/error/AppEnumError";
 
 export const verifyAccountStatus=(userAccountCheckRepo:ICheckAccoutStatus)=>{
     return async function(req:Request,res:Response,next:NextFunction){
