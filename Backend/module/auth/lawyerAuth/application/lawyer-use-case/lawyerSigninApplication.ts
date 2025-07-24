@@ -47,7 +47,7 @@ export class LawyerSigninApplication implements ILawyerSigninApplication{
 
         let response:LawyerSigninResponseDto=mapper.toResponse(lawyerExist,accessToken,refreshToken)
 
-        return response
+        return response;
 
     }
 }
