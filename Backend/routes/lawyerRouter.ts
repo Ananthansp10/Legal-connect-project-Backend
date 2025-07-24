@@ -14,6 +14,10 @@ import { ForgotPasswordTokenGeneration } from '../module/auth/lawyerAuth/infrast
 import { LawyerChangePasswordApplication } from '../module/auth/lawyerAuth/application/lawyer-use-case/lawyerChangePasswordApplication';
 import { ChangePasswordMongoRepositorie } from '../module/auth/lawyerAuth/infrastructure/mongoRepositories/changePasswordMongoRepositorie';
 import { LawyerResetPasswordApplication } from '../module/auth/lawyerAuth/application/lawyer-use-case/lawyerResetPasswordApplication';
+import { verifyToken } from '../middlewares/verifyTokenMiddleware';
+import { verifyRole } from '../middlewares/verifyRoleMiddleware';
+import { verifyAccountStatus } from '../middlewares/verifyAccountStatus';
+import { CheckAccountStatusMongoRepositorie } from '../module/auth/userAuth/infrastructure/mongoRepositories/checkAccountStatusMongoRepositorie';
 const router=express.Router()
 
 const lawyerSignupMongoRepo=new LawyerSignupMongoRepositorie()
@@ -29,6 +33,7 @@ const forgotPasswordAplication=new LawyerForgotPasswordApplication(emailService,
 const lawyerChangePasswordRepo=new ChangePasswordMongoRepositorie()
 const changePasswordApplication=new LawyerChangePasswordApplication(lawyerChangePasswordRepo,hashService)
 const resetPasswordApplication=new LawyerResetPasswordApplication(lawyerChangePasswordRepo,hashService)
+const checkAccountStatusMongoRepo=new CheckAccountStatusMongoRepositorie()
 
 const lawyerAuthController=new LawyerAuthController(
     lawyerSignupApplication,
@@ -48,6 +53,7 @@ router.post('/forgot-password-email',(req,res)=>lawyerAuthController.forgotPassw
 
 router.post('/new-password',(req,res)=>lawyerAuthController.changePassword(req,res))
 
-router.post('/reset-password',(req,res)=>lawyerAuthController.resetPassword(req,res))
+router.post('/reset-password',verifyToken,verifyRole(['lawyer']),verifyAccountStatus(checkAccountStatusMongoRepo),(req,res)=>lawyerAuthController.resetPassword(req,res))
+
 
 export default router;
