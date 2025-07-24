@@ -28,8 +28,12 @@ export class LawyerSigninApplication implements ILawyerSigninApplication{
             throw new AppException(AppError.ACCOUNT_BLOCKED,AppStatusCode.ACCOUNT_BLOCKED)
         }
 
-        if(lawyerExist && !lawyerExist.verified){
+        if(lawyerExist && !lawyerExist.verified && !lawyerExist.reason){
             throw new AppException("Account Not verified",503)
+        }
+
+        if(lawyerExist && lawyerExist.reason){
+            throw new AppException("Your account has been rejected try again after six month")
         }
 
         let isPasswordMatch=await bcrypt.compare(password,lawyerExist.password)
