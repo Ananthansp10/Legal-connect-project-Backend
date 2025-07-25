@@ -34,6 +34,10 @@ import { GetUserProfileApplication } from '../module/user/application/use-case/g
 import { GetProfileMogoRepositorie } from '../module/user/infrastructure/mongoRepositorie.ts/getProfileMongoRepositorie';
 import { EditProfileMongoRepositorie } from '../module/user/infrastructure/mongoRepositorie.ts/editProfileMongoRepositorie';
 import { EditUserProfileApplication } from '../module/user/application/use-case/editUserProfileApplication';
+import { UserController } from '../module/user/interface/controller/userController';
+import { GetLawyerMongoRepositorie } from '../module/user/infrastructure/mongoRepositorie.ts/getLawyersMongoRepositorie';
+import { GetLawyerApplication } from '../module/user/application/use-case/getLawyersApplication';
+import { GetLawyerDetailsApplication } from '../module/user/application/use-case/getLawyerDetailsApplication';
 
 const userSignupMongoRepo=new UserSignupMongoRepositorie()
 const otpsendEmail=new sendOtpMailService()
@@ -85,6 +89,16 @@ const userProfileController=new UserProfileController(
 
 )
 
+const getLawyerRepo=new GetLawyerMongoRepositorie()
+
+const getLawyerApplication=new GetLawyerApplication(getLawyerRepo)
+const getLawyerDetailsApplication=new GetLawyerDetailsApplication(getLawyerRepo)
+
+const userController=new UserController(
+    getLawyerApplication,
+    getLawyerDetailsApplication
+)
+
 router.post('/signup',(req,res)=>userAuthController.registerUser(req,res))
 
 router.post('/otp-verification',(req,res)=>userAuthController.verifyOtp(req,res))
@@ -113,5 +127,8 @@ router.get('/get-profile/:userId',verifyToken,verifyRole(['user']),verifyAccount
 
 router.put('/edit-profile',verifyToken,verifyRole(['user']),verifyAccountStatus(checkUserAccountStatusMongoRepo),upload.single('profileImage'),(req,res)=>userProfileController.editUserProfile(req,res))
 
+router.get('/get-lawyers',verifyToken,verifyRole(['user']),verifyAccountStatus(checkUserAccountStatusMongoRepo),(req,res)=>userController.getLawyers(req,res))
+
+router.get('/get-lawyer-details/:lawyerId',verifyToken,verifyRole(['user']),verifyAccountStatus(checkUserAccountStatusMongoRepo),(req,res)=>userController.getLawyerDetails(req,res))
 
 export default router;
