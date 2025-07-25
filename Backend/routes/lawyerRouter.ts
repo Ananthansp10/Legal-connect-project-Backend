@@ -16,8 +16,14 @@ import { ChangePasswordMongoRepositorie } from '../module/auth/lawyerAuth/infras
 import { LawyerResetPasswordApplication } from '../module/auth/lawyerAuth/application/lawyer-use-case/lawyerResetPasswordApplication';
 import { verifyToken } from '../middlewares/verifyTokenMiddleware';
 import { verifyRole } from '../middlewares/verifyRoleMiddleware';
-import { verifyAccountStatus } from '../middlewares/verifyAccountStatus';
 import { CheckAccountStatusMongoRepositorie } from '../module/auth/userAuth/infrastructure/mongoRepositories/checkAccountStatusMongoRepositorie';
+import { LawyerProfileController } from '../module/lawyer/interface/controller/lawyerProfileManagementController';
+import { LawyerAddProfileMongoRepo } from '../module/lawyer/infrastructure/mongoRepositorie/lawyerAddProfileMongoRepo';
+import { LawyerAddProfileAppliaction } from '../module/lawyer/application/use-case/lawyerAddProfileApplication';
+import { GetLawyerProfileMongoRepositorie } from '../module/lawyer/infrastructure/mongoRepositorie/getLawyerProfileMongoRepositorie';
+import { GetLawyerProfileApplication } from '../module/lawyer/application/use-case/getLawyerProfileApplication';
+import { EditLawyerProfileMongoRepositorie } from '../module/lawyer/infrastructure/mongoRepositorie/editLawyerProfileMongoRepositorie';
+import { LawyerEditProfileApplication } from '../module/lawyer/application/use-case/editLawyerProfileApplication';
 const router=express.Router()
 
 const lawyerSignupMongoRepo=new LawyerSignupMongoRepositorie()
@@ -43,6 +49,19 @@ const lawyerAuthController=new LawyerAuthController(
     resetPasswordApplication
 )
 
+const lawyerAddProfileRepo=new LawyerAddProfileMongoRepo()
+const lawyerAddProfileApplication=new LawyerAddProfileAppliaction(lawyerAddProfileRepo)
+const getLawyerProfileMongoRepo=new GetLawyerProfileMongoRepositorie()
+const getLawyerProfileApplication=new GetLawyerProfileApplication(getLawyerProfileMongoRepo)
+const editLawyerProfileMongoRepo=new EditLawyerProfileMongoRepositorie()
+const lawyerEditProfileApplication=new LawyerEditProfileApplication(editLawyerProfileMongoRepo)
+
+const lawyerProfileController=new LawyerProfileController(
+    lawyerAddProfileApplication,
+    getLawyerProfileApplication,
+    lawyerEditProfileApplication
+)
+
 router.post('/signup',upload.array('files',2),(req,res)=>lawyerAuthController.registerLawyer(req as MulterRequest,res))
 
 router.post('/signin',(req,res)=>lawyerAuthController.siginLawyer(req,res,authCookieService))
@@ -53,7 +72,18 @@ router.post('/forgot-password-email',(req,res)=>lawyerAuthController.forgotPassw
 
 router.post('/new-password',(req,res)=>lawyerAuthController.changePassword(req,res))
 
-router.post('/reset-password',verifyToken,verifyRole(['lawyer']),verifyAccountStatus(checkAccountStatusMongoRepo),(req,res)=>lawyerAuthController.resetPassword(req,res))
+router.post('/reset-password',verifyToken,verifyRole(['lawyer']),(req,res)=>lawyerAuthController.resetPassword(req,res))
 
+router.post('/add-profile',verifyToken,verifyRole(['lawyer']),upload.fields([
+    { name: 'profileImage', maxCount: 1 },
+    { name: 'barCouncilCertificate', maxCount: 1 },
+    { name: 'degreeCertificate', maxCount: 1 },
+    { name: 'experienceCertificate', maxCount: 1 },
+    { name: 'idProof', maxCount: 1 }
+  ]),(req,res)=>lawyerProfileController.addLawyerProfile(req,res))
+
+router.get('/get-profile/:lawyerId',verifyToken,verifyRole(['lawyer']),(req,res)=>lawyerProfileController.getLawyerProfile(req,res))
+
+router.patch('/edit-profile',verifyToken,verifyRole(['lawyer']),upload.single('profileImage'),(req,res)=>lawyerProfileController.editLawyerProfile(req,res))
 
 export default router;

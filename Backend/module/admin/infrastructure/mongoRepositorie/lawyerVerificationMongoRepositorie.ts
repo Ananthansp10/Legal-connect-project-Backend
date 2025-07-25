@@ -12,7 +12,7 @@ export class LawyerVerificationMongoRepositorie extends BaseMongoRepositorie<ILa
 
     async updateLawyerVerification(lawyerId: string, status: boolean, reason: string): Promise<void> {
         
-        if(reason==null){
+        if(reason){
             await LawyerModel.findByIdAndUpdate(lawyerId,{$set:{verified:status}})
         }else{
             await LawyerModel.findByIdAndUpdate(lawyerId,{$set:{verified:status,reason:reason}})
