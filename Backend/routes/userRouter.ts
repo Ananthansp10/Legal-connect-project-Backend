@@ -26,6 +26,14 @@ import { verifyToken } from '../middlewares/verifyTokenMiddleware';
 import { verifyRole } from '../middlewares/verifyRoleMiddleware';
 import { verifyAccountStatus } from '../middlewares/verifyAccountStatus';
 import { CheckAccountStatusMongoRepositorie } from '../module/auth/userAuth/infrastructure/mongoRepositories/checkAccountStatusMongoRepositorie';
+import upload from '../config/multerConfig';
+import { UserProfileController } from '../module/user/interface/controller/userProfileController';
+import { AddProfileApplication } from '../module/user/application/use-case/addProfileApplication';
+import { UserProfileMongoRepositorie } from '../module/user/infrastructure/mongoRepositorie.ts/userProfileMongoRepositorie';
+import { GetUserProfileApplication } from '../module/user/application/use-case/getUserProfileApplication';
+import { GetProfileMogoRepositorie } from '../module/user/infrastructure/mongoRepositorie.ts/getProfileMongoRepositorie';
+import { EditProfileMongoRepositorie } from '../module/user/infrastructure/mongoRepositorie.ts/editProfileMongoRepositorie';
+import { EditUserProfileApplication } from '../module/user/application/use-case/editUserProfileApplication';
 
 const userSignupMongoRepo=new UserSignupMongoRepositorie()
 const otpsendEmail=new sendOtpMailService()
@@ -49,6 +57,8 @@ const resetPasswordMongoRepo=new ResetPasswordMongoRepositorie()
 const resetPasswordApplication=new ResetPasswordApplication(resetPasswordMongoRepo,hashData)
 const checkUserAccountStatusMongoRepo=new CheckAccountStatusMongoRepositorie()
 
+
+
 const userAuthController=new UserAuthController(
     userSignupApplication,
     OtpVerificationUseCase,
@@ -58,6 +68,21 @@ const userAuthController=new UserAuthController(
     userSigninApplication,
     googleAuthApplication,
     resetPasswordApplication
+)
+
+const userProfileRepo=new UserProfileMongoRepositorie()
+
+const userAddProfileApplication=new AddProfileApplication(userProfileRepo)
+const userGetProfileRepo=new GetProfileMogoRepositorie()
+const userGetProfileApplication=new GetUserProfileApplication(userGetProfileRepo)
+const userEditProfileRepo=new EditProfileMongoRepositorie()
+const editUserProfileApplication=new EditUserProfileApplication(userEditProfileRepo)
+
+const userProfileController=new UserProfileController(
+    userAddProfileApplication,
+    userGetProfileApplication,
+    editUserProfileApplication
+
 )
 
 router.post('/signup',(req,res)=>userAuthController.registerUser(req,res))
@@ -81,6 +106,12 @@ router.get('/getGoogleAuthDetails',(req,res)=>userAuthController.getGoogleAuthDe
 router.post('/logout',(req,res)=>userAuthController.logout(req,res))
 
 router.post('/reset-password',verifyToken,verifyRole(['user']),verifyAccountStatus(checkUserAccountStatusMongoRepo),(req,res)=>userAuthController.resetPassword(req,res))
+
+router.post('/add-profile',verifyToken,verifyRole(['user']),verifyAccountStatus(checkUserAccountStatusMongoRepo),upload.single('profileImage'),(req,res)=>userProfileController.addProfile(req,res))
+
+router.get('/get-profile/:userId',verifyToken,verifyRole(['user']),verifyAccountStatus(checkUserAccountStatusMongoRepo),(req,res)=>userProfileController.getUserProfile(req,res))
+
+router.put('/edit-profile',verifyToken,verifyRole(['user']),verifyAccountStatus(checkUserAccountStatusMongoRepo),upload.single('profileImage'),(req,res)=>userProfileController.editUserProfile(req,res))
 
 
 export default router;
