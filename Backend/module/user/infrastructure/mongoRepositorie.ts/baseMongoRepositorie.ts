@@ -21,4 +21,8 @@ export class BaseMongoRepositorie<T> implements IBaseRepositorie<T>{
     async create(data: T): Promise<T | null> {
         return await this._model.create(data)
     }
+
+    async findAll(): Promise<T[] | null> {
+        return await this._model.find()
+    }
 }
