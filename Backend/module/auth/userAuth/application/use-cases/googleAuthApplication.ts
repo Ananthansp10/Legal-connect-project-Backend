@@ -7,6 +7,7 @@ import { GoogleAuthEntity } from "../../domain/googleAuthEntity";
 import { AppException } from "../../../../../common/error/errorException";
 import { AppError } from "../../../../../common/error/AppEnumError";
 import { IUserSignup } from "../../domain/userRegisterEntity";
+import { AppStatusCode } from "../../../../../common/statusCode/AppStatusCode";
 
 export class GoogleAuthApplication implements IGoogleAuthApplication{
     
@@ -20,11 +21,11 @@ export class GoogleAuthApplication implements IGoogleAuthApplication{
             let userExist=await this._googleAuthRepo.findByEmail(data.email)
 
             if(userExist?.isBlock){
-                throw new AppException(AppError.ACCOUNT_BLOCKED,403)
+                throw new AppException(AppError.ACCOUNT_BLOCKED,AppStatusCode.ACCOUNT_BLOCKED)
             }
 
             if(userExist && !userExist.googleId){
-                throw new AppException(AppError.USER_ALREADY_EXISTS,409)
+                throw new AppException(AppError.USER_ALREADY_EXISTS,AppStatusCode.CONFLICT)
             }
 
             if(!userExist){

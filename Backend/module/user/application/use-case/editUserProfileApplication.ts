@@ -1,11 +1,11 @@
-import { IEditProfileRepositorie } from "../../interface/repositorie/editProfileRepositorie";
+import { IEditProfileRepository } from "../../interface/repository/editProfileRepository";
 import { UserProfile, UserProfileMapper } from "../mapper/userProfileMapper";
 import { IEditProfileApplication } from "../use-case-interface/IEditProfileApplication";
 
 export class EditUserProfileApplication implements IEditProfileApplication{
 
     constructor(
-        private _editProfileRepo:IEditProfileRepositorie
+        private _editProfileRepo:IEditProfileRepository
     ){}
 
     async execute(userId: string, data: UserProfile,imageUrl:string): Promise<UserProfileMapper> {

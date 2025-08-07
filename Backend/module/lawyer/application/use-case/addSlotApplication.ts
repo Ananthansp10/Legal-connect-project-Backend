@@ -37,7 +37,7 @@ export class AddSlotApplication implements IAddSlotApplication{
                         }
                 }else{
                     let newSlotObj={
-                        date:data.date,
+                        date: new Date(data.date).toISOString().split('T')[0],
                         timeSlots:data.timeSlots
                     }
                     await this.addSlotRepo.addNewSlot(data.lawyerId,newSlotObj)

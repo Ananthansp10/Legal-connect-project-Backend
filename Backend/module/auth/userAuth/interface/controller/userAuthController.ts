@@ -33,12 +33,12 @@ export class UserAuthController{
     async registerUser(req:Request,res:Response):Promise<void>{
         try {
         let result:Omit<IUserSignup,'isBlock' | 'isActive' | 'password'> | null=await this._userSignupApplication.registerUser(req.body)
-        res.status(200).json({success:true,message:"OTP has successfully send to your email",data:result})
+        res.status(AppStatusCode.SUCCESS_CODE).json({success:true,message:"OTP has successfully send to your email",data:result})
         } catch (error) {
             if(error instanceof AppException){
                 res.status(error.statusCode).json({success:false,message:error.message})
             }else{
-                res.status(500).json({success:false,message:AppError.UNKNOWN_ERROR})
+                res.status(AppStatusCode.INTERNAL_ERROR_CODE).json({success:false,message:AppError.UNKNOWN_ERROR})
             }
         }
     }

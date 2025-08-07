@@ -4,19 +4,20 @@ import { verifyRole } from "../middlewares/verifyRoleMiddleware";
 const router=express.Router()
 import { CheckAccountStatusMongoRepositorie } from "../module/auth/userAuth/infrastructure/mongoRepositories/checkAccountStatusMongoRepositorie";
 import { verifyAccountStatus } from "../middlewares/verifyAccountStatus";
+import { AppStatusCode } from "../common/statusCode/AppStatusCode";
 
 const checkUserAccountStatusMongoRepo=new CheckAccountStatusMongoRepositorie()
 
 router.post('/verify-auth',verifyToken,verifyRole(['user']),verifyAccountStatus(checkUserAccountStatusMongoRepo),(req,res)=>{
-    res.status(200).json({success:true,message:"Authorization successfull"})
+    res.status(AppStatusCode.SUCCESS_CODE).json({success:true,message:"Authorization successfull"})
 })
 
 router.post('/verify-lawyer-auth',verifyToken,verifyRole(['lawyer']),(req,res)=>{
-    res.status(200).json({success:true,message:"Authorization successfull"})
+    res.status(AppStatusCode.SUCCESS_CODE).json({success:true,message:"Authorization successfull"})
 })
 
 router.post('/verify-admin-auth',verifyToken,verifyRole(['admin']),(req,res)=>{
-    res.status(200).json({success:true,message:"Authorization successfull"})
+    res.status(AppStatusCode.SUCCESS_CODE).json({success:true,message:"Authorization successfull"})
 })
 
 export default router;

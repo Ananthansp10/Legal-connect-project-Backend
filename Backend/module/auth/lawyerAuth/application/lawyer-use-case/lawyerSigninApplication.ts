@@ -29,17 +29,17 @@ export class LawyerSigninApplication implements ILawyerSigninApplication{
         }
 
         if(lawyerExist && !lawyerExist.verified && !lawyerExist.reason){
-            throw new AppException("Account Not verified",503)
+            throw new AppException("Account Not verified",AppStatusCode.UNAVAILABLE)
         }
 
-        if(lawyerExist && lawyerExist.reason){
+        if(lawyerExist && lawyerExist.reason && lawyerExist.reason!="null"){
             throw new AppException("Your account has been rejected try again after six month")
         }
 
         let isPasswordMatch=await bcrypt.compare(password,lawyerExist.password)
 
         if(!isPasswordMatch){
-            throw new AppException(AppError.INVALID_PASSWORD,401)
+            throw new AppException(AppError.INVALID_PASSWORD,AppStatusCode.UNAUTHORIZED)
         }
 
         let accessToken:string=this._tokenGenerateService.generateAccessToken({id:lawyerExist._id,role:'lawyer'})

@@ -3,7 +3,7 @@ import { LawyerProfileEntity } from "../../domain/entity/lawyerProfileEntity";
 
 const lawyerProfileSchema=new Schema<LawyerProfileEntity>({
     lawyerId:{
-        type:mongoose.Types.ObjectId,
+        type:Schema.Types.ObjectId,
         ref:'lawyers',
         required:true
     },

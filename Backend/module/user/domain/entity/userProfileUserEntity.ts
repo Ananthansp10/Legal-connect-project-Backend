@@ -1,3 +1,4 @@
+import { Types } from "mongoose"
 
 
 
@@ -12,8 +13,8 @@ export interface Address{
 
 
 export interface UserProfileEntitie{
-    id ? :any
-    userId:any,
+    id ? :Types.ObjectId
+    userId:Types.ObjectId,
     name:string,
     email:string,
     phoneNumber:string,

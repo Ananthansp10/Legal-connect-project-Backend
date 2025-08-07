@@ -1,5 +1,5 @@
 import { LawyerProfileEntity } from "../../../lawyer/domain/entity/lawyerProfileEntity";
-import { IGetLawyerRepositorie } from "../../interface/repositorie/getLawyerRepositorie";
+import { IGetLawyerRepository } from "../../interface/repository/getLawyerRepository";
 import { IGetLawyerDetailsApplication } from "../use-case-interface/IGetLawyerDetailsApplication";
 
 
@@ -7,7 +7,7 @@ import { IGetLawyerDetailsApplication } from "../use-case-interface/IGetLawyerDe
 export class GetLawyerDetailsApplication implements IGetLawyerDetailsApplication{
 
     constructor(
-        private _getLawyerDetailsRepo:IGetLawyerRepositorie
+        private _getLawyerDetailsRepo:IGetLawyerRepository
     ){}
 
     async execute(lawyerId: string): Promise<LawyerProfileEntity | null> {

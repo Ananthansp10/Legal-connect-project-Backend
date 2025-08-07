@@ -1,7 +1,8 @@
+import { Types } from "mongoose";
 
 
 export interface LawyerEditProfileRequest{
-    lawyerId:any;
+    lawyerId:Types.ObjectId;
     name: string;
     email: string;
     phoneNumber: string;

@@ -1,5 +1,5 @@
 import { LawyerProfileEntity } from "../../../lawyer/domain/entity/lawyerProfileEntity";
-import { IGetLawyerRepositorie } from "../../interface/repositorie/getLawyerRepositorie";
+import { IGetLawyerRepository } from "../../interface/repository/getLawyerRepository";
 import { getLawyerResponse } from "../mapper/getLawyerMapper";
 import { GetLawyerMapper } from "../mapper/getLawyerMapper";
 import { IGetLawyerApplication } from "../use-case-interface/IGetLawyersApplication";
@@ -8,7 +8,7 @@ import { IGetLawyerApplication } from "../use-case-interface/IGetLawyersApplicat
 export class GetLawyerApplication implements IGetLawyerApplication {
 
     constructor(
-        private _getLawyerRepo:IGetLawyerRepositorie
+        private _getLawyerRepo:IGetLawyerRepository
     ){}
 
     async execute(): Promise<getLawyerResponse[] | null> {
