@@ -11,7 +11,7 @@ router.post('/verify-auth',verifyToken,verifyRole(['user']),verifyAccountStatus(
     res.status(200).json({success:true,message:"Authorization successfull"})
 })
 
-router.post('/verify-lawyer-auth',verifyToken,verifyRole(['lawyer']),verifyAccountStatus(checkUserAccountStatusMongoRepo),(req,res)=>{
+router.post('/verify-lawyer-auth',verifyToken,verifyRole(['lawyer']),(req,res)=>{
     res.status(200).json({success:true,message:"Authorization successfull"})
 })
 

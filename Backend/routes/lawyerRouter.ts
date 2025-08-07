@@ -24,6 +24,9 @@ import { GetLawyerProfileMongoRepositorie } from '../module/lawyer/infrastructur
 import { GetLawyerProfileApplication } from '../module/lawyer/application/use-case/getLawyerProfileApplication';
 import { EditLawyerProfileMongoRepositorie } from '../module/lawyer/infrastructure/mongoRepositorie/editLawyerProfileMongoRepositorie';
 import { LawyerEditProfileApplication } from '../module/lawyer/application/use-case/editLawyerProfileApplication';
+import { AddSlotMongoRepositorie } from '../module/lawyer/infrastructure/mongoRepositorie/addSlotMongoRepositorie';
+import { AddSlotApplication } from '../module/lawyer/application/use-case/addSlotApplication';
+import { LawyerController } from '../module/lawyer/interface/controller/lawyerController';
 const router=express.Router()
 
 const lawyerSignupMongoRepo=new LawyerSignupMongoRepositorie()
@@ -62,6 +65,11 @@ const lawyerProfileController=new LawyerProfileController(
     lawyerEditProfileApplication
 )
 
+const addSlotMongoRepo=new AddSlotMongoRepositorie()
+const addSlotApplication=new AddSlotApplication(addSlotMongoRepo)
+
+const lawyerController=new LawyerController(addSlotApplication)
+
 router.post('/signup',upload.array('files',2),(req,res)=>lawyerAuthController.registerLawyer(req as MulterRequest,res))
 
 router.post('/signin',(req,res)=>lawyerAuthController.siginLawyer(req,res,authCookieService))
@@ -85,5 +93,7 @@ router.post('/add-profile',verifyToken,verifyRole(['lawyer']),upload.fields([
 router.get('/get-profile/:lawyerId',verifyToken,verifyRole(['lawyer']),(req,res)=>lawyerProfileController.getLawyerProfile(req,res))
 
 router.patch('/edit-profile',verifyToken,verifyRole(['lawyer']),upload.single('profileImage'),(req,res)=>lawyerProfileController.editLawyerProfile(req,res))
+
+router.post('/add-slot',verifyToken,verifyRole(['lawyer']),(req,res)=>lawyerController.addSlot(req,res))
 
 export default router;
