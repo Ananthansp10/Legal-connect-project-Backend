@@ -1,11 +1,11 @@
 import { UserProfileMapper } from "../../application/mapper/userProfileMapper";
 import { UserProfileEntitie } from "../../domain/entity/userProfileUserEntity";
-import { IEditProfileRepositorie } from "../../interface/repositorie/editProfileRepositorie";
+import { IEditProfileRepository } from "../../interface/repository/editProfileRepository";
 import { userProfileModel } from "../models/userProfileModel";
-import { BaseMongoRepositorie } from "./baseMongoRepositorie";
+import { BaseRepository } from "../mongoRepository/baseMongoRepository";
 
 
-export class EditProfileMongoRepositorie extends BaseMongoRepositorie<UserProfileEntitie> implements IEditProfileRepositorie{
+export class EditProfileRepository extends BaseRepository<UserProfileEntitie> implements IEditProfileRepository{
 
     constructor(){
         super(userProfileModel)

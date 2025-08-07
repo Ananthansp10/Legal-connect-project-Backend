@@ -1,5 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import jwt, { JwtPayload } from 'jsonwebtoken'
+import { AppStatusCode } from "../common/statusCode/AppStatusCode";
+import { AppError } from "../common/error/AppEnumError";
 
 export const verifyToken=(req:Request,res:Response,next:NextFunction)=>{
     try {
@@ -7,7 +9,7 @@ export const verifyToken=(req:Request,res:Response,next:NextFunction)=>{
         const refreshToken=req?.cookies?.refreshToken
 
         if(!refreshToken){
-            res.status(401).json({success:false,message:'Token expired',isUnAuth:true})
+            res.status(AppStatusCode.UNAUTHORIZED).json({success:false,message:'Token expired',isUnAuth:true})
             return
         }
         let decodeToken=jwt.decode(accessToken)
@@ -15,7 +17,7 @@ export const verifyToken=(req:Request,res:Response,next:NextFunction)=>{
             const exp=(decodeToken as JwtPayload).exp
             if(Date.now()>exp!*1000){
                 try {
-                    let verifyRefreshToken:any=jwt.verify(refreshToken,process.env.JWT_REFRESH_TOKEN_SECRET!)
+                    let verifyRefreshToken=jwt.verify(refreshToken,process.env.JWT_REFRESH_TOKEN_SECRET!) as jwt.JwtPayload
                     let newAccessToken=jwt.sign({id:verifyRefreshToken.id,role:verifyRefreshToken.role},process.env.JWT_ACCESS_TOKEN_SECRET!,{expiresIn:"30m"})
                     res.cookie('accessToken',newAccessToken,{
                         httpOnly:true,
@@ -25,24 +27,24 @@ export const verifyToken=(req:Request,res:Response,next:NextFunction)=>{
                     })
                     return next();
                 } catch (error) {
-                    res.status(401).json({success:false,message:"Invalid refresh token",isUnAuth:true})
+                    res.status(AppStatusCode.UNAUTHORIZED).json({success:false,message:"Invalid refresh token",isUnAuth:true})
                     return
                 }
             }else{
                 try {
-                    let verifyAccessToken:any=jwt.verify(accessToken,process.env.JWT_ACCESS_TOKEN_SECRET!)
+                    let verifyAccessToken=jwt.verify(accessToken,process.env.JWT_ACCESS_TOKEN_SECRET!) as jwt.JwtPayload
                     return next();
                 } catch (error) {
-                    res.status(401).json({success:false,message:"Invalid access token",isUnAuth:true})
+                    res.status(AppStatusCode.UNAUTHORIZED).json({success:false,message:"Invalid access token",isUnAuth:true})
                     return
                 }
             }
         } else {
-            res.status(401).json({success:false,message:"Invalid token",isUnAuth:true})
+            res.status(AppStatusCode.UNAUTHORIZED).json({success:false,message:"Invalid token",isUnAuth:true})
             return
         }
     } catch (error) {
-        res.status(500).json({success:false,message:"Something went wrong"})
+        res.status(AppStatusCode.INTERNAL_ERROR_CODE).json({success:false,message:AppError.UNKNOWN_ERROR})
         return
     }
 }

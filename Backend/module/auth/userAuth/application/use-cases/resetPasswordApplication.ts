@@ -5,6 +5,7 @@ import { AppError } from "../../../../../common/error/AppEnumError";
 import { AppException } from "../../../../../common/error/errorException";
 import { IResetPasswordApplication } from "../use-case-Interface/IresetPasswordApplication";
 import bcrypt from 'bcrypt'
+import { AppStatusCode } from "../../../../../common/statusCode/AppStatusCode";
 
 export class ResetPasswordApplication implements IResetPasswordApplication{
 
@@ -15,13 +16,13 @@ export class ResetPasswordApplication implements IResetPasswordApplication{
         let userExist:IUserSignup | null=await this._resetPasswordRepo.findByEmail(email)
 
         if(!userExist){
-            throw new AppException(AppError.USER_NOT_FOUND,404)
+            throw new AppException(AppError.USER_NOT_FOUND,AppStatusCode.NOT_FOUND)
         }
 
         let isPasswordMatch=await bcrypt.compare(oldPassword,userExist.password!)
 
         if(!isPasswordMatch){
-            throw new AppException(AppError.OLD_PASSWORD_WRONG,401)
+            throw new AppException(AppError.OLD_PASSWORD_WRONG,AppStatusCode.UNAUTHORIZED)
         }
 
         let newHashhedPassword=await this._hashService.hash(newPassword)

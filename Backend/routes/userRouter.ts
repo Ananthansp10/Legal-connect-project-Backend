@@ -29,15 +29,21 @@ import { CheckAccountStatusMongoRepositorie } from '../module/auth/userAuth/infr
 import upload from '../config/multerConfig';
 import { UserProfileController } from '../module/user/interface/controller/userProfileController';
 import { AddProfileApplication } from '../module/user/application/use-case/addProfileApplication';
-import { UserProfileMongoRepositorie } from '../module/user/infrastructure/mongoRepositorie.ts/userProfileMongoRepositorie';
+import { UserProfileRepository } from '../module/user/infrastructure/mongoRepository/userProfileMongoRepository';
 import { GetUserProfileApplication } from '../module/user/application/use-case/getUserProfileApplication';
-import { GetProfileMogoRepositorie } from '../module/user/infrastructure/mongoRepositorie.ts/getProfileMongoRepositorie';
-import { EditProfileMongoRepositorie } from '../module/user/infrastructure/mongoRepositorie.ts/editProfileMongoRepositorie';
+import { GetProfileRepository } from '../module/user/infrastructure/mongoRepository/getProfileMongoRepository';
+import { EditProfileRepository } from '../module/user/infrastructure/mongoRepository/editProfileMongoRepository';
 import { EditUserProfileApplication } from '../module/user/application/use-case/editUserProfileApplication';
 import { UserController } from '../module/user/interface/controller/userController';
-import { GetLawyerMongoRepositorie } from '../module/user/infrastructure/mongoRepositorie.ts/getLawyersMongoRepositorie';
+import { GetLawyerRepository } from '../module/user/infrastructure/mongoRepository/getLawyersMongoRepository';
 import { GetLawyerApplication } from '../module/user/application/use-case/getLawyersApplication';
 import { GetLawyerDetailsApplication } from '../module/user/application/use-case/getLawyerDetailsApplication';
+import { GetLawyerSlotRepository } from '../module/user/infrastructure/mongoRepository/getLawyerSlotMongoRepository';
+import { GetLawyerSlotApplication } from '../module/user/application/use-case/getLawyerSlotApplication';
+import { FilterLawyerApplication } from '../module/user/application/use-case/filterLawyerApplication';
+import { SearchLawyerApplication } from '../module/user/application/use-case/searchLawyerApplication';
+import { BookAppointmentRepository } from '../module/user/infrastructure/mongoRepository/bookAppointmentMongoRepository';
+import { BookAppointmentApplication } from '../module/user/application/use-case/bookAppointmentApplication';
 
 const userSignupMongoRepo=new UserSignupMongoRepositorie()
 const otpsendEmail=new sendOtpMailService()
@@ -74,12 +80,12 @@ const userAuthController=new UserAuthController(
     resetPasswordApplication
 )
 
-const userProfileRepo=new UserProfileMongoRepositorie()
+const userProfileRepo=new UserProfileRepository()
 
 const userAddProfileApplication=new AddProfileApplication(userProfileRepo)
-const userGetProfileRepo=new GetProfileMogoRepositorie()
+const userGetProfileRepo=new GetProfileRepository()
 const userGetProfileApplication=new GetUserProfileApplication(userGetProfileRepo)
-const userEditProfileRepo=new EditProfileMongoRepositorie()
+const userEditProfileRepo=new EditProfileRepository()
 const editUserProfileApplication=new EditUserProfileApplication(userEditProfileRepo)
 
 const userProfileController=new UserProfileController(
@@ -89,14 +95,24 @@ const userProfileController=new UserProfileController(
 
 )
 
-const getLawyerRepo=new GetLawyerMongoRepositorie()
+const getLawyerRepo=new GetLawyerRepository()
 
 const getLawyerApplication=new GetLawyerApplication(getLawyerRepo)
 const getLawyerDetailsApplication=new GetLawyerDetailsApplication(getLawyerRepo)
+const getLawyerSlotRepo=new GetLawyerSlotRepository()
+const getLawyerSlotApplication=new GetLawyerSlotApplication(getLawyerSlotRepo)
+const filterLawyerApplication=new FilterLawyerApplication(getLawyerRepo)
+const searchLawyerApplication=new SearchLawyerApplication(getLawyerRepo)
+const bookAppointmentRepo=new BookAppointmentRepository()
+const bookAppointmentApplication=new BookAppointmentApplication(bookAppointmentRepo)
 
 const userController=new UserController(
     getLawyerApplication,
-    getLawyerDetailsApplication
+    getLawyerDetailsApplication,
+    getLawyerSlotApplication,
+    filterLawyerApplication,
+    searchLawyerApplication,
+    bookAppointmentApplication
 )
 
 router.post('/signup',(req,res)=>userAuthController.registerUser(req,res))
@@ -130,5 +146,13 @@ router.put('/edit-profile',verifyToken,verifyRole(['user']),verifyAccountStatus(
 router.get('/get-lawyers',verifyToken,verifyRole(['user']),verifyAccountStatus(checkUserAccountStatusMongoRepo),(req,res)=>userController.getLawyers(req,res))
 
 router.get('/get-lawyer-details/:lawyerId',verifyToken,verifyRole(['user']),verifyAccountStatus(checkUserAccountStatusMongoRepo),(req,res)=>userController.getLawyerDetails(req,res))
+
+router.get('/get-slot-details/:lawyerId/:date',verifyToken,verifyRole(['user']),verifyAccountStatus(checkUserAccountStatusMongoRepo),(req,res)=>userController.getSlotDetails(req,res))
+
+router.get('/filter-lawyer/:specialization',verifyToken,verifyRole(['user']),verifyAccountStatus(checkUserAccountStatusMongoRepo),(req,res)=>userController.filterLawyerBySpecialization(req,res))
+
+router.get('/search-lawyer/:name',verifyToken,verifyRole(['user']),verifyAccountStatus(checkUserAccountStatusMongoRepo),(req,res)=>userController.searchLawyerByName(req,res))
+
+router.post('/book-appointment',verifyToken,verifyRole(['user']),verifyAccountStatus(checkUserAccountStatusMongoRepo),(req,res)=>userController.bookAppointment(req,res))
 
 export default router;

@@ -1,3 +1,4 @@
+import { Types } from "mongoose";
 import { LawyerEditProfileResponse } from "../../application/mapper/lawyerEditProfileMapper";
 import { LawyerProfileEntity } from "../../domain/entity/lawyerProfileEntity";
 import { IEditLawyerProfileRepositorie } from "../../interface/repositorie/editLawyerProfileRepositorie";
@@ -11,7 +12,7 @@ export class EditLawyerProfileMongoRepositorie extends BaseMongoRepositorie<Lawy
         super(lawyerProfileModel)
     }
 
-    async editLawyerProfile(lawyerId:string,data: LawyerEditProfileResponse): Promise<void> {
+    async editLawyerProfile(lawyerId:Types.ObjectId,data: LawyerEditProfileResponse): Promise<void> {
         await lawyerProfileModel.updateOne({lawyerId:lawyerId},{$set:{personalInfo:data}})
     }
 }

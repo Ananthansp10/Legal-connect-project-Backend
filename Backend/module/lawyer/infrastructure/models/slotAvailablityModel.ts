@@ -10,7 +10,7 @@ const slotAvailablityShema=new Schema<ISlotAvailablityEntity>({
     },
     availablity:[
         {
-            date:Date,
+            date:String,
             timeSlots:[
                 {
                     startTime:String,

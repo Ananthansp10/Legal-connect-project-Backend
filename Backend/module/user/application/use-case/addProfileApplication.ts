@@ -1,5 +1,5 @@
 import { UserProfileEntitie } from "../../domain/entity/userProfileUserEntity";
-import { IUserProfileRepositorie } from "../../interface/repositorie/userProfileRepositorie";
+import { IUserProfileRepository } from "../../interface/repository/userProfileRepository";
 import { IAddProfileApplication } from "../use-case-interface/IAddProfileApplication";
 import { UserProfile, UserProfileMapper } from "../mapper/userProfileMapper";
 
@@ -7,7 +7,7 @@ import { UserProfile, UserProfileMapper } from "../mapper/userProfileMapper";
 export class AddProfileApplication implements IAddProfileApplication{
 
     constructor(
-        private _userProfileRepo:IUserProfileRepositorie
+        private _userProfileRepo:IUserProfileRepository
     ){}
 
     async execute(data:UserProfile , imageUrl: string): Promise<void> {
