@@ -19,6 +19,11 @@ import { UserMongoRepositorie } from '../module/admin/infrastructure/mongoReposi
 import { GetUsersApplication } from '../module/admin/application/use-case/getUsersApplication';
 import { VerifyLawyerStatusApplication } from '../module/admin/application/use-case/verifyLawyerStatusApplication';
 import { VerifyUserStatusApplication } from '../module/admin/application/use-case/verifyUserStatusApllication';
+import { AdminSpecializationController } from '../module/admin/interface/controller/adminSpecializationController';
+import { AddSpecializationMongoRepositorie } from '../module/admin/infrastructure/mongoRepositorie/addSpecializationMongoRepositorie';
+import { AddSpecializationApplication } from '../module/admin/application/use-case/addSpecializationApplication';
+import { GetSpecializationMongoRepositorie } from '../module/admin/infrastructure/mongoRepositorie/getSpecializationMongoRepositorie';
+import { GetSpecializationApplication } from '../module/admin/application/use-case/getSpecialisationApplication';
 const router=express.Router()
 
 const tokenGenerateService=new TokenGenerationService()
@@ -52,6 +57,13 @@ const adminUserManagementController=new AdminUserManagementController(
     verifyUserStatusApplication
 )
 
+const addSpecializationMongoRepo=new AddSpecializationMongoRepositorie()
+const addSpecializationApplication=new AddSpecializationApplication(addSpecializationMongoRepo)
+const getSpecializationMongoRepo=new GetSpecializationMongoRepositorie()
+const getSpecializationApplication=new GetSpecializationApplication(getSpecializationMongoRepo)
+
+const adminSpecializationController=new AdminSpecializationController(addSpecializationApplication,getSpecializationApplication)
+
 
 router.post('/signin',(req,res)=>adminAuthController.signin(req,res))
 
@@ -68,5 +80,9 @@ router.get('/getusers',verifyToken,verifyRole(['admin']),(req,res)=>adminUserMan
 router.patch('/lawyer/:lawyerId/:status',verifyToken,verifyRole(['admin']),(req,res)=>adminLawyerManagementController.verifyLawyerStatus(req,res))
 
 router.patch('/user/:userId/:status',verifyToken,verifyRole(['admin']),(req,res)=>adminUserManagementController.verifyUserStatus(req,res))
+
+router.post('/add-specialization',verifyToken,verifyRole(['admin']),(req,res)=>adminSpecializationController.addSpecialization(req,res))
+
+router.get('/get-specialization',verifyToken,verifyRole(['admin']),(req,res)=>adminSpecializationController.getSpecialization(req,res))
 
 export default router;
