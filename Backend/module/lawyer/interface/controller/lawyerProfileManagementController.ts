@@ -49,7 +49,7 @@ export class LawyerProfileController{
             let imageUrl=req?.file?.path
            await this._lawyerEditProfileApplication.execute(req.body,imageUrl!)
            res.status(AppStatusCode.SUCCESS_CODE).json({success:true,message:"Profile edited successfully"})
-        } catch (error:any) {
+        } catch (error) {
             res.status(AppStatusCode.INTERNAL_ERROR_CODE).json({success:false,message:AppError.UNKNOWN_ERROR})
         }
     }

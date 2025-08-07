@@ -1,5 +1,5 @@
 import { UserProfileEntitie } from "../../domain/entity/userProfileUserEntity";
-import { IGetProfileRepositorie } from "../../interface/repositorie/getProfileRepositorie";
+import { IGetProfileRepository } from "../../interface/repository/getProfileRepository";
 import { UserProfileMapper } from "../mapper/userProfileMapper";
 import { IGetProfileApplication } from "../use-case-interface/IGetProfileApplication";
 
@@ -7,7 +7,7 @@ import { IGetProfileApplication } from "../use-case-interface/IGetProfileApplica
 export class GetUserProfileApplication implements IGetProfileApplication{
 
     constructor(
-        private _getProfileRepo:IGetProfileRepositorie
+        private _getProfileRepo:IGetProfileRepository
     ){}
 
     async execute(userId: string): Promise<UserProfileMapper | null> {

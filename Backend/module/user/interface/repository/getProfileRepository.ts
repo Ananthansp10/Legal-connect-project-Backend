@@ -1,7 +1,7 @@
 import { UserProfileEntitie } from "../../domain/entity/userProfileUserEntity";
-import { IBaseRepositorie } from "./IbaseRepositorie";
+import { IBaseRepository } from "./IbaseRepository";
 
 
-export interface IGetProfileRepositorie extends IBaseRepositorie<UserProfileEntitie>{
+export interface IGetProfileRepository extends IBaseRepository<UserProfileEntitie>{
     getProfile(userId:string):Promise<UserProfileEntitie | null>
 }

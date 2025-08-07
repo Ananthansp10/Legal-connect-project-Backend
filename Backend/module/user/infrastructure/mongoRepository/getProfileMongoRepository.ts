@@ -1,10 +1,10 @@
 import { UserProfileEntitie } from "../../domain/entity/userProfileUserEntity";
-import { IGetProfileRepositorie } from "../../interface/repositorie/getProfileRepositorie";
+import { IGetProfileRepository } from "../../interface/repository/getProfileRepository";
 import { userProfileModel } from "../models/userProfileModel";
-import { BaseMongoRepositorie } from "./baseMongoRepositorie";
+import { BaseRepository } from "../mongoRepository/baseMongoRepository";
 
 
-export class GetProfileMogoRepositorie extends BaseMongoRepositorie<UserProfileEntitie> implements IGetProfileRepositorie{
+export class GetProfileRepository extends BaseRepository<UserProfileEntitie> implements IGetProfileRepository{
 
     constructor(){
         super(userProfileModel)

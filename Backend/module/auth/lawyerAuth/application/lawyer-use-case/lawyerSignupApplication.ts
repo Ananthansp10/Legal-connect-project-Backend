@@ -1,5 +1,6 @@
 import { AppError } from "../../../../../common/error/AppEnumError";
 import { AppException } from "../../../../../common/error/errorException";
+import { AppStatusCode } from "../../../../../common/statusCode/AppStatusCode";
 import { IHashService } from "../../../userAuth/infrastructure/services/IhashService";
 import { LawyerSignupRequestDto, LawyerSignupResponseDto } from "../../domain/dto/lawyerSignupDto";
 import { ILawyerSignup } from "../../domain/entity/lawyerEntity";
@@ -19,7 +20,7 @@ export class LawyerSignupApplication implements ILawyerSignupApplication{
         let emailExist:ILawyerSignup | null=await this._lawyerRepo.findByEmail(data.email)
 
         if(emailExist && emailExist.verified){
-            throw new AppException(AppError.USER_ALREADY_EXISTS,409)
+            throw new AppException(AppError.USER_ALREADY_EXISTS,AppStatusCode.CONFLICT)
         }
 
         if(emailExist && emailExist.reason){
@@ -31,7 +32,7 @@ export class LawyerSignupApplication implements ILawyerSignupApplication{
                 await this._lawyerRepo.deleteByEmail(emailExist.email)
                 await this._lawyerRepo.create(data)
             }else{
-                throw new AppException("Your Account has been rejected please try again after six month",403)
+                throw new AppException("Your Account has been rejected please try again after six month",AppStatusCode.ACCOUNT_BLOCKED)
             }
         }
 

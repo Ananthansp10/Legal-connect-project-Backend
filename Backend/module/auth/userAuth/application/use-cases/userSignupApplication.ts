@@ -9,6 +9,7 @@ import { AppError } from "../../../../../common/error/AppEnumError";
 import { AppException } from "../../../../../common/error/errorException";
 import { UserSignupMapper as userSignupMapper } from "../mapper/userSignupMapper";
 import { IUserSignupApplication } from "../use-case-Interface/IUserSignupApplicationRepo";
+import { AppStatusCode } from "../../../../../common/statusCode/AppStatusCode";
 
 export class UserSignupApplication implements IUserSignupApplication{
 
@@ -32,7 +33,7 @@ export class UserSignupApplication implements IUserSignupApplication{
         try {
             let userExist:IUserSignup | null=await this._userRepo.findByEmail(data.email)
             if(userExist){
-                throw new AppException(AppError.USER_ALREADY_EXISTS,409)
+                throw new AppException(AppError.USER_ALREADY_EXISTS,AppStatusCode.CONFLICT)
             }else{
 
                 let user=userSignupMapper.toRequest(data)

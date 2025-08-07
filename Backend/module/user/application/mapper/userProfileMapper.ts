@@ -1,7 +1,8 @@
+import { Types } from "mongoose";
 import { UserProfileEntitie } from "../../domain/entity/userProfileUserEntity";
 
 export interface UserProfile{
-    userId:any;
+    userId:Types.ObjectId;
     name:string;
     email:string;
     phoneNumber:string;

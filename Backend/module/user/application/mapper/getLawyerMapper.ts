@@ -1,8 +1,9 @@
+import { Types } from "mongoose";
 import { LawyerProfileEntity } from "../../../lawyer/domain/entity/lawyerProfileEntity";
 
 
 export interface getLawyerResponse{
-    lawyerId:any;
+    lawyerId:Types.ObjectId;
     name:string;
     specialization:string[];
     experience:string;

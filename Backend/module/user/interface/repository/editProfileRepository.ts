@@ -1,8 +1,8 @@
 import { UserProfileMapper } from "../../application/mapper/userProfileMapper";
 import { UserProfileEntitie } from "../../domain/entity/userProfileUserEntity";
-import { BaseMongoRepositorie } from "../../infrastructure/mongoRepositorie.ts/baseMongoRepositorie";
+import { BaseRepository } from "../../infrastructure/mongoRepository/baseMongoRepository";
 
 
-export interface IEditProfileRepositorie extends BaseMongoRepositorie<UserProfileEntitie>{
+export interface IEditProfileRepository extends BaseRepository<UserProfileEntitie>{
     editUserProfile(userId:string,data:UserProfileEntitie):Promise<UserProfileMapper>;
 }

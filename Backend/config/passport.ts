@@ -4,6 +4,12 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
+interface User{
+  googleId:string;
+  name:string;
+  email?:string;
+}
+
 export default passport.use(
   new GoogleStrategy(
     {
@@ -11,9 +17,9 @@ export default passport.use(
       clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
       callbackURL: "/api/user/auth/google/callback",
     },
-    async (accessToken: any, refreshToken: any, profile, done: any) => {
+    async (accessToken: string, refreshToken: string, profile, done: any) => {
       try {
-        const user = {
+        const user:User = {
           googleId: profile.id,
           name: profile.displayName,
           email: profile.emails?.[0]?.value,
@@ -28,10 +34,10 @@ export default passport.use(
   )
 );
 
-passport.serializeUser((user: any, done) => {
+passport.serializeUser((user: Express.User, done) => {
   done(null, user);
 });
 
-passport.deserializeUser((user: any, done) => {
+passport.deserializeUser((user: Express.User, done) => {
   done(null, user);
 });

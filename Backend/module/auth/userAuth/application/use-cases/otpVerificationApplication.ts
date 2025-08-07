@@ -4,6 +4,7 @@ import { AppException } from "../../../../../common/error/errorException";
 import bcrypt from 'bcrypt'
 import { IOtpVerificationApplication } from "../use-case-Interface/IOtpVerificationApplication";
 import { IUserSignupRepositorie } from "../../interface/repositories/userSignupRepositorie";
+import { AppStatusCode } from "../../../../../common/statusCode/AppStatusCode";
 
 export class OtpVerificationApplication implements IOtpVerificationApplication{
 
@@ -19,11 +20,11 @@ export class OtpVerificationApplication implements IOtpVerificationApplication{
         try {
             let isOtpExist=await this._otpVerificationRepo.findOtpByEmail(email)
             if(!isOtpExist){
-                throw new AppException(AppError.OTP_EXPIRED,400)
+                throw new AppException(AppError.OTP_EXPIRED,AppStatusCode.BAD_REQUEST_CODE)
             }else{
                 let isOtpMatch=await bcrypt.compare(otp,isOtpExist.otp)
                 if(!isOtpMatch){
-                    throw new AppException(AppError.INVALID_OTP,400)
+                    throw new AppException(AppError.INVALID_OTP,AppStatusCode.BAD_REQUEST_CODE)
                 }else{
                     await this._userRepo.updateUserToActive(email)
                     return true

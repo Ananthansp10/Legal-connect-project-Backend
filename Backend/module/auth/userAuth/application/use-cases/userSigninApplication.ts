@@ -7,6 +7,7 @@ import { IUserSigninApplication } from "../use-case-Interface/IUserSigninApplica
 import bcrypt from 'bcrypt'
 import { UserSigninMapper as mapper } from "../mapper/userSigninMapper";
 import { UserSigninDto } from "../../domain/dto/userSigninDto";
+import { AppStatusCode } from "../../../../../common/statusCode/AppStatusCode";
 
 export class UserSigninApplication implements IUserSigninApplication{
 
@@ -20,17 +21,17 @@ export class UserSigninApplication implements IUserSigninApplication{
         let userExist:IUserSignup | null=await this._userSigninRepo.findByEmail(email)
         
         if(!userExist){
-            throw new AppException(AppError.USER_NOT_FOUND,404)
+            throw new AppException(AppError.USER_NOT_FOUND,AppStatusCode.NOT_FOUND)
         }
 
         if(userExist.isBlock){
-            throw new AppException(AppError.ACCOUNT_BLOCKED,403)
+            throw new AppException(AppError.ACCOUNT_BLOCKED,AppStatusCode.ACCOUNT_BLOCKED)
         }
 
         let isPasswordMatch=await bcrypt.compare(password,userExist.password!)
 
         if(!isPasswordMatch){
-            throw new AppException(AppError.INVALID_PASSWORD,401)
+            throw new AppException(AppError.INVALID_PASSWORD,AppStatusCode.UNAUTHORIZED)
         }
 
         let accessToken=this._tokenGenerationService.generateAccessToken({id:userExist._id,role:'user'})

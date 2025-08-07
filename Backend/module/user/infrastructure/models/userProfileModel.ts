@@ -3,7 +3,7 @@ import { UserProfileEntitie } from "../../domain/entity/userProfileUserEntity";
 
 const userProfileSchema=new Schema<UserProfileEntitie>({
     userId:{
-        type:mongoose.Types.ObjectId,
+        type:Schema.Types.ObjectId,
         ref:'users',
         required:true
     },

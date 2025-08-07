@@ -1,3 +1,4 @@
+import { Types } from "mongoose";
 
 
 interface Address{
@@ -39,8 +40,8 @@ interface ProffessionalInfo{
 }
 
 export interface LawyerProfileEntity{
-    _id ? :any
-    lawyerId:any;
+    _id ? :Types.ObjectId
+    lawyerId:Types.ObjectId;
     personalInfo:PersonalInfo;
     proffessionalInfo:ProffessionalInfo;
 }
