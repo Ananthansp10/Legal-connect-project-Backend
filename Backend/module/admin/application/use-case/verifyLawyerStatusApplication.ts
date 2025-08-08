@@ -1,5 +1,5 @@
 import { AppStatus } from "../../../../common/status/appStatus";
-import { ILawyerRepositorie } from "../../interface/repositories/ILawyerRepositorie";
+import { ILawyerRepository } from "../../interface/repositories/ILawyerRepository";
 import { ILawyerVerificationStatusApplication } from "../use-case-interface/IVerifyLawyerStatusApplication";
 
 
@@ -7,7 +7,7 @@ import { ILawyerVerificationStatusApplication } from "../use-case-interface/IVer
 export class VerifyLawyerStatusApplication implements ILawyerVerificationStatusApplication{
 
     constructor(
-        private _lawyerRepo:ILawyerRepositorie
+        private _lawyerRepo:ILawyerRepository
     ){}
 
     async execute(lawyerId: string, status: string): Promise<boolean> {

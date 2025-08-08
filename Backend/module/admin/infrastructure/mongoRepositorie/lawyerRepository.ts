@@ -1,12 +1,12 @@
 import { AppStatus } from "../../../../common/status/appStatus";
 import { LawyerModel } from "../../../auth/lawyerAuth/infrastructure/models/lawyerModel";
 import { ILawyerSignup } from "../../domain/entity/lawyerEntity";
-import { ILawyerRepositorie } from "../../interface/repositories/ILawyerRepositorie";
-import { BaseMongoRepositorie } from "./baseRepositories";
+import { ILawyerRepository } from "../../interface/repositories/ILawyerRepository";
+import { BaseRepository } from "./baseRepository";
 
 
 
-export class LawyerMongoRepositorie extends BaseMongoRepositorie<ILawyerSignup> implements ILawyerRepositorie{
+export class LawyerRepository extends BaseRepository<ILawyerSignup> implements ILawyerRepository{
 
     constructor(){
         super(LawyerModel)

@@ -1,10 +1,10 @@
 import { LawyerModel } from "../../../auth/lawyerAuth/infrastructure/models/lawyerModel";
 import { ILawyerSignup } from "../../domain/entity/lawyerEntity";
-import { ILawyerVerificationRepositorie } from "../../interface/repositories/lawyerVerificationRepositorie";
-import { BaseMongoRepositorie } from "./baseRepositories";
+import { ILawyerVerificationRepository } from "../../interface/repositories/lawyerVerificationRepository";
+import { BaseRepository } from "./baseRepository";
 
 
-export class LawyerVerificationMongoRepositorie extends BaseMongoRepositorie<ILawyerSignup> implements ILawyerVerificationRepositorie{
+export class LawyerVerificationRepository extends BaseRepository<ILawyerSignup> implements ILawyerVerificationRepository{
 
     constructor(){
         super(LawyerModel)

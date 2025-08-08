@@ -2,6 +2,6 @@ import { ISpecializationEntity } from "../../domain/entity/specializationEntity"
 
 
 
-export interface IAddSpecializationRepositorie{
+export interface IAddSpecializationRepository{
     addSpecialization(data:ISpecializationEntity):Promise<void>;
 }

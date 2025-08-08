@@ -1,7 +1,7 @@
 import { ILawyerSignup } from "../../domain/entity/lawyerEntity";
-import { IBaseRepositorie } from "./IBaseRepositorie";
+import { IBaseRepository } from "./IBaseRepository";
 
 
-export interface ILawyerRepositorie extends IBaseRepositorie<ILawyerSignup>{
+export interface ILawyerRepository extends IBaseRepository<ILawyerSignup>{
     updateLawyerStatus(lawyerId:string,status:string):Promise<void>;
 }
