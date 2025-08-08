@@ -1,11 +1,11 @@
 import { AppStatus } from "../../../../common/status/appStatus";
 import { UserModel } from "../../../auth/userAuth/infrastructure/models/userSignupModel";
 import { IUserSignup } from "../../domain/entity/userEntity";
-import { IUserRepositorie } from "../../interface/repositories/IuserRepositorie";
-import { BaseMongoRepositorie } from "./baseRepositories";
+import { IUserRepository } from "../../interface/repositories/IuserRepository";
+import { BaseRepository } from "./baseRepository";
 
 
-export class UserMongoRepositorie extends BaseMongoRepositorie<IUserSignup> implements IUserRepositorie{
+export class UserRepositorie extends BaseRepository<IUserSignup> implements IUserRepository{
 
     constructor(){
         super(UserModel)

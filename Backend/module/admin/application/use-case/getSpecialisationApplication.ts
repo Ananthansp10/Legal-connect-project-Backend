@@ -1,5 +1,5 @@
 import { ISpecializationEntity } from "../../domain/entity/specializationEntity";
-import { IGetSpecializationRepositorie } from "../../interface/repositories/IGetSpecializationRepositorie";
+import { IGetSpecializationRepository } from "../../interface/repositories/IGetSpecializationRepository";
 import { IGetSpecializationApplication } from "../use-case-interface/IGetSpecializationApplication";
 
 
@@ -7,7 +7,7 @@ import { IGetSpecializationApplication } from "../use-case-interface/IGetSpecial
 export class GetSpecializationApplication implements IGetSpecializationApplication{
 
     constructor(
-        private getSpecializationRepo:IGetSpecializationRepositorie
+        private getSpecializationRepo:IGetSpecializationRepository
     ){}
 
     async execute(): Promise<ISpecializationEntity[] | null> {

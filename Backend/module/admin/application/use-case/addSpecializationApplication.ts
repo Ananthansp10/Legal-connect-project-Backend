@@ -1,5 +1,5 @@
 import { ISpecializationEntity } from "../../domain/entity/specializationEntity";
-import { IAddSpecializationRepositorie } from "../../interface/repositories/IAddSpecializationRepositorie";
+import { IAddSpecializationRepository } from "../../interface/repositories/IAddSpecializationRepository";
 import { IAddSpecializationApplication } from "../use-case-interface/IAddSpecialisationApplication";
 
 
@@ -7,7 +7,7 @@ import { IAddSpecializationApplication } from "../use-case-interface/IAddSpecial
 export class AddSpecializationApplication implements IAddSpecializationApplication{
 
     constructor(
-        private addSpecialization:IAddSpecializationRepositorie
+        private addSpecialization:IAddSpecializationRepository
     ){}
 
     async execute(data: ISpecializationEntity): Promise<void> {

@@ -139,7 +139,7 @@ export class UserAuthController{
 
     getGoogleAuthDetails(req:Request,res:Response){
         try {
-            const data:GoogleAuthEntity=req?.cookies?.googleAuthDetails
+            const data:GoogleAuthEntity | null=req?.cookies?.googleAuthDetails
             res.status(AppStatusCode.SUCCESS_CODE).json({success:true,message:"Data found successfully",result:data})
         } catch (error) {
             

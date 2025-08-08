@@ -1,14 +1,14 @@
 import { AppStatus } from "../../../../common/status/appStatus";
 import { ILawyerSignup } from "../../domain/entity/lawyerEntity";
 import { ILawyerVerificationEmailService } from "../../infrastructure/services/ILawyerVerificationEmailService";
-import { ILawyerVerificationRepositorie } from "../../interface/repositories/lawyerVerificationRepositorie";
+import { ILawyerVerificationRepository } from "../../interface/repositories/lawyerVerificationRepository";
 import { ILawyerVerificationApplication } from "../use-case-interface/ILawyerVerificationApplication";
 
 
 export class LawyerVerificationApplication implements ILawyerVerificationApplication{
 
     constructor(
-        private _lawyerVerificationRepo:ILawyerVerificationRepositorie,
+        private _lawyerVerificationRepo:ILawyerVerificationRepository,
         private _lawyerVerifyEmailService:ILawyerVerificationEmailService
     ){}
 

@@ -1,7 +1,7 @@
 import { IUserSignup } from "../../domain/entity/userEntity";
-import { IBaseRepositorie } from "./IBaseRepositorie";
+import { IBaseRepository } from "./IBaseRepository";
 
 
-export interface IUserRepositorie extends IBaseRepositorie<IUserSignup>{
+export interface IUserRepository extends IBaseRepository<IUserSignup>{
     updateUserStatus(userId:string,status:string):Promise<void>;
 }
