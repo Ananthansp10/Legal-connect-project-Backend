@@ -2,6 +2,6 @@ import { ISpecializationEntity } from "../../domain/entity/specializationEntity"
 
 
 
-export interface IGetSpecializationRepositorie{
+export interface IGetSpecializationRepository{
     getSpecialization():Promise<ISpecializationEntity[] | null>;
 }

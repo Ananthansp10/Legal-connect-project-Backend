@@ -1,12 +1,12 @@
 import { AppStatus } from "../../../../common/status/appStatus";
-import { IUserRepositorie } from "../../interface/repositories/IuserRepositorie";
+import { IUserRepository } from "../../interface/repositories/IuserRepository";
 import { IVerifyUserStatusApplication } from "../use-case-interface/IVerifyUserStatusApplication";
 
 
 export class VerifyUserStatusApplication implements IVerifyUserStatusApplication{
 
     constructor(
-        private _userRepo:IUserRepositorie
+        private _userRepo:IUserRepository
     ){}
 
     async execute(userId: string, status: string): Promise<boolean> {

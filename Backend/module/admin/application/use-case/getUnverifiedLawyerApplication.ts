@@ -1,13 +1,13 @@
 import { ILawyerResponse } from "../../domain/dtos/lawyerDto";
 import { ILawyerSignup } from "../../domain/entity/lawyerEntity";
-import { IBaseRepositorie } from "../../interface/repositories/IBaseRepositorie";
+import { IBaseRepository } from "../../interface/repositories/IBaseRepository";
 import { IGetUnverifiedLawyersApplication } from "../use-case-interface/IGetUnverifiedLawyerApplication";
 import { UnverifiedLawyerMapper } from "../mapper/unverifiedLawyerMapper";
 
 export class GetUnverifiedLawyers implements IGetUnverifiedLawyersApplication{
 
     constructor(
-        private _lawyerRepo:IBaseRepositorie<ILawyerSignup>
+        private _lawyerRepo:IBaseRepository<ILawyerSignup>
     ){}
 
    async execute(): Promise<ILawyerResponse[]> {

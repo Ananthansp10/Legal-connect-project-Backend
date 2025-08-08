@@ -10,6 +10,10 @@ const specializationSchema=new Schema<ISpecializationEntity>({
     description:{
         type:String,
         required:true
+    },
+    isDeleted:{
+        type:Boolean,
+        required:true
     }
 })
 

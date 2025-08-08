@@ -1,13 +1,13 @@
 import { ILawyerResponse } from "../../domain/dtos/lawyerDto";
 import { ILawyerSignup } from "../../domain/entity/lawyerEntity";
-import { ILawyerRepositorie } from "../../interface/repositories/ILawyerRepositorie";
+import { ILawyerRepository } from "../../interface/repositories/ILawyerRepository";
 import { IGetLawyersApplication } from "../use-case-interface/IGetLawyerApplication";
 import { LawyerMapper } from "../mapper/lawyerMapper";
 
 export class GetLawyersApplication implements IGetLawyersApplication{
 
     constructor(
-        private lawyerRepo:ILawyerRepositorie
+        private lawyerRepo:ILawyerRepository
     ){}
 
     async execute(): Promise<ILawyerResponse[]> {
