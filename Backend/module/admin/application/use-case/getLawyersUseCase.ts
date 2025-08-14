@@ -1,10 +1,10 @@
 import { ILawyerResponse } from "../../domain/dtos/lawyerDto";
 import { ILawyerSignup } from "../../domain/entity/lawyerEntity";
-import { ILawyerRepository } from "../../interface/repositories/ILawyerRepository";
-import { IGetLawyersApplication } from "../use-case-interface/IGetLawyerApplication";
+import { ILawyerRepository } from "../../infrastructure/repositoryInterface/ILawyerRepository";
+import { IGetLawyersUseCase } from "../use-case-interface/IGetLawyerUseCase";
 import { LawyerMapper } from "../mapper/lawyerMapper";
 
-export class GetLawyersApplication implements IGetLawyersApplication{
+export class GetLawyersUseCase implements IGetLawyersUseCase{
 
     constructor(
         private lawyerRepo:ILawyerRepository

@@ -1,4 +1,4 @@
-import { IDeleteSpecializationRepository } from "../../interface/repositories/IDeleteSpecializationRepository";
+import { IDeleteSpecializationRepository } from "../repositoryInterface/IDeleteSpecializationRepository";
 import { specializationModel } from "../models/specializationModel";
 
 

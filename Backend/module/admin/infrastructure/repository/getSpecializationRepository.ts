@@ -1,5 +1,5 @@
 import { ISpecializationEntity } from "../../domain/entity/specializationEntity";
-import { IGetSpecializationRepository } from "../../interface/repositories/IGetSpecializationRepository";
+import { IGetSpecializationRepository } from "../repositoryInterface/IGetSpecializationRepository";
 import { specializationModel } from "../models/specializationModel";
 
 

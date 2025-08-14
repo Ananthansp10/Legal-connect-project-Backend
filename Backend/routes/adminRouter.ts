@@ -4,30 +4,30 @@ import { TokenGenerationService } from '../module/auth/userAuth/infrastructure/s
 import { AdminSigninApplication } from '../module/auth/adminAuth/application/use-cases/adminSigninApplication';
 import { CookieTokenService } from '../module/auth/userAuth/infrastructure/services/cookieTokenService';
 import { AdminLawyerManagementController } from '../module/admin/interface/controller/adminLawyerManagementController';
-import { LawyerVerificationRepository } from '../module/admin/infrastructure/mongoRepositorie/lawyerVerificationRepository';
-import { LawyerVerificationApplication } from '../module/admin/application/use-case/lawyerVerificationApplication';
+import { LawyerVerificationRepository } from '../module/admin/infrastructure/repository/lawyerVerificationRepository';
+import { LawyerVerificationUseCase } from '../module/admin/application/use-case/lawyerVerificationUseCase';
 import { verifyToken } from '../middlewares/verifyTokenMiddleware';
 import { verifyRole } from '../middlewares/verifyRoleMiddleware';
-import { BaseRepository } from '../module/admin/infrastructure/mongoRepositorie/baseRepository';
+import { BaseRepository } from '../module/admin/infrastructure/repository/baseRepository';
 import { LawyerModel } from '../module/auth/lawyerAuth/infrastructure/models/lawyerModel';
-import { GetUnverifiedLawyers } from '../module/admin/application/use-case/getUnverifiedLawyerApplication';
+import { GetUnverifiedLawyersUseCase } from '../module/admin/application/use-case/getUnverifiedLawyerUseCase';
 import { LawyerVerificationEmail } from '../module/admin/infrastructure/services/lawyerVerificarionEmailService';
-import { LawyerRepository } from '../module/admin/infrastructure/mongoRepositorie/lawyerRepository';
-import { GetLawyersApplication } from '../module/admin/application/use-case/getLawyersApplication';
+import { LawyerRepository } from '../module/admin/infrastructure/repository/lawyerRepository';
+import { GetLawyersUseCase } from '../module/admin/application/use-case/getLawyersUseCase';
 import { AdminUserManagementController } from '../module/admin/interface/controller/adminUserManagementController';
-import { UserRepositorie } from '../module/admin/infrastructure/mongoRepositorie/userRepository';
-import { GetUsersApplication } from '../module/admin/application/use-case/getUsersApplication';
-import { VerifyLawyerStatusApplication } from '../module/admin/application/use-case/verifyLawyerStatusApplication';
-import { VerifyUserStatusApplication } from '../module/admin/application/use-case/verifyUserStatusApllication';
+import { UserRepository } from '../module/admin/infrastructure/repository/userRepository';
+import { GetUsersUseCase } from '../module/admin/application/use-case/getUsersUseCase';
+import { VerifyLawyerStatusUseCase } from '../module/admin/application/use-case/verifyLawyerStatusUseCase';
+import { VerifyUserStatusUseCase } from '../module/admin/application/use-case/verifyUserStatusUseCase';
 import { AdminSpecializationController } from '../module/admin/interface/controller/adminSpecializationController';
-import { AddSpecializationRepository } from '../module/admin/infrastructure/mongoRepositorie/addSpecializationRepository';
-import { AddSpecializationApplication } from '../module/admin/application/use-case/addSpecializationApplication';
-import { GetSpecializationRepository } from '../module/admin/infrastructure/mongoRepositorie/getSpecializationRepository';
-import { GetSpecializationApplication } from '../module/admin/application/use-case/getSpecialisationApplication';
-import { EditSpecializationRepository } from '../module/admin/infrastructure/mongoRepositorie/editSpecializationRepository';
-import { EditSpecializationApplication } from '../module/admin/application/use-case/editSpecializationApplication';
-import { DeleteSpecializationRepository } from '../module/admin/infrastructure/mongoRepositorie/deleteSpecializationRepository';
-import { DeleteSpecializationApplication } from '../module/admin/application/use-case/deleteSpecializationApplication';
+import { AddSpecializationRepository } from '../module/admin/infrastructure/repository/addSpecializationRepository';
+import { AddSpecializationUseCase } from '../module/admin/application/use-case/addSpecializationUseCase';
+import { GetSpecializationRepository } from '../module/admin/infrastructure/repository/getSpecializationRepository';
+import { GetSpecializationUseCase } from '../module/admin/application/use-case/getSpecialisationUseCase';
+import { EditSpecializationRepository } from '../module/admin/infrastructure/repository/editSpecializationRepository';
+import { EditSpecializationUseCase } from '../module/admin/application/use-case/editSpecializationUseCase';
+import { DeleteSpecializationRepository } from '../module/admin/infrastructure/repository/deleteSpecializationRepository';
+import { DeleteSpecializationUseCase } from '../module/admin/application/use-case/deleteSpecializationUseCase';
 const router=express.Router()
 
 const tokenGenerateService=new TokenGenerationService()
@@ -35,15 +35,15 @@ const adminSigninApplication=new AdminSigninApplication(tokenGenerateService)
 const tokenCookieService=new CookieTokenService()
 const lawyerVerificationRepo=new LawyerVerificationRepository()
 const lawyerVerifyEmailService=new LawyerVerificationEmail()
-const verifyLawyerApplication=new LawyerVerificationApplication(lawyerVerificationRepo,lawyerVerifyEmailService)
+const verifyLawyerApplication=new LawyerVerificationUseCase(lawyerVerificationRepo,lawyerVerifyEmailService)
 const adminLawyerRepo=new BaseRepository(LawyerModel)
-const getUnverifiedLawyerApplication=new GetUnverifiedLawyers(adminLawyerRepo)
+const getUnverifiedLawyerApplication=new GetUnverifiedLawyersUseCase(adminLawyerRepo)
 const lawyerMongoRepo=new LawyerRepository()
-const getLawyersApplication=new GetLawyersApplication(lawyerMongoRepo)
+const getLawyersApplication=new GetLawyersUseCase(lawyerMongoRepo)
 
 const adminAuthController=new AdminAuthController(adminSigninApplication,tokenCookieService)
 
-const verifyLawyerStatusApplication=new VerifyLawyerStatusApplication(lawyerMongoRepo)
+const verifyLawyerStatusApplication=new VerifyLawyerStatusUseCase(lawyerMongoRepo)
 
 const adminLawyerManagementController=new AdminLawyerManagementController(
     verifyLawyerApplication,
@@ -52,9 +52,9 @@ const adminLawyerManagementController=new AdminLawyerManagementController(
     verifyLawyerStatusApplication
 )
 
-const userMongoRepo=new UserRepositorie()
-const getUserApplication=new GetUsersApplication(userMongoRepo)
-const verifyUserStatusApplication=new VerifyUserStatusApplication(userMongoRepo)
+const userMongoRepo=new UserRepository()
+const getUserApplication=new GetUsersUseCase(userMongoRepo)
+const verifyUserStatusApplication=new VerifyUserStatusUseCase(userMongoRepo)
 
 const adminUserManagementController=new AdminUserManagementController(
     getUserApplication,
@@ -62,13 +62,13 @@ const adminUserManagementController=new AdminUserManagementController(
 )
 
 const addSpecializationMongoRepo=new AddSpecializationRepository()
-const addSpecializationApplication=new AddSpecializationApplication(addSpecializationMongoRepo)
+const addSpecializationApplication=new AddSpecializationUseCase(addSpecializationMongoRepo)
 const getSpecializationMongoRepo=new GetSpecializationRepository()
-const getSpecializationApplication=new GetSpecializationApplication(getSpecializationMongoRepo)
+const getSpecializationApplication=new GetSpecializationUseCase(getSpecializationMongoRepo)
 const editSpecializationRepo=new EditSpecializationRepository()
-const editSpecializationApplication=new EditSpecializationApplication(editSpecializationRepo)
+const editSpecializationApplication=new EditSpecializationUseCase(editSpecializationRepo)
 const deleteSpecializationRepo=new DeleteSpecializationRepository()
-const deleteSpecializationApplication=new DeleteSpecializationApplication(deleteSpecializationRepo)
+const deleteSpecializationApplication=new DeleteSpecializationUseCase(deleteSpecializationRepo)
 
 const adminSpecializationController=new AdminSpecializationController(
     addSpecializationApplication,

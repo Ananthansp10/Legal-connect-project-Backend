@@ -1,6 +1,6 @@
 import { ILawyerResponse } from "../../domain/dtos/lawyerDto";
 
 
-export interface IGetLawyersApplication{
+export interface IGetLawyersUseCase{
     execute():Promise<ILawyerResponse[]>
 }

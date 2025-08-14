@@ -1,19 +1,19 @@
 import { AppError } from "../../../../common/error/AppEnumError";
 import { AppStatusCode } from "../../../../common/statusCode/AppStatusCode";
-import { IAddSpecializationApplication } from "../../application/use-case-interface/IAddSpecialisationApplication";
+import { IAddSpecializationUseCase } from "../../application/use-case-interface/IAddSpecialisationUseCase";
 import { Request,Response } from "express";
-import { IGetSpecializationApplication } from "../../application/use-case-interface/IGetSpecializationApplication";
-import { IEditSpecializationApplication } from "../../application/use-case-interface/IEditSpecializationApplication";
-import { IDeleteSpecializationApplication } from "../../application/use-case-interface/IDeleteSpecializationApplication";
+import { IGetSpecializationUseCase } from "../../application/use-case-interface/IGetSpecializationUseCase";
+import { IEditSpecializationUseCase } from "../../application/use-case-interface/IEditSpecializationUseCase";
+import { IDeleteSpecializationUseCase } from "../../application/use-case-interface/IDeleteSpecializationUseCase";
 
 
 export class AdminSpecializationController{
 
     constructor(
-        private _addSpecializationApplication:IAddSpecializationApplication,
-        private _getSpecializationApplication:IGetSpecializationApplication,
-        private _editSpecializationApplication:IEditSpecializationApplication,
-        private _deleteSpecializationApplication:IDeleteSpecializationApplication
+        private _addSpecializationApplication:IAddSpecializationUseCase,
+        private _getSpecializationApplication:IGetSpecializationUseCase,
+        private _editSpecializationApplication:IEditSpecializationUseCase,
+        private _deleteSpecializationApplication:IDeleteSpecializationUseCase
     ){}
 
     async addSpecialization(req:Request,res:Response):Promise<void>{
