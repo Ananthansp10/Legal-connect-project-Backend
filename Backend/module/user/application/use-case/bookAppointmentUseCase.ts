@@ -1,5 +1,5 @@
 import { IAppointmentEntity } from "../../domain/entity/appointmentModel";
-import { IBookAppointmentRepository } from "../../interface/repository/IbookAppointmentRepository";
+import { IBookAppointmentRepository } from "../../infrastructure/repositoryInterface/IbookAppointmentRepository";
 import { IBookAppointmentUseCase } from "../use-case-interface/IBookAppointmentUseCase";
 
 

@@ -18,15 +18,19 @@ import { verifyToken } from '../middlewares/verifyTokenMiddleware';
 import { verifyRole } from '../middlewares/verifyRoleMiddleware';
 import { CheckAccountStatusMongoRepositorie } from '../module/auth/userAuth/infrastructure/mongoRepositories/checkAccountStatusMongoRepositorie';
 import { LawyerProfileController } from '../module/lawyer/interface/controller/lawyerProfileManagementController';
-import { LawyerAddProfileMongoRepo } from '../module/lawyer/infrastructure/mongoRepositorie/lawyerAddProfileMongoRepo';
-import { LawyerAddProfileAppliaction } from '../module/lawyer/application/use-case/lawyerAddProfileApplication';
-import { GetLawyerProfileMongoRepositorie } from '../module/lawyer/infrastructure/mongoRepositorie/getLawyerProfileMongoRepositorie';
-import { GetLawyerProfileApplication } from '../module/lawyer/application/use-case/getLawyerProfileApplication';
-import { EditLawyerProfileMongoRepositorie } from '../module/lawyer/infrastructure/mongoRepositorie/editLawyerProfileMongoRepositorie';
-import { LawyerEditProfileApplication } from '../module/lawyer/application/use-case/editLawyerProfileApplication';
-import { AddSlotMongoRepositorie } from '../module/lawyer/infrastructure/mongoRepositorie/addSlotMongoRepositorie';
-import { AddSlotApplication } from '../module/lawyer/application/use-case/addSlotApplication';
+import { LawyerAddProfileRepository } from '../module/lawyer/infrastructure/repository/lawyerAddProfileRepository';
+import { LawyerAddProfileUseCase } from '../module/lawyer/application/use-case/lawyerAddProfileUseCase';
+import { GetLawyerProfileRepository } from '../module/lawyer/infrastructure/repository/getLawyerProfileRepository';
+import { GetLawyerProfileUseCase } from '../module/lawyer/application/use-case/getLawyerProfileUseCase';
+import { EditLawyerProfileRepository } from '../module/lawyer/infrastructure/repository/editLawyerProfileRepository';
+import { LawyerEditProfileUseCase } from '../module/lawyer/application/use-case/editLawyerProfileUseCase';
+import { AddSlotRepository } from '../module/lawyer/infrastructure/repository/addSlotRepository';
+import { AddSlotUseCase } from '../module/lawyer/application/use-case/addSlotUseCase';
 import { LawyerController } from '../module/lawyer/interface/controller/lawyerController';
+import { GetSlotRepository } from '../module/lawyer/infrastructure/repository/getSlotRepository';
+import { GetSlotUseCase } from '../module/lawyer/application/use-case/getSlotUseCase';
+import { UpdateRuleStatusRepository } from '../module/lawyer/infrastructure/repository/updateRuleStatusRepository';
+import { UpdateRuleStatusUseCase } from '../module/lawyer/application/use-case/updateRuleStatusUseCase';
 const router=express.Router()
 
 const lawyerSignupMongoRepo=new LawyerSignupMongoRepositorie()
@@ -42,7 +46,6 @@ const forgotPasswordAplication=new LawyerForgotPasswordApplication(emailService,
 const lawyerChangePasswordRepo=new ChangePasswordMongoRepositorie()
 const changePasswordApplication=new LawyerChangePasswordApplication(lawyerChangePasswordRepo,hashService)
 const resetPasswordApplication=new LawyerResetPasswordApplication(lawyerChangePasswordRepo,hashService)
-const checkAccountStatusMongoRepo=new CheckAccountStatusMongoRepositorie()
 
 const lawyerAuthController=new LawyerAuthController(
     lawyerSignupApplication,
@@ -52,12 +55,12 @@ const lawyerAuthController=new LawyerAuthController(
     resetPasswordApplication
 )
 
-const lawyerAddProfileRepo=new LawyerAddProfileMongoRepo()
-const lawyerAddProfileApplication=new LawyerAddProfileAppliaction(lawyerAddProfileRepo)
-const getLawyerProfileMongoRepo=new GetLawyerProfileMongoRepositorie()
-const getLawyerProfileApplication=new GetLawyerProfileApplication(getLawyerProfileMongoRepo)
-const editLawyerProfileMongoRepo=new EditLawyerProfileMongoRepositorie()
-const lawyerEditProfileApplication=new LawyerEditProfileApplication(editLawyerProfileMongoRepo)
+const lawyerAddProfileRepo=new LawyerAddProfileRepository()
+const lawyerAddProfileApplication=new LawyerAddProfileUseCase(lawyerAddProfileRepo)
+const getLawyerProfileMongoRepo=new GetLawyerProfileRepository()
+const getLawyerProfileApplication=new GetLawyerProfileUseCase(getLawyerProfileMongoRepo)
+const editLawyerProfileMongoRepo=new EditLawyerProfileRepository()
+const lawyerEditProfileApplication=new LawyerEditProfileUseCase(editLawyerProfileMongoRepo)
 
 const lawyerProfileController=new LawyerProfileController(
     lawyerAddProfileApplication,
@@ -65,10 +68,18 @@ const lawyerProfileController=new LawyerProfileController(
     lawyerEditProfileApplication
 )
 
-const addSlotMongoRepo=new AddSlotMongoRepositorie()
-const addSlotApplication=new AddSlotApplication(addSlotMongoRepo)
+const addSlotMongoRepo=new AddSlotRepository()
+const addSlotApplication=new AddSlotUseCase(addSlotMongoRepo)
+const getSlotMongoRepo=new GetSlotRepository()
+const getSlotApplication=new GetSlotUseCase(getSlotMongoRepo)
+const updateRuleMongoRepo=new UpdateRuleStatusRepository
+const updateRuleStatusApplication=new UpdateRuleStatusUseCase(updateRuleMongoRepo)
 
-const lawyerController=new LawyerController(addSlotApplication)
+const lawyerController=new LawyerController(
+    addSlotApplication,
+    getSlotApplication,
+    updateRuleStatusApplication
+)
 
 router.post('/signup',upload.array('files',2),(req,res)=>lawyerAuthController.registerLawyer(req as MulterRequest,res))
 
@@ -94,6 +105,10 @@ router.get('/get-profile/:lawyerId',verifyToken,verifyRole(['lawyer']),(req,res)
 
 router.patch('/edit-profile',verifyToken,verifyRole(['lawyer']),upload.single('profileImage'),(req,res)=>lawyerProfileController.editLawyerProfile(req,res))
 
-router.post('/add-slot',verifyToken,verifyRole(['lawyer']),(req,res)=>lawyerController.addSlot(req,res))
+router.post('/add-slot/:lawyerId',verifyToken,verifyRole(['lawyer']),(req,res)=>lawyerController.addSlot(req,res))
+
+router.get('/get-slots/:lawyerId/:type',verifyToken,verifyRole(['lawyer']),(req,res)=>lawyerController.getSlot(req,res))
+
+router.patch('/update-rule-status/:ruleId/:ruleStatus',verifyToken,verifyRole(['lawyer']),(req,res)=>lawyerController.updateRuleStatus(req,res))
 
 export default router;

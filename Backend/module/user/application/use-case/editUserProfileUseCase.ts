@@ -1,4 +1,4 @@
-import { IEditProfileRepository } from "../../interface/repository/editProfileRepository";
+import { IEditProfileRepository } from "../../infrastructure/repositoryInterface/editProfileRepository";
 import { UserProfile, UserProfileMapper } from "../mapper/userProfileMapper";
 import { IEditProfileUseCase } from "../use-case-interface/IEditProfileUseCase";
 

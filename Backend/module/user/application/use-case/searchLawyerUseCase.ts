@@ -1,5 +1,5 @@
 import { LawyerProfileEntity } from "../../../lawyer/domain/entity/lawyerProfileEntity";
-import { IGetLawyerRepository } from "../../interface/repository/getLawyerRepository";
+import { IGetLawyerRepository } from "../../infrastructure/repositoryInterface/getLawyerRepository";
 import { GetLawyerMapper, getLawyerResponse } from "../mapper/getLawyerMapper";
 import { ISearchLawyerUseCase } from "../use-case-interface/ISearchLawyerUseCase";
 

@@ -29,20 +29,20 @@ import { CheckAccountStatusMongoRepositorie } from '../module/auth/userAuth/infr
 import upload from '../config/multerConfig';
 import { UserProfileController } from '../module/user/interface/controller/userProfileController';
 import { AddProfileUseCase } from '../module/user/application/use-case/addProfileUseCase';
-import { UserProfileRepository } from '../module/user/infrastructure/mongoRepository/userProfileMongoRepository';
+import { UserProfileRepository } from '../module/user/infrastructure/repository/userProfileRepository';
 import { GetUserProfileUseCase } from '../module/user/application/use-case/getUserProfileUseCase';
-import { GetProfileRepository } from '../module/user/infrastructure/mongoRepository/getProfileMongoRepository';
-import { EditProfileRepository } from '../module/user/infrastructure/mongoRepository/editProfileMongoRepository';
+import { GetProfileRepository } from '../module/user/infrastructure/repository/getProfileRepository';
+import { EditProfileRepository } from '../module/user/infrastructure/repository/editProfileRepository';
 import { EditUserProfileUseCase } from '../module/user/application/use-case/editUserProfileUseCase';
 import { UserController } from '../module/user/interface/controller/userController';
-import { GetLawyerRepository } from '../module/user/infrastructure/mongoRepository/getLawyersMongoRepository';
+import { GetLawyerRepository } from '../module/user/infrastructure/repository/getLawyersRepository';
 import { GetLawyerUseCase } from '../module/user/application/use-case/getLawyersUseCase';
 import { GetLawyerDetailsUseCase } from '../module/user/application/use-case/getLawyerDetailsUseCase';
-import { GetLawyerSlotRepository } from '../module/user/infrastructure/mongoRepository/getLawyerSlotMongoRepository';
+import { GetLawyerSlotRepository } from '../module/user/infrastructure/repository/getLawyerSlotRepository';
 import { GetLawyerSlotUseCase } from '../module/user/application/use-case/getLawyerSlotUseCase';
 import { FilterLawyerUseCase } from '../module/user/application/use-case/filterLawyerUseCase';
 import { SearchLawyerUseCase } from '../module/user/application/use-case/searchLawyerUseCase';
-import { BookAppointmentRepository } from '../module/user/infrastructure/mongoRepository/bookAppointmentMongoRepository';
+import { BookAppointmentRepository } from '../module/user/infrastructure/repository/bookAppointmentRepository';
 import { BookAppointmentUseCase } from '../module/user/application/use-case/bookAppointmentUseCase';
 
 const userSignupMongoRepo=new UserSignupMongoRepositorie()

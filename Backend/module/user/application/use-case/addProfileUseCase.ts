@@ -1,5 +1,5 @@
 import { UserProfileEntitie } from "../../domain/entity/userProfileUserEntity";
-import { IUserProfileRepository } from "../../interface/repository/userProfileRepository";
+import { IUserProfileRepository } from "../../infrastructure/repositoryInterface/userProfileRepository";
 import { IAddProfileUseCase } from "../use-case-interface/IAddProfileUseCase";
 import { UserProfile, UserProfileMapper } from "../mapper/userProfileMapper";
 
