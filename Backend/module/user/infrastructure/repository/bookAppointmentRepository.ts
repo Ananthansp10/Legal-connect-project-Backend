@@ -1,7 +1,7 @@
 import { IAppointmentEntity } from "../../domain/entity/appointmentModel";
-import { IBookAppointmentRepository } from "../../interface/repository/IbookAppointmentRepository";
+import { IBookAppointmentRepository } from "../repositoryInterface/IbookAppointmentRepository";
 import { appointmentModel } from "../models/appointmentModel";
-import { BaseRepository } from "../mongoRepository/baseMongoRepository";
+import { BaseRepository } from "./baseRepository";
 
 
 

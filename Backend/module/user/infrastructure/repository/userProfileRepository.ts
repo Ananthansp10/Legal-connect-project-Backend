@@ -1,7 +1,7 @@
 import { UserProfileEntitie } from "../../domain/entity/userProfileUserEntity";
-import { IUserProfileRepository } from "../../interface/repository/userProfileRepository";
+import { IUserProfileRepository } from "../repositoryInterface/userProfileRepository";
 import { userProfileModel } from "../models/userProfileModel";
-import { BaseRepository } from "../mongoRepository/baseMongoRepository";
+import { BaseRepository } from "./baseRepository";
 
 
 

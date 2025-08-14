@@ -1,4 +1,4 @@
-import { IGetLawyerSlotRepository } from "../../interface/repository/IgetLawyerSlotRepository";
+import { IGetLawyerSlotRepository } from "../repositoryInterface/IgetLawyerSlotRepository";
 
 
 

@@ -1,18 +1,18 @@
 import { AppError } from "../../../../common/error/AppEnumError";
 import { AppStatusCode } from "../../../../common/statusCode/AppStatusCode";
-import { IAddProfileApplication } from "../../application/use-case-interface/IAddProfileApplication";
+import { IAddProfileUseCase } from "../../application/use-case-interface/IAddProfileUseCase";
 import { Request,Response } from "express";
-import { IGetProfileApplication } from "../../application/use-case-interface/IGetProfileApplication";
+import { IGetProfileUseCase } from "../../application/use-case-interface/IGetProfileUseCase";
 import { UserProfileMapper } from "../../application/mapper/userProfileMapper";
-import { IEditProfileApplication } from "../../application/use-case-interface/IEditProfileApplication";
+import { IEditProfileUseCase } from "../../application/use-case-interface/IEditProfileUseCase";
 
 
 export class UserProfileController{
 
     constructor(
-        private _userAddProfileApplication:IAddProfileApplication,
-        private _userGetProfile:IGetProfileApplication,
-        private _editUserProfile:IEditProfileApplication
+        private _userAddProfileApplication:IAddProfileUseCase,
+        private _userGetProfile:IGetProfileUseCase,
+        private _editUserProfile:IEditProfileUseCase
     ){}
 
     async addProfile(req:Request,res:Response){

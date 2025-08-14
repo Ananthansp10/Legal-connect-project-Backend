@@ -1,10 +1,10 @@
 import { LawyerProfileEntity } from "../../../lawyer/domain/entity/lawyerProfileEntity";
-import { IGetLawyerRepository } from "../../interface/repository/getLawyerRepository";
+import { IGetLawyerRepository } from "../../infrastructure/repositoryInterface/getLawyerRepository";
 import { GetLawyerMapper, getLawyerResponse } from "../mapper/getLawyerMapper";
-import { ISearchLawyerApplication } from "../use-case-interface/ISearchLawyerApplication";
+import { ISearchLawyerUseCase } from "../use-case-interface/ISearchLawyerUseCase";
 
 
-export class SearchLawyerApplication implements ISearchLawyerApplication{
+export class SearchLawyerUseCase implements ISearchLawyerUseCase{
 
     constructor(
         private _getLawyerProfileRepo:IGetLawyerRepository

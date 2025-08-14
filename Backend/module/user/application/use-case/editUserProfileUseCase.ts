@@ -1,8 +1,8 @@
-import { IEditProfileRepository } from "../../interface/repository/editProfileRepository";
+import { IEditProfileRepository } from "../../infrastructure/repositoryInterface/editProfileRepository";
 import { UserProfile, UserProfileMapper } from "../mapper/userProfileMapper";
-import { IEditProfileApplication } from "../use-case-interface/IEditProfileApplication";
+import { IEditProfileUseCase } from "../use-case-interface/IEditProfileUseCase";
 
-export class EditUserProfileApplication implements IEditProfileApplication{
+export class EditUserProfileUseCase implements IEditProfileUseCase{
 
     constructor(
         private _editProfileRepo:IEditProfileRepository

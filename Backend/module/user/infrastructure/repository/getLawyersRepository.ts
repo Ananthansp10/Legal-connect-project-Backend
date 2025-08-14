@@ -1,7 +1,7 @@
 import { LawyerProfileEntity } from "../../../lawyer/domain/entity/lawyerProfileEntity";
 import { lawyerProfileModel } from "../../../lawyer/infrastructure/models/lawyerProfileModel";
-import { IGetLawyerRepository } from "../../interface/repository/getLawyerRepository";
-import { BaseRepository } from "../mongoRepository/baseMongoRepository";
+import { IGetLawyerRepository } from "../repositoryInterface/getLawyerRepository";
+import { BaseRepository } from "./baseRepository";
 
 
 

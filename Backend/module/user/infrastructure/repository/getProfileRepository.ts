@@ -1,7 +1,7 @@
 import { UserProfileEntitie } from "../../domain/entity/userProfileUserEntity";
-import { IGetProfileRepository } from "../../interface/repository/getProfileRepository";
+import { IGetProfileRepository } from "../repositoryInterface/getProfileRepository";
 import { userProfileModel } from "../models/userProfileModel";
-import { BaseRepository } from "../mongoRepository/baseMongoRepository";
+import { BaseRepository } from "./baseRepository";
 
 
 export class GetProfileRepository extends BaseRepository<UserProfileEntitie> implements IGetProfileRepository{
