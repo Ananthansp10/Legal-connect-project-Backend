@@ -1,13 +1,13 @@
 import { Types } from "mongoose";
 import { ISlotAvailablityEntity } from "../../domain/entity/slotAvailablityEntity";
-import { IAddSlotRepositorie } from "../../infrastructure/repositoryInterface/IAddSlotRepository";
-import { IAddSlotApplication } from "../use-case-interface/IAddSlotApplication";
+import { IAddSlotRepository } from "../../infrastructure/repositoryInterface/IAddSlotRepository";
+import { IAddSlotUseCase } from "../use-case-interface/IAddSlotUseCase";
 
 
-export class AddSlotApplication implements IAddSlotApplication{
+export class AddSlotUseCase implements IAddSlotUseCase{
 
     constructor(
-        private addSlotRepo:IAddSlotRepositorie
+        private addSlotRepo:IAddSlotRepository
     ){}
 
     async execute(lawyerId: Types.ObjectId, data: ISlotAvailablityEntity): Promise<void> {

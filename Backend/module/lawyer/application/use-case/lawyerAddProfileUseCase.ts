@@ -1,9 +1,9 @@
 import { LawyerProfileEntity } from "../../domain/entity/lawyerProfileEntity";
 import { ILawyerAddProfile } from "../../infrastructure/repositoryInterface/ILawyerAddProfileRepository";
 import { ILawyerProfileRequest, LawyerProfileMapper } from "../mapper/lawyerProfileMapper";
-import { ILawyerAddProfileApplication } from "../use-case-interface/ILawyerAddProfileApplication";
+import { ILawyerAddProfileUseCase } from "../use-case-interface/ILawyerAddProfileUseCase";
 
-export class LawyerAddProfileAppliaction implements ILawyerAddProfileApplication{
+export class LawyerAddProfileUseCase implements ILawyerAddProfileUseCase{
 
     constructor(
         private _lawyerAddProfileRepo:ILawyerAddProfile

@@ -1,8 +1,8 @@
 import { LawyerProfileEntity } from "../../domain/entity/lawyerProfileEntity";
-import { IBaseRepositorie } from "./IbaseRepository";
+import { IBaseRepository } from "./IbaseRepository";
 
 
 
-export interface ILawyerAddProfile extends IBaseRepositorie<LawyerProfileEntity>{
+export interface ILawyerAddProfile extends IBaseRepository<LawyerProfileEntity>{
 
 }

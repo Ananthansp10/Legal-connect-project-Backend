@@ -4,6 +4,6 @@ import { ISlotAvailablityEntity } from "../../domain/entity/slotAvailablityEntit
 
 
 
-export interface IAddSlotApplication{
+export interface IAddSlotUseCase{
     execute(lawyerId:Types.ObjectId,data:ISlotAvailablityEntity):Promise<void>;
 }

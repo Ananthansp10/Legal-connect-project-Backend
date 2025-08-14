@@ -1,9 +1,9 @@
 import { Types } from "mongoose";
 import { IUpdateRuleStatusRepository } from "../../infrastructure/repositoryInterface/IUpdateRuleStatusRepository";
-import { IUpdateRuleStatusApplication } from "../use-case-interface/IUpdateRuleStatusApplication";
+import { IUpdateRuleStatusUseCase } from "../use-case-interface/IUpdateRuleStatusUseCase";
 
 
-export class UpdateRuleStatusApplication implements IUpdateRuleStatusApplication{
+export class UpdateRuleStatusUseCase implements IUpdateRuleStatusUseCase{
 
     constructor(
         private _updateRuleStatusRepo:IUpdateRuleStatusRepository

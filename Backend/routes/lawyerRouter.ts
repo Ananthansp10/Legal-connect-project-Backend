@@ -19,18 +19,18 @@ import { verifyRole } from '../middlewares/verifyRoleMiddleware';
 import { CheckAccountStatusMongoRepositorie } from '../module/auth/userAuth/infrastructure/mongoRepositories/checkAccountStatusMongoRepositorie';
 import { LawyerProfileController } from '../module/lawyer/interface/controller/lawyerProfileManagementController';
 import { LawyerAddProfileRepository } from '../module/lawyer/infrastructure/repository/lawyerAddProfileRepository';
-import { LawyerAddProfileAppliaction } from '../module/lawyer/application/use-case/lawyerAddProfileApplication';
-import { GetLawyerProfileRepositorie } from '../module/lawyer/infrastructure/repository/getLawyerProfileRepository';
-import { GetLawyerProfileApplication } from '../module/lawyer/application/use-case/getLawyerProfileApplication';
-import { EditLawyerProfileRepositorie } from '../module/lawyer/infrastructure/repository/editLawyerProfileRepository';
-import { LawyerEditProfileApplication } from '../module/lawyer/application/use-case/editLawyerProfileApplication';
-import { AddSlotRepositorie } from '../module/lawyer/infrastructure/repository/addSlotRepository';
-import { AddSlotApplication } from '../module/lawyer/application/use-case/addSlotApplication';
+import { LawyerAddProfileUseCase } from '../module/lawyer/application/use-case/lawyerAddProfileUseCase';
+import { GetLawyerProfileRepository } from '../module/lawyer/infrastructure/repository/getLawyerProfileRepository';
+import { GetLawyerProfileUseCase } from '../module/lawyer/application/use-case/getLawyerProfileUseCase';
+import { EditLawyerProfileRepository } from '../module/lawyer/infrastructure/repository/editLawyerProfileRepository';
+import { LawyerEditProfileUseCase } from '../module/lawyer/application/use-case/editLawyerProfileUseCase';
+import { AddSlotRepository } from '../module/lawyer/infrastructure/repository/addSlotRepository';
+import { AddSlotUseCase } from '../module/lawyer/application/use-case/addSlotUseCase';
 import { LawyerController } from '../module/lawyer/interface/controller/lawyerController';
 import { GetSlotRepository } from '../module/lawyer/infrastructure/repository/getSlotRepository';
-import { GetSlotApplication } from '../module/lawyer/application/use-case/getSlotApplication';
+import { GetSlotUseCase } from '../module/lawyer/application/use-case/getSlotUseCase';
 import { UpdateRuleStatusRepository } from '../module/lawyer/infrastructure/repository/updateRuleStatusRepository';
-import { UpdateRuleStatusApplication } from '../module/lawyer/application/use-case/updateRuleStatusApplication';
+import { UpdateRuleStatusUseCase } from '../module/lawyer/application/use-case/updateRuleStatusUseCase';
 const router=express.Router()
 
 const lawyerSignupMongoRepo=new LawyerSignupMongoRepositorie()
@@ -56,11 +56,11 @@ const lawyerAuthController=new LawyerAuthController(
 )
 
 const lawyerAddProfileRepo=new LawyerAddProfileRepository()
-const lawyerAddProfileApplication=new LawyerAddProfileAppliaction(lawyerAddProfileRepo)
-const getLawyerProfileMongoRepo=new GetLawyerProfileRepositorie()
-const getLawyerProfileApplication=new GetLawyerProfileApplication(getLawyerProfileMongoRepo)
-const editLawyerProfileMongoRepo=new EditLawyerProfileRepositorie()
-const lawyerEditProfileApplication=new LawyerEditProfileApplication(editLawyerProfileMongoRepo)
+const lawyerAddProfileApplication=new LawyerAddProfileUseCase(lawyerAddProfileRepo)
+const getLawyerProfileMongoRepo=new GetLawyerProfileRepository()
+const getLawyerProfileApplication=new GetLawyerProfileUseCase(getLawyerProfileMongoRepo)
+const editLawyerProfileMongoRepo=new EditLawyerProfileRepository()
+const lawyerEditProfileApplication=new LawyerEditProfileUseCase(editLawyerProfileMongoRepo)
 
 const lawyerProfileController=new LawyerProfileController(
     lawyerAddProfileApplication,
@@ -68,12 +68,12 @@ const lawyerProfileController=new LawyerProfileController(
     lawyerEditProfileApplication
 )
 
-const addSlotMongoRepo=new AddSlotRepositorie()
-const addSlotApplication=new AddSlotApplication(addSlotMongoRepo)
+const addSlotMongoRepo=new AddSlotRepository()
+const addSlotApplication=new AddSlotUseCase(addSlotMongoRepo)
 const getSlotMongoRepo=new GetSlotRepository()
-const getSlotApplication=new GetSlotApplication(getSlotMongoRepo)
+const getSlotApplication=new GetSlotUseCase(getSlotMongoRepo)
 const updateRuleMongoRepo=new UpdateRuleStatusRepository
-const updateRuleStatusApplication=new UpdateRuleStatusApplication(updateRuleMongoRepo)
+const updateRuleStatusApplication=new UpdateRuleStatusUseCase(updateRuleMongoRepo)
 
 const lawyerController=new LawyerController(
     addSlotApplication,

@@ -1,18 +1,18 @@
 import mongoose from "mongoose";
 import { AppError } from "../../../../common/error/AppEnumError";
 import { AppStatusCode } from "../../../../common/statusCode/AppStatusCode";
-import { IAddSlotApplication } from "../../application/use-case-interface/IAddSlotApplication";
+import { IAddSlotUseCase } from "../../application/use-case-interface/IAddSlotUseCase";
 import { Request,Response } from "express";
-import { IGetSlotApplication } from "../../application/use-case-interface/IGetSlotApplication";
-import { IUpdateRuleStatusApplication } from "../../application/use-case-interface/IUpdateRuleStatusApplication";
+import { IGetSlotUseCase } from "../../application/use-case-interface/IGetSlotUseCase";
+import { IUpdateRuleStatusUseCase } from "../../application/use-case-interface/IUpdateRuleStatusUseCase";
 
 
 export class LawyerController{
 
     constructor(
-        private _addSlotApplication:IAddSlotApplication,
-        private _getSlotApplication:IGetSlotApplication,
-        private _updateRuleStatusApplication:IUpdateRuleStatusApplication
+        private _addSlotApplication:IAddSlotUseCase,
+        private _getSlotApplication:IGetSlotUseCase,
+        private _updateRuleStatusApplication:IUpdateRuleStatusUseCase
     ){}
 
     async addSlot(req:Request,res:Response):Promise<void>{
