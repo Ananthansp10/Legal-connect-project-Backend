@@ -10,8 +10,4 @@ export class GetLawyerSlotApplication implements IGetLawyerSlotApplication{
     constructor(
         private getLawyerSlotRepo:IGetLawyerSlotRepository
     ){}
-
-    async execute(lawyerId: string, date: string): Promise<ISlotResponseDto[] | null> {
-        return await this.getLawyerSlotRepo.getLawyerSlotDetails(lawyerId,date)
-    }
 }

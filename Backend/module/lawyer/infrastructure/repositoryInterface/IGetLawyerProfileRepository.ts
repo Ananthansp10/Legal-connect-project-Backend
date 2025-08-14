@@ -1,7 +1,7 @@
 import { LawyerProfileEntity } from "../../domain/entity/lawyerProfileEntity";
-import { IBaseRepositorie } from "./IbaseRepositorie";
+import { IBaseRepository } from "./IbaseRepository";
 
 
-export interface IGetLawyerProfileRepositorie extends IBaseRepositorie<LawyerProfileEntity>{
+export interface IGetLawyerProfileRepository extends IBaseRepository<LawyerProfileEntity>{
     getLawyerProfile(lawyerId:string):Promise<LawyerProfileEntity | null>;
 }

@@ -1,4 +1,3 @@
-import { Types } from "mongoose";
 import { IDeleteSpecializationRepository } from "../../interface/repositories/IDeleteSpecializationRepository";
 import { specializationModel } from "../models/specializationModel";
 

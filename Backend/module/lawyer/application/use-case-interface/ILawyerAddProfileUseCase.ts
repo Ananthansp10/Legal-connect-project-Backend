@@ -2,7 +2,7 @@ import { LawyerProfileEntity } from "../../domain/entity/lawyerProfileEntity";
 import { ILawyerProfileRequest } from "../mapper/lawyerProfileMapper";
 
 
-export interface ILawyerAddProfileApplication{
+export interface ILawyerAddProfileUseCase{
     execute(data:ILawyerProfileRequest,imageUrls:{
                 profileImage: { path: string }[];
                 barCouncilCertificate?: { path: string }[];

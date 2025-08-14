@@ -1,18 +1,18 @@
 import { AppError } from "../../../../common/error/AppEnumError";
 import { AppStatusCode } from "../../../../common/statusCode/AppStatusCode";
-import { IGetLawyerProfileApplication } from "../../application/use-case-interface/IGetLawyerProfileApplication";
-import { ILawyerAddProfileApplication } from "../../application/use-case-interface/ILawyerAddProfileApplication";
+import { IGetLawyerProfileUseCase } from "../../application/use-case-interface/IGetLawyerProfileUseCase";
+import { ILawyerAddProfileUseCase } from "../../application/use-case-interface/ILawyerAddProfileUseCase";
 import { Request,Response } from "express";
 import { LawyerProfileEntity } from "../../domain/entity/lawyerProfileEntity";
-import { IEditLawyerProfileApplication } from "../../application/use-case-interface/IEditLawyerProfileApplication";
+import { IEditLawyerProfileUseCase } from "../../application/use-case-interface/IEditLawyerProfileUseCase";
 
 
 export class LawyerProfileController{
 
     constructor(
-        private _lawyerAddProfileApplication:ILawyerAddProfileApplication,
-        private _lawyerGetProfileApplication:IGetLawyerProfileApplication,
-        private _lawyerEditProfileApplication:IEditLawyerProfileApplication
+        private _lawyerAddProfileApplication:ILawyerAddProfileUseCase,
+        private _lawyerGetProfileApplication:IGetLawyerProfileUseCase,
+        private _lawyerEditProfileApplication:IEditLawyerProfileUseCase
     ){}
 
     async addLawyerProfile(req:Request,res:Response){
