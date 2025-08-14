@@ -1,11 +1,11 @@
 import { LawyerProfileEntity } from "../../../lawyer/domain/entity/lawyerProfileEntity";
-import { IGetLawyerRepository } from "../../interface/repository/getLawyerRepository";
+import { IGetLawyerRepository } from "../../infrastructure/repositoryInterface/getLawyerRepository";
 import { GetLawyerMapper, getLawyerResponse } from "../mapper/getLawyerMapper";
-import { IFilterLawyerApplication } from "../use-case-interface/IFilterLawyerApplication";
+import { IFilterLawyerUseCase } from "../use-case-interface/IFilterLawyerUseCase";
 
 
 
-export class FilterLawyerApplication implements IFilterLawyerApplication{
+export class FilterLawyerUseCase implements IFilterLawyerUseCase{
 
     constructor(
         private _getLawyerProfileRepo:IGetLawyerRepository

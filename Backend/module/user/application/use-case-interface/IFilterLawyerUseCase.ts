@@ -2,6 +2,6 @@ import { getLawyerResponse } from "../mapper/getLawyerMapper";
 
 
 
-export interface IFilterLawyerApplication{
+export interface IFilterLawyerUseCase{
     execute(specialization:string):Promise<getLawyerResponse[] | null>;
 }
