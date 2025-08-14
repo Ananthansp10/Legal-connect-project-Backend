@@ -1,5 +1,5 @@
 import { LawyerProfileEntity } from "../../domain/entity/lawyerProfileEntity";
-import { IBaseRepositorie } from "./IbaseRepositorie";
+import { IBaseRepositorie } from "./IbaseRepository";
 
 
 export interface IGetLawyerProfileRepositorie extends IBaseRepositorie<LawyerProfileEntity>{

@@ -1,8 +1,9 @@
-import { SlotRequestDto } from "../../domain/dtos/slotDtos";
+import { Types } from "mongoose";
 import { ISlotAvailablityEntity } from "../../domain/entity/slotAvailablityEntity";
 
 
 
+
 export interface IAddSlotApplication{
-    execute(data:SlotRequestDto):Promise<void>;
+    execute(lawyerId:Types.ObjectId,data:ISlotAvailablityEntity):Promise<void>;
 }

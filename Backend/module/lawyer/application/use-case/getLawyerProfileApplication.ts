@@ -1,6 +1,6 @@
 import { LawyerProfileEntity } from "../../domain/entity/lawyerProfileEntity";
-import { BaseMongoRepositorie } from "../../infrastructure/mongoRepositorie/baseMongoRepositorie";
-import { IGetLawyerProfileRepositorie } from "../../interface/repositorie/getLawyerProfileRepositorie";
+import { BaseRepositorie } from "../../infrastructure/repository/baseRepository";
+import { IGetLawyerProfileRepositorie } from "../../infrastructure/repositoryInterface/IGetLawyerProfileRepository";
 import { IGetLawyerProfileApplication } from "../use-case-interface/IGetLawyerProfileApplication";
 
 

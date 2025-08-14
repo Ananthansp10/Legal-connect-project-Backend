@@ -1,12 +1,12 @@
 import { Types } from "mongoose";
 import { LawyerEditProfileResponse } from "../../application/mapper/lawyerEditProfileMapper";
 import { LawyerProfileEntity } from "../../domain/entity/lawyerProfileEntity";
-import { IEditLawyerProfileRepositorie } from "../../interface/repositorie/editLawyerProfileRepositorie";
+import { IEditLawyerProfileRepositorie } from "../repositoryInterface/IEditLawyerProfileRepository";
 import { lawyerProfileModel } from "../models/lawyerProfileModel";
-import { BaseMongoRepositorie } from "./baseMongoRepositorie";
+import { BaseRepositorie } from "./baseRepository";
 
 
-export class EditLawyerProfileMongoRepositorie extends BaseMongoRepositorie<LawyerProfileEntity> implements IEditLawyerProfileRepositorie{
+export class EditLawyerProfileRepositorie extends BaseRepositorie<LawyerProfileEntity> implements IEditLawyerProfileRepositorie{
 
     constructor(){
         super(lawyerProfileModel)

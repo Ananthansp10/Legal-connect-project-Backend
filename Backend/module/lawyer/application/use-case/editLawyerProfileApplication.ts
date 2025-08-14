@@ -1,4 +1,4 @@
-import { IEditLawyerProfileRepositorie } from "../../interface/repositorie/editLawyerProfileRepositorie";
+import { IEditLawyerProfileRepositorie } from "../../infrastructure/repositoryInterface/IEditLawyerProfileRepository";
 import { LawyerEditProfileRequest, LawyerEditProfileResponse } from "../mapper/lawyerEditProfileMapper";
 import { IEditLawyerProfileApplication } from "../use-case-interface/IEditLawyerProfileApplication";
 import { EditLawyerProfileMapper } from "../mapper/lawyerEditProfileMapper";

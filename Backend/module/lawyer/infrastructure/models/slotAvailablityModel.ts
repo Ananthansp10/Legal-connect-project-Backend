@@ -1,25 +1,54 @@
-import mongoose, { Schema, Types } from "mongoose";
+import mongoose, { Schema } from "mongoose";
 import { ISlotAvailablityEntity } from "../../domain/entity/slotAvailablityEntity";
 
 
-const slotAvailablityShema=new Schema<ISlotAvailablityEntity>({
+const slotAvailablitySchema=new Schema<ISlotAvailablityEntity>({
     lawyerId:{
-        type:mongoose.Schema.Types.ObjectId,
+        type:Schema.Types.ObjectId,
         ref:'lawyers',
         required:true
     },
-    availablity:[
+    name:{
+        type:String,
+        required:true
+    },
+    description:{
+        type:String,
+        required:true
+    },
+    days:[{
+        type:String
+}],
+    startTime:{
+        type:String,
+        required:true
+    },
+    endTime:{
+        type:String,
+        required:true
+    },
+    startDate:{
+        type:String
+    },
+    endDate:{
+        type:String
+    },
+    priority:{
+        type:Number
+    },
+    breakTimes:[
         {
-            date:String,
-            timeSlots:[
-                {
-                    startTime:String,
-                    endTime:String,
-                    isBooked:Boolean
-                }
-            ]
+            startTime:String,
+            endTime:String
         }
-    ]
+    ],
+    bufferTime:{
+        type:Number
+    },
+    status:{
+        type:Boolean
+    }
+
 })
 
-export const availableSlotModel=mongoose.model<ISlotAvailablityEntity>('availableSlots',slotAvailablityShema)
+export const availableSlotModel=mongoose.model<ISlotAvailablityEntity>('availableSlots',slotAvailablitySchema)

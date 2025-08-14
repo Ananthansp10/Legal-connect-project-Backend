@@ -1,5 +1,5 @@
 import { LawyerProfileEntity } from "../../domain/entity/lawyerProfileEntity";
-import { ILawyerAddProfile } from "../../interface/repositorie/lawyerAddProfileRepositorie";
+import { ILawyerAddProfile } from "../../infrastructure/repositoryInterface/ILawyerAddProfileRepository";
 import { ILawyerProfileRequest, LawyerProfileMapper } from "../mapper/lawyerProfileMapper";
 import { ILawyerAddProfileApplication } from "../use-case-interface/ILawyerAddProfileApplication";
 

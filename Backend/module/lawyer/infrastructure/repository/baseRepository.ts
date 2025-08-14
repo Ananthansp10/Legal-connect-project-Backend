@@ -1,8 +1,8 @@
 import { Model } from "mongoose";
-import { IBaseRepositorie } from "../../interface/repositorie/IbaseRepositorie";
+import { IBaseRepositorie } from "../repositoryInterface/IbaseRepository";
 
 
-export class BaseMongoRepositorie<T> implements IBaseRepositorie<T>{
+export class BaseRepositorie<T> implements IBaseRepositorie<T>{
 
     private _model:Model<T>
 

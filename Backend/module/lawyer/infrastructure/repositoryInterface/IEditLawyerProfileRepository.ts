@@ -1,7 +1,7 @@
 import { Types } from "mongoose";
 import { LawyerEditProfileResponse } from "../../application/mapper/lawyerEditProfileMapper";
 import { LawyerProfileEntity } from "../../domain/entity/lawyerProfileEntity";
-import { IBaseRepositorie } from "./IbaseRepositorie";
+import { IBaseRepositorie } from "./IbaseRepository";
 
 
 

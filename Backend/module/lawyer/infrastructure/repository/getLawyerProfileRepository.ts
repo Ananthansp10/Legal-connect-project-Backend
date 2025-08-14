@@ -1,11 +1,11 @@
 import { LawyerProfileEntity } from "../../domain/entity/lawyerProfileEntity";
-import { IGetLawyerProfileRepositorie } from "../../interface/repositorie/getLawyerProfileRepositorie";
+import { IGetLawyerProfileRepositorie } from "../repositoryInterface/IGetLawyerProfileRepository";
 import { lawyerProfileModel } from "../models/lawyerProfileModel";
-import { BaseMongoRepositorie } from "./baseMongoRepositorie";
+import { BaseRepositorie } from "./baseRepository";
 
 
 
-export class GetLawyerProfileMongoRepositorie extends BaseMongoRepositorie<LawyerProfileEntity> implements IGetLawyerProfileRepositorie{
+export class GetLawyerProfileRepositorie extends BaseRepositorie<LawyerProfileEntity> implements IGetLawyerProfileRepositorie{
 
     constructor(){
         super(lawyerProfileModel)
