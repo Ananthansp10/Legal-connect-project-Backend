@@ -1,6 +1,6 @@
 import { Types } from "mongoose";
 
 
-export interface IDeleteSpecializationApplication{
+export interface IDeleteSpecializationUseCase{
     execute(specId:string):Promise<void>;
 }

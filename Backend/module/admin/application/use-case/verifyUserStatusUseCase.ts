@@ -1,9 +1,9 @@
 import { AppStatus } from "../../../../common/status/appStatus";
-import { IUserRepository } from "../../interface/repositories/IuserRepository";
-import { IVerifyUserStatusApplication } from "../use-case-interface/IVerifyUserStatusApplication";
+import { IUserRepository } from "../../infrastructure/repositoryInterface/IuserRepository";
+import { IVerifyUserStatusUseCase } from "../use-case-interface/IVerifyUserStatusUseCase";
 
 
-export class VerifyUserStatusApplication implements IVerifyUserStatusApplication{
+export class VerifyUserStatusUseCase implements IVerifyUserStatusUseCase{
 
     constructor(
         private _userRepo:IUserRepository

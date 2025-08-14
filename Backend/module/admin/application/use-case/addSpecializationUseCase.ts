@@ -1,10 +1,10 @@
 import { ISpecializationEntity } from "../../domain/entity/specializationEntity";
-import { IAddSpecializationRepository } from "../../interface/repositories/IAddSpecializationRepository";
-import { IAddSpecializationApplication } from "../use-case-interface/IAddSpecialisationApplication";
+import { IAddSpecializationRepository } from "../../infrastructure/repositoryInterface/IAddSpecializationRepository";
+import { IAddSpecializationUseCase } from "../use-case-interface/IAddSpecialisationUseCase";
 
 
 
-export class AddSpecializationApplication implements IAddSpecializationApplication{
+export class AddSpecializationUseCase implements IAddSpecializationUseCase{
 
     constructor(
         private addSpecialization:IAddSpecializationRepository

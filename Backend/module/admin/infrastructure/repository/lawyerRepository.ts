@@ -1,7 +1,7 @@
 import { AppStatus } from "../../../../common/status/appStatus";
 import { LawyerModel } from "../../../auth/lawyerAuth/infrastructure/models/lawyerModel";
 import { ILawyerSignup } from "../../domain/entity/lawyerEntity";
-import { ILawyerRepository } from "../../interface/repositories/ILawyerRepository";
+import { ILawyerRepository } from "../repositoryInterface/ILawyerRepository";
 import { BaseRepository } from "./baseRepository";
 
 

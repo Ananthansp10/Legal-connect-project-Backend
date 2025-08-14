@@ -2,6 +2,6 @@ import { ISpecializationEntity } from "../../domain/entity/specializationEntity"
 
 
 
-export interface IGetSpecializationApplication{
+export interface IGetSpecializationUseCase{
     execute():Promise<ISpecializationEntity[] | null>;
 }
