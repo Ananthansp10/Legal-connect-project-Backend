@@ -1,23 +1,23 @@
 import { AppError } from "../../../../common/error/AppEnumError";
 import { AppStatusCode } from "../../../../common/statusCode/AppStatusCode";
 import { getLawyerResponse } from "../../application/mapper/getLawyerMapper";
-import { IGetLawyerDetailsApplication } from "../../application/use-case-interface/IGetLawyerDetailsApplication";
-import { IGetLawyerApplication } from "../../application/use-case-interface/IGetLawyersApplication";
+import { IGetLawyerDetailsUseCase } from "../../application/use-case-interface/IGetLawyerDetailsUseCase";
+import { IGetLawyerUseCase } from "../../application/use-case-interface/IGetLawyersUseCase";
 import { Request,Response } from "express";
-import { IGetLawyerSlotApplication } from "../../application/use-case-interface/IGetLawyerSlotApplication";
-import { IFilterLawyerApplication } from "../../application/use-case-interface/IFilterLawyerApplication";
-import { ISearchLawyerApplication } from "../../application/use-case-interface/ISearchLawyerApplication";
-import { IBookAppointmentApplication } from "../../application/use-case-interface/IBookAppointmentApplication";
+import { IGetLawyerSlotApplication } from "../../application/use-case-interface/IGetLawyerSlotUseCase";
+import { IFilterLawyerUseCase } from "../../application/use-case-interface/IFilterLawyerUseCase";
+import { ISearchLawyerUseCase } from "../../application/use-case-interface/ISearchLawyerUseCase";
+import { IBookAppointmentUseCase } from "../../application/use-case-interface/IBookAppointmentUseCase";
 
 export class UserController{
 
     constructor(
-        private _getLawyerApplication:IGetLawyerApplication,
-        private _getLawyerDetailsApplication:IGetLawyerDetailsApplication,
+        private _getLawyerApplication:IGetLawyerUseCase,
+        private _getLawyerDetailsApplication:IGetLawyerDetailsUseCase,
         private _getLawyerSlotApplication:IGetLawyerSlotApplication,
-        private _filterLawyerApplication:IFilterLawyerApplication,
-        private _searchLawyerApplication:ISearchLawyerApplication,
-        private _bookAppointmentApplication:IBookAppointmentApplication
+        private _filterLawyerApplication:IFilterLawyerUseCase,
+        private _searchLawyerApplication:ISearchLawyerUseCase,
+        private _bookAppointmentApplication:IBookAppointmentUseCase
     ){}
 
     async getLawyers(req:Request,res:Response){

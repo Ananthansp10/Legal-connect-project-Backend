@@ -1,10 +1,10 @@
 import { UserProfileEntitie } from "../../domain/entity/userProfileUserEntity";
 import { IGetProfileRepository } from "../../interface/repository/getProfileRepository";
 import { UserProfileMapper } from "../mapper/userProfileMapper";
-import { IGetProfileApplication } from "../use-case-interface/IGetProfileApplication";
+import { IGetProfileUseCase } from "../use-case-interface/IGetProfileUseCase";
 
 
-export class GetUserProfileApplication implements IGetProfileApplication{
+export class GetUserProfileUseCase implements IGetProfileUseCase{
 
     constructor(
         private _getProfileRepo:IGetProfileRepository

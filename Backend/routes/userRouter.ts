@@ -28,22 +28,22 @@ import { verifyAccountStatus } from '../middlewares/verifyAccountStatus';
 import { CheckAccountStatusMongoRepositorie } from '../module/auth/userAuth/infrastructure/mongoRepositories/checkAccountStatusMongoRepositorie';
 import upload from '../config/multerConfig';
 import { UserProfileController } from '../module/user/interface/controller/userProfileController';
-import { AddProfileApplication } from '../module/user/application/use-case/addProfileApplication';
+import { AddProfileUseCase } from '../module/user/application/use-case/addProfileUseCase';
 import { UserProfileRepository } from '../module/user/infrastructure/mongoRepository/userProfileMongoRepository';
-import { GetUserProfileApplication } from '../module/user/application/use-case/getUserProfileApplication';
+import { GetUserProfileUseCase } from '../module/user/application/use-case/getUserProfileUseCase';
 import { GetProfileRepository } from '../module/user/infrastructure/mongoRepository/getProfileMongoRepository';
 import { EditProfileRepository } from '../module/user/infrastructure/mongoRepository/editProfileMongoRepository';
-import { EditUserProfileApplication } from '../module/user/application/use-case/editUserProfileApplication';
+import { EditUserProfileUseCase } from '../module/user/application/use-case/editUserProfileUseCase';
 import { UserController } from '../module/user/interface/controller/userController';
 import { GetLawyerRepository } from '../module/user/infrastructure/mongoRepository/getLawyersMongoRepository';
-import { GetLawyerApplication } from '../module/user/application/use-case/getLawyersApplication';
-import { GetLawyerDetailsApplication } from '../module/user/application/use-case/getLawyerDetailsApplication';
+import { GetLawyerUseCase } from '../module/user/application/use-case/getLawyersUseCase';
+import { GetLawyerDetailsUseCase } from '../module/user/application/use-case/getLawyerDetailsUseCase';
 import { GetLawyerSlotRepository } from '../module/user/infrastructure/mongoRepository/getLawyerSlotMongoRepository';
-import { GetLawyerSlotApplication } from '../module/user/application/use-case/getLawyerSlotApplication';
-import { FilterLawyerApplication } from '../module/user/application/use-case/filterLawyerApplication';
-import { SearchLawyerApplication } from '../module/user/application/use-case/searchLawyerApplication';
+import { GetLawyerSlotUseCase } from '../module/user/application/use-case/getLawyerSlotUseCase';
+import { FilterLawyerUseCase } from '../module/user/application/use-case/filterLawyerUseCase';
+import { SearchLawyerUseCase } from '../module/user/application/use-case/searchLawyerUseCase';
 import { BookAppointmentRepository } from '../module/user/infrastructure/mongoRepository/bookAppointmentMongoRepository';
-import { BookAppointmentApplication } from '../module/user/application/use-case/bookAppointmentApplication';
+import { BookAppointmentUseCase } from '../module/user/application/use-case/bookAppointmentUseCase';
 
 const userSignupMongoRepo=new UserSignupMongoRepositorie()
 const otpsendEmail=new sendOtpMailService()
@@ -82,11 +82,11 @@ const userAuthController=new UserAuthController(
 
 const userProfileRepo=new UserProfileRepository()
 
-const userAddProfileApplication=new AddProfileApplication(userProfileRepo)
+const userAddProfileApplication=new AddProfileUseCase(userProfileRepo)
 const userGetProfileRepo=new GetProfileRepository()
-const userGetProfileApplication=new GetUserProfileApplication(userGetProfileRepo)
+const userGetProfileApplication=new GetUserProfileUseCase(userGetProfileRepo)
 const userEditProfileRepo=new EditProfileRepository()
-const editUserProfileApplication=new EditUserProfileApplication(userEditProfileRepo)
+const editUserProfileApplication=new EditUserProfileUseCase(userEditProfileRepo)
 
 const userProfileController=new UserProfileController(
     userAddProfileApplication,
@@ -97,14 +97,14 @@ const userProfileController=new UserProfileController(
 
 const getLawyerRepo=new GetLawyerRepository()
 
-const getLawyerApplication=new GetLawyerApplication(getLawyerRepo)
-const getLawyerDetailsApplication=new GetLawyerDetailsApplication(getLawyerRepo)
+const getLawyerApplication=new GetLawyerUseCase(getLawyerRepo)
+const getLawyerDetailsApplication=new GetLawyerDetailsUseCase(getLawyerRepo)
 const getLawyerSlotRepo=new GetLawyerSlotRepository()
-const getLawyerSlotApplication=new GetLawyerSlotApplication(getLawyerSlotRepo)
-const filterLawyerApplication=new FilterLawyerApplication(getLawyerRepo)
-const searchLawyerApplication=new SearchLawyerApplication(getLawyerRepo)
+const getLawyerSlotApplication=new GetLawyerSlotUseCase(getLawyerSlotRepo)
+const filterLawyerApplication=new FilterLawyerUseCase(getLawyerRepo)
+const searchLawyerApplication=new SearchLawyerUseCase(getLawyerRepo)
 const bookAppointmentRepo=new BookAppointmentRepository()
-const bookAppointmentApplication=new BookAppointmentApplication(bookAppointmentRepo)
+const bookAppointmentApplication=new BookAppointmentUseCase(bookAppointmentRepo)
 
 const userController=new UserController(
     getLawyerApplication,

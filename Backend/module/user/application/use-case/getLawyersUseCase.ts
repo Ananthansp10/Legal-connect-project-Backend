@@ -2,10 +2,10 @@ import { LawyerProfileEntity } from "../../../lawyer/domain/entity/lawyerProfile
 import { IGetLawyerRepository } from "../../interface/repository/getLawyerRepository";
 import { getLawyerResponse } from "../mapper/getLawyerMapper";
 import { GetLawyerMapper } from "../mapper/getLawyerMapper";
-import { IGetLawyerApplication } from "../use-case-interface/IGetLawyersApplication";
+import { IGetLawyerUseCase } from "../use-case-interface/IGetLawyersUseCase";
 
 
-export class GetLawyerApplication implements IGetLawyerApplication {
+export class GetLawyerUseCase implements IGetLawyerUseCase {
 
     constructor(
         private _getLawyerRepo:IGetLawyerRepository
