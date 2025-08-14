@@ -1,19 +1,19 @@
 import { Request,Response } from "express";
-import { ILawyerVerificationApplication } from "../../application/use-case-interface/ILawyerVerificationApplication";
+import { ILawyerVerificationUseCase } from "../../application/use-case-interface/ILawyerVerificationUseCase";
 import { AppStatusCode } from "../../../../common/statusCode/AppStatusCode";
 import { AppError } from "../../../../common/error/AppEnumError";
-import { IGetUnverifiedLawyersApplication } from "../../application/use-case-interface/IGetUnverifiedLawyerApplication";
+import { IGetUnverifiedLawyersUseCase } from "../../application/use-case-interface/IGetUnverifiedLawyerUseCase";
 import { ILawyerResponse } from "../../domain/dtos/lawyerDto";
-import { IGetLawyersApplication } from "../../application/use-case-interface/IGetLawyerApplication";
-import { ILawyerVerificationStatusApplication } from "../../application/use-case-interface/IVerifyLawyerStatusApplication";
+import { IGetLawyersUseCase } from "../../application/use-case-interface/IGetLawyerUseCase";
+import { ILawyerVerificationStatusUseCase } from "../../application/use-case-interface/IVerifyLawyerStatusUseCase";
 
 export class AdminLawyerManagementController{
 
     constructor(
-        private _verifyLawyerApplication:ILawyerVerificationApplication,
-        private _getUnverifiedLawyerApplication:IGetUnverifiedLawyersApplication,
-        private _getLawyersApplication:IGetLawyersApplication,
-        private _verifyLawyerStatusApplication:ILawyerVerificationStatusApplication
+        private _verifyLawyerApplication:ILawyerVerificationUseCase,
+        private _getUnverifiedLawyerApplication:IGetUnverifiedLawyersUseCase,
+        private _getLawyersApplication:IGetLawyersUseCase,
+        private _verifyLawyerStatusApplication:ILawyerVerificationStatusUseCase
     ){}
 
     async getUnverifiedLawyers(req:Request,res:Response){

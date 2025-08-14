@@ -1,6 +1,6 @@
 import { IUserResponse } from "../../domain/dtos/userDto";
 
 
-export interface IGetUsersApplication{
+export interface IGetUsersUseCase{
     execute():Promise<IUserResponse[]>;
 }

@@ -1,10 +1,10 @@
 import { IUserResponse } from "../../domain/dtos/userDto";
 import { IUserSignup } from "../../domain/entity/userEntity";
-import { IUserRepository } from "../../interface/repositories/IuserRepository";
+import { IUserRepository } from "../../infrastructure/repositoryInterface/IuserRepository";
 import { UserMapper } from "../mapper/userMapper";
-import { IGetUsersApplication } from "../use-case-interface/IGetUsersApplication";
+import { IGetUsersUseCase } from "../use-case-interface/IGetUsersUseCase";
 
-export class GetUsersApplication implements IGetUsersApplication {
+export class GetUsersUseCase implements IGetUsersUseCase {
 
     constructor(
         private _userRepo:IUserRepository

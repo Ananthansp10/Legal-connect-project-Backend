@@ -1,15 +1,15 @@
 import { AppError } from "../../../../common/error/AppEnumError";
 import { AppStatusCode } from "../../../../common/statusCode/AppStatusCode";
-import { IGetUsersApplication } from "../../application/use-case-interface/IGetUsersApplication";
+import { IGetUsersUseCase } from "../../application/use-case-interface/IGetUsersUseCase";
 import { Request,Response } from "express";
 import { IUserResponse } from "../../domain/dtos/userDto";
-import { IVerifyUserStatusApplication } from "../../application/use-case-interface/IVerifyUserStatusApplication";
+import { IVerifyUserStatusUseCase } from "../../application/use-case-interface/IVerifyUserStatusUseCase";
 
 export class AdminUserManagementController{
 
     constructor(
-        private _getUserApplication:IGetUsersApplication,
-        private _verifyUserStatusApplication:IVerifyUserStatusApplication
+        private _getUserApplication:IGetUsersUseCase,
+        private _verifyUserStatusApplication:IVerifyUserStatusUseCase
     ){}
 
     async getUsers(req:Request,res:Response){

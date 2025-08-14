@@ -1,10 +1,10 @@
 import { AppStatus } from "../../../../common/status/appStatus";
-import { ILawyerRepository } from "../../interface/repositories/ILawyerRepository";
-import { ILawyerVerificationStatusApplication } from "../use-case-interface/IVerifyLawyerStatusApplication";
+import { ILawyerRepository } from "../../infrastructure/repositoryInterface/ILawyerRepository";
+import { ILawyerVerificationStatusUseCase } from "../use-case-interface/IVerifyLawyerStatusUseCase";
 
 
 
-export class VerifyLawyerStatusApplication implements ILawyerVerificationStatusApplication{
+export class VerifyLawyerStatusUseCase implements ILawyerVerificationStatusUseCase{
 
     constructor(
         private _lawyerRepo:ILawyerRepository

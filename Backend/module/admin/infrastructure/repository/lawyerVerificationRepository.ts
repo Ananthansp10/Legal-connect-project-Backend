@@ -1,6 +1,6 @@
 import { LawyerModel } from "../../../auth/lawyerAuth/infrastructure/models/lawyerModel";
 import { ILawyerSignup } from "../../domain/entity/lawyerEntity";
-import { ILawyerVerificationRepository } from "../../interface/repositories/lawyerVerificationRepository";
+import { ILawyerVerificationRepository } from "../repositoryInterface/lawyerVerificationRepository";
 import { BaseRepository } from "./baseRepository";
 
 

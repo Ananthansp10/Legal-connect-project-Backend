@@ -1,10 +1,10 @@
 import { ILawyerResponse } from "../../domain/dtos/lawyerDto";
 import { ILawyerSignup } from "../../domain/entity/lawyerEntity";
-import { IBaseRepository } from "../../interface/repositories/IBaseRepository";
-import { IGetUnverifiedLawyersApplication } from "../use-case-interface/IGetUnverifiedLawyerApplication";
+import { IBaseRepository } from "../../infrastructure/repositoryInterface/IBaseRepository";
+import { IGetUnverifiedLawyersUseCase } from "../use-case-interface/IGetUnverifiedLawyerUseCase";
 import { UnverifiedLawyerMapper } from "../mapper/unverifiedLawyerMapper";
 
-export class GetUnverifiedLawyers implements IGetUnverifiedLawyersApplication{
+export class GetUnverifiedLawyersUseCase implements IGetUnverifiedLawyersUseCase{
 
     constructor(
         private _lawyerRepo:IBaseRepository<ILawyerSignup>
