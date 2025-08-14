@@ -1,6 +1,6 @@
 import { LawyerProfileEntity } from "../../domain/entity/lawyerProfileEntity";
 
 
-export interface IGetLawyerProfileApplication{
+export interface IGetLawyerProfileUseCase{
     execute(lawyerId:string):Promise<LawyerProfileEntity | null>;
 }

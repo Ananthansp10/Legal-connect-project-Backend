@@ -39,13 +39,6 @@ export class UserController{
     }
 
     async getSlotDetails(req:Request,res:Response){
-        try {
-            let result=await this._getLawyerSlotApplication.execute(req.params.lawyerId,req.params.date)
-            console.log(result)
-            res.status(AppStatusCode.SUCCESS_CODE).json({success:true,message:'Slot found successfully',data:result})
-        } catch (error) {
-           console.log(error)
-        }
     }
 
     async filterLawyerBySpecialization(req:Request,res:Response){

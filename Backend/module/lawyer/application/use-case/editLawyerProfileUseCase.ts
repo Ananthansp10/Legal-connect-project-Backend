@@ -1,13 +1,13 @@
-import { IEditLawyerProfileRepositorie } from "../../interface/repositorie/editLawyerProfileRepositorie";
+import { IEditLawyerProfileRepository } from "../../infrastructure/repositoryInterface/IEditLawyerProfileRepository";
 import { LawyerEditProfileRequest, LawyerEditProfileResponse } from "../mapper/lawyerEditProfileMapper";
-import { IEditLawyerProfileApplication } from "../use-case-interface/IEditLawyerProfileApplication";
+import { IEditLawyerProfileUseCase } from "../use-case-interface/IEditLawyerProfileUseCase";
 import { EditLawyerProfileMapper } from "../mapper/lawyerEditProfileMapper";
 
 
-export class LawyerEditProfileApplication implements IEditLawyerProfileApplication{
+export class LawyerEditProfileUseCase implements IEditLawyerProfileUseCase{
 
     constructor(
-        private editLawyerProfileRepo:IEditLawyerProfileRepositorie
+        private editLawyerProfileRepo:IEditLawyerProfileRepository
     ){}
 
     async execute(data: LawyerEditProfileRequest,imageUrl:string): Promise<void> {
