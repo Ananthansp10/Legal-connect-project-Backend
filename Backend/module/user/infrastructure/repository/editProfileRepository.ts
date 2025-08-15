@@ -1,6 +1,6 @@
 import { UserProfileMapper } from "../../application/mapper/userProfileMapper";
 import { UserProfileEntitie } from "../../domain/entity/userProfileUserEntity";
-import { IEditProfileRepository } from "../repositoryInterface/editProfileRepository";
+import { IEditProfileRepository } from "../repositoryInterface/IEditProfileRepository";
 import { userProfileModel } from "../models/userProfileModel";
 import { BaseRepository } from "./baseRepository";
 
