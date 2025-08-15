@@ -1,10 +1,10 @@
 import { ILawyerSignup } from "../../domain/entity/lawyerEntity";
-import { IChangePasswordRepositorie } from "../../interface/repositories/IchangePasswordRepositorie";
+import { IChangePasswordRepository } from "../repositoryInterface/IchangePasswordRepository";
 import { LawyerModel } from "../models/lawyerModel";
-import { BaseMongoRepositorie } from "./baseMongoRepositorie";
+import { BaseRepository } from "./baseRepository";
 
 
-export class ChangePasswordMongoRepositorie extends BaseMongoRepositorie<ILawyerSignup> implements IChangePasswordRepositorie{
+export class ChangePasswordRepository extends BaseRepository<ILawyerSignup> implements IChangePasswordRepository{
 
     constructor(){
         super(LawyerModel)
