@@ -1,5 +1,5 @@
 import { ILawyerSignup } from "../../domain/entity/lawyerEntity";
-import { IChangePasswordRepository } from "../repositoryInterface/IchangePasswordRepository";
+import { IChangePasswordRepository } from "../repositoryInterface/IChangePasswordRepository";
 import { LawyerModel } from "../models/lawyerModel";
 import { BaseRepository } from "./baseRepository";
 
