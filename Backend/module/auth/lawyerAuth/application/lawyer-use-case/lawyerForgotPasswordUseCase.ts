@@ -4,7 +4,7 @@ import { AppStatusCode } from "../../../../../common/statusCode/AppStatusCode";
 import { ILawyerSignup } from "../../domain/entity/lawyerEntity";
 import { IForgotPasswordEmailService } from "../../infrastructure/service/IforgotPasswordEmailService";
 import { IForgotPasswordTokenGeneration } from "../../infrastructure/service/IforgotPasswordTokenGeneration";
-import { ILawyerSignupRepository } from "../../infrastructure/repositoryInterface/lawyerSignupRepository";
+import { ILawyerSignupRepository } from "../../infrastructure/repositoryInterface/ILawyerSignupRepository";
 import { ILawyerForgotPasswordUseCase } from "../lawyer-use-case-interface/IlawyerForgotPasswordUseCase";
 
 
