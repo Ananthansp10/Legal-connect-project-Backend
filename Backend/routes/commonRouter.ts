@@ -2,11 +2,11 @@ import  express  from "express";
 import { verifyToken } from "../middlewares/verifyTokenMiddleware";
 import { verifyRole } from "../middlewares/verifyRoleMiddleware";
 const router=express.Router()
-import { CheckAccountStatusMongoRepositorie } from "../module/auth/userAuth/infrastructure/mongoRepositories/checkAccountStatusMongoRepositorie";
+import { CheckAccountStatusRepository } from "../module/auth/userAuth/infrastructure/repository/checkAccountStatusRepository";
 import { verifyAccountStatus } from "../middlewares/verifyAccountStatus";
 import { AppStatusCode } from "../common/statusCode/AppStatusCode";
 
-const checkUserAccountStatusMongoRepo=new CheckAccountStatusMongoRepositorie()
+const checkUserAccountStatusMongoRepo=new CheckAccountStatusRepository()
 
 router.post('/verify-auth',verifyToken,verifyRole(['user']),verifyAccountStatus(checkUserAccountStatusMongoRepo),(req,res)=>{
     res.status(AppStatusCode.SUCCESS_CODE).json({success:true,message:"Authorization successfull"})
