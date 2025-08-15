@@ -1,5 +1,5 @@
 import { ILawyerSignup } from "../../domain/entity/lawyerEntity";
-import { ILawyerSignupRepository } from "../repositoryInterface/lawyerSignupRepository";
+import { ILawyerSignupRepository } from "../repositoryInterface/ILawyerSignupRepository";
 import { LawyerModel } from "../models/lawyerModel";
 import { BaseRepository } from "./baseRepository";
 
