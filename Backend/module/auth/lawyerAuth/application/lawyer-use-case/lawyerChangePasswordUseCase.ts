@@ -2,14 +2,14 @@ import { AppError } from "../../../../../common/error/AppEnumError";
 import { AppException } from "../../../../../common/error/errorException";
 import { AppStatusCode } from "../../../../../common/statusCode/AppStatusCode";
 import { IHashService } from "../../../userAuth/infrastructure/services/IhashService";
-import { IChangePasswordRepositorie } from "../../interface/repositories/IchangePasswordRepositorie";
-import { ILawyerChangePasswordApplication } from "../lawyer-use-case-interface/IlawyerChangePasswordApplication";
+import { IChangePasswordRepository } from "../../infrastructure/repositoryInterface/IchangePasswordRepository";
+import { ILawyerChangePasswordUseCase } from "../lawyer-use-case-interface/IlawyerChangePasswordUseCase";
 import jwt from 'jsonwebtoken'
 
-export class LawyerChangePasswordApplication implements ILawyerChangePasswordApplication{
+export class LawyerChangePasswordUseCase implements ILawyerChangePasswordUseCase{
 
     constructor(
-        private _changePasswordRepo:IChangePasswordRepositorie,
+        private _changePasswordRepo:IChangePasswordRepository,
         private _hashService:IHashService
     ){}
 

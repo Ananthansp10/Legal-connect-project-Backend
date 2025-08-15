@@ -4,15 +4,15 @@ import { AppStatusCode } from "../../../../../common/statusCode/AppStatusCode";
 import { ITokenGeneration } from "../../../userAuth/infrastructure/services/ItokenGenerationService";
 import { LawyerSigninResponseDto } from "../../domain/dto/lawyerSigninDto";
 import { ILawyerSignup } from "../../domain/entity/lawyerEntity";
-import { ILawyerSigninRepositorie } from "../../interface/repositories/lawyerSigninRepositorie";
-import { ILawyerSigninApplication } from "../lawyer-use-case-interface/IlawyerSigninApplication";
+import { ILawyerSigninRepository } from "../../infrastructure/repositoryInterface/lawyerSigninRepository";
+import { ILawyerSigninUseCase } from "../lawyer-use-case-interface/IlawyerSigninUseCase";
 import { LawyerSigninMapper as mapper } from "../mapper/lawyerSigninMapper";
 import bcrypt from 'bcrypt'
 
-export class LawyerSigninApplication implements ILawyerSigninApplication{
+export class LawyerSigninUseCase implements ILawyerSigninUseCase{
 
     constructor(
-        private _lawyerRepo:ILawyerSigninRepositorie,
+        private _lawyerRepo:ILawyerSigninRepository,
         private _tokenGenerateService:ITokenGeneration
     ){}
 
