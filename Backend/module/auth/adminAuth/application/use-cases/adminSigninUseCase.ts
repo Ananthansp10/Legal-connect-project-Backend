@@ -3,11 +3,11 @@ import { AppException } from "../../../../../common/error/errorException";
 import { AppStatusCode } from "../../../../../common/statusCode/AppStatusCode";
 import { ITokenGeneration } from "../../../userAuth/infrastructure/services/ItokenGenerationService";
 import { IAdmin } from "../../domain/entity/adminEntity";
-import { IAdminSigninApplication } from "../use-case-interface/IadminSigninApplication";
+import { IAdminSigninUseCase } from "../use-case-interface/IadminSigninUseCase";
 
 
 
-export class AdminSigninApplication implements IAdminSigninApplication{
+export class AdminSigninUseCase implements IAdminSigninUseCase{
 
     constructor(
         private _tokenGenerateService:ITokenGeneration

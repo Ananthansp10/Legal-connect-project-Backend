@@ -1,7 +1,7 @@
 import express from 'express'
 import { AdminAuthController } from '../module/auth/adminAuth/interface/controller/adminAuthController';
 import { TokenGenerationService } from '../module/auth/userAuth/infrastructure/services/tokenGenerationService';
-import { AdminSigninApplication } from '../module/auth/adminAuth/application/use-cases/adminSigninApplication';
+import { AdminSigninUseCase } from '../module/auth/adminAuth/application/use-cases/adminSigninUseCase';
 import { CookieTokenService } from '../module/auth/userAuth/infrastructure/services/cookieTokenService';
 import { AdminLawyerManagementController } from '../module/admin/interface/controller/adminLawyerManagementController';
 import { LawyerVerificationRepository } from '../module/admin/infrastructure/repository/lawyerVerificationRepository';
@@ -31,7 +31,7 @@ import { DeleteSpecializationUseCase } from '../module/admin/application/use-cas
 const router=express.Router()
 
 const tokenGenerateService=new TokenGenerationService()
-const adminSigninApplication=new AdminSigninApplication(tokenGenerateService)
+const adminSigninApplication=new AdminSigninUseCase(tokenGenerateService)
 const tokenCookieService=new CookieTokenService()
 const lawyerVerificationRepo=new LawyerVerificationRepository()
 const lawyerVerifyEmailService=new LawyerVerificationEmail()
