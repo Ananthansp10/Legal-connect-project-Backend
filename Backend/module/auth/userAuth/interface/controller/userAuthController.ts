@@ -1,32 +1,32 @@
-import { IUserSignupApplication } from "../../application/use-case-Interface/IUserSignupApplicationRepo";
+import { IUserSignupUseCase } from "../../application/use-case-Interface/IUserSignupUseCase";
 import { Request,Response } from "express";
 import { IUserSignup } from "../../domain/userRegisterEntity";
 import { AppException } from "../../../../../common/error/errorException";
 import { AppError } from "../../../../../common/error/AppEnumError";
-import { IOtpVerificationApplication } from "../../application/use-case-Interface/IOtpVerificationApplication";
+import { IOtpVerificationUseCase } from "../../application/use-case-Interface/IOtpVerificationUseCase";
 import { AppStatusCode } from "../../../../../common/statusCode/AppStatusCode";
-import { IResendOtpApplication } from "../../application/use-case-Interface/IResendOtpApplication";
-import { IForgotPasswordApplication } from "../../application/use-case-Interface/IforgotPasswordApllication";
-import { IChangePasswordApplication } from "../../application/use-case-Interface/IchangePasswordApplication";
-import { IUserSigninApplication } from "../../application/use-case-Interface/IUserSigninApplication";
+import { IResendOtpUseCase } from "../../application/use-case-Interface/IResendOtpUseCase";
+import { IForgotPasswordUseCase } from "../../application/use-case-Interface/IforgotPasswordUseCase";
+import { IChangePasswordUseCase } from "../../application/use-case-Interface/IchangePasswordUseCase";
+import { IUserSigninUseCase } from "../../application/use-case-Interface/IUserSigninUseCase";
 import { ICookieTokenService } from "../../infrastructure/services/IcookieTokenService";
 import { UserSigninDto } from "../../domain/dto/userSigninDto";
-import { IGoogleAuthApplication } from "../../application/use-case-Interface/IgoogleAuthApplication";
+import { IGoogleAuthUseCase } from "../../application/use-case-Interface/IgoogleAuthUseCase";
 import { GoogleAuthEntity } from "../../domain/googleAuthEntity";
-import { IResetPasswordApplication } from "../../application/use-case-Interface/IresetPasswordApplication";
+import { IResetPasswordUseCase } from "../../application/use-case-Interface/IresetPasswordUseCase";
 
 export class UserAuthController{
 
     constructor(
 
-        private _userSignupApplication:IUserSignupApplication, 
-        private _otpVerificationApplication:IOtpVerificationApplication,
-        private _resendOtpApplication:IResendOtpApplication,
-        private _forgotPasswordApplication:IForgotPasswordApplication,
-        private _changePassword:IChangePasswordApplication,
-        private _userSigninAplication:IUserSigninApplication,
-        private _googleAuthApplication:IGoogleAuthApplication,
-        private _resetPasswordApplication:IResetPasswordApplication
+        private _userSignupApplication:IUserSignupUseCase, 
+        private _otpVerificationApplication:IOtpVerificationUseCase,
+        private _resendOtpApplication:IResendOtpUseCase,
+        private _forgotPasswordApplication:IForgotPasswordUseCase,
+        private _changePassword:IChangePasswordUseCase,
+        private _userSigninAplication:IUserSigninUseCase,
+        private _googleAuthApplication:IGoogleAuthUseCase,
+        private _resetPasswordApplication:IResetPasswordUseCase
 
     ){}
 

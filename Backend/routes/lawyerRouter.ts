@@ -16,7 +16,7 @@ import { ChangePasswordRepository } from '../module/auth/lawyerAuth/infrastructu
 import { LawyerResetPasswordUseCase } from '../module/auth/lawyerAuth/application/lawyer-use-case/lawyerResetPasswordUseCase';
 import { verifyToken } from '../middlewares/verifyTokenMiddleware';
 import { verifyRole } from '../middlewares/verifyRoleMiddleware';
-import { CheckAccountStatusMongoRepositorie } from '../module/auth/userAuth/infrastructure/mongoRepositories/checkAccountStatusMongoRepositorie';
+import { CheckAccountStatusRepository } from '../module/auth/userAuth/infrastructure/repository/checkAccountStatusRepository';
 import { LawyerProfileController } from '../module/lawyer/interface/controller/lawyerProfileManagementController';
 import { LawyerAddProfileRepository } from '../module/lawyer/infrastructure/repository/lawyerAddProfileRepository';
 import { LawyerAddProfileUseCase } from '../module/lawyer/application/use-case/lawyerAddProfileUseCase';

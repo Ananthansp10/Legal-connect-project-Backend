@@ -1,31 +1,31 @@
 import express from 'express'
-import { UserSignupMongoRepositorie } from '../module/auth/userAuth/infrastructure/mongoRepositories/userSignupMongoRepositorie';
-import { UserSignupApplication } from '../module/auth/userAuth/application/use-cases/userSignupApplication';
+import { UserSignupRepository } from '../module/auth/userAuth/infrastructure/repository/userSignupRepository';
+import { UserSignupUseCase } from '../module/auth/userAuth/application/use-cases/userSignupUseCase';
 import { UserAuthController } from '../module/auth/userAuth/interface/controller/userAuthController';
 import { sendOtpMailService } from '../module/auth/userAuth/infrastructure/services/sendOtpMailService';
 import { GenerateOtpService } from '../module/auth/userAuth/infrastructure/services/generateOtpService';
 import { HashService } from '../module/auth/userAuth/infrastructure/services/hashService';
 import { OtpService } from '../module/auth/userAuth/infrastructure/services/saveOtp';
-import { OtpVerificationMongoRepo } from '../module/auth/userAuth/infrastructure/mongoRepositories/otpVerificationMongoRepositories';
-import { OtpVerificationApplication } from '../module/auth/userAuth/application/use-cases/otpVerificationApplication';
-import { ResendOtpApplication } from '../module/auth/userAuth/application/use-cases/resendOtpApplication';
-import { ForgotPasswordApplication } from '../module/auth/userAuth/application/use-cases/forgotPasswordApplication';
-import { ChangePassword } from '../module/auth/userAuth/application/use-cases/changePasswordApplication';
-import { ForgotPasswordMongoRepo } from '../module/auth/userAuth/infrastructure/mongoRepositories/forgotPasswordMongoRepo';
-import { UserSigninMongoRepositorie } from '../module/auth/userAuth/infrastructure/mongoRepositories/userSigninMongoRepositorie';
+import { OtpVerificationRepository } from '../module/auth/userAuth/infrastructure/repository/otpVerificationRepository';
+import { OtpVerificationUseCase } from '../module/auth/userAuth/application/use-cases/otpVerificationUseCase';
+import { ResendOtpUseCase } from '../module/auth/userAuth/application/use-cases/resendOtpUseCase';
+import { ForgotPasswordUseCase } from '../module/auth/userAuth/application/use-cases/forgotPasswordUseCase';
+import { ChangePasswordUseCase } from '../module/auth/userAuth/application/use-cases/changePasswordUseCase';
+import { ForgotPasswordRepository } from '../module/auth/userAuth/infrastructure/repository/forgotPasswordRepository';
+import { UserSigninRepository } from '../module/auth/userAuth/infrastructure/repository/userSigninRepository';
 import { TokenGenerationService } from '../module/auth/userAuth/infrastructure/services/tokenGenerationService';
-import { UserSigninApplication } from '../module/auth/userAuth/application/use-cases/userSigninApplication';
+import { UserSigninUseCase } from '../module/auth/userAuth/application/use-cases/userSigninUseCase';
 import { CookieTokenService } from '../module/auth/userAuth/infrastructure/services/cookieTokenService';
 const router=express.Router()
 import passport from '../config/passport'
-import { GoogleAuthMongoRepo } from '../module/auth/userAuth/infrastructure/mongoRepositories/googleAuthMongoRepositorie';
-import { GoogleAuthApplication } from '../module/auth/userAuth/application/use-cases/googleAuthApplication';
-import { ResetPasswordMongoRepositorie } from '../module/auth/userAuth/infrastructure/mongoRepositories/resetPasswordMongoRepositorie';
-import { ResetPasswordApplication } from '../module/auth/userAuth/application/use-cases/resetPasswordApplication';
+import { GoogleAuthRepository } from '../module/auth/userAuth/infrastructure/repository/googleAuthRepository';
+import { GoogleAuthUseCase } from '../module/auth/userAuth/application/use-cases/googleAuthUseCase';
+import { ResetPasswordRepository } from '../module/auth/userAuth/infrastructure/repository/resetPasswordRepository';
+import { ResetPasswordUseCase } from '../module/auth/userAuth/application/use-cases/resetPasswordUseCase';
 import { verifyToken } from '../middlewares/verifyTokenMiddleware';
 import { verifyRole } from '../middlewares/verifyRoleMiddleware';
 import { verifyAccountStatus } from '../middlewares/verifyAccountStatus';
-import { CheckAccountStatusMongoRepositorie } from '../module/auth/userAuth/infrastructure/mongoRepositories/checkAccountStatusMongoRepositorie';
+import { CheckAccountStatusRepository } from '../module/auth/userAuth/infrastructure/repository/checkAccountStatusRepository';
 import upload from '../config/multerConfig';
 import { UserProfileController } from '../module/user/interface/controller/userProfileController';
 import { AddProfileUseCase } from '../module/user/application/use-case/addProfileUseCase';
@@ -45,27 +45,27 @@ import { SearchLawyerUseCase } from '../module/user/application/use-case/searchL
 import { BookAppointmentRepository } from '../module/user/infrastructure/repository/bookAppointmentRepository';
 import { BookAppointmentUseCase } from '../module/user/application/use-case/bookAppointmentUseCase';
 
-const userSignupMongoRepo=new UserSignupMongoRepositorie()
+const userSignupMongoRepo=new UserSignupRepository()
 const otpsendEmail=new sendOtpMailService()
 const generateOtp=new GenerateOtpService()
 const hashData=new HashService()
 const otpService=new OtpService()
-const otpMongoRepo=new OtpVerificationMongoRepo()
-const OtpVerificationUseCase=new OtpVerificationApplication(otpMongoRepo,userSignupMongoRepo)
-const userSignupApplication=new UserSignupApplication(userSignupMongoRepo,otpsendEmail,generateOtp,hashData,otpService)
-const resendOtpApplication=new ResendOtpApplication(otpService,generateOtp,hashData,otpsendEmail)
-const forgotPasswordApplication=new ForgotPasswordApplication(otpService,generateOtp,hashData,otpsendEmail)
-const forgotPasswordRepo=new ForgotPasswordMongoRepo()
-const changePasswordApplication=new ChangePassword(forgotPasswordRepo,hashData)
-const userSigninMongoRepo=new UserSigninMongoRepositorie()
+const otpMongoRepo=new OtpVerificationRepository()
+const OtpVerificationUseCase=new OtpVerificationUseCase(otpMongoRepo,userSignupMongoRepo)
+const userSignupApplication=new UserSignupUseCase(userSignupMongoRepo,otpsendEmail,generateOtp,hashData,otpService)
+const resendOtpApplication=new ResendOtpUseCase(otpService,generateOtp,hashData,otpsendEmail)
+const forgotPasswordApplication=new ForgotPasswordUseCase(otpService,generateOtp,hashData,otpsendEmail)
+const forgotPasswordRepo=new ForgotPasswordRepository()
+const changePasswordApplication=new ChangePasswordUseCase(forgotPasswordRepo,hashData)
+const userSigninMongoRepo=new UserSigninRepository()
 const tokenGenerationService=new TokenGenerationService()
-const userSigninApplication=new UserSigninApplication(userSigninMongoRepo,tokenGenerationService)
+const userSigninApplication=new UserSigninUseCase(userSigninMongoRepo,tokenGenerationService)
 const cookieTokenService=new CookieTokenService()
-const googleAuthMongoRepo=new GoogleAuthMongoRepo()
-const googleAuthApplication=new GoogleAuthApplication(googleAuthMongoRepo,tokenGenerationService)
-const resetPasswordMongoRepo=new ResetPasswordMongoRepositorie()
-const resetPasswordApplication=new ResetPasswordApplication(resetPasswordMongoRepo,hashData)
-const checkUserAccountStatusMongoRepo=new CheckAccountStatusMongoRepositorie()
+const googleAuthMongoRepo=new GoogleAuthRepository()
+const googleAuthApplication=new GoogleAuthUseCase(googleAuthMongoRepo,tokenGenerationService)
+const resetPasswordMongoRepo=new ResetPasswordRepository()
+const resetPasswordApplication=new ResetPasswordUseCase(resetPasswordMongoRepo,hashData)
+const checkUserAccountStatusMongoRepo=new CheckAccountStatusRepository()
 
 
 
