@@ -1,5 +1,5 @@
 import { UserProfileEntitie } from "../../domain/entity/userProfileUserEntity";
-import { IUserProfileRepository } from "../repositoryInterface/userProfileRepository";
+import { IUserProfileRepository } from "../repositoryInterface/IUserProfileRepository";
 import { userProfileModel } from "../models/userProfileModel";
 import { BaseRepository } from "./baseRepository";
 
