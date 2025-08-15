@@ -4,7 +4,7 @@ import { AppStatusCode } from "../../../../../common/statusCode/AppStatusCode";
 import { IHashService } from "../../../userAuth/infrastructure/services/IhashService";
 import { LawyerSignupRequestDto, LawyerSignupResponseDto } from "../../domain/dto/lawyerSignupDto";
 import { ILawyerSignup } from "../../domain/entity/lawyerEntity";
-import { ILawyerSignupRepository } from "../../infrastructure/repositoryInterface/lawyerSignupRepository";
+import { ILawyerSignupRepository } from "../../infrastructure/repositoryInterface/ILawyerSignupRepository";
 import { ILawyerSignupUseCase } from "../lawyer-use-case-interface/IlawyerSignupUseCase";
 import { LawyerSignupMapper as mapper } from "../mapper/lawyerSignupMapper";
 

@@ -4,7 +4,7 @@ import { AppStatusCode } from "../../../../../common/statusCode/AppStatusCode";
 import { ITokenGeneration } from "../../../userAuth/infrastructure/services/ItokenGenerationService";
 import { LawyerSigninResponseDto } from "../../domain/dto/lawyerSigninDto";
 import { ILawyerSignup } from "../../domain/entity/lawyerEntity";
-import { ILawyerSigninRepository } from "../../infrastructure/repositoryInterface/lawyerSigninRepository";
+import { ILawyerSigninRepository } from "../../infrastructure/repositoryInterface/ILawyerSigninRepository";
 import { ILawyerSigninUseCase } from "../lawyer-use-case-interface/IlawyerSigninUseCase";
 import { LawyerSigninMapper as mapper } from "../mapper/lawyerSigninMapper";
 import bcrypt from 'bcrypt'
