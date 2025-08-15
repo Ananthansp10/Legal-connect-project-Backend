@@ -51,7 +51,7 @@ const generateOtp=new GenerateOtpService()
 const hashData=new HashService()
 const otpService=new OtpService()
 const otpMongoRepo=new OtpVerificationRepository()
-const OtpVerificationUseCase=new OtpVerificationUseCase(otpMongoRepo,userSignupMongoRepo)
+const otpVerificationUseCase=new OtpVerificationUseCase(otpMongoRepo,userSignupMongoRepo)
 const userSignupApplication=new UserSignupUseCase(userSignupMongoRepo,otpsendEmail,generateOtp,hashData,otpService)
 const resendOtpApplication=new ResendOtpUseCase(otpService,generateOtp,hashData,otpsendEmail)
 const forgotPasswordApplication=new ForgotPasswordUseCase(otpService,generateOtp,hashData,otpsendEmail)
@@ -71,7 +71,7 @@ const checkUserAccountStatusMongoRepo=new CheckAccountStatusRepository()
 
 const userAuthController=new UserAuthController(
     userSignupApplication,
-    OtpVerificationUseCase,
+    otpVerificationUseCase,
     resendOtpApplication,
     forgotPasswordApplication,
     changePasswordApplication,
