@@ -1,5 +1,5 @@
 import { Request,Response } from "express-serve-static-core";
-import { IAdminSigninApplication } from "../../application/use-case-interface/IadminSigninApplication";
+import { IAdminSigninUseCase } from "../../application/use-case-interface/IadminSigninUseCase";
 import { ICookieTokenService } from "../../../userAuth/infrastructure/services/IcookieTokenService";
 import { AppStatusCode } from "../../../../../common/statusCode/AppStatusCode";
 import { AppException } from "../../../../../common/error/errorException";
@@ -8,7 +8,7 @@ import { AppError } from "../../../../../common/error/AppEnumError";
 export class AdminAuthController{
 
     constructor(
-        private _adminSigninApplication:IAdminSigninApplication,
+        private _adminSigninApplication:IAdminSigninUseCase,
         private _tokenCookieService:ICookieTokenService
     ){}
 
