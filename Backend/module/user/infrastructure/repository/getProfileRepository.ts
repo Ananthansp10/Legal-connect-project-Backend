@@ -1,5 +1,5 @@
 import { UserProfileEntitie } from "../../domain/entity/userProfileUserEntity";
-import { IGetProfileRepository } from "../repositoryInterface/getProfileRepository";
+import { IGetProfileRepository } from "../repositoryInterface/IGetProfileRepository";
 import { userProfileModel } from "../models/userProfileModel";
 import { BaseRepository } from "./baseRepository";
 
