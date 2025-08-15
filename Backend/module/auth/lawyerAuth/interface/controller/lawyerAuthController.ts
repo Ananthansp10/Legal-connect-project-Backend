@@ -1,13 +1,13 @@
-import { ILawyerSignupApplication } from "../../application/lawyer-use-case-interface/IlawyerSignupApplication";
+import { ILawyerSignupUseCase } from "../../application/lawyer-use-case-interface/IlawyerSignupUseCase";
 import { Request,Response } from "express";
 import { AppStatusCode } from "../../../../../common/statusCode/AppStatusCode";
 import { AppException } from "../../../../../common/error/errorException";
 import { AppError } from "../../../../../common/error/AppEnumError";
 import { ICookieTokenService } from "../../../userAuth/infrastructure/services/IcookieTokenService";
-import { ILawyerSigninApplication } from "../../application/lawyer-use-case-interface/IlawyerSigninApplication";
-import { ILawyerForgotPasswordApplication } from "../../application/lawyer-use-case-interface/IlawyerForgotPasswordApplication";
-import { ILawyerChangePasswordApplication } from "../../application/lawyer-use-case-interface/IlawyerChangePasswordApplication";
-import { ILawyerResetPasswordApplication } from "../../application/lawyer-use-case-interface/IlawyerResetPasswordApplication";
+import { ILawyerSigninUseCase } from "../../application/lawyer-use-case-interface/IlawyerSigninUseCase";
+import { ILawyerForgotPasswordUseCase } from "../../application/lawyer-use-case-interface/IlawyerForgotPasswordUseCase";
+import { ILawyerChangePasswordUseCase } from "../../application/lawyer-use-case-interface/IlawyerChangePasswordUseCase";
+import { ILawyerResetPasswordUseCase } from "../../application/lawyer-use-case-interface/IlawyerResetPasswordUseCase";
 import jwt from 'jsonwebtoken'
 
 export interface MulterRequest extends Request {
@@ -19,11 +19,11 @@ export interface MulterRequest extends Request {
 export class LawyerAuthController{
 
     constructor(
-        private _lawyerSignupApplication:ILawyerSignupApplication,
-        private _lawyerSigninApplication:ILawyerSigninApplication,
-        private _lawyerForgotPasswordApplication:ILawyerForgotPasswordApplication,
-        private _lawyerChangePasswordApplication:ILawyerChangePasswordApplication,
-        private _lawyerResetPasswordApplication:ILawyerResetPasswordApplication
+        private _lawyerSignupApplication:ILawyerSignupUseCase,
+        private _lawyerSigninApplication:ILawyerSigninUseCase,
+        private _lawyerForgotPasswordApplication:ILawyerForgotPasswordUseCase,
+        private _lawyerChangePasswordApplication:ILawyerChangePasswordUseCase,
+        private _lawyerResetPasswordApplication:ILawyerResetPasswordUseCase
     ){}
 
     async registerLawyer(req:MulterRequest,res:Response):Promise<void>{

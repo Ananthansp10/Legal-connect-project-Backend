@@ -1,19 +1,19 @@
 import express from 'express'
 import { LawyerAuthController, MulterRequest } from '../module/auth/lawyerAuth/interface/controller/lawyerAuthController';
-import { LawyerSignupMongoRepositorie } from '../module/auth/lawyerAuth/infrastructure/mongoRepositories/lawyerSignupMongoRepositorie';
-import { LawyerSignupApplication } from '../module/auth/lawyerAuth/application/lawyer-use-case/lawyerSignupApplication';
+import { LawyerSignupRepository } from '../module/auth/lawyerAuth/infrastructure/repository/lawyerSignupRepository';
+import { LawyerSignupUseCase } from '../module/auth/lawyerAuth/application/lawyer-use-case/lawyerSignupUseCase';
 import { HashService } from '../module/auth/userAuth/infrastructure/services/hashService';
 import upload from '../config/multerConfig';
-import { LawyerSigninMongoRepositorie } from '../module/auth/lawyerAuth/infrastructure/mongoRepositories/lawyerSigninMongoRepositorie';
-import { LawyerSigninApplication } from '../module/auth/lawyerAuth/application/lawyer-use-case/lawyerSigninApplication';
+import { LawyerSigninRepository } from '../module/auth/lawyerAuth/infrastructure/repository/lawyerSigninRepository';
+import { LawyerSigninUseCase } from '../module/auth/lawyerAuth/application/lawyer-use-case/lawyerSigninUseCase';
 import { TokenGenerationService } from '../module/auth/userAuth/infrastructure/services/tokenGenerationService';
 import { CookieTokenService } from '../module/auth/userAuth/infrastructure/services/cookieTokenService';
-import { LawyerForgotPasswordApplication } from '../module/auth/lawyerAuth/application/lawyer-use-case/lawyerForgotPasswordApplication';
+import { LawyerForgotPasswordUseCase } from '../module/auth/lawyerAuth/application/lawyer-use-case/lawyerForgotPasswordUseCase';
 import { ForgotPasswordEmailService } from '../module/auth/lawyerAuth/infrastructure/service/forgotPaaswordEmailService';
 import { ForgotPasswordTokenGeneration } from '../module/auth/lawyerAuth/infrastructure/service/forgotPasswordTokenGeneration';
-import { LawyerChangePasswordApplication } from '../module/auth/lawyerAuth/application/lawyer-use-case/lawyerChangePasswordApplication';
-import { ChangePasswordMongoRepositorie } from '../module/auth/lawyerAuth/infrastructure/mongoRepositories/changePasswordMongoRepositorie';
-import { LawyerResetPasswordApplication } from '../module/auth/lawyerAuth/application/lawyer-use-case/lawyerResetPasswordApplication';
+import { LawyerChangePasswordUseCase } from '../module/auth/lawyerAuth/application/lawyer-use-case/lawyerChangePasswordUseCase';
+import { ChangePasswordRepository } from '../module/auth/lawyerAuth/infrastructure/repository/changePasswordRepository';
+import { LawyerResetPasswordUseCase } from '../module/auth/lawyerAuth/application/lawyer-use-case/lawyerResetPasswordUseCase';
 import { verifyToken } from '../middlewares/verifyTokenMiddleware';
 import { verifyRole } from '../middlewares/verifyRoleMiddleware';
 import { CheckAccountStatusMongoRepositorie } from '../module/auth/userAuth/infrastructure/mongoRepositories/checkAccountStatusMongoRepositorie';
@@ -33,19 +33,19 @@ import { UpdateRuleStatusRepository } from '../module/lawyer/infrastructure/repo
 import { UpdateRuleStatusUseCase } from '../module/lawyer/application/use-case/updateRuleStatusUseCase';
 const router=express.Router()
 
-const lawyerSignupMongoRepo=new LawyerSignupMongoRepositorie()
+const lawyerSignupMongoRepo=new LawyerSignupRepository()
 const hashService=new HashService()
-const lawyerSignupApplication=new LawyerSignupApplication(lawyerSignupMongoRepo,hashService)
-const lawyerSigninMongoRepo=new LawyerSigninMongoRepositorie()
+const lawyerSignupApplication=new LawyerSignupUseCase(lawyerSignupMongoRepo,hashService)
+const lawyerSigninMongoRepo=new LawyerSigninRepository()
 const tokenGenerationService=new TokenGenerationService()
 const authCookieService=new CookieTokenService()
-const lawyerSigninApplication=new LawyerSigninApplication(lawyerSigninMongoRepo,tokenGenerationService)
+const lawyerSigninApplication=new LawyerSigninUseCase(lawyerSigninMongoRepo,tokenGenerationService)
 const emailService=new ForgotPasswordEmailService()
 const forgotPasswordTokenGenerateService=new ForgotPasswordTokenGeneration()
-const forgotPasswordAplication=new LawyerForgotPasswordApplication(emailService,forgotPasswordTokenGenerateService,lawyerSignupMongoRepo)
-const lawyerChangePasswordRepo=new ChangePasswordMongoRepositorie()
-const changePasswordApplication=new LawyerChangePasswordApplication(lawyerChangePasswordRepo,hashService)
-const resetPasswordApplication=new LawyerResetPasswordApplication(lawyerChangePasswordRepo,hashService)
+const forgotPasswordAplication=new LawyerForgotPasswordUseCase(emailService,forgotPasswordTokenGenerateService,lawyerSignupMongoRepo)
+const lawyerChangePasswordRepo=new ChangePasswordRepository()
+const changePasswordApplication=new LawyerChangePasswordUseCase(lawyerChangePasswordRepo,hashService)
+const resetPasswordApplication=new LawyerResetPasswordUseCase(lawyerChangePasswordRepo,hashService)
 
 const lawyerAuthController=new LawyerAuthController(
     lawyerSignupApplication,

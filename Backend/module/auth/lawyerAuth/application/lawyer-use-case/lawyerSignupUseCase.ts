@@ -4,14 +4,14 @@ import { AppStatusCode } from "../../../../../common/statusCode/AppStatusCode";
 import { IHashService } from "../../../userAuth/infrastructure/services/IhashService";
 import { LawyerSignupRequestDto, LawyerSignupResponseDto } from "../../domain/dto/lawyerSignupDto";
 import { ILawyerSignup } from "../../domain/entity/lawyerEntity";
-import { ILawyerSignupRepositorie } from "../../interface/repositories/lawyerSignupRepositorie";
-import { ILawyerSignupApplication } from "../lawyer-use-case-interface/IlawyerSignupApplication";
+import { ILawyerSignupRepository } from "../../infrastructure/repositoryInterface/lawyerSignupRepository";
+import { ILawyerSignupUseCase } from "../lawyer-use-case-interface/IlawyerSignupUseCase";
 import { LawyerSignupMapper as mapper } from "../mapper/lawyerSignupMapper";
 
-export class LawyerSignupApplication implements ILawyerSignupApplication{
+export class LawyerSignupUseCase implements ILawyerSignupUseCase{
 
     constructor(
-        private _lawyerRepo:ILawyerSignupRepositorie,
+        private _lawyerRepo:ILawyerSignupRepository,
         private _hashService:IHashService
     ){}
 

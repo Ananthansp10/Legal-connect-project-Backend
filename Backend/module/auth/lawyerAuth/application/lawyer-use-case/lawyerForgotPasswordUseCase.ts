@@ -4,16 +4,16 @@ import { AppStatusCode } from "../../../../../common/statusCode/AppStatusCode";
 import { ILawyerSignup } from "../../domain/entity/lawyerEntity";
 import { IForgotPasswordEmailService } from "../../infrastructure/service/IforgotPasswordEmailService";
 import { IForgotPasswordTokenGeneration } from "../../infrastructure/service/IforgotPasswordTokenGeneration";
-import { ILawyerSignupRepositorie } from "../../interface/repositories/lawyerSignupRepositorie";
-import { ILawyerForgotPasswordApplication } from "../lawyer-use-case-interface/IlawyerForgotPasswordApplication";
+import { ILawyerSignupRepository } from "../../infrastructure/repositoryInterface/lawyerSignupRepository";
+import { ILawyerForgotPasswordUseCase } from "../lawyer-use-case-interface/IlawyerForgotPasswordUseCase";
 
 
-export class LawyerForgotPasswordApplication implements ILawyerForgotPasswordApplication{
+export class LawyerForgotPasswordUseCase implements ILawyerForgotPasswordUseCase{
 
     constructor(
         private _emailService:IForgotPasswordEmailService, 
         private _ForgotPasswordTokenGenerate:IForgotPasswordTokenGeneration,
-        private _lawyerRepo:ILawyerSignupRepositorie
+        private _lawyerRepo:ILawyerSignupRepository
     ){}
 
     async execute(email: string): Promise<void> {
