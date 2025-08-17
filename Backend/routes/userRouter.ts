@@ -42,8 +42,10 @@ import { GetLawyerSlotRepository } from '../module/user/infrastructure/repositor
 import { GetLawyerSlotUseCase } from '../module/user/application/use-case/getLawyerSlotUseCase';
 import { FilterLawyerUseCase } from '../module/user/application/use-case/filterLawyerUseCase';
 import { SearchLawyerUseCase } from '../module/user/application/use-case/searchLawyerUseCase';
-import { BookAppointmentRepository } from '../module/user/infrastructure/repository/bookAppointmentRepository';
+import { AppointmentRepository } from '../module/user/infrastructure/repository/appointmentRepository';
 import { BookAppointmentUseCase } from '../module/user/application/use-case/bookAppointmentUseCase';
+import { BookAppointmentRepository } from '../module/user/infrastructure/repository/bookAppointmentRepository';
+import { GetAppointmentUseCase } from '../module/user/application/use-case/getAppointmentUseCase';
 
 const userSignupMongoRepo=new UserSignupRepository()
 const otpsendEmail=new sendOtpMailService()
@@ -105,6 +107,8 @@ const filterLawyerApplication=new FilterLawyerUseCase(getLawyerRepo)
 const searchLawyerApplication=new SearchLawyerUseCase(getLawyerRepo)
 const bookAppointmentRepo=new BookAppointmentRepository()
 const bookAppointmentApplication=new BookAppointmentUseCase(bookAppointmentRepo)
+const appointmentRepo=new AppointmentRepository()
+const getAppointmentUseCase=new GetAppointmentUseCase(appointmentRepo)
 
 const userController=new UserController(
     getLawyerApplication,
@@ -112,7 +116,8 @@ const userController=new UserController(
     getLawyerSlotApplication,
     filterLawyerApplication,
     searchLawyerApplication,
-    bookAppointmentApplication
+    bookAppointmentApplication,
+    getAppointmentUseCase
 )
 
 router.post('/signup',(req,res)=>userAuthController.registerUser(req,res))
@@ -154,5 +159,7 @@ router.get('/filter-lawyer/:specialization',verifyToken,verifyRole(['user']),ver
 router.get('/search-lawyer/:name',verifyToken,verifyRole(['user']),verifyAccountStatus(checkUserAccountStatusMongoRepo),(req,res)=>userController.searchLawyerByName(req,res))
 
 router.post('/book-appointment',verifyToken,verifyRole(['user']),verifyAccountStatus(checkUserAccountStatusMongoRepo),(req,res)=>userController.bookAppointment(req,res))
+
+router.get('/get-appointments/:userId/:appointmentStatus',verifyToken,verifyRole(['user']),verifyAccountStatus(checkUserAccountStatusMongoRepo),(req,res)=>userController.getAppointment(req,res))
 
 export default router;

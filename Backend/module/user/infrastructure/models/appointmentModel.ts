@@ -1,10 +1,10 @@
 import mongoose, { Schema } from "mongoose";
-import { IAppointmentEntity } from "../../domain/entity/appointmentModel";
+import { IAppointmentEntity } from "../../domain/entity/appointmentEntity";
 
 const appointmentSchema=new Schema<IAppointmentEntity>({
     lawyerId:{
         type:Schema.Types.ObjectId,
-        ref:'lawyers',
+        ref:'lawyer',
         required:true
     },
     userId:{
@@ -19,6 +19,12 @@ const appointmentSchema=new Schema<IAppointmentEntity>({
     time:{
         type:String,
         required:true
+    },
+    consultationMode:{
+        type:String
+    },
+    problem:{
+        type:String
     },
     appointmentStatus:{
         type:String,

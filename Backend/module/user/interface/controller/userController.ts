@@ -8,6 +8,8 @@ import { IGetLawyerSlotApplication } from "../../application/use-case-interface/
 import { IFilterLawyerUseCase } from "../../application/use-case-interface/IFilterLawyerUseCase";
 import { ISearchLawyerUseCase } from "../../application/use-case-interface/ISearchLawyerUseCase";
 import { IBookAppointmentUseCase } from "../../application/use-case-interface/IBookAppointmentUseCase";
+import mongoose from "mongoose";
+import { IGetAppointmentUseCase } from "../../application/use-case-interface/IGetAppointmentUseCase";
 
 export class UserController{
 
@@ -17,7 +19,8 @@ export class UserController{
         private _getLawyerSlotApplication:IGetLawyerSlotApplication,
         private _filterLawyerApplication:IFilterLawyerUseCase,
         private _searchLawyerApplication:ISearchLawyerUseCase,
-        private _bookAppointmentApplication:IBookAppointmentUseCase
+        private _bookAppointmentApplication:IBookAppointmentUseCase,
+        private _getAppointmentApplication:IGetAppointmentUseCase
     ){}
 
     async getLawyers(req:Request,res:Response){
@@ -39,6 +42,12 @@ export class UserController{
     }
 
     async getSlotDetails(req:Request,res:Response){
+        try {
+            let timeSlots=await this._getLawyerSlotApplication.execute(new mongoose.Types.ObjectId(req.params.lawyerId),req.params.date)
+            res.status(AppStatusCode.SUCCESS_CODE).json({success:true,message:'Time slots found',timeSlots:timeSlots})
+        } catch (error) {
+            res.status(AppStatusCode.INTERNAL_ERROR_CODE).json({success:false,message:AppError.UNKNOWN_ERROR})
+        }
     }
 
     async filterLawyerBySpecialization(req:Request,res:Response){
@@ -69,6 +78,17 @@ export class UserController{
             res.status(AppStatusCode.SUCCESS_CODE).json({success:true,message:"Appointment booked successfully"})
         } catch (error) {
           res.status(AppStatusCode.INTERNAL_ERROR_CODE).json({success:false,message:AppError.UNKNOWN_ERROR})  
+        }
+    }
+
+    async getAppointment(req:Request,res:Response){
+        try {
+            let appointments=await this._getAppointmentApplication.execute(new mongoose.Types.ObjectId(req.params.userId),req.params.appointmentStatus)
+            console.log(appointments)
+            res.status(AppStatusCode.SUCCESS_CODE).json({success:true,message:"Appointment found successfully",data:appointments})
+        } catch (error) {
+            console.log(error)
+            res.status(AppStatusCode.INTERNAL_ERROR_CODE).json({success:false,message:AppError.UNKNOWN_ERROR})
         }
     }
 }
