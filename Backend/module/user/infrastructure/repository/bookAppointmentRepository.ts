@@ -1,4 +1,4 @@
-import { IAppointmentEntity } from "../../domain/entity/appointmentModel";
+import { IAppointmentEntity } from "../../domain/entity/appointmentEntity";
 import { IBookAppointmentRepository } from "../repositoryInterface/IbookAppointmentRepository";
 import { appointmentModel } from "../models/appointmentModel";
 import { BaseRepository } from "./baseRepository";

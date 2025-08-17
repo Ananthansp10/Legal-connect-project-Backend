@@ -6,5 +6,7 @@ export interface IAppointmentEntity{
     userId:Types.ObjectId;
     date:string;
     time:string;
+    consultationMode:string;
+    problem:string;
     appointmentStatus:string;
 }
