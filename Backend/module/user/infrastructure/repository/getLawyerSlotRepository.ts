@@ -1,22 +1,19 @@
+import { Types } from "mongoose";
+import { ISlotAvailablityEntity } from "../../../lawyer/domain/entity/slotAvailablityEntity";
 import { IGetLawyerSlotRepository } from "../repositoryInterface/IgetLawyerSlotRepository";
+import { availableSlotModel } from "../../../lawyer/infrastructure/models/slotAvailablityModel";
+import { IAppointmentEntity } from "../../domain/entity/appointmentEntity";
+import { appointmentModel } from "../models/appointmentModel";
 
 
 
 export class GetLawyerSlotRepository implements IGetLawyerSlotRepository{
 
-    // async getLawyerSlotDetails(lawyerId: string, date:string): Promise<ISlotResponseDto[] | null> {
+   async findSlot(lawyerId:Types.ObjectId,date:string): Promise<ISlotAvailablityEntity[]> {
+       return await availableSlotModel.find({lawyerId:lawyerId,status:true,startDate:{$lte:date},endDate:{$gte:date}})
+   }
 
-    //     let doc= await availableSlotModel.findOne({lawyerId:lawyerId,'availablity.date':date})
-
-    //     if(doc){
-    //         let matchedDoc:ISlotResponseDto | undefined=doc.availablity.find((slot)=>slot.date==date)
-    //         if(matchedDoc){
-    //             return [matchedDoc]
-    //         }else{
-    //             return null
-    //         }
-    //     }else{
-    //         return null
-    //     }
-    // }
+   async findAppointmentSlot(lawyerId: Types.ObjectId, date: string, time: string): Promise<IAppointmentEntity | null> {
+       return await appointmentModel.findOne({lawyerId:lawyerId,date:date,time:time})
+   }
 }

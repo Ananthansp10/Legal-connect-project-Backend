@@ -1,4 +1,4 @@
-import { IAppointmentEntity } from "../../domain/entity/appointmentModel";
+import { IAppointmentEntity } from "../../domain/entity/appointmentEntity";
 import { IBaseRepository } from "./IbaseRepository";
 
 
