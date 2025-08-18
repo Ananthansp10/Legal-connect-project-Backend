@@ -2,6 +2,7 @@ import { Types } from "mongoose";
 
 
 export interface IAppointmentEntity{
+    _id ? : Types.ObjectId
     lawyerId:Types.ObjectId;
     userId:Types.ObjectId;
     date:string;
@@ -9,4 +10,5 @@ export interface IAppointmentEntity{
     consultationMode:string;
     problem:string;
     appointmentStatus:string;
+    payment ? : string
 }

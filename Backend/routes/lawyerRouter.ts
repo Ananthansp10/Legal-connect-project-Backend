@@ -31,6 +31,9 @@ import { GetSlotRepository } from '../module/lawyer/infrastructure/repository/ge
 import { GetSlotUseCase } from '../module/lawyer/application/use-case/getSlotUseCase';
 import { UpdateRuleStatusRepository } from '../module/lawyer/infrastructure/repository/updateRuleStatusRepository';
 import { UpdateRuleStatusUseCase } from '../module/lawyer/application/use-case/updateRuleStatusUseCase';
+import { AppointmentRepository } from '../module/lawyer/infrastructure/repository/appointmentRepository';
+import { GetAppointmentUseCase } from '../module/lawyer/application/use-case/getAppointmentUseCase';
+import { UpdateAppointmentStatusUseCase } from '../module/lawyer/application/use-case/updateAppointmentStatusUseCase';
 const router=express.Router()
 
 const lawyerSignupMongoRepo=new LawyerSignupRepository()
@@ -74,11 +77,16 @@ const getSlotMongoRepo=new GetSlotRepository()
 const getSlotApplication=new GetSlotUseCase(getSlotMongoRepo)
 const updateRuleMongoRepo=new UpdateRuleStatusRepository
 const updateRuleStatusApplication=new UpdateRuleStatusUseCase(updateRuleMongoRepo)
+const appointmentRepo=new AppointmentRepository()
+const getAppointmentUseCase=new GetAppointmentUseCase(appointmentRepo)
+const updateAppointmentStatusUseCase=new UpdateAppointmentStatusUseCase(appointmentRepo)
 
 const lawyerController=new LawyerController(
     addSlotApplication,
     getSlotApplication,
-    updateRuleStatusApplication
+    updateRuleStatusApplication,
+    getAppointmentUseCase,
+    updateAppointmentStatusUseCase
 )
 
 router.post('/signup',upload.array('files',2),(req,res)=>lawyerAuthController.registerLawyer(req as MulterRequest,res))
@@ -110,5 +118,9 @@ router.post('/add-slot/:lawyerId',verifyToken,verifyRole(['lawyer']),(req,res)=>
 router.get('/get-slots/:lawyerId/:type',verifyToken,verifyRole(['lawyer']),(req,res)=>lawyerController.getSlot(req,res))
 
 router.patch('/update-rule-status/:ruleId/:ruleStatus',verifyToken,verifyRole(['lawyer']),(req,res)=>lawyerController.updateRuleStatus(req,res))
+
+router.get('/get-appointments/:lawyerId/:appointmentStatus',verifyToken,verifyRole(['lawyer']),(req,res)=>lawyerController.getAppointments(req,res))
+
+router.patch('/appointment/:appointmentId/:appointmentStatus',verifyToken,verifyRole(['lawyer']),(req,res)=>lawyerController.updateAppointmentStatus(req,res))
 
 export default router;

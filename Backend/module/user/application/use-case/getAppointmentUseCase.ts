@@ -20,17 +20,21 @@ export class GetAppointmentUseCase implements IGetAppointmentUseCase{
       let lawyerDetails = await this._appointmentRepository.findLawyerDetails(appointment.lawyerId);
 
       let lawyerData = {
+        _id:lawyerDetails?.lawyerId!,
         name: lawyerDetails?.personalInfo.name!,
         specialization: lawyerDetails?.proffessionalInfo.practiceAreas!,
-        profileImage: lawyerDetails?.personalInfo.profileImage!
+        profileImage: lawyerDetails?.personalInfo.profileImage!,
+        fee:lawyerDetails?.proffessionalInfo.fee!
       };
 
       return {
+        _id:appointment._id!,
         lawyer: lawyerData!,
         date: appointment.date,
         time: appointment.time,
         mode: appointment.consultationMode,
-        status: appointment.appointmentStatus
+        status: appointment.appointmentStatus,
+        payment:appointment?.payment ? appointment.payment : ''
       };
     })
   );

@@ -66,6 +66,13 @@ const lawyerProfileSchema=new Schema<LawyerProfileEntity>({
             }
         ],
         documents:[String]
+    },
+    isReported:{
+            type:Boolean
+    },
+    reportCount:{
+            type:Number,
+            default:0
     }
 })
 
