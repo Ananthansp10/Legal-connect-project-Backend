@@ -28,6 +28,9 @@ const appointmentSchema=new Schema<IAppointmentEntity>({
     },
     appointmentStatus:{
         type:String,
+    },
+    payment:{
+        type:String
     }
 })
 

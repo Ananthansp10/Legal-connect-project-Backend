@@ -10,6 +10,11 @@ import { ISearchLawyerUseCase } from "../../application/use-case-interface/ISear
 import { IBookAppointmentUseCase } from "../../application/use-case-interface/IBookAppointmentUseCase";
 import mongoose from "mongoose";
 import { IGetAppointmentUseCase } from "../../application/use-case-interface/IGetAppointmentUseCase";
+import { ICancelAppointmentUseCase } from "../../application/use-case-interface/ICancelAppointmentUseCase";
+import { AppException } from "../../../../common/error/errorException";
+import { IGetTodaysAppointmentsUseCase } from "../../application/use-case-interface/IGetTodaysAppointmentUseCase";
+import { IResheduleAppointmentUseCase } from "../../application/use-case-interface/IResheduleAppointmentUseCase";
+import { IReportLawyerUseCase } from "../../application/use-case-interface/IReportLawyerUseCase";
 
 export class UserController{
 
@@ -20,7 +25,11 @@ export class UserController{
         private _filterLawyerApplication:IFilterLawyerUseCase,
         private _searchLawyerApplication:ISearchLawyerUseCase,
         private _bookAppointmentApplication:IBookAppointmentUseCase,
-        private _getAppointmentApplication:IGetAppointmentUseCase
+        private _getAppointmentApplication:IGetAppointmentUseCase,
+        private _cancelAppointmentUseCase:ICancelAppointmentUseCase,
+        private _getTodaysAppointmentUseCase:IGetTodaysAppointmentsUseCase,
+        private _resheduleAppointmentUseCase:IResheduleAppointmentUseCase,
+        private _reportLawyerUseCase:IReportLawyerUseCase
     ){}
 
     async getLawyers(req:Request,res:Response){
@@ -88,6 +97,47 @@ export class UserController{
             res.status(AppStatusCode.SUCCESS_CODE).json({success:true,message:"Appointment found successfully",data:appointments})
         } catch (error) {
             console.log(error)
+            res.status(AppStatusCode.INTERNAL_ERROR_CODE).json({success:false,message:AppError.UNKNOWN_ERROR})
+        }
+    }
+
+    async cancelAppointment(req:Request,res:Response){
+        try {
+           await this._cancelAppointmentUseCase.execute(new mongoose.Types.ObjectId(req.params.appointmentId))
+           res.status(AppStatusCode.SUCCESS_CODE).json({success:true,message:"Appointment cancelled successfully"})
+        } catch (error) {
+            if(error instanceof AppException){
+                res.status(error.statusCode).json({success:false,message:error.message})
+            }else{
+                res.status(AppStatusCode.INTERNAL_ERROR_CODE).json({success:false,message:AppError.UNKNOWN_ERROR})
+            }
+        }
+    }
+
+    async getTodaysAppointments(req:Request,res:Response){
+        try {
+            let result=await this._getTodaysAppointmentUseCase.execute(new mongoose.Types.ObjectId(req.params.userId))
+            res.status(AppStatusCode.SUCCESS_CODE).json({success:true,message:'Todays appointments found',data:result})
+        } catch (error) {
+            console.log(error)
+            res.status(AppStatusCode.INTERNAL_ERROR_CODE).json({success:false,message:AppError.UNKNOWN_ERROR})
+        }
+    }
+
+    async resheduleAppointment(req:Request,res:Response){
+        try {
+           await this._resheduleAppointmentUseCase.execute(new mongoose.Types.ObjectId(req.params.appointmentId))
+           res.status(AppStatusCode.SUCCESS_CODE).json({success:true,message:"Appointment reshedule"})
+        } catch (error) {
+           res.status(AppStatusCode.INTERNAL_ERROR_CODE).json({success:false,message:AppError.UNKNOWN_ERROR})
+        }
+    }
+
+    async reportLawyer(req:Request,res:Response){
+        try {
+            await this._reportLawyerUseCase.execute(new mongoose.Types.ObjectId(req.params.lawyerId))
+            res.status(AppStatusCode.SUCCESS_CODE).json({success:true,message:"Report lawyer successfully"})
+        } catch (error) {
             res.status(AppStatusCode.INTERNAL_ERROR_CODE).json({success:false,message:AppError.UNKNOWN_ERROR})
         }
     }

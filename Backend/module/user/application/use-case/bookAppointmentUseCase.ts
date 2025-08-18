@@ -1,3 +1,4 @@
+import { AppointmentStatus } from "../../../../common/status/appointmentStatus";
 import { IAppointmentEntity } from "../../domain/entity/appointmentEntity";
 import { IBookAppointmentRepository } from "../../infrastructure/repositoryInterface/IbookAppointmentRepository";
 import { IBookAppointmentUseCase } from "../use-case-interface/IBookAppointmentUseCase";
@@ -10,6 +11,6 @@ export class BookAppointmentUseCase implements IBookAppointmentUseCase{
     ){}
 
     async execute(data: IAppointmentEntity): Promise<void> {
-        await this._bookAppointmentRepo.create({...data,appointmentStatus:'pending'})
+        await this._bookAppointmentRepo.create({...data,appointmentStatus:AppointmentStatus.PENDING})
     }
 }

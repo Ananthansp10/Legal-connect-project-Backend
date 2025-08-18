@@ -46,6 +46,14 @@ import { AppointmentRepository } from '../module/user/infrastructure/repository/
 import { BookAppointmentUseCase } from '../module/user/application/use-case/bookAppointmentUseCase';
 import { BookAppointmentRepository } from '../module/user/infrastructure/repository/bookAppointmentRepository';
 import { GetAppointmentUseCase } from '../module/user/application/use-case/getAppointmentUseCase';
+import { PaymentController } from '../module/user/interface/controller/paymentController';
+import { CreateRazorpayOrderUseCase } from '../module/user/application/use-case/createRazorpayOrderUseCase';
+import { VerifyPaymentUseCase } from '../module/user/application/use-case/verifyPaymentUseCase';
+import { CancelAppointmentUseCase } from '../module/user/application/use-case/cancelAppointmentUseCase';
+import { GetTodaysAppointmentsUseCase } from '../module/user/application/use-case/getTodaysAppointmentUseCase';
+import { ResheduleAppointmentUseCase } from '../module/user/application/use-case/resheduleAppointmentUseCase';
+import { ReportRepository } from '../module/user/infrastructure/repository/reportRepository';
+import { ReportLawyerUseCase } from '../module/user/application/use-case/reportLawyerUseCase';
 
 const userSignupMongoRepo=new UserSignupRepository()
 const otpsendEmail=new sendOtpMailService()
@@ -109,6 +117,11 @@ const bookAppointmentRepo=new BookAppointmentRepository()
 const bookAppointmentApplication=new BookAppointmentUseCase(bookAppointmentRepo)
 const appointmentRepo=new AppointmentRepository()
 const getAppointmentUseCase=new GetAppointmentUseCase(appointmentRepo)
+const cancelAppointmentUseCase=new CancelAppointmentUseCase(appointmentRepo)
+const getTodaysAppointmentsUseCase=new GetTodaysAppointmentsUseCase(appointmentRepo)
+const resheduleAppointmentUseCase=new ResheduleAppointmentUseCase(appointmentRepo)
+const reportRepo=new ReportRepository()
+const reportLawyerUseCase=new ReportLawyerUseCase(reportRepo)
 
 const userController=new UserController(
     getLawyerApplication,
@@ -117,7 +130,19 @@ const userController=new UserController(
     filterLawyerApplication,
     searchLawyerApplication,
     bookAppointmentApplication,
-    getAppointmentUseCase
+    getAppointmentUseCase,
+    cancelAppointmentUseCase,
+    getTodaysAppointmentsUseCase,
+    resheduleAppointmentUseCase,
+    reportLawyerUseCase
+)
+
+const createRazorpayOrderUseCase=new CreateRazorpayOrderUseCase()
+const verifyPaymentUseCase=new VerifyPaymentUseCase(appointmentRepo)
+
+const paymentController=new PaymentController(
+    createRazorpayOrderUseCase,
+    verifyPaymentUseCase
 )
 
 router.post('/signup',(req,res)=>userAuthController.registerUser(req,res))
@@ -161,5 +186,17 @@ router.get('/search-lawyer/:name',verifyToken,verifyRole(['user']),verifyAccount
 router.post('/book-appointment',verifyToken,verifyRole(['user']),verifyAccountStatus(checkUserAccountStatusMongoRepo),(req,res)=>userController.bookAppointment(req,res))
 
 router.get('/get-appointments/:userId/:appointmentStatus',verifyToken,verifyRole(['user']),verifyAccountStatus(checkUserAccountStatusMongoRepo),(req,res)=>userController.getAppointment(req,res))
+
+router.post('/create-order',verifyToken,verifyRole(['user']),verifyAccountStatus(checkUserAccountStatusMongoRepo),(req,res)=>paymentController.createOrder(req,res))
+
+router.post('/verify-payment',(req,res)=>paymentController.verifyPayment(req,res))
+
+router.post('/cancel-appointment/:appointmentId',verifyToken,verifyRole(['user']),verifyAccountStatus(checkUserAccountStatusMongoRepo),(req,res)=>userController.cancelAppointment(req,res))
+
+router.get('/get-todays-appointments/:userId',verifyToken,verifyRole(['user']),verifyAccountStatus(checkUserAccountStatusMongoRepo),(req,res)=>userController.getTodaysAppointments(req,res))
+
+router.post('/reshedule-appointment/:appointmentId',verifyToken,verifyRole(['user']),verifyAccountStatus(checkUserAccountStatusMongoRepo),(req,res)=>userController.resheduleAppointment(req,res))
+
+router.post('/report-lawyer/:lawyerId',verifyToken,verifyRole(['user']),verifyAccountStatus(checkUserAccountStatusMongoRepo),(req,res)=>userController.reportLawyer(req,res))
 
 export default router;
