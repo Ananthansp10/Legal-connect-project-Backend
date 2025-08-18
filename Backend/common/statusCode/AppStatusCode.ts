@@ -9,5 +9,6 @@ export enum AppStatusCode{
     NOT_FOUND=404,
     CONFLICT=409,
     EXPIRED=410,
-    UNAVAILABLE=503
+    UNAVAILABLE=503,
+    PAYMENT_FAILED=402
 }
