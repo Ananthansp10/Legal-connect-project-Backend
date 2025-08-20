@@ -135,9 +135,10 @@ export class UserController{
 
     async reportLawyer(req:Request,res:Response){
         try {
-            await this._reportLawyerUseCase.execute(new mongoose.Types.ObjectId(req.params.lawyerId))
+            await this._reportLawyerUseCase.execute(req.body)
             res.status(AppStatusCode.SUCCESS_CODE).json({success:true,message:"Report lawyer successfully"})
         } catch (error) {
+            console.log(error)
             res.status(AppStatusCode.INTERNAL_ERROR_CODE).json({success:false,message:AppError.UNKNOWN_ERROR})
         }
     }

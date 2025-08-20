@@ -1,6 +1,6 @@
-import { Types } from "mongoose";
+import { ReportData } from "../../infrastructure/repositoryInterface/IReportReposiitory";
 
 
 export interface IReportLawyerUseCase{
-    execute(lawyerId:Types.ObjectId):Promise<void>;
+    execute(data:ReportData):Promise<void>;
 }
