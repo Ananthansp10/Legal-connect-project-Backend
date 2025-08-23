@@ -197,6 +197,6 @@ router.get('/get-todays-appointments/:userId',verifyToken,verifyRole(['user']),v
 
 router.post('/reshedule-appointment/:appointmentId',verifyToken,verifyRole(['user']),verifyAccountStatus(checkUserAccountStatusMongoRepo),(req,res)=>userController.resheduleAppointment(req,res))
 
-router.post('/report-lawyer/:lawyerId',verifyToken,verifyRole(['user']),verifyAccountStatus(checkUserAccountStatusMongoRepo),(req,res)=>userController.reportLawyer(req,res))
+router.post('/report-lawyer',verifyToken,verifyRole(['user']),verifyAccountStatus(checkUserAccountStatusMongoRepo),(req,res)=>userController.reportLawyer(req,res))
 
 export default router;

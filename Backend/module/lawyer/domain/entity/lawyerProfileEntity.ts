@@ -44,6 +44,4 @@ export interface LawyerProfileEntity{
     lawyerId:Types.ObjectId;
     personalInfo:PersonalInfo;
     proffessionalInfo:ProffessionalInfo;
-    isReported ? :boolean;
-    reportCount ? :number;
 }
