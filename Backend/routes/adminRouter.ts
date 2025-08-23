@@ -28,6 +28,12 @@ import { EditSpecializationRepository } from '../module/admin/infrastructure/rep
 import { EditSpecializationUseCase } from '../module/admin/application/use-case/editSpecializationUseCase';
 import { DeleteSpecializationRepository } from '../module/admin/infrastructure/repository/deleteSpecializationRepository';
 import { DeleteSpecializationUseCase } from '../module/admin/application/use-case/deleteSpecializationUseCase';
+import { AdminController } from '../module/admin/interface/controller/adminController';
+import { AppointmentRepository } from '../module/admin/infrastructure/repository/appointmentRepository';
+import { GetAppointmentsUseCase } from '../module/admin/application/use-case/getAppointmentsUseCase';
+import { ReportAccountRepository } from '../module/admin/infrastructure/repository/reportAccountRepository';
+import { GetReportedAccountsUseCase } from '../module/admin/application/use-case/getReportedAccounts';
+import { UpdateReportedAccountUseCase } from '../module/admin/application/use-case/updateReportedAccountUseCase';
 const router=express.Router()
 
 const tokenGenerateService=new TokenGenerationService()
@@ -77,6 +83,19 @@ const adminSpecializationController=new AdminSpecializationController(
     deleteSpecializationApplication
 )
 
+const appointmentRepo=new AppointmentRepository()
+const getAppointmentUseCase=new GetAppointmentsUseCase(appointmentRepo)
+const reportedAccountRepo=new ReportAccountRepository()
+const getReportedAccountUseCase=new GetReportedAccountsUseCase(reportedAccountRepo)
+const updateReportedAccountUseCase=new UpdateReportedAccountUseCase(reportedAccountRepo)
+
+
+const adminController=new AdminController(
+    getAppointmentUseCase,
+    getReportedAccountUseCase,
+    updateReportedAccountUseCase
+)
+
 
 router.post('/signin',(req,res)=>adminAuthController.signin(req,res))
 
@@ -101,5 +120,11 @@ router.get('/get-specialization',verifyToken,verifyRole(['admin']),(req,res)=>ad
 router.post('/edit-specialization',verifyToken,verifyRole(['admin']),(req,res)=>adminSpecializationController.editSpecialization(req,res))
 
 router.post('/delete-specialization/:specId',verifyToken,verifyRole(['admin']),(req,res)=>adminSpecializationController.DeleteSpecializationApplication(req,res))
+
+router.get('/get-appointments/:appointmentStatus',verifyToken,verifyRole(['admin']),(req,res)=>adminController.getAppointments(req,res))
+
+router.get('/reported-accounts/:userType',verifyToken,verifyRole(['admin']),(req,res)=>adminController.getReportedAccounts(req,res))
+
+router.post('/update-reportedAccount-status/:reportedAccountId',verifyToken,verifyRole(['admin']),(req,res)=>adminController.updateReportedAccountStatus(req,res))
 
 export default router;

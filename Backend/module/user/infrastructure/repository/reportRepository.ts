@@ -1,11 +1,20 @@
 import { Types } from "mongoose";
-import { IReportRepository } from "../repositoryInterface/IReportReposiitory";
-import { lawyerProfileModel } from "../../../lawyer/infrastructure/models/lawyerProfileModel";
+import { IReportRepository, ReportData, Reports } from "../repositoryInterface/IReportReposiitory";
+import { IReportAccountEntity} from "../../../admin/domain/entity/reportAccountEntity";
+import { reportAccountModel } from "../../../admin/infrastructure/models/reportAccountsModel";
 
 
 export class ReportRepository implements IReportRepository{
 
-    async reportLawyer(lawyerId: Types.ObjectId): Promise<void> {
-        await lawyerProfileModel.updateOne({lawyerId:lawyerId},{$set:{isReported:true},$inc:{reportCount:1}})
+    async reportLawyer(data:IReportAccountEntity): Promise<void> {
+        await reportAccountModel.create(data)
+    }
+
+    async findLawyerReportExist(lawyerId: Types.ObjectId): Promise<IReportAccountEntity | null> {
+        return await reportAccountModel.findOne({reportedId:lawyerId})
+    }
+
+    async updateLawyerReport(lawyerId: Types.ObjectId, data:Reports): Promise<void> {
+        await reportAccountModel.updateOne({reportedId:lawyerId},{$push:{reports:data,},$set:{status:'Pending'}})
     }
 }
