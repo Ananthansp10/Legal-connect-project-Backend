@@ -34,6 +34,14 @@ import { UpdateRuleStatusUseCase } from '../module/lawyer/application/use-case/u
 import { AppointmentRepository } from '../module/lawyer/infrastructure/repository/appointmentRepository';
 import { GetAppointmentUseCase } from '../module/lawyer/application/use-case/getAppointmentUseCase';
 import { UpdateAppointmentStatusUseCase } from '../module/lawyer/application/use-case/updateAppointmentStatusUseCase';
+import { GetLawyerProfileImageUseCase } from '../module/lawyer/application/use-case/getLawyerProfileImageUseCase';
+import { SubscriptionPlanRepository } from '../module/lawyer/infrastructure/repository/subscriptionPlanRepository';
+import { GetSubscriptionPlanUseCase } from '../module/lawyer/application/use-case/getSubscriptionPlanUseCase';
+import { PlanRepository } from '../module/lawyer/infrastructure/repository/planRepository';
+import { PaymentController } from '../module/lawyer/interface/controller/paymentController';
+import { CreateRazorpayOrderUseCase } from '../module/lawyer/application/use-case/createRazorpayOrderUseCase';
+import { VerifyRazorpayPaymentUseCase } from '../module/lawyer/application/use-case/verifyRazorpayPaymentUseCase';
+import { AddPlanUseCase } from '../module/lawyer/application/use-case/addPlanUseCase';
 const router=express.Router()
 
 const lawyerSignupMongoRepo=new LawyerSignupRepository()
@@ -64,11 +72,13 @@ const getLawyerProfileMongoRepo=new GetLawyerProfileRepository()
 const getLawyerProfileApplication=new GetLawyerProfileUseCase(getLawyerProfileMongoRepo)
 const editLawyerProfileMongoRepo=new EditLawyerProfileRepository()
 const lawyerEditProfileApplication=new LawyerEditProfileUseCase(editLawyerProfileMongoRepo)
+const getLawyerProfileImageUseCase=new GetLawyerProfileImageUseCase(getLawyerProfileMongoRepo)
 
 const lawyerProfileController=new LawyerProfileController(
     lawyerAddProfileApplication,
     getLawyerProfileApplication,
-    lawyerEditProfileApplication
+    lawyerEditProfileApplication,
+    getLawyerProfileImageUseCase
 )
 
 const addSlotMongoRepo=new AddSlotRepository()
@@ -79,14 +89,28 @@ const updateRuleMongoRepo=new UpdateRuleStatusRepository
 const updateRuleStatusApplication=new UpdateRuleStatusUseCase(updateRuleMongoRepo)
 const appointmentRepo=new AppointmentRepository()
 const getAppointmentUseCase=new GetAppointmentUseCase(appointmentRepo)
-const updateAppointmentStatusUseCase=new UpdateAppointmentStatusUseCase(appointmentRepo)
+const planRepo=new PlanRepository()
+const updateAppointmentStatusUseCase=new UpdateAppointmentStatusUseCase(appointmentRepo,planRepo)
+const subscriptionPlanRepo=new SubscriptionPlanRepository()
+const getSubscriptionPlanUseCase=new GetSubscriptionPlanUseCase(subscriptionPlanRepo)
+const addPlanUseCase=new AddPlanUseCase(planRepo)
 
 const lawyerController=new LawyerController(
     addSlotApplication,
     getSlotApplication,
     updateRuleStatusApplication,
     getAppointmentUseCase,
-    updateAppointmentStatusUseCase
+    updateAppointmentStatusUseCase,
+    getSubscriptionPlanUseCase,
+    addPlanUseCase
+)
+
+const createRazorpayOrderUseCase=new CreateRazorpayOrderUseCase()
+const verifyRazorpayPaymentUseCase=new VerifyRazorpayPaymentUseCase()
+
+const paymentController=new PaymentController(
+    createRazorpayOrderUseCase,
+    verifyRazorpayPaymentUseCase
 )
 
 router.post('/signup',upload.array('files',2),(req,res)=>lawyerAuthController.registerLawyer(req as MulterRequest,res))
@@ -121,6 +145,17 @@ router.patch('/update-rule-status/:ruleId/:ruleStatus',verifyToken,verifyRole(['
 
 router.get('/get-appointments/:lawyerId/:appointmentStatus',verifyToken,verifyRole(['lawyer']),(req,res)=>lawyerController.getAppointments(req,res))
 
-router.patch('/appointment/:appointmentId/:appointmentStatus',verifyToken,verifyRole(['lawyer']),(req,res)=>lawyerController.updateAppointmentStatus(req,res))
+router.patch('/appointment/:appointmentId/:appointmentStatus/:lawyerId',verifyToken,verifyRole(['lawyer']),(req,res)=>lawyerController.updateAppointmentStatus(req,res))
+
+router.get('/get-profile-image/:lawyerId',verifyToken,verifyRole(['lawyer']),(req,res)=>lawyerProfileController.getLawyerProfileImage(req,res))
+
+router.get('/subscription-plans',verifyToken,verifyRole(['lawyer']),(req,res)=>lawyerController.getSubscriptionPlan(req,res))
+
+router.post('/create-razorpay-order',verifyToken,verifyRole(['lawyer']),(req,res)=>paymentController.createRazorpayOrder(req,res))
+
+router.post('/verify-payment',verifyToken,verifyRole(['lawyer']),(req,res)=>paymentController.verifyPayment(req,res))
+
+router.post('/add-plan/:lawyerId/:planId',verifyToken,verifyRole(['lawyer']),(req,res)=>lawyerController.addPlan(req,res))
+
 
 export default router;
