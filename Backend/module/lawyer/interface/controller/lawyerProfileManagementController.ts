@@ -5,6 +5,8 @@ import { ILawyerAddProfileUseCase } from "../../application/use-case-interface/I
 import { Request,Response } from "express";
 import { LawyerProfileEntity } from "../../domain/entity/lawyerProfileEntity";
 import { IEditLawyerProfileUseCase } from "../../application/use-case-interface/IEditLawyerProfileUseCase";
+import { IGetLawyerProfileImageUseCase } from "../../application/use-case-interface/IGetLawyerProfileImageUseCase";
+import mongoose, { mongo } from "mongoose";
 
 
 export class LawyerProfileController{
@@ -12,7 +14,8 @@ export class LawyerProfileController{
     constructor(
         private _lawyerAddProfileApplication:ILawyerAddProfileUseCase,
         private _lawyerGetProfileApplication:IGetLawyerProfileUseCase,
-        private _lawyerEditProfileApplication:IEditLawyerProfileUseCase
+        private _lawyerEditProfileApplication:IEditLawyerProfileUseCase,
+        private _getLawyerProfileImageUseCase:IGetLawyerProfileImageUseCase
     ){}
 
     async addLawyerProfile(req:Request,res:Response){
@@ -49,6 +52,15 @@ export class LawyerProfileController{
             let imageUrl=req?.file?.path
            await this._lawyerEditProfileApplication.execute(req.body,imageUrl!)
            res.status(AppStatusCode.SUCCESS_CODE).json({success:true,message:"Profile edited successfully"})
+        } catch (error) {
+            res.status(AppStatusCode.INTERNAL_ERROR_CODE).json({success:false,message:AppError.UNKNOWN_ERROR})
+        }
+    }
+
+    async getLawyerProfileImage(req:Request,res:Response){
+        try {
+            let result=await this._getLawyerProfileImageUseCase.execute(new mongoose.Types.ObjectId(req.params.lawyerId))
+            res.status(AppStatusCode.SUCCESS_CODE).json({success:true,message:"Profile image found successfully",data:result})
         } catch (error) {
             res.status(AppStatusCode.INTERNAL_ERROR_CODE).json({success:false,message:AppError.UNKNOWN_ERROR})
         }

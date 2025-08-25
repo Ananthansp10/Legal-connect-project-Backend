@@ -9,8 +9,8 @@ export class UpdateRuleStatusUseCase implements IUpdateRuleStatusUseCase{
         private _updateRuleStatusRepo:IUpdateRuleStatusRepository
     ){}
 
-    async execute(ruleId: Types.ObjectId, ruleStatus: boolean): Promise<boolean> {
-        await this._updateRuleStatusRepo.updateRuleStatus(ruleId,ruleStatus)
+    async execute(ruleId: Types.ObjectId, ruleStatus: string): Promise<string> {
+        await this._updateRuleStatusRepo.updateRuleStatus(ruleId,Boolean(ruleStatus))
         return ruleStatus
     }
 }
