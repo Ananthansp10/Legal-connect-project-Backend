@@ -48,6 +48,7 @@ export class UserAuthController{
           await this._otpVerificationApplication.verifyOtp(req.body.userDetails.email,req.body.otp)
           res.status(AppStatusCode.SUCCESS_CODE).json({success:true,message:"OTP verified successfully"})
         } catch (error) {
+            console.log(error)
             if(error instanceof AppException){
                 res.status(error.statusCode).json({success:false,message:error.message})
             }else{

@@ -34,6 +34,12 @@ import { GetAppointmentsUseCase } from '../module/admin/application/use-case/get
 import { ReportAccountRepository } from '../module/admin/infrastructure/repository/reportAccountRepository';
 import { GetReportedAccountsUseCase } from '../module/admin/application/use-case/getReportedAccounts';
 import { UpdateReportedAccountUseCase } from '../module/admin/application/use-case/updateReportedAccountUseCase';
+import { PlanManagementRepository } from '../module/admin/infrastructure/repository/planManagementRepository';
+import { AddPlanUseCase } from '../module/admin/application/use-case/addPlanUseCase';
+import { EditPlanUseCase } from '../module/admin/application/use-case/editPlanUseCase';
+import { ManagePlanStatusUseCase } from '../module/admin/application/use-case/managePlanStatusUseCase';
+import { DeletePlanUseCase } from '../module/admin/application/use-case/deletePlanUseCase';
+import { GetPlansUseCase } from '../module/admin/application/use-case/getPlansUseCase';
 const router=express.Router()
 
 const tokenGenerateService=new TokenGenerationService()
@@ -88,12 +94,23 @@ const getAppointmentUseCase=new GetAppointmentsUseCase(appointmentRepo)
 const reportedAccountRepo=new ReportAccountRepository()
 const getReportedAccountUseCase=new GetReportedAccountsUseCase(reportedAccountRepo)
 const updateReportedAccountUseCase=new UpdateReportedAccountUseCase(reportedAccountRepo)
+const planeManagementRepo=new PlanManagementRepository()
+const addPlanUseCase=new AddPlanUseCase(planeManagementRepo)
+const editPlanUseCase=new EditPlanUseCase(planeManagementRepo)
+const managePlanStatusUseCase=new ManagePlanStatusUseCase(planeManagementRepo)
+const deletePlanUseCase=new DeletePlanUseCase(planeManagementRepo)
+const getPlansUseCase=new GetPlansUseCase(planeManagementRepo)
 
 
 const adminController=new AdminController(
     getAppointmentUseCase,
     getReportedAccountUseCase,
-    updateReportedAccountUseCase
+    updateReportedAccountUseCase,
+    addPlanUseCase,
+    editPlanUseCase,
+    managePlanStatusUseCase,
+    deletePlanUseCase,
+    getPlansUseCase
 )
 
 
@@ -126,5 +143,15 @@ router.get('/get-appointments/:appointmentStatus',verifyToken,verifyRole(['admin
 router.get('/reported-accounts/:userType',verifyToken,verifyRole(['admin']),(req,res)=>adminController.getReportedAccounts(req,res))
 
 router.post('/update-reportedAccount-status/:reportedAccountId',verifyToken,verifyRole(['admin']),(req,res)=>adminController.updateReportedAccountStatus(req,res))
+
+router.post('/add-plan',verifyToken,verifyRole(['admin']),(req,res)=>adminController.addPlan(req,res))
+
+router.put('/edit-plan/:planId',verifyToken,verifyRole(['admin']),(req,res)=>adminController.editPlan(req,res))
+
+router.post('/manage-plan-status/:planId/:status',verifyToken,verifyRole(['admin']),(req,res)=>adminController.managePlanStatus(req,res))
+
+router.post('/delete-plan/:planId',verifyToken,verifyRole(['admin']),(req,res)=>adminController.DeletePlanUseCase(req,res))
+
+router.get('/plans',verifyToken,verifyRole(['admin']),(req,res)=>adminController.getPlans(req,res))
 
 export default router;
