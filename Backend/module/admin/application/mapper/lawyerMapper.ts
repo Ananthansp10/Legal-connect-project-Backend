@@ -9,9 +9,6 @@ export class LawyerMapper{
             _id:lawyer._id!,
             name:lawyer.name,
             email:lawyer.email,
-            specialization:lawyer.specialization,
-            barCouncilNumber:lawyer.barCouncilNumber,
-            experience:lawyer.experience,
             status:lawyer.isBlock,
             createdAt:lawyer.createdAt
        }))
