@@ -1,8 +1,11 @@
+import { Types } from "mongoose";
 import { AppStatus } from "../../../../common/status/appStatus";
 import { LawyerModel } from "../../../auth/lawyerAuth/infrastructure/models/lawyerModel";
+import { lawyerProfileModel } from "../../../lawyer/infrastructure/models/lawyerProfileModel";
 import { ILawyerSignup } from "../../domain/entity/lawyerEntity";
 import { ILawyerRepository } from "../repositoryInterface/ILawyerRepository";
 import { BaseRepository } from "./baseRepository";
+import { LawyerProfileEntity } from "../../../lawyer/domain/entity/lawyerProfileEntity";
 
 
 
@@ -26,5 +29,9 @@ export class LawyerRepository extends BaseRepository<ILawyerSignup> implements I
 
     async filterLawyer(status: string): Promise<ILawyerSignup[] | null> {
         return await LawyerModel.find(status == 'unblock' ? {isBlock:false} : status == 'block' ? {isBlock:true} : {})
+    }
+
+    async getLawyerDetails(lawyerId: Types.ObjectId): Promise<LawyerProfileEntity | null> {
+        return await lawyerProfileModel.findOne({lawyerId:lawyerId})
     }
 }

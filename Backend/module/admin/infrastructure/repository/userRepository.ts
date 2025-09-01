@@ -1,8 +1,11 @@
+import { Types } from "mongoose";
 import { AppStatus } from "../../../../common/status/appStatus";
 import { UserModel } from "../../../auth/userAuth/infrastructure/models/userSignupModel";
 import { IUserSignup } from "../../domain/entity/userEntity";
 import { IUserRepository } from "../repositoryInterface/IuserRepository";
 import { BaseRepository } from "./baseRepository";
+import { userProfileModel } from "../../../user/infrastructure/models/userProfileModel";
+import { UserProfileEntitie } from "../../../user/domain/entity/userProfileUserEntity";
 
 
 export class UserRepository extends BaseRepository<IUserSignup> implements IUserRepository{
@@ -25,5 +28,9 @@ export class UserRepository extends BaseRepository<IUserSignup> implements IUser
 
     async filterUser(status: string): Promise<IUserSignup[] | null> {
         return await UserModel.find(status == 'unblock' ? {isBlock:false} : status == 'block' ? {isBlock:true} : {})
+    }
+
+    async getUserDetails(userId: Types.ObjectId): Promise<UserProfileEntitie | null> {
+        return await userProfileModel.findOne({userId:userId}) 
     }
 }
