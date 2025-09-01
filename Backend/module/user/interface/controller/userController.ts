@@ -15,6 +15,9 @@ import { AppException } from "../../../../common/error/errorException";
 import { IGetTodaysAppointmentsUseCase } from "../../application/use-case-interface/IGetTodaysAppointmentUseCase";
 import { IResheduleAppointmentUseCase } from "../../application/use-case-interface/IResheduleAppointmentUseCase";
 import { IReportLawyerUseCase } from "../../application/use-case-interface/IReportLawyerUseCase";
+import { IGetUserChatUseCase } from "../../application/use-case-interface/IGetUserChatUseCase";
+import { IGetAllChatUseCase } from "../../application/use-case-interface/IGetAllChatUseCase";
+import { IGetLawyerChatProfileUseCase } from "../../application/use-case-interface/IGetLawyerChatProfileUseCase";
 
 export class UserController{
 
@@ -29,7 +32,10 @@ export class UserController{
         private _cancelAppointmentUseCase:ICancelAppointmentUseCase,
         private _getTodaysAppointmentUseCase:IGetTodaysAppointmentsUseCase,
         private _resheduleAppointmentUseCase:IResheduleAppointmentUseCase,
-        private _reportLawyerUseCase:IReportLawyerUseCase
+        private _reportLawyerUseCase:IReportLawyerUseCase,
+        private _getUserChatUseCase:IGetUserChatUseCase,
+        private _getUserAllChatsUseCase:IGetAllChatUseCase,
+        private _getLawyerChatProfileUseCase:IGetLawyerChatProfileUseCase
     ){}
 
     async getLawyers(req:Request,res:Response){
@@ -138,7 +144,33 @@ export class UserController{
             await this._reportLawyerUseCase.execute(req.body)
             res.status(AppStatusCode.SUCCESS_CODE).json({success:true,message:"Report lawyer successfully"})
         } catch (error) {
-            console.log(error)
+            res.status(AppStatusCode.INTERNAL_ERROR_CODE).json({success:false,message:AppError.UNKNOWN_ERROR})
+        }
+    }
+
+    async getUserChat(req:Request,res:Response){
+        try {
+           let result=await this._getUserChatUseCase.execute(new mongoose.Types.ObjectId(req.params.userId),new mongoose.Types.ObjectId(req.params.lawyerId))
+           res.status(AppStatusCode.SUCCESS_CODE).json({success:true,message:"Message found successfully",data:result})
+        } catch (error) {
+            res.status(AppStatusCode.INTERNAL_ERROR_CODE).json({success:false,message:AppError.UNKNOWN_ERROR})
+        }
+    }
+
+    async getUserAllChats(req:Request,res:Response){
+        try {
+            let result=await this._getUserAllChatsUseCase.execute(new mongoose.Types.ObjectId(req.params.userId))
+            res.status(AppStatusCode.SUCCESS_CODE).json({success:true,message:"User chat found successfully",data:result})
+        } catch (error) {
+            res.status(AppStatusCode.INTERNAL_ERROR_CODE).json({success:false,message:AppError.UNKNOWN_ERROR})
+        }
+    }
+
+    async getLawyerChatProfile(req:Request,res:Response){
+        try {
+            let result=await this._getLawyerChatProfileUseCase.execute(new mongoose.Types.ObjectId(req.params.lawyerId))
+            res.status(AppStatusCode.SUCCESS_CODE).json({success:true,message:"Lawyer chat profile found successfully",data:result})
+        } catch (error) {
             res.status(AppStatusCode.INTERNAL_ERROR_CODE).json({success:false,message:AppError.UNKNOWN_ERROR})
         }
     }
