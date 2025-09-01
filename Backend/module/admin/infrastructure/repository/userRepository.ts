@@ -18,4 +18,12 @@ export class UserRepository extends BaseRepository<IUserSignup> implements IUser
             await UserModel.findByIdAndUpdate(userId,{$set:{isBlock:true}})
         }
     }
+
+    async searchUser(name: string): Promise<IUserSignup[] | null> {
+        return await UserModel.find({name: { $regex: new RegExp(name, "i") }})
+    }
+
+    async filterUser(status: string): Promise<IUserSignup[] | null> {
+        return await UserModel.find(status == 'unblock' ? {isBlock:false} : status == 'block' ? {isBlock:true} : {})
+    }
 }

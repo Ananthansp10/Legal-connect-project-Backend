@@ -6,6 +6,8 @@ import { IGetUnverifiedLawyersUseCase } from "../../application/use-case-interfa
 import { ILawyerResponse } from "../../domain/dtos/lawyerDto";
 import { IGetLawyersUseCase } from "../../application/use-case-interface/IGetLawyerUseCase";
 import { ILawyerVerificationStatusUseCase } from "../../application/use-case-interface/IVerifyLawyerStatusUseCase";
+import { ISearchLawyerUseCase } from "../../application/use-case-interface/ISearchLawyerUseCase";
+import { IFilterLawyerUseCase } from "../../application/use-case-interface/IFilterLawyerUseCase";
 
 export class AdminLawyerManagementController{
 
@@ -13,7 +15,9 @@ export class AdminLawyerManagementController{
         private _verifyLawyerApplication:ILawyerVerificationUseCase,
         private _getUnverifiedLawyerApplication:IGetUnverifiedLawyersUseCase,
         private _getLawyersApplication:IGetLawyersUseCase,
-        private _verifyLawyerStatusApplication:ILawyerVerificationStatusUseCase
+        private _verifyLawyerStatusApplication:ILawyerVerificationStatusUseCase,
+        private _searchLawyerUseCase:ISearchLawyerUseCase,
+        private _filterLawyerUseCase:IFilterLawyerUseCase
     ){}
 
     async getUnverifiedLawyers(req:Request,res:Response){
@@ -55,6 +59,24 @@ export class AdminLawyerManagementController{
             }else{
                 res.status(AppStatusCode.SUCCESS_CODE).json({success:true,message:"Lawyer unblock successfully"})
             }
+        } catch (error) {
+            res.status(AppStatusCode.INTERNAL_ERROR_CODE).json({success:false,message:AppError.UNKNOWN_ERROR})
+        }
+    }
+
+    async searchLawyer(req:Request,res:Response){
+        try {
+            let result=await this._searchLawyerUseCase.execute(req.params.name)
+            res.status(AppStatusCode.SUCCESS_CODE).json({success:true,message:"Search data found successfully",data:result})
+        } catch (error) {
+            res.status(AppStatusCode.INTERNAL_ERROR_CODE).json({success:false,message:AppError.UNKNOWN_ERROR})
+        }
+    }
+
+    async filterLawyer(req:Request,res:Response){
+        try {
+            let result=await this._filterLawyerUseCase.execute(req.params.status)
+            res.status(AppStatusCode.SUCCESS_CODE).json({success:true,message:"Filtered data found successfully",data:result})
         } catch (error) {
             res.status(AppStatusCode.INTERNAL_ERROR_CODE).json({success:false,message:AppError.UNKNOWN_ERROR})
         }
