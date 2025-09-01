@@ -44,6 +44,8 @@ import { SearchUserUseCase } from '../module/admin/application/use-case/searchUs
 import { SearchLawyerUseCase } from '../module/admin/application/use-case/searchLawyerUseCase';
 import { FilterLawyerUseCase } from '../module/admin/application/use-case/filterLawyerUseCase';
 import { FilterUserUseCase } from '../module/admin/application/use-case/filterUserUseCase';
+import { GetLawyerProfileDataUseCase } from '../module/admin/application/use-case/getLawyerProfileDataUseCase';
+import { GetUserProfileDataUseCase } from '../module/admin/application/use-case/getUserProfileDataUseCase';
 const router=express.Router()
 
 const tokenGenerateService=new TokenGenerationService()
@@ -62,6 +64,7 @@ const adminAuthController=new AdminAuthController(adminSigninApplication,tokenCo
 const verifyLawyerStatusApplication=new VerifyLawyerStatusUseCase(lawyerMongoRepo)
 const searchLawyerUseCase=new SearchLawyerUseCase(lawyerMongoRepo)
 const filterLawyerUseCase=new FilterLawyerUseCase(lawyerMongoRepo)
+const getLawyerProfileUseCase=new GetLawyerProfileDataUseCase(lawyerMongoRepo)
 
 const adminLawyerManagementController=new AdminLawyerManagementController(
     verifyLawyerApplication,
@@ -69,7 +72,8 @@ const adminLawyerManagementController=new AdminLawyerManagementController(
     getLawyersApplication,
     verifyLawyerStatusApplication,
     searchLawyerUseCase,
-    filterLawyerUseCase
+    filterLawyerUseCase,
+    getLawyerProfileUseCase
 )
 
 const userMongoRepo=new UserRepository()
@@ -77,12 +81,14 @@ const getUserApplication=new GetUsersUseCase(userMongoRepo)
 const verifyUserStatusApplication=new VerifyUserStatusUseCase(userMongoRepo)
 const searchUserUseCase=new SearchUserUseCase(userMongoRepo)
 const filterUserUseCase=new FilterUserUseCase(userMongoRepo)
+const getUserProfileUseCase=new GetUserProfileDataUseCase(userMongoRepo)
 
 const adminUserManagementController=new AdminUserManagementController(
     getUserApplication,
     verifyUserStatusApplication,
     searchUserUseCase,
-    filterUserUseCase
+    filterUserUseCase,
+    getUserProfileUseCase
 )
 
 const addSpecializationMongoRepo=new AddSpecializationRepository()
@@ -173,5 +179,9 @@ router.get('/search-lawyer/:name',verifyToken,verifyRole(['admin']),(req,res)=>a
 router.get('/filter-user/:status',verifyToken,verifyRole(['admin']),(req,res)=>adminUserManagementController.filterUser(req,res))
 
 router.get('/filter-lawyer/:status',verifyToken,verifyRole(['admin']),(req,res)=>adminLawyerManagementController.filterLawyer(req,res))
+
+router.get('/get-user-profile/:userId',verifyToken,verifyRole(['admin']),(req,res)=>adminUserManagementController.getUserProfile(req,res))
+
+router.get('/get-lawyer-profile/:lawyerId',verifyToken,verifyRole(['admin']),(req,res)=>adminLawyerManagementController.getLawyerProfile(req,res))
 
 export default router;

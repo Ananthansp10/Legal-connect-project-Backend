@@ -8,6 +8,8 @@ import { IGetLawyersUseCase } from "../../application/use-case-interface/IGetLaw
 import { ILawyerVerificationStatusUseCase } from "../../application/use-case-interface/IVerifyLawyerStatusUseCase";
 import { ISearchLawyerUseCase } from "../../application/use-case-interface/ISearchLawyerUseCase";
 import { IFilterLawyerUseCase } from "../../application/use-case-interface/IFilterLawyerUseCase";
+import { IGetLawyerProfileDataUseCase } from "../../application/use-case-interface/IGetLawyerProfileUseCase";
+import mongoose from "mongoose";
 
 export class AdminLawyerManagementController{
 
@@ -17,7 +19,8 @@ export class AdminLawyerManagementController{
         private _getLawyersApplication:IGetLawyersUseCase,
         private _verifyLawyerStatusApplication:ILawyerVerificationStatusUseCase,
         private _searchLawyerUseCase:ISearchLawyerUseCase,
-        private _filterLawyerUseCase:IFilterLawyerUseCase
+        private _filterLawyerUseCase:IFilterLawyerUseCase,
+        private _getLawyerProfileDataUseCase:IGetLawyerProfileDataUseCase
     ){}
 
     async getUnverifiedLawyers(req:Request,res:Response){
@@ -77,6 +80,15 @@ export class AdminLawyerManagementController{
         try {
             let result=await this._filterLawyerUseCase.execute(req.params.status)
             res.status(AppStatusCode.SUCCESS_CODE).json({success:true,message:"Filtered data found successfully",data:result})
+        } catch (error) {
+            res.status(AppStatusCode.INTERNAL_ERROR_CODE).json({success:false,message:AppError.UNKNOWN_ERROR})
+        }
+    }
+
+    async getLawyerProfile(req:Request,res:Response){
+        try {
+           let result=await this._getLawyerProfileDataUseCase.execute(new mongoose.Types.ObjectId(req.params.lawyerId))
+           res.status(AppStatusCode.SUCCESS_CODE).json({success:true,message:"Lawyer profile found successfully",data:result})
         } catch (error) {
             res.status(AppStatusCode.INTERNAL_ERROR_CODE).json({success:false,message:AppError.UNKNOWN_ERROR})
         }

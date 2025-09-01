@@ -8,8 +8,14 @@ import commonRouter from './routes/commonRouter'
 import cors from 'cors';
 import cookieParser from 'cookie-parser'
 import morgan from 'morgan'
+import http from 'http'
+import { initSocket } from './config/socketIo'
 
 env.config()
+
+export const server=http.createServer(app)
+
+initSocket(server)
 
 app.use(cors({
   origin: 'http://localhost:5173', 
