@@ -19,4 +19,12 @@ export class LawyerRepository extends BaseRepository<ILawyerSignup> implements I
             await LawyerModel.findByIdAndUpdate(lawyerId,{$set:{isBlock:true}})
         }
     }
+
+    async searchLawyer(name: string): Promise<ILawyerSignup[] | null> {
+        return await LawyerModel.find({name:name})
+    }
+
+    async filterLawyer(status: string): Promise<ILawyerSignup[] | null> {
+        return await LawyerModel.find(status == 'unblock' ? {isBlock:false} : status == 'block' ? {isBlock:true} : {})
+    }
 }

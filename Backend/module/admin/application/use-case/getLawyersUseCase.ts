@@ -7,12 +7,12 @@ import { LawyerMapper } from "../mapper/lawyerMapper";
 export class GetLawyersUseCase implements IGetLawyersUseCase{
 
     constructor(
-        private lawyerRepo:ILawyerRepository
+        private _lawyerRepo:ILawyerRepository
     ){}
 
     async execute(): Promise<ILawyerResponse[]> {
         try {
-            let lawyers:ILawyerSignup[] | null=await this.lawyerRepo.findAll()
+            let lawyers:ILawyerSignup[] | null=await this._lawyerRepo.findAll()
             let response:ILawyerResponse[]=[]
             if(lawyers){
                 response=await LawyerMapper.toResponse(lawyers) 

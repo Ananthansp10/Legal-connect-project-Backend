@@ -40,6 +40,10 @@ import { EditPlanUseCase } from '../module/admin/application/use-case/editPlanUs
 import { ManagePlanStatusUseCase } from '../module/admin/application/use-case/managePlanStatusUseCase';
 import { DeletePlanUseCase } from '../module/admin/application/use-case/deletePlanUseCase';
 import { GetPlansUseCase } from '../module/admin/application/use-case/getPlansUseCase';
+import { SearchUserUseCase } from '../module/admin/application/use-case/searchUserUseCase';
+import { SearchLawyerUseCase } from '../module/admin/application/use-case/searchLawyerUseCase';
+import { FilterLawyerUseCase } from '../module/admin/application/use-case/filterLawyerUseCase';
+import { FilterUserUseCase } from '../module/admin/application/use-case/filterUserUseCase';
 const router=express.Router()
 
 const tokenGenerateService=new TokenGenerationService()
@@ -56,21 +60,29 @@ const getLawyersApplication=new GetLawyersUseCase(lawyerMongoRepo)
 const adminAuthController=new AdminAuthController(adminSigninApplication,tokenCookieService)
 
 const verifyLawyerStatusApplication=new VerifyLawyerStatusUseCase(lawyerMongoRepo)
+const searchLawyerUseCase=new SearchLawyerUseCase(lawyerMongoRepo)
+const filterLawyerUseCase=new FilterLawyerUseCase(lawyerMongoRepo)
 
 const adminLawyerManagementController=new AdminLawyerManagementController(
     verifyLawyerApplication,
     getUnverifiedLawyerApplication,
     getLawyersApplication,
-    verifyLawyerStatusApplication
+    verifyLawyerStatusApplication,
+    searchLawyerUseCase,
+    filterLawyerUseCase
 )
 
 const userMongoRepo=new UserRepository()
 const getUserApplication=new GetUsersUseCase(userMongoRepo)
 const verifyUserStatusApplication=new VerifyUserStatusUseCase(userMongoRepo)
+const searchUserUseCase=new SearchUserUseCase(userMongoRepo)
+const filterUserUseCase=new FilterUserUseCase(userMongoRepo)
 
 const adminUserManagementController=new AdminUserManagementController(
     getUserApplication,
-    verifyUserStatusApplication
+    verifyUserStatusApplication,
+    searchUserUseCase,
+    filterUserUseCase
 )
 
 const addSpecializationMongoRepo=new AddSpecializationRepository()
@@ -153,5 +165,13 @@ router.post('/manage-plan-status/:planId/:status',verifyToken,verifyRole(['admin
 router.post('/delete-plan/:planId',verifyToken,verifyRole(['admin']),(req,res)=>adminController.DeletePlanUseCase(req,res))
 
 router.get('/plans',verifyToken,verifyRole(['admin']),(req,res)=>adminController.getPlans(req,res))
+
+router.get('/search-user/:name',verifyToken,verifyRole(['admin']),(req,res)=>adminUserManagementController.searchUser(req,res))
+
+router.get('/search-lawyer/:name',verifyToken,verifyRole(['admin']),(req,res)=>adminLawyerManagementController.searchLawyer(req,res))
+
+router.get('/filter-user/:status',verifyToken,verifyRole(['admin']),(req,res)=>adminUserManagementController.filterUser(req,res))
+
+router.get('/filter-lawyer/:status',verifyToken,verifyRole(['admin']),(req,res)=>adminLawyerManagementController.filterLawyer(req,res))
 
 export default router;
