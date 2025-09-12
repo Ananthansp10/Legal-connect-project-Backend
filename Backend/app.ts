@@ -9,6 +9,9 @@ import cors from 'cors';
 import cookieParser from 'cookie-parser'
 import morgan from 'morgan'
 import http from 'http'
+import * as rfs from "rotating-file-stream"
+import fs from "fs"
+import path from "path"
 import { initSocket } from './config/socketIo'
 
 env.config()
@@ -16,6 +19,17 @@ env.config()
 export const server=http.createServer(app)
 
 initSocket(server)
+
+const logDirectory = path.join(process.cwd(), 'logs');
+if (!fs.existsSync(logDirectory)) {
+  fs.mkdirSync(logDirectory, { recursive: true });
+}
+
+const accessLogStream = rfs.createStream('access.log', {
+  interval: '1d',         
+  path: logDirectory,
+  maxFiles: 7             
+});
 
 app.use(cors({
   origin: 'http://localhost:5173', 
@@ -26,7 +40,8 @@ app.use(cookieParser());
 
 app.use(express.json());
 
-app.use(morgan('dev'))
+//app.use(morgan('dev'))
+app.use(morgan('combined', { stream: accessLogStream }))
 
 app.use('/api/user',userRouter)
 app.use('/api/lawyer',lawyerRouter)

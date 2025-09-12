@@ -6,10 +6,10 @@ import { IGetLawyerProfileImageUseCase } from "../use-case-interface/IGetLawyerP
 export class GetLawyerProfileImageUseCase implements IGetLawyerProfileImageUseCase {
 
     constructor(
-        private getLawyerProfileRepo:IGetLawyerProfileRepository
+        private _getLawyerProfileRepo:IGetLawyerProfileRepository
     ){}
 
     async execute(lawyerId: Types.ObjectId): Promise<string | null> {
-        return await this.getLawyerProfileRepo.getLawyerProfileImage(lawyerId)
+        return await this._getLawyerProfileRepo.getLawyerProfileImage(lawyerId)
     }
 }

@@ -1,3 +1,4 @@
+import { Types } from "mongoose";
 import { IAppointmentEntity } from "../../domain/entity/appointmentEntity";
 import { IBaseRepository } from "./IbaseRepository";
 

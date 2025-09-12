@@ -8,10 +8,10 @@ import { IGetLawyerProfileUseCase } from "../use-case-interface/IGetLawyerProfil
 export class GetLawyerProfileUseCase  implements IGetLawyerProfileUseCase{
 
     constructor(
-        private getLawyerProfileRepo:IGetLawyerProfileRepository
+        private _getLawyerProfileRepo:IGetLawyerProfileRepository
     ){}
 
     async execute(lawyerId: string): Promise<LawyerProfileEntity | null> {
-        return await this.getLawyerProfileRepo.getLawyerProfile(lawyerId)
+        return await this._getLawyerProfileRepo.getLawyerProfile(lawyerId)
     }
 }

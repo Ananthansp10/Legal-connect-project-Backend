@@ -16,7 +16,6 @@ import { ChangePasswordRepository } from '../module/auth/lawyerAuth/infrastructu
 import { LawyerResetPasswordUseCase } from '../module/auth/lawyerAuth/application/lawyer-use-case/lawyerResetPasswordUseCase';
 import { verifyToken } from '../middlewares/verifyTokenMiddleware';
 import { verifyRole } from '../middlewares/verifyRoleMiddleware';
-import { CheckAccountStatusRepository } from '../module/auth/userAuth/infrastructure/repository/checkAccountStatusRepository';
 import { LawyerProfileController } from '../module/lawyer/interface/controller/lawyerProfileManagementController';
 import { LawyerAddProfileRepository } from '../module/lawyer/infrastructure/repository/lawyerAddProfileRepository';
 import { LawyerAddProfileUseCase } from '../module/lawyer/application/use-case/lawyerAddProfileUseCase';
@@ -42,6 +41,17 @@ import { PaymentController } from '../module/lawyer/interface/controller/payment
 import { CreateRazorpayOrderUseCase } from '../module/lawyer/application/use-case/createRazorpayOrderUseCase';
 import { VerifyRazorpayPaymentUseCase } from '../module/lawyer/application/use-case/verifyRazorpayPaymentUseCase';
 import { AddPlanUseCase } from '../module/lawyer/application/use-case/addPlanUseCase';
+import { LawyerChatRepository } from '../module/lawyer/infrastructure/repository/lawyerChatRepository';
+import { GetLawyerAllChatUseCase } from '../module/lawyer/application/use-case/getLawyerAllChatUseCase';
+import { GetLawyerChatUseCase } from '../module/lawyer/application/use-case/getLawyerChatUseCase';
+import { GetUserProfileUseCase } from '../module/user/application/use-case/getUserProfileUseCase';
+import { GetUserChatProfileUseCase } from '../module/lawyer/application/use-case/getUserChatProfileUseCase';
+import { UpdateReadStatusUseCase } from '../module/lawyer/application/use-case/updateReadStatusUseCase';
+import { BankDetailsRepository } from '../module/lawyer/infrastructure/repository/bankDetailsRepository';
+import { AddBankAccountDetailsUseCase } from '../module/lawyer/application/use-case/addBankAccountDetailsUseCase';
+import { SummaryRepository } from '../module/lawyer/infrastructure/repository/summaryRepository';
+import { GetSummaryUseCase } from '../module/lawyer/application/use-case/getSummaryUseCase';
+import { CheckBankDetailsUseCase } from '../module/lawyer/application/use-case/checkBankDetailsUseCase';
 const router=express.Router()
 
 const lawyerSignupMongoRepo=new LawyerSignupRepository()
@@ -94,6 +104,16 @@ const updateAppointmentStatusUseCase=new UpdateAppointmentStatusUseCase(appointm
 const subscriptionPlanRepo=new SubscriptionPlanRepository()
 const getSubscriptionPlanUseCase=new GetSubscriptionPlanUseCase(subscriptionPlanRepo)
 const addPlanUseCase=new AddPlanUseCase(planRepo)
+const chatRepo=new LawyerChatRepository()
+const getLawyerAllChatsUseCase=new GetLawyerAllChatUseCase(chatRepo)
+const getLawyerChatUseCase=new GetLawyerChatUseCase(chatRepo)
+const getUserChatProfileUseCase=new GetUserChatProfileUseCase(chatRepo)
+const updateChatReadStatusUseCase=new UpdateReadStatusUseCase(chatRepo)
+const bankDetailsRepo=new BankDetailsRepository()
+const addBankDetailsUseCase=new AddBankAccountDetailsUseCase(bankDetailsRepo)
+const summaryRepo=new SummaryRepository()
+const getSummaryUseCase=new GetSummaryUseCase(summaryRepo)
+const checkBankDetailsUseCase=new CheckBankDetailsUseCase(bankDetailsRepo)
 
 const lawyerController=new LawyerController(
     addSlotApplication,
@@ -102,7 +122,14 @@ const lawyerController=new LawyerController(
     getAppointmentUseCase,
     updateAppointmentStatusUseCase,
     getSubscriptionPlanUseCase,
-    addPlanUseCase
+    addPlanUseCase,
+    getLawyerAllChatsUseCase,
+    getLawyerChatUseCase,
+    getUserChatProfileUseCase,
+    updateChatReadStatusUseCase,
+    addBankDetailsUseCase,
+    getSummaryUseCase,
+    checkBankDetailsUseCase
 )
 
 const createRazorpayOrderUseCase=new CreateRazorpayOrderUseCase()
@@ -156,6 +183,20 @@ router.post('/create-razorpay-order',verifyToken,verifyRole(['lawyer']),(req,res
 router.post('/verify-payment',verifyToken,verifyRole(['lawyer']),(req,res)=>paymentController.verifyPayment(req,res))
 
 router.post('/add-plan/:lawyerId/:planId',verifyToken,verifyRole(['lawyer']),(req,res)=>lawyerController.addPlan(req,res))
+
+router.get('/get-all-chats/:lawyerId',verifyToken,verifyRole(['lawyer']),(req,res)=>lawyerController.getAllChats(req,res))
+
+router.get('/get-chat/:lawyerId/:userId',verifyToken,verifyRole(['lawyer']),(req,res)=>lawyerController.getChat(req,res))
+
+router.get('/get-user-chat-profile/:userId',verifyToken,verifyRole(['lawyer']),(req,res)=>lawyerController.getUserChatProfile(req,res))
+
+router.post('/update-chat-read-status/:lawyerId/:userId',verifyToken,verifyRole(['lawyer']),(req,res)=>lawyerController.updateChatReadStatus(req,res))
+
+router.post('/add-bank-account',verifyToken,verifyRole(['lawyer']),(req,res)=>lawyerController.addBankAccount(req,res))
+
+router.get('/get-summary/:lawyerId',verifyToken,verifyRole(['lawyer']),(req,res)=>lawyerController.getSummary(req,res))
+
+router.get('/check-bank-details/:lawyerId',verifyToken,verifyRole(['lawyer']),(req,res)=>lawyerController.checkBankDetails(req,res))
 
 
 export default router;

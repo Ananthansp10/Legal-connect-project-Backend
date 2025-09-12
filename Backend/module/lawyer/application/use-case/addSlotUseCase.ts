@@ -7,10 +7,10 @@ import { IAddSlotUseCase } from "../use-case-interface/IAddSlotUseCase";
 export class AddSlotUseCase implements IAddSlotUseCase{
 
     constructor(
-        private addSlotRepo:IAddSlotRepository
+        private _addSlotRepo:IAddSlotRepository
     ){}
 
     async execute(lawyerId: Types.ObjectId, data: ISlotAvailablityEntity): Promise<void> {
-        await this.addSlotRepo.addSlot({...data,lawyerId:lawyerId})
+        await this._addSlotRepo.addSlot({...data,lawyerId:lawyerId})
     }
 }

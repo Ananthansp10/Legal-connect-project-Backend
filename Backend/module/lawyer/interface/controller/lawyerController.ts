@@ -10,6 +10,13 @@ import { IUpdateAppointmentStatus } from "../../application/use-case-interface/I
 import { IGetSubscriptionPlanUseCase } from "../../application/use-case-interface/IGetSubscriptionPlanUseCase";
 import { AppException } from "../../../../common/error/errorException";
 import { IAddPlanUseCase } from "../../application/use-case-interface/IAddPlanUseCase";
+import { IGetLawyerAllChatsUseCase } from "../../application/use-case-interface/IGetLawyerAllChatUseCase";
+import { IGetLawyerChatUseCase } from "../../application/use-case-interface/IGetLawyerChatUseCase";
+import { IGetUserChatProfileUseCase } from "../../application/use-case-interface/IGetUserChatProfileUseCase";
+import { IUpdateReadStatusUseCase } from "../../application/use-case-interface/IUpdateReadStatusUseCase";
+import { IAddBankAccountDetailsUseCase } from "../../application/use-case-interface/IAddBankAccountDetailsUseCase";
+import { IGetSummaryUseCase } from "../../application/use-case-interface/IGetSummaryUseCase";
+import { ICheckBankDetailsUseCase } from "../../application/use-case-interface/ICheckBankDetailsUseCase";
 
 
 export class LawyerController{
@@ -21,7 +28,14 @@ export class LawyerController{
         private _getAppointmentUseCase:IGetAppointmentUseCase,
         private _updateAppointmentStatusUseCase:IUpdateAppointmentStatus,
         private _getSubscriptionPlanUseCase:IGetSubscriptionPlanUseCase,
-        private _addPlanUseCase:IAddPlanUseCase
+        private _addPlanUseCase:IAddPlanUseCase,
+        private _getLawyerAllChatsUseCase:IGetLawyerAllChatsUseCase,
+        private _getLawyerChatUseCase:IGetLawyerChatUseCase,
+        private _getUserChatProfileUseCase:IGetUserChatProfileUseCase,
+        private _updateChatReadStatusUseCase:IUpdateReadStatusUseCase,
+        private _addBankAccountDetailsUseCase:IAddBankAccountDetailsUseCase,
+        private _getSummaryUseCase:IGetSummaryUseCase,
+        private checkBankDetailsUseCase:ICheckBankDetailsUseCase
     ){}
 
     async addSlot(req:Request,res:Response):Promise<void>{
@@ -87,6 +101,69 @@ export class LawyerController{
         try {
             await this._addPlanUseCase.execute(new mongoose.Types.ObjectId(req.params.lawyerId),new mongoose.Types.ObjectId(req.params.planId))
             res.status(AppStatusCode.SUCCESS_CODE).json({success:true,message:"Subscription plan addedd"})
+        } catch (error) {
+            res.status(AppStatusCode.INTERNAL_ERROR_CODE).json({success:false,message:AppError.UNKNOWN_ERROR})
+        }
+    }
+
+    async getAllChats(req:Request,res:Response){
+        try {
+            let result=await this._getLawyerAllChatsUseCase.execute(new mongoose.Types.ObjectId(req.params.lawyerId))
+            res.status(AppStatusCode.SUCCESS_CODE).json({success:true,message:"Lawyer all chats found successfully",data:result})
+        } catch (error) {
+            res.status(AppStatusCode.INTERNAL_ERROR_CODE).json({success:false,message:AppError.UNKNOWN_ERROR})
+        }
+    }
+
+    async getChat(req:Request,res:Response){
+        try {
+            let result=await this._getLawyerChatUseCase.execute(new mongoose.Types.ObjectId(req.params.lawyerId),new mongoose.Types.ObjectId(req.params.userId))
+            res.status(AppStatusCode.SUCCESS_CODE).json({success:true,message:"Chat found successfully",data:result})
+        } catch (error) {
+            res.status(AppStatusCode.INTERNAL_ERROR_CODE).json({success:false,message:AppError.UNKNOWN_ERROR})
+        }
+    }
+
+    async getUserChatProfile(req:Request,res:Response){
+        try {
+            let result=await this._getUserChatProfileUseCase.execute(new mongoose.Types.ObjectId(req.params.userId))
+            res.status(AppStatusCode.SUCCESS_CODE).json({success:true,message:"User chat profile found",data:result})
+        } catch (error) {
+            res.status(AppStatusCode.INTERNAL_ERROR_CODE).json({success:false,message:AppError.UNKNOWN_ERROR})
+        }
+    }
+
+    async updateChatReadStatus(req:Request,res:Response){
+        try {
+           await this._updateChatReadStatusUseCase.execute(new mongoose.Types.ObjectId(req.params.lawyerId),new mongoose.Types.ObjectId(req.params.userId))
+           res.status(AppStatusCode.SUCCESS_CODE).json({success:true,message:"Chat read status updated"})
+        } catch (error) {
+            res.status(AppStatusCode.INTERNAL_ERROR_CODE).json({success:false,message:AppError.UNKNOWN_ERROR})
+        }
+    }
+
+    async addBankAccount(req:Request,res:Response){
+        try {
+           await this._addBankAccountDetailsUseCase.execute(req.body)
+           res.status(AppStatusCode.SUCCESS_CODE).json({success:true,message:"Bank details added successfully"})
+        } catch (error) {
+            res.status(AppStatusCode.INTERNAL_ERROR_CODE).json({SUCCESS:false,MESSAGE:AppError.UNKNOWN_ERROR})
+        }
+    }
+
+    async getSummary(req:Request,res:Response){
+        try {
+            let result=await this._getSummaryUseCase.execute(new mongoose.Types.ObjectId(req.params.lawyerId))
+            res.status(AppStatusCode.SUCCESS_CODE).json({success:true,message:"Summary found successfully",data:result})
+        } catch (error) {
+            res.status(AppStatusCode.INTERNAL_ERROR_CODE).json({success:false,message:AppError.UNKNOWN_ERROR})
+        }
+    }
+
+    async checkBankDetails(req:Request,res:Response){
+        try {
+           let result=await this.checkBankDetailsUseCase.execute(new mongoose.Types.ObjectId(req.params.lawyerId))
+           res.status(AppStatusCode.SUCCESS_CODE).json({success: result ? true : false,message: result ? "Bank Details found successfully" : "Bank details not found"})
         } catch (error) {
             res.status(AppStatusCode.INTERNAL_ERROR_CODE).json({success:false,message:AppError.UNKNOWN_ERROR})
         }

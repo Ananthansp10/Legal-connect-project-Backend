@@ -24,9 +24,9 @@ export class VerifyPaymentUseCase implements IVerifyPaymentUseCase{
             const generatedSignature = hmac.digest("hex")
 
             if(generatedSignature===razorpay_signature){
-                await this._appointmentRepo.updatePayment(appointmentId,PaymentStatus.SUCCESS)
+                await this._appointmentRepo.updatePayment(appointmentId,PaymentStatus.SUCCESS,razorpay_payment_id)
             }else{
-                await this._appointmentRepo.updatePayment(appointmentId,PaymentStatus.FAILED)
+                await this._appointmentRepo.updatePayment(appointmentId,PaymentStatus.FAILED,razorpay_payment_id)
                 throw new AppException("Payment failed",AppStatusCode.PAYMENT_FAILED)
             }
 

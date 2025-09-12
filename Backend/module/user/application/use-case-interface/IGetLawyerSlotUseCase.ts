@@ -1,7 +1,11 @@
 import { Types } from "mongoose";
-import { ISlotResponseDto } from "../../domain/dtos/slotResponseDto";
 
+interface SlotData{
+    startTime:string;
+    endTime:string;
+    isBooked:boolean
+}
 
-export interface IGetLawyerSlotApplication{
-    execute(lawyerId:Types.ObjectId,date:string):Promise<any>
+export interface IGetLawyerSlotUseCase{
+    execute(lawyerId:Types.ObjectId,date:string):Promise<SlotData[] | undefined>;
 }

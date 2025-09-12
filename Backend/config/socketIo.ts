@@ -2,11 +2,18 @@ import { Server as SocketIOServer } from "socket.io";
 import { Server as HTTPServer } from "http";
 import { ChatRepository } from "../module/user/infrastructure/repository/chatRepository";
 import { AddChatUseCase } from "../module/user/application/use-case/addChatUseCase";
+import { UpdateChatReadStatusUseCase } from "../module/user/application/use-case/updateChatReadStatusUseCase";
+import mongoose from "mongoose";
+import { LawyerChatRepository } from "../module/lawyer/infrastructure/repository/lawyerChatRepository";
+import { UpdateReadStatusUseCase } from "../module/lawyer/application/use-case/updateReadStatusUseCase";
 
 let io:SocketIOServer;
 
 const chatRepo=new ChatRepository()
 const addChatUseCase=new AddChatUseCase(chatRepo)
+const updateChatReadStatusUseCase=new UpdateChatReadStatusUseCase(chatRepo)
+const lawyerChatRepo=new LawyerChatRepository()
+const updateLawyerChatReadStatusUseCase=new UpdateReadStatusUseCase(lawyerChatRepo)
 
 const map=new Map()
 
@@ -37,6 +44,14 @@ export const initSocket = (server:HTTPServer) => {
         })
       }
       await addChatUseCase.execute(senderId,receiverId,message)
+    })
+
+    socket.on("update_read_status",async({userId,lawyerId})=>{
+      await updateChatReadStatusUseCase.execute(new mongoose.Types.ObjectId(String((userId))),new mongoose.Types.ObjectId(String(lawyerId)))
+    })
+
+    socket.on("update_lawyer_chat_status",async({lawyerId,userId})=>{
+      await updateLawyerChatReadStatusUseCase.execute(new mongoose.Types.ObjectId(String(lawyerId)),new mongoose.Types.ObjectId(String(userId)))
     })
 
     socket.on("disconnect", () => {
