@@ -4,7 +4,7 @@ import { getLawyerResponse } from "../../application/mapper/getLawyerMapper";
 import { IGetLawyerDetailsUseCase } from "../../application/use-case-interface/IGetLawyerDetailsUseCase";
 import { IGetLawyerUseCase } from "../../application/use-case-interface/IGetLawyersUseCase";
 import { Request,Response } from "express";
-import { IGetLawyerSlotApplication } from "../../application/use-case-interface/IGetLawyerSlotUseCase";
+import { IGetLawyerSlotUseCase } from "../../application/use-case-interface/IGetLawyerSlotUseCase";
 import { IFilterLawyerUseCase } from "../../application/use-case-interface/IFilterLawyerUseCase";
 import { ISearchLawyerUseCase } from "../../application/use-case-interface/ISearchLawyerUseCase";
 import { IBookAppointmentUseCase } from "../../application/use-case-interface/IBookAppointmentUseCase";
@@ -18,13 +18,15 @@ import { IReportLawyerUseCase } from "../../application/use-case-interface/IRepo
 import { IGetUserChatUseCase } from "../../application/use-case-interface/IGetUserChatUseCase";
 import { IGetAllChatUseCase } from "../../application/use-case-interface/IGetAllChatUseCase";
 import { IGetLawyerChatProfileUseCase } from "../../application/use-case-interface/IGetLawyerChatProfileUseCase";
+import { IAddReviewUseCase } from "../../application/use-case-interface/IAddReviewUseCase";
+import { IGetReviewUseCase } from "../../application/use-case-interface/IGetReviewUseCase";
 
 export class UserController{
 
     constructor(
         private _getLawyerApplication:IGetLawyerUseCase,
         private _getLawyerDetailsApplication:IGetLawyerDetailsUseCase,
-        private _getLawyerSlotApplication:IGetLawyerSlotApplication,
+        private _getLawyerSlotApplication:IGetLawyerSlotUseCase,
         private _filterLawyerApplication:IFilterLawyerUseCase,
         private _searchLawyerApplication:ISearchLawyerUseCase,
         private _bookAppointmentApplication:IBookAppointmentUseCase,
@@ -35,7 +37,9 @@ export class UserController{
         private _reportLawyerUseCase:IReportLawyerUseCase,
         private _getUserChatUseCase:IGetUserChatUseCase,
         private _getUserAllChatsUseCase:IGetAllChatUseCase,
-        private _getLawyerChatProfileUseCase:IGetLawyerChatProfileUseCase
+        private _getLawyerChatProfileUseCase:IGetLawyerChatProfileUseCase,
+        private _addReviewUseCase:IAddReviewUseCase,
+        private _getReviewUseCase:IGetReviewUseCase
     ){}
 
     async getLawyers(req:Request,res:Response){
@@ -110,7 +114,7 @@ export class UserController{
     async cancelAppointment(req:Request,res:Response){
         try {
            await this._cancelAppointmentUseCase.execute(new mongoose.Types.ObjectId(req.params.appointmentId))
-           res.status(AppStatusCode.SUCCESS_CODE).json({success:true,message:"Appointment cancelled successfully"})
+           res.status(AppStatusCode.SUCCESS_CODE).json({success:true,message:"Appointment cancelled successfully and payment refunded"})
         } catch (error) {
             if(error instanceof AppException){
                 res.status(error.statusCode).json({success:false,message:error.message})
@@ -170,6 +174,24 @@ export class UserController{
         try {
             let result=await this._getLawyerChatProfileUseCase.execute(new mongoose.Types.ObjectId(req.params.lawyerId))
             res.status(AppStatusCode.SUCCESS_CODE).json({success:true,message:"Lawyer chat profile found successfully",data:result})
+        } catch (error) {
+            res.status(AppStatusCode.INTERNAL_ERROR_CODE).json({success:false,message:AppError.UNKNOWN_ERROR})
+        }
+    }
+
+    async addReview(req:Request,res:Response){
+        try {
+          await this._addReviewUseCase.execute(new mongoose.Types.ObjectId(req.params.lawyerId),req.body)
+          res.status(AppStatusCode.SUCCESS_CODE).json({success:true,message:"Review added successfully"})
+        } catch (error) {
+            res.status(AppStatusCode.INTERNAL_ERROR_CODE).json({success:false,message:AppError.UNKNOWN_ERROR})
+        }
+    }
+
+    async getReview(req:Request,res:Response){
+        try {
+            let result=await this._getReviewUseCase.execute(new mongoose.Types.ObjectId(req.params.lawyerId))
+            res.status(AppStatusCode.SUCCESS_CODE).json({success:true,message:"Review found successfully",data:result})
         } catch (error) {
             res.status(AppStatusCode.INTERNAL_ERROR_CODE).json({success:false,message:AppError.UNKNOWN_ERROR})
         }

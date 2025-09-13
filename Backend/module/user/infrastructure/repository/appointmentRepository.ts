@@ -33,9 +33,9 @@ export class AppointmentRepository implements IAppointmentRepository{
         return await lawyerProfileModel.findOne({lawyerId:lawyerId})
     }
 
-    async updatePayment(appointmentId: Types.ObjectId, status:string): Promise<void> {
+    async updatePayment(appointmentId: Types.ObjectId, status:string, paymentId:string): Promise<void> {
       await appointmentModel.findByIdAndUpdate(appointmentId,
-        {$set:{payment:status,appointmentStatus:status==PaymentStatus.SUCCESS ? AppointmentStatus.BOOKED : AppointmentStatus.ACCEPTED}}
+        {$set:{payment:status,appointmentStatus:status==PaymentStatus.SUCCESS ? AppointmentStatus.BOOKED : AppointmentStatus.ACCEPTED,paymentId:paymentId}}
       )
     }
 
@@ -53,5 +53,9 @@ export class AppointmentRepository implements IAppointmentRepository{
 
     async resheduleAppointment(appointmentId: Types.ObjectId): Promise<void> {
       await appointmentModel.findByIdAndDelete(appointmentId)
+    }
+
+    async refundPayment(appointmentId: Types.ObjectId, status:string): Promise<void> {
+      await appointmentModel.findByIdAndUpdate(appointmentId,{$set:{refundStatus:status}})
     }
 }

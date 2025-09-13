@@ -14,6 +14,7 @@ export interface LawyerEditProfileRequest{
     language: string[];
     imagePreview:string;
     profileImage: string;
+    fee:number;
 }
 
 export interface LawyerEditProfileResponse{
@@ -29,6 +30,7 @@ export interface LawyerEditProfileResponse{
         state:string;
         country:string;
     }
+    fee:number;
 }
 
 export class EditLawyerProfileMapper{
@@ -46,7 +48,8 @@ export class EditLawyerProfileMapper{
                 city:data.city,
                 state:data.state,
                 country:data.country
-            }
+            },
+            fee:data.fee
         }
     }
 }

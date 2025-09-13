@@ -7,10 +7,10 @@ import { IAddSpecializationUseCase } from "../use-case-interface/IAddSpecialisat
 export class AddSpecializationUseCase implements IAddSpecializationUseCase{
 
     constructor(
-        private addSpecialization:IAddSpecializationRepository
+        private _addSpecialization:IAddSpecializationRepository
     ){}
 
     async execute(data: ISpecializationEntity): Promise<void> {
-        await this.addSpecialization.addSpecialization(data)
+        await this._addSpecialization.addSpecialization(data)
     }
 }

@@ -2,6 +2,7 @@
 import { Types } from "mongoose";
 import { IPlanRepository } from "../../infrastructure/repositoryInterface/IPlanRepository";
 import { IAddPlanUseCase } from "../use-case-interface/IAddPlanUseCase";
+import plans from "razorpay/dist/types/plans";
 
 
 export class AddPlanUseCase implements IAddPlanUseCase{
@@ -10,13 +11,28 @@ export class AddPlanUseCase implements IAddPlanUseCase{
         private _planRepo:IPlanRepository
     ){}
 
-    async execute(lawyerId: Types.ObjectId, planId: Types.ObjectId): Promise<void> {
+    async execute(lawyerId: Types.ObjectId, planId: Types.ObjectId, price:string): Promise<void> {
         let planExist=await this._planRepo.findPlan(lawyerId)
         let currentDate=new Date().toISOString().split('T')[0]
         if(planExist){
-            await this._planRepo.updatePlan(lawyerId,planId,currentDate)
+            let planObj={
+                planId:planId,
+                date:currentDate,
+                price:Number(price)
+            }
+            await this._planRepo.updatePlan(lawyerId,planObj)
         }else{
-            await this._planRepo.addPlan({lawyerId:lawyerId,planId:planId,date:currentDate})
+            let plan={
+                lawyerId:lawyerId,
+                plans:[
+                    {
+                        planId:planId,
+                        date:currentDate,
+                        price:Number(price)
+                    }
+                ]
+            }
+            await this._planRepo.addPlan(plan)
         }
     }
 }

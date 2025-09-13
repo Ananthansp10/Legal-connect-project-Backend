@@ -7,11 +7,11 @@ import { IGetSpecializationUseCase } from "../use-case-interface/IGetSpecializat
 export class GetSpecializationUseCase implements IGetSpecializationUseCase{
 
     constructor(
-        private getSpecializationRepo:IGetSpecializationRepository
+        private _getSpecializationRepo:IGetSpecializationRepository
     ){}
 
     async execute(): Promise<ISpecializationEntity[] | null> {
 
-        return await this.getSpecializationRepo.getSpecialization()
+        return await this._getSpecializationRepo.getSpecialization()
     }
 }

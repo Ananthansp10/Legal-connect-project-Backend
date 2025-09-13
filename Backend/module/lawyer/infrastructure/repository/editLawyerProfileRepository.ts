@@ -13,6 +13,7 @@ export class EditLawyerProfileRepository extends BaseRepository<LawyerProfileEnt
     }
 
     async editLawyerProfile(lawyerId:Types.ObjectId,data: LawyerEditProfileResponse): Promise<void> {
-        await lawyerProfileModel.updateOne({lawyerId:lawyerId},{$set:{personalInfo:data}})
+        const {fee,...personalInfo}=data
+        await lawyerProfileModel.updateOne({lawyerId:lawyerId},{$set:{personalInfo:personalInfo,'proffessionalInfo.fee':fee}})
     }
 }

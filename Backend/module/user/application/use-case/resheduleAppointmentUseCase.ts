@@ -6,10 +6,10 @@ import { IResheduleAppointmentUseCase } from "../use-case-interface/IResheduleAp
 export class ResheduleAppointmentUseCase implements IResheduleAppointmentUseCase{
 
     constructor(
-        private appointmentRepo:IAppointmentRepository
+        private _appointmentRepo:IAppointmentRepository
     ){}
 
     async execute(appointmentId: Types.ObjectId): Promise<void> {
-        await this.appointmentRepo.resheduleAppointment(appointmentId)
+        await this._appointmentRepo.resheduleAppointment(appointmentId)
     }
 }

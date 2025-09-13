@@ -2,7 +2,7 @@ import { AppError } from "../../../../../common/error/AppEnumError";
 import { AppException } from "../../../../../common/error/errorException";
 import { AppStatusCode } from "../../../../../common/statusCode/AppStatusCode";
 import { IHashService } from "../../../userAuth/infrastructure/services/IhashService";
-import { IChangePasswordRepository } from "../../infrastructure/repositoryInterface/IChangePasswordRepository";
+import { IChangePasswordRepository } from "../../infrastructure/repositoryInterface/IchangePasswordRepository";
 import { ILawyerChangePasswordUseCase } from "../lawyer-use-case-interface/IlawyerChangePasswordUseCase";
 import jwt from 'jsonwebtoken'
 
