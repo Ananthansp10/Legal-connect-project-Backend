@@ -23,12 +23,12 @@ export class GetAllChatUseCase implements IGetAllChatUseCase{
                     name:lawyerDetails?.personalInfo.name!,
                     profileImage:lawyerDetails?.personalInfo.profileImage!,
                     lastMessage:chat.messages[chat.messages.length-1].message,
-                    lastMessageTime: '2025-01-08T12:25:00Z',
-                    unreadCount: 3,
+                    lastMessageTime:chat.messages[chat.messages.length-1].createdAt,
+                    unreadCount:chat.messages.filter((msg)=>msg.receiverId.toString()==userId.toString() && !msg.isRead).length,
                     isOnline: true
                 }
             })
         )
-        return chatDetails
+        return chatDetails.reverse()
     }
 }

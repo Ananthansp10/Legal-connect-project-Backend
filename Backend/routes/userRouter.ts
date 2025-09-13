@@ -58,6 +58,10 @@ import { ChatRepository } from '../module/user/infrastructure/repository/chatRep
 import { GetUserChatUseCase } from '../module/user/application/use-case/getUserChatUseCase';
 import { GetAllChatUseCase } from '../module/user/application/use-case/getAllChatUseCase';
 import { GetLawyerChatProfileUseCase } from '../module/user/application/use-case/getLawyerChatProfileUseCase';
+import { RefundPayment } from '../module/user/infrastructure/services/refundPaymentService';
+import { FeedbackRepository } from '../module/user/infrastructure/repository/feedbackRepository';
+import { AddReviewUseCase } from '../module/user/application/use-case/addReviewUseCase';
+import { GetReviewUseCase } from '../module/user/application/use-case/getReviewUseCase';
 
 const userSignupMongoRepo=new UserSignupRepository()
 const otpsendEmail=new sendOtpMailService()
@@ -121,7 +125,8 @@ const bookAppointmentRepo=new BookAppointmentRepository()
 const bookAppointmentApplication=new BookAppointmentUseCase(bookAppointmentRepo)
 const appointmentRepo=new AppointmentRepository()
 const getAppointmentUseCase=new GetAppointmentUseCase(appointmentRepo)
-const cancelAppointmentUseCase=new CancelAppointmentUseCase(appointmentRepo)
+const refundPaymentService=new RefundPayment(appointmentRepo)
+const cancelAppointmentUseCase=new CancelAppointmentUseCase(appointmentRepo,refundPaymentService)
 const getTodaysAppointmentsUseCase=new GetTodaysAppointmentsUseCase(appointmentRepo)
 const resheduleAppointmentUseCase=new ResheduleAppointmentUseCase(appointmentRepo)
 const reportRepo=new ReportRepository()
@@ -130,6 +135,9 @@ const chatRepo=new ChatRepository()
 const getUserChatUseCase=new GetUserChatUseCase(chatRepo)
 const getUserAllChatUseCase=new GetAllChatUseCase(chatRepo)
 const getLawyerChatProfileUseCase=new GetLawyerChatProfileUseCase(chatRepo)
+const feedbackRepo=new FeedbackRepository()
+const addReviewUseCase=new AddReviewUseCase(feedbackRepo)
+const getReviewUseCase=new GetReviewUseCase(feedbackRepo)
 
 const userController=new UserController(
     getLawyerApplication,
@@ -145,7 +153,9 @@ const userController=new UserController(
     reportLawyerUseCase,
     getUserChatUseCase,
     getUserAllChatUseCase,
-    getLawyerChatProfileUseCase
+    getLawyerChatProfileUseCase,
+    addReviewUseCase,
+    getReviewUseCase
 )
 
 const createRazorpayOrderUseCase=new CreateRazorpayOrderUseCase()
@@ -215,5 +225,9 @@ router.get('/get-user-chat/:userId/:lawyerId',verifyToken,verifyRole(['user']),v
 router.get('/get-user-all-chats/:userId',verifyToken,verifyRole(['user']),verifyAccountStatus(checkUserAccountStatusMongoRepo),(req,res)=>userController.getUserAllChats(req,res))
 
 router.get('/get-lawyer-chat-profile/:lawyerId',verifyToken,verifyRole(['user']),verifyAccountStatus(checkUserAccountStatusMongoRepo),(req,res)=>userController.getLawyerChatProfile(req,res))
+
+router.post('/add-review/:lawyerId',verifyToken,verifyRole(['user']),verifyAccountStatus(checkUserAccountStatusMongoRepo),(req,res)=>userController.addReview(req,res))
+
+router.get('/get-review/:lawyerId',verifyToken,verifyRole(['user','lawyer']),verifyAccountStatus(checkUserAccountStatusMongoRepo),(req,res)=>userController.getReview(req,res))
 
 export default router;

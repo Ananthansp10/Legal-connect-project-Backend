@@ -9,7 +9,7 @@ export interface RazorpayOrder {
   receipt: string;
   status: "created" | "attempted" | "paid";
   attempts: number;
-  notes: Record<string, any>;
+  notes: Record<string, string>;
   created_at?: number;
 }
 

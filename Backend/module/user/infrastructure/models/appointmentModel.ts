@@ -26,10 +26,19 @@ const appointmentSchema=new Schema<IAppointmentEntity>({
     problem:{
         type:String
     },
+    fee:{
+        type:Number
+    },
     appointmentStatus:{
         type:String,
     },
     payment:{
+        type:String
+    },
+    paymentId:{
+        type:String
+    },
+    refundStatus:{
         type:String
     }
 })

@@ -34,7 +34,8 @@ export class GetAppointmentUseCase implements IGetAppointmentUseCase{
         time: appointment.time,
         mode: appointment.consultationMode,
         status: appointment.appointmentStatus,
-        payment:appointment?.payment ? appointment.payment : ''
+        payment:appointment?.payment ? appointment.payment : '',
+        problem:appointment.problem
       };
     })
   );

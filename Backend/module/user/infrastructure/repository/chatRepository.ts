@@ -27,4 +27,15 @@ export class ChatRepository implements IChatRepository{
     async findLawyerDetails(lawyerId: Types.ObjectId): Promise<LawyerProfileEntity | null> {
         return await lawyerProfileModel.findOne({lawyerId:lawyerId})
     }
+
+    async updateChatReadStatus(userId: Types.ObjectId, lawyerId:Types.ObjectId): Promise<void> {
+        await chatModel.updateMany({participants:{$all:[userId,lawyerId]}},
+            {
+                $set:{'messages.$[msg].isRead':true}
+            },
+            {
+                arrayFilters:[{'msg.receiverId':userId,'msg.isRead':false}]
+            }
+        )
+    }
 }

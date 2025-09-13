@@ -7,15 +7,22 @@ const subscribersSchema=new mongoose.Schema<ISubscribersEntity>({
         ref:'lawyer',
         required:true
     },
-    planId:{
-        type:Schema.Types.ObjectId,
-        ref:"planModel",
-        required:true
-    },
-    date:{
-        type:String,
-        required:true
-    }
+    plans:[
+        {
+            planId:{
+                type:Schema.Types.ObjectId,
+                required:true
+            },
+            date:{
+                type:String,
+                required:true
+            },
+            price:{
+                type:Number,
+                required:true
+            }
+        }
+    ]
 })
 
 export const subscribersModel=mongoose.model<ISubscribersEntity>("subscribers",subscribersSchema)

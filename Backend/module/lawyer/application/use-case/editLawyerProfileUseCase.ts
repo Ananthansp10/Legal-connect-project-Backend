@@ -7,14 +7,14 @@ import { EditLawyerProfileMapper } from "../mapper/lawyerEditProfileMapper";
 export class LawyerEditProfileUseCase implements IEditLawyerProfileUseCase{
 
     constructor(
-        private editLawyerProfileRepo:IEditLawyerProfileRepository
+        private _editLawyerProfileRepo:IEditLawyerProfileRepository
     ){}
 
     async execute(data: LawyerEditProfileRequest,imageUrl:string): Promise<void> {
         
         let editedData:LawyerEditProfileResponse=await EditLawyerProfileMapper.toResponse(data,imageUrl)
 
-        await this.editLawyerProfileRepo.editLawyerProfile(data.lawyerId,editedData)
+        await this._editLawyerProfileRepo.editLawyerProfile(data.lawyerId,editedData)
 
     }
 }

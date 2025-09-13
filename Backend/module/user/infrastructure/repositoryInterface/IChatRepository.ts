@@ -9,4 +9,5 @@ export interface IChatRepository{
     addMessage(userId:Types.ObjectId,lawyerId:Types.ObjectId,message:Messages):Promise<void>;
     findUserChat(userId:Types.ObjectId):Promise<IChatEntity[] | null>;
     findLawyerDetails(lawyerId:Types.ObjectId):Promise<LawyerProfileEntity | null>;
+    updateChatReadStatus(userId:Types.ObjectId,lawyerId:Types.ObjectId):Promise<void>;
 }

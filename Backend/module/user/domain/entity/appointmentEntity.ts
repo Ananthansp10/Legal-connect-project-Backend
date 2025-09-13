@@ -9,6 +9,9 @@ export interface IAppointmentEntity{
     time:string;
     consultationMode:string;
     problem:string;
+    fee:number;
     appointmentStatus:string;
     payment ? : string
+    paymentId ? : string;
+    refundStatus ? : string;
 }
