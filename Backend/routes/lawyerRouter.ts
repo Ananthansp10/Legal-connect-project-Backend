@@ -182,7 +182,7 @@ router.post('/create-razorpay-order',verifyToken,verifyRole(['lawyer']),(req,res
 
 router.post('/verify-payment',verifyToken,verifyRole(['lawyer']),(req,res)=>paymentController.verifyPayment(req,res))
 
-router.post('/add-plan/:lawyerId/:planId',verifyToken,verifyRole(['lawyer']),(req,res)=>lawyerController.addPlan(req,res))
+router.post('/add-plan/:lawyerId/:planId/:price',verifyToken,verifyRole(['lawyer']),(req,res)=>lawyerController.addPlan(req,res))
 
 router.get('/get-all-chats/:lawyerId',verifyToken,verifyRole(['lawyer']),(req,res)=>lawyerController.getAllChats(req,res))
 

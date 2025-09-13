@@ -1,6 +1,6 @@
 import { Types } from "mongoose";
-import { ISubscribersEntity } from "../../domain/entity/subscribersEntity";
-import { IPlanRepository, PlanData } from "../repositoryInterface/IPlanRepository";
+import { ISubscribersEntity, PlanDetail } from "../../domain/entity/subscribersEntity";
+import { IPlanRepository} from "../repositoryInterface/IPlanRepository";
 import { subscribersModel } from "../models/subscribersModel";
 
 
@@ -10,11 +10,11 @@ export class PlanRepository implements IPlanRepository{
         return await subscribersModel.findOne({lawyerId:lawyerId})
     }
 
-    async addPlan(data: PlanData): Promise<void> {
+    async addPlan(data: ISubscribersEntity): Promise<void> {
         await subscribersModel.create(data)
     }
 
-    async updatePlan(lawyerId: Types.ObjectId, planId: Types.ObjectId, date: string): Promise<void> {
-        await subscribersModel.updateOne({lawyerId:lawyerId},{$set:{planId:planId,date:date}})
+    async updatePlan(lawyerId: Types.ObjectId, plan: PlanDetail): Promise<void> {
+        await subscribersModel.findOneAndUpdate({lawyerId:lawyerId},{$push:{plans:plan}})
     }
 }

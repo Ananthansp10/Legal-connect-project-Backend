@@ -17,6 +17,7 @@ export interface AppointmentsData{
     mode:string;
     status:string;
     payment?:string;
+    problem:string;
   }
 
 

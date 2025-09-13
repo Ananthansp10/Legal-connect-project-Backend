@@ -99,7 +99,7 @@ export class LawyerController{
 
     async addPlan(req:Request,res:Response){
         try {
-            await this._addPlanUseCase.execute(new mongoose.Types.ObjectId(req.params.lawyerId),new mongoose.Types.ObjectId(req.params.planId))
+            await this._addPlanUseCase.execute(new mongoose.Types.ObjectId(req.params.lawyerId),new mongoose.Types.ObjectId(req.params.planId),req.params.price)
             res.status(AppStatusCode.SUCCESS_CODE).json({success:true,message:"Subscription plan addedd"})
         } catch (error) {
             res.status(AppStatusCode.INTERNAL_ERROR_CODE).json({success:false,message:AppError.UNKNOWN_ERROR})
