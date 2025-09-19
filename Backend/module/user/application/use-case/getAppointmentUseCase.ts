@@ -10,13 +10,13 @@ export class GetAppointmentUseCase implements IGetAppointmentUseCase{
         private _appointmentRepository:IAppointmentRepository
     ){}
 
-   async execute(userId: Types.ObjectId,appointmentStatus:string): Promise<AppointmentsData[] | null> {
-  let appointments = await this._appointmentRepository.findAppointmentByUserId(userId,appointmentStatus);
+   async execute(userId: Types.ObjectId,appointmentStatus:string,startIndex:number,limit:number): Promise<{appointments:AppointmentsData[],totalAppointments:number} | null> {
+  let appointments = await this._appointmentRepository.findAppointmentByUserId(userId,appointmentStatus,startIndex,limit);
 
-  if (!appointments) return null;
+  if (!appointments || appointments.appointments.length==0) return null;
 
   let appointmentDetails = await Promise.all(
-    appointments.map(async (appointment) => {
+    appointments.appointments.map(async (appointment) => {
       let lawyerDetails = await this._appointmentRepository.findLawyerDetails(appointment.lawyerId);
 
       let lawyerData = {
@@ -35,11 +35,13 @@ export class GetAppointmentUseCase implements IGetAppointmentUseCase{
         mode: appointment.consultationMode,
         status: appointment.appointmentStatus,
         payment:appointment?.payment ? appointment.payment : '',
-        problem:appointment.problem
+        problem:appointment.problem,
+        fee:appointment.fee,
+        paymentDate:appointment.paymentDate
       };
     })
   );
 
-  return appointmentDetails;
+  return {appointments:appointmentDetails,totalAppointments:appointments.totalAppointments};
 }
 }

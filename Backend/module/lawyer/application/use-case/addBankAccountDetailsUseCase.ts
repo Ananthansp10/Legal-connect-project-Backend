@@ -50,9 +50,36 @@ export class AddBankAccountDetailsUseCase implements IAddBankAccountDetailsUseCa
             },
         }
     )
-        await this._bankDetailsRepo.addBankDetails(data.lawyerId,contact.data.id,fundAccount.data.id)
-       } catch (error) {
-        console.log(error)
+
+      //   const res = await axios.post(
+      //     "https://api.razorpay.com/v1/accounts",
+      //     {
+      //       name: data.name,
+      //       email: data.email,
+      //       contact: data.phoneNumber,
+      //       type: "vendor",
+      //       bank_account: {
+      //         name: data.name,
+      //         ifsc: data.ifscCode,
+      //         account_number:data.bankAccountNumber
+      //       },
+      //       notes: { role: "Lawyer" }
+      //     },
+      //     {
+      //       auth: {
+      //         username: process.env.RAZORPAY_KEY_ID!,
+      //         password: process.env.RAZORPAY_KEY_SECRET!,
+      //       },
+      //     }
+      // );
+
+
+      //  console.log(res)
+
+      await this._bankDetailsRepo.addBankDetails(data.lawyerId,contact.data.id,fundAccount.data.id)
+       } catch (error:any) {
+        console.log(error.response.data)
+         throw error
        }
     }
 }

@@ -206,7 +206,7 @@ router.get('/search-lawyer/:name',verifyToken,verifyRole(['user']),verifyAccount
 
 router.post('/book-appointment',verifyToken,verifyRole(['user']),verifyAccountStatus(checkUserAccountStatusMongoRepo),(req,res)=>userController.bookAppointment(req,res))
 
-router.get('/get-appointments/:userId/:appointmentStatus',verifyToken,verifyRole(['user']),verifyAccountStatus(checkUserAccountStatusMongoRepo),(req,res)=>userController.getAppointment(req,res))
+router.get('/get-appointments/:userId/:appointmentStatus/:startIndex/:limit',verifyToken,verifyRole(['user']),verifyAccountStatus(checkUserAccountStatusMongoRepo),(req,res)=>userController.getAppointment(req,res))
 
 router.post('/create-order',verifyToken,verifyRole(['user']),verifyAccountStatus(checkUserAccountStatusMongoRepo),(req,res)=>paymentController.createOrder(req,res))
 

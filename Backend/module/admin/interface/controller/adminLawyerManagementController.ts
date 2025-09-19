@@ -47,8 +47,8 @@ export class AdminLawyerManagementController{
 
     async getLawyers(req:Request,res:Response){
         try {
-            let result:ILawyerResponse[] | null=await this._getLawyersApplication.execute()
-            res.status(AppStatusCode.SUCCESS_CODE).json({success:true,message:"Data found successfully",data:result})
+            let result:{data:ILawyerResponse[],totalData:number} | null=await this._getLawyersApplication.execute(parseInt(req.query.page as string),parseInt(req.query.limit as string))
+            res.status(AppStatusCode.SUCCESS_CODE).json({success:true,message:"Data found successfully",data:result.data,totalData:result.totalData})
         } catch (error) {
             res.status(AppStatusCode.INTERNAL_ERROR_CODE).json({success:false,message:AppError.UNKNOWN_ERROR})
         }

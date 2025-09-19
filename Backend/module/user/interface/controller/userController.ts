@@ -102,11 +102,9 @@ export class UserController{
 
     async getAppointment(req:Request,res:Response){
         try {
-            let appointments=await this._getAppointmentApplication.execute(new mongoose.Types.ObjectId(req.params.userId),req.params.appointmentStatus)
-            console.log(appointments)
-            res.status(AppStatusCode.SUCCESS_CODE).json({success:true,message:"Appointment found successfully",data:appointments})
+            let result=await this._getAppointmentApplication.execute(new mongoose.Types.ObjectId(req.params.userId),req.params.appointmentStatus,parseInt(req.params.startIndex),parseInt(req.params.limit))
+            res.status(AppStatusCode.SUCCESS_CODE).json({success:true,message:"Appointment found successfully",data:result?.appointments,totalAppointments:result?.totalAppointments})
         } catch (error) {
-            console.log(error)
             res.status(AppStatusCode.INTERNAL_ERROR_CODE).json({success:false,message:AppError.UNKNOWN_ERROR})
         }
     }

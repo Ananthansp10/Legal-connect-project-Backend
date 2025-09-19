@@ -9,24 +9,25 @@ import { userProfileModel } from "../../../user/infrastructure/models/userProfil
 
 export class AppointmentRepository implements IAppointmentRepository{
 
-    async getAppointments(lawyerId: Types.ObjectId, appointmentStatus: string): Promise<IAppointmentEntity[] | null> {
+    async getAppointments(lawyerId: Types.ObjectId, appointmentStatus: string, startIndex:number, endIndex:number): Promise<{appointments:IAppointmentEntity[],totalAppointments:number }| null> {
         let result
+        let totalAppointments=await appointmentModel.countDocuments({lawyerId:lawyerId,appointmentStatus:appointmentStatus})
         if(appointmentStatus==AppointmentStatus.PENDING){
-           result=await appointmentModel.find({lawyerId:lawyerId,appointmentStatus:AppointmentStatus.PENDING})
+           result=await appointmentModel.find({lawyerId:lawyerId,appointmentStatus:AppointmentStatus.PENDING}).skip(startIndex).limit(endIndex)
         }else if(appointmentStatus==AppointmentStatus.ACCEPTED){
-            result=await appointmentModel.find({lawyerId:lawyerId,appointmentStatus:AppointmentStatus.ACCEPTED})
+            result=await appointmentModel.find({lawyerId:lawyerId,appointmentStatus:AppointmentStatus.ACCEPTED}).skip(startIndex).limit(endIndex)
         }
         else if(appointmentStatus==AppointmentStatus.BOOKED){
-            result=await appointmentModel.find({lawyerId:lawyerId,appointmentStatus:AppointmentStatus.BOOKED})
+            result=await appointmentModel.find({lawyerId:lawyerId,appointmentStatus:AppointmentStatus.BOOKED}).skip(startIndex).limit(endIndex)
         }else if(appointmentStatus==AppointmentStatus.COMPLETED){
-            result=await appointmentModel.find({lawyerId:lawyerId,appointmentStatus:AppointmentStatus.COMPLETED})
+            result=await appointmentModel.find({lawyerId:lawyerId,appointmentStatus:AppointmentStatus.COMPLETED}).skip(startIndex).limit(endIndex)
         }else if(appointmentStatus==AppointmentStatus.CANCELLED){
-            result=await appointmentModel.find({lawyerId:lawyerId,appointmentStatus:AppointmentStatus.CANCELLED})
+            result=await appointmentModel.find({lawyerId:lawyerId,appointmentStatus:AppointmentStatus.CANCELLED}).skip(startIndex).limit(endIndex)
         }else{
-            result=await appointmentModel.find({lawyerId:lawyerId,appointmentStatus:AppointmentStatus.REJECTED})
+            result=await appointmentModel.find({lawyerId:lawyerId,appointmentStatus:AppointmentStatus.REJECTED}).skip(startIndex).limit(endIndex)
         }
 
-        return result
+        return {appointments:result,totalAppointments:totalAppointments}
     }
 
     async findUserDetails(userId: Types.ObjectId): Promise<UserProfileEntitie | null> {

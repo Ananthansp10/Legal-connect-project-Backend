@@ -18,9 +18,11 @@ export interface AppointmentsData{
     status:string;
     payment?:string;
     problem:string;
+    fee:number;
+    paymentDate ? : string;
   }
 
 
 export interface IGetAppointmentUseCase{
-    execute(userId:Types.ObjectId,appointmentStatus:string):Promise<AppointmentsData[] | null>;
+    execute(userId:Types.ObjectId,appointmentStatus:string,startIndex:number,limit:number):Promise<{appointments:AppointmentsData[],totalAppointments:number} | null>;
 }

@@ -46,6 +46,10 @@ import { FilterLawyerUseCase } from '../module/admin/application/use-case/filter
 import { FilterUserUseCase } from '../module/admin/application/use-case/filterUserUseCase';
 import { GetLawyerProfileDataUseCase } from '../module/admin/application/use-case/getLawyerProfileDataUseCase';
 import { GetUserProfileDataUseCase } from '../module/admin/application/use-case/getUserProfileDataUseCase';
+import { SummaryReportRepository } from '../module/admin/infrastructure/repository/summaryReportRepository';
+import { GetSummaryReportUseCase } from '../module/admin/application/use-case/getSummaryReportUseCase';
+import { ReportsRepository } from '../module/admin/infrastructure/repository/reportsRepository';
+import { GetReportsUseCase } from '../module/admin/application/use-case/getReportsUseCase';
 const router=express.Router()
 
 const tokenGenerateService=new TokenGenerationService()
@@ -118,6 +122,10 @@ const editPlanUseCase=new EditPlanUseCase(planeManagementRepo)
 const managePlanStatusUseCase=new ManagePlanStatusUseCase(planeManagementRepo)
 const deletePlanUseCase=new DeletePlanUseCase(planeManagementRepo)
 const getPlansUseCase=new GetPlansUseCase(planeManagementRepo)
+const summaryReportRepo=new SummaryReportRepository()
+const getSummaryReportUseCase=new GetSummaryReportUseCase(summaryReportRepo)
+const reportsRepo=new ReportsRepository()
+const getReportsUseCase=new GetReportsUseCase(reportsRepo)
 
 
 const adminController=new AdminController(
@@ -128,7 +136,9 @@ const adminController=new AdminController(
     editPlanUseCase,
     managePlanStatusUseCase,
     deletePlanUseCase,
-    getPlansUseCase
+    getPlansUseCase,
+    getSummaryReportUseCase,
+    getReportsUseCase
 )
 
 
@@ -142,7 +152,7 @@ router.patch('/verification/:lawyerId/:status/:reason',verifyToken,verifyRole(['
 
 router.get('/getlawyers',verifyToken,verifyRole(['admin']),(req,res)=>adminLawyerManagementController.getLawyers(req,res))
 
-router.get('/getusers',verifyToken,verifyRole(['admin']),(req,res)=>adminUserManagementController.getUsers(req,res))
+router.get('/getusers/:startIndex/:limit',verifyToken,verifyRole(['admin']),(req,res)=>adminUserManagementController.getUsers(req,res))
 
 router.patch('/lawyer/:lawyerId/:status',verifyToken,verifyRole(['admin']),(req,res)=>adminLawyerManagementController.verifyLawyerStatus(req,res))
 
@@ -183,5 +193,9 @@ router.get('/filter-lawyer/:status',verifyToken,verifyRole(['admin']),(req,res)=
 router.get('/get-user-profile/:userId',verifyToken,verifyRole(['admin']),(req,res)=>adminUserManagementController.getUserProfile(req,res))
 
 router.get('/get-lawyer-profile/:lawyerId',verifyToken,verifyRole(['admin']),(req,res)=>adminLawyerManagementController.getLawyerProfile(req,res))
+
+router.get('/get-summary-report',verifyToken,verifyRole(['admin']),(req,res)=>adminController.getSummaryReport(req,res))
+
+router.get('/get-reports',verifyToken,verifyRole(['admin']),(req,res)=>adminController.getReports(req,res))
 
 export default router;

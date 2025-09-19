@@ -4,7 +4,7 @@ import { LawyerProfileEntity } from "../../../lawyer/domain/entity/lawyerProfile
 
 
 export interface IAppointmentRepository{
-    findAppointmentByUserId(userId:Types.ObjectId,appointmentStatus:string):Promise<IAppointmentEntity[] | null>;
+    findAppointmentByUserId(userId:Types.ObjectId,appointmentStatus:string,startIndex:number,limit:number):Promise<{appointments:IAppointmentEntity[],totalAppointments:number} | null>;
     findLawyerDetails(lawyerId:Types.ObjectId):Promise<LawyerProfileEntity | null>;
     updatePayment(appointmentId:Types.ObjectId,status:string,paymentId:string):Promise<void>;
     cancelAppointment(appointmentId:Types.ObjectId):Promise<void>;

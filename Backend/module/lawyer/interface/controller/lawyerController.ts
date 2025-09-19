@@ -67,8 +67,8 @@ export class LawyerController{
 
     async getAppointments(req:Request,res:Response):Promise<void>{
         try {
-            let appointments=await this._getAppointmentUseCase.execute(new mongoose.Types.ObjectId(req.params.lawyerId),req.params.appointmentStatus)
-            res.status(AppStatusCode.SUCCESS_CODE).json({success:true,message:"Appointments found successfully",data:appointments})
+            let result=await this._getAppointmentUseCase.execute(new mongoose.Types.ObjectId(req.params.lawyerId),req.params.appointmentStatus,parseInt(req.params.startIndex),parseInt(req.params.limit))
+            res.status(AppStatusCode.SUCCESS_CODE).json({success:true,message:"Appointments found successfully",data:result?.appointments,totalAppointments:result?.totalAppointments})
         } catch (error) {
             res.status(AppStatusCode.INTERNAL_ERROR_CODE).json({status:false,message:AppError.UNKNOWN_ERROR})
         }

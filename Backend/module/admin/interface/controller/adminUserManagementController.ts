@@ -21,8 +21,8 @@ export class AdminUserManagementController{
 
     async getUsers(req:Request,res:Response){
         try {
-            let result:IUserResponse[] | null=await this._getUserApplication.execute()
-            res.status(AppStatusCode.SUCCESS_CODE).json({success:true,message:"Data found successfully",data:result})
+            let result:{data:IUserResponse[],totalData:number} | null=await this._getUserApplication.execute(parseInt(req.params.startIndex),parseInt(req.params.limit))
+            res.status(AppStatusCode.SUCCESS_CODE).json({success:true,message:"Data found successfully",data:result.data,totalData:result.totalData})
         } catch (error) {
             res.status(AppStatusCode.INTERNAL_ERROR_CODE).json({success:false,message:AppError.UNKNOWN_ERROR})
         }

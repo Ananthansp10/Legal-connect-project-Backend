@@ -10,23 +10,24 @@ import { PaymentStatus } from "../../../../common/status/paymentStatus";
 
 export class AppointmentRepository implements IAppointmentRepository{
 
-    async findAppointmentByUserId(userId: Types.ObjectId,appointmentStatus:string): Promise<IAppointmentEntity[] | null> {
+    async findAppointmentByUserId(userId: Types.ObjectId,appointmentStatus:string,startIndex:number,limit:number): Promise<{appointments:IAppointmentEntity[],totalAppointments:number} | null> {
       let result
+      let totalAppointments=await appointmentModel.countDocuments({userId:userId,appointmentStatus:appointmentStatus})
       if(appointmentStatus==AppointmentStatus.PENDING){
-        result=await appointmentModel.find({userId:userId,appointmentStatus:AppointmentStatus.PENDING})
+        result=await appointmentModel.find({userId:userId,appointmentStatus:AppointmentStatus.PENDING}).skip(startIndex).limit(limit)
       }else if(appointmentStatus==AppointmentStatus.ACCEPTED){
-        result=await appointmentModel.find({userId:userId,appointmentStatus:AppointmentStatus.ACCEPTED})
+        result=await appointmentModel.find({userId:userId,appointmentStatus:AppointmentStatus.ACCEPTED}).skip(startIndex).limit(limit)
       }else if(appointmentStatus==AppointmentStatus.COMPLETED){
-        result=await appointmentModel.find({userId:userId,appointmentStatus:AppointmentStatus.COMPLETED})
+        result=await appointmentModel.find({userId:userId,appointmentStatus:AppointmentStatus.COMPLETED}).skip(startIndex).limit(limit)
       }else if(appointmentStatus==AppointmentStatus.CANCELLED){
-        result=await appointmentModel.find({userId:userId,appointmentStatus:AppointmentStatus.CANCELLED})
+        result=await appointmentModel.find({userId:userId,appointmentStatus:AppointmentStatus.CANCELLED}).skip(startIndex).limit(limit)
       }else if(appointmentStatus==AppointmentStatus.REJECTED){
-        result=await appointmentModel.find({userId:userId,appointmentStatus:AppointmentStatus.REJECTED})
+        result=await appointmentModel.find({userId:userId,appointmentStatus:AppointmentStatus.REJECTED}).skip(startIndex).limit(limit)
       }else if(appointmentStatus==AppointmentStatus.UPCOMING){
-        result=await appointmentModel.find({userId:userId,appointmentStatus:AppointmentStatus.BOOKED})
+        result=await appointmentModel.find({userId:userId,appointmentStatus:AppointmentStatus.BOOKED}).skip(startIndex).limit(limit)
       }
 
-      return result ? result : null
+      return result ? {appointments:result,totalAppointments:totalAppointments} : null
     }
 
     async findLawyerDetails(lawyerId: Types.ObjectId): Promise<LawyerProfileEntity | null> {
@@ -34,8 +35,9 @@ export class AppointmentRepository implements IAppointmentRepository{
     }
 
     async updatePayment(appointmentId: Types.ObjectId, status:string, paymentId:string): Promise<void> {
+      let currentDate=new Date().toISOString().split('T')[0]
       await appointmentModel.findByIdAndUpdate(appointmentId,
-        {$set:{payment:status,appointmentStatus:status==PaymentStatus.SUCCESS ? AppointmentStatus.BOOKED : AppointmentStatus.ACCEPTED,paymentId:paymentId}}
+        {$set:{paymentDate:currentDate,payment:status,appointmentStatus:status==PaymentStatus.SUCCESS ? AppointmentStatus.BOOKED : AppointmentStatus.ACCEPTED,paymentId:paymentId}}
       )
     }
 

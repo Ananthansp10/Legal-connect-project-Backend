@@ -18,8 +18,10 @@ export class BaseRepository<T> implements IBaseRepository<T>{
         return await this._model.findById(id)
     }
 
-    async findAll(): Promise<T[] | null> {
-        return await this._model.find()
+    async findAll(startIndex:number,limit:number): Promise<{data:T[],totalData:number }| null> {
+        let data=await this._model.find().skip(startIndex).limit(limit)
+        let totalData=await this._model.countDocuments() || 0
+        return {data,totalData}
     }
 
     async findAllUnverifiedLawyer(): Promise<T[] | null> {
