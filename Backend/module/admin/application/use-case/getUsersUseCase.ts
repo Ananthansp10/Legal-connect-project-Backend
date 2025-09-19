@@ -10,14 +10,14 @@ export class GetUsersUseCase implements IGetUsersUseCase {
         private _userRepo:IUserRepository
     ){}
 
-    async execute(): Promise<IUserResponse[]> {
+    async execute(startIndex:number,limit:number): Promise<{data:IUserResponse[],totalData:number}> {
         try {
-            let user:IUserSignup[] | null=await this._userRepo.findAll()
+            let user:{data:IUserSignup[],totalData:number} | null=await this._userRepo.findAll(startIndex,limit)
             let response:IUserResponse[]=[]
             if(user){
-                response=await UserMapper.toResponse(user)
+                response=await UserMapper.toResponse(user.data)
             }
-            return response
+            return {data:response,totalData:user?.totalData || 0}
         } catch (error) {
             throw error
         }

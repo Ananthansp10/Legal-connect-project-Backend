@@ -170,7 +170,7 @@ router.get('/get-slots/:lawyerId/:type',verifyToken,verifyRole(['lawyer']),(req,
 
 router.patch('/update-rule-status/:ruleId/:ruleStatus',verifyToken,verifyRole(['lawyer']),(req,res)=>lawyerController.updateRuleStatus(req,res))
 
-router.get('/get-appointments/:lawyerId/:appointmentStatus',verifyToken,verifyRole(['lawyer']),(req,res)=>lawyerController.getAppointments(req,res))
+router.get('/get-appointments/:lawyerId/:appointmentStatus/:startIndex/:limit',verifyToken,verifyRole(['lawyer']),(req,res)=>lawyerController.getAppointments(req,res))
 
 router.patch('/appointment/:appointmentId/:appointmentStatus/:lawyerId',verifyToken,verifyRole(['lawyer']),(req,res)=>lawyerController.updateAppointmentStatus(req,res))
 
@@ -197,6 +197,8 @@ router.post('/add-bank-account',verifyToken,verifyRole(['lawyer']),(req,res)=>la
 router.get('/get-summary/:lawyerId',verifyToken,verifyRole(['lawyer']),(req,res)=>lawyerController.getSummary(req,res))
 
 router.get('/check-bank-details/:lawyerId',verifyToken,verifyRole(['lawyer']),(req,res)=>lawyerController.checkBankDetails(req,res))
+
+
 
 
 export default router;

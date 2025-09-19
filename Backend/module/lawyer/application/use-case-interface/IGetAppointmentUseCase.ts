@@ -12,10 +12,13 @@ export interface Appointment {
   problem: string;
   date: string;
   time: string;
-  mode:string
-  status:string
+  mode:string;
+  status:string;
+  payment:string;
+  fee:number;
+  paymentDate ? : string;
 }
 
 export interface IGetAppointmentUseCase{
-    execute(lawyerId:Types.ObjectId,appointmentStatus:string):Promise<Appointment[] | null>;
+    execute(lawyerId:Types.ObjectId,appointmentStatus:string,startIndex:number,endIndex:number):Promise<{appointments:Appointment[],totalAppointments:number} | null>;
 }

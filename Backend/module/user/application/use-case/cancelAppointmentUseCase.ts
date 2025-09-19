@@ -21,13 +21,14 @@ export class CancelAppointmentUseCase implements ICancelAppointmentUseCase{
         if(appointment){
             if(appointment.date>currentDate){
                 await this._appointmentRepo.cancelAppointment(appointmentId)
-                await this._refundPaymentService.execute(appointmentId,appointment.paymentId!)
+                if(appointment.paymentId){
+                    await this._refundPaymentService.execute(appointmentId,appointment.paymentId!)
+                }
             }else{
                 throw new AppException("Appointment can't cancel Today",403)
             }
         }
         } catch (error) {
-            console.log(error)
             throw error
         }
 
