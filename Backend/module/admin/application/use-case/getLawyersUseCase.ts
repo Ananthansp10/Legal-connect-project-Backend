@@ -10,14 +10,14 @@ export class GetLawyersUseCase implements IGetLawyersUseCase{
         private _lawyerRepo:ILawyerRepository
     ){}
 
-    async execute(): Promise<ILawyerResponse[]> {
+    async execute(startIndex:number,limit:number): Promise<{data:ILawyerResponse[],totalData:number}> {
         try {
-            let lawyers:ILawyerSignup[] | null=await this._lawyerRepo.findAll()
+            let lawyers:{data:ILawyerSignup[],totalData:number} | null=await this._lawyerRepo.findAll(startIndex,limit)
             let response:ILawyerResponse[]=[]
             if(lawyers){
-                response=await LawyerMapper.toResponse(lawyers) 
+                response=await LawyerMapper.toResponse(lawyers.data) 
             }
-            return response
+            return {data:response,totalData:lawyers?.totalData || 0}
         } catch (error) {
             throw error
         }

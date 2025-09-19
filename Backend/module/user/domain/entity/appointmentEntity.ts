@@ -14,4 +14,6 @@ export interface IAppointmentEntity{
     payment ? : string
     paymentId ? : string;
     refundStatus ? : string;
+    paymentDate ? : string;
+    meetStart ? : boolean;
 }

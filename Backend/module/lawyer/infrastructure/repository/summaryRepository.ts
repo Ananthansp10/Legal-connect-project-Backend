@@ -18,7 +18,7 @@ export class SummaryRepository implements ISummaryRepository{
                 pendingConsultations:[{$match:{appointmentStatus:"Pending"}},{$group:{_id:null,count:{$sum:1}}}],
                 upcomingConsultations:[{$match:{appointmentStatus:"Booked"}},{$group:{_id:null,count:{$sum:1}}}],
                 completedConsultations:[{$match:{appointmentStatus:"Completed"}},{$group:{_id:null,count:{$sum:1}}}],
-                CancelledConsultations:[{$match:{appointmentStatus:"Cancelled"}},{$group:{_id:null,count:{$sum:1}}}],
+                cancelledConsultations:[{$match:{appointmentStatus:"Cancelled"}},{$group:{_id:null,count:{$sum:1}}}],
                 rejectedConsultations:[{$match:{appointmentStatus:"Rejected"}},{$group:{_id:null,count:{$sum:1}}}],
                 totalRevenue:[{$match:{appointmentStatus:"Booked"}},{$group:{_id:null,revenue:{$sum:"$fee"}}}],
                 graphData:[{$match:{appointmentStatus:"Booked"}},{$group:{_id:{year: { $year: { $dateFromString: { dateString: "$date" } } }, month: { $month: { $dateFromString: { dateString: "$date" } } }},count:{$sum:1},revenue:{$sum:"$fee"}}}]

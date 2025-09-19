@@ -40,6 +40,12 @@ const appointmentSchema=new Schema<IAppointmentEntity>({
     },
     refundStatus:{
         type:String
+    },
+    paymentDate:{
+        type:String
+    },
+    meetStart:{
+        type:Boolean
     }
 })
 

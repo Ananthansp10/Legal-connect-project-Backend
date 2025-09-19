@@ -1,27 +1,32 @@
 // eslint.config.mjs
 import globals from "globals";
+import prettier from "eslint-plugin-prettier";
+import configPrettier from "eslint-config-prettier";
 
 export default [
   {
-    files: ["**/*.ts"],  // only TypeScript files
+    files: ["**/*.ts"],
     languageOptions: {
       ecmaVersion: "latest",
       sourceType: "module",
       globals: globals.node,
     },
+    plugins: {
+      prettier,
+    },
     rules: {
       "no-unused-vars": "warn",
       "no-console": "off",
-      // Regex-based enforcement: variable names starting with _ are allowed
-      // This won't detect actual TS private modifier, but enforces _ for "private" style
       "id-match": [
         "error",
         "^_?[a-z][a-zA-Z0-9]*$",
         {
           properties: true,
-          onlyDeclarations: false
-        }
-      ]
-    }
-  }
+          onlyDeclarations: false,
+        },
+      ],
+      "prettier/prettier": "error",
+    },
+  },
+  configPrettier
 ];
