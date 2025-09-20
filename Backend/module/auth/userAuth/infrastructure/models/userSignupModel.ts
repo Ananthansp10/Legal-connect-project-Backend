@@ -1,31 +1,34 @@
-import {IUserSignup} from '../../domain/userRegisterEntity'
-import mongoose, {Schema} from 'mongoose'
+import { IUserSignup } from "../../domain/userRegisterEntity";
+import mongoose, { Schema } from "mongoose";
 
-const userSchema=new Schema <IUserSignup>({
-    name:{
-        type:String,
-        required:true
+const userSchema = new Schema<IUserSignup>(
+  {
+    name: {
+      type: String,
+      required: true,
     },
-    email:{
-        type:String,
-        required:true
+    email: {
+      type: String,
+      required: true,
     },
-    password:{
-        type:String,
+    password: {
+      type: String,
     },
-    phoneNumber:{
-        type:Number,
+    phoneNumber: {
+      type: Number,
     },
-    googleId:{
-        type:String
+    googleId: {
+      type: String,
     },
-    isActive:{
-        type:Boolean,
-        required:true
+    isActive: {
+      type: Boolean,
+      required: true,
     },
-    isBlock:{
-        type:Boolean
-    }
-},{timestamps:true})
+    isBlock: {
+      type: Boolean,
+    },
+  },
+  { timestamps: true },
+);
 
-export const UserModel=mongoose.model<IUserSignup>("users",userSchema)
+export const UserModel = mongoose.model<IUserSignup>("users", userSchema);

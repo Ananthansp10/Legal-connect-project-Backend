@@ -11,7 +11,7 @@ export class FilterLawyerUseCase implements IFilterLawyerUseCase{
     ){}
 
     async execute(status: string): Promise<ILawyerResponse[] | null> {
-        let lawyers=await this._lawyerRepo.filterLawyer(status)
+        const lawyers=await this._lawyerRepo.filterLawyer(status)
         let response:ILawyerResponse[]=[]
         if(lawyers){
             response=await LawyerMapper.toResponse(lawyers)

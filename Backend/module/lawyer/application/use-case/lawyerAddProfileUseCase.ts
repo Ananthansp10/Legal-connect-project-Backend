@@ -1,3 +1,4 @@
+import { LawyerProfileResponseDto } from "../../domain/dtos/lawyerProfileDto";
 import { LawyerProfileEntity } from "../../domain/entity/lawyerProfileEntity";
 import { ILawyerAddProfile } from "../../infrastructure/repositoryInterface/ILawyerAddProfileRepository";
 import { ILawyerProfileRequest, LawyerProfileMapper } from "../mapper/lawyerProfileMapper";
@@ -15,9 +16,9 @@ export class LawyerAddProfileUseCase implements ILawyerAddProfileUseCase{
                 degreeCertificate?: { path: string }[];
                 experienceCertificate?: { path: string }[];
                 idProof?: { path: string }[];
-            }): Promise<LawyerProfileEntity | null> {
+            }): Promise<LawyerProfileResponseDto | null> {
         
-        let lawyerProfileData:LawyerProfileEntity=await LawyerProfileMapper.toRequest(data,imageUrls)
+        const lawyerProfileData:LawyerProfileEntity=await LawyerProfileMapper.toRequest(data,imageUrls)
 
         return await this._lawyerAddProfileRepo.create(lawyerProfileData)
     }

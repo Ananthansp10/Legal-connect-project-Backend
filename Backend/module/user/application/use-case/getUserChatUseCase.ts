@@ -4,17 +4,17 @@ import { IChatRepository } from "../../infrastructure/repositoryInterface/IChatR
 import { IGetUserChatUseCase } from "../use-case-interface/IGetUserChatUseCase";
 
 
-export class GetUserChatUseCase implements IGetUserChatUseCase{
+export class GetUserChatUseCase implements IGetUserChatUseCase {
 
     constructor(
-        private _chatRepo:IChatRepository
-    ){}
+        private _chatRepo: IChatRepository
+    ) { }
 
     async execute(userId: Types.ObjectId, lawyerId: Types.ObjectId): Promise<Messages[] | null> {
-        let userChat=await this._chatRepo.findChatConnection(userId,lawyerId)
-        if(!userChat){
+        const userChat = await this._chatRepo.findChatConnection(userId, lawyerId)
+        if (!userChat) {
             return null
-        }else{
+        } else {
             return userChat.messages
         }
     }

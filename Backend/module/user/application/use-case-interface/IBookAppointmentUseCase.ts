@@ -1,7 +1,7 @@
-import { IAppointmentEntity } from "../../domain/entity/appointmentEntity";
+import { AppointmentRequestDto } from "../../domain/dtos/appointmentDto";
 
 
 
-export interface IBookAppointmentUseCase{
-    execute(data:IAppointmentEntity):Promise<void>;
+export interface IBookAppointmentUseCase {
+    execute(data: AppointmentRequestDto): Promise<void>;
 }

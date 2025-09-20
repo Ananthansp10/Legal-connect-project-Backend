@@ -3,14 +3,14 @@ import { IUserSignupRepository } from "../repositoryInterface/IUserSignupReposit
 import { BaseRepository } from "./baseRepository";
 import { UserModel } from "../models/userSignupModel";
 
-export class UserSignupRepository extends BaseRepository<IUserSignup> implements IUserSignupRepository{
+export class UserSignupRepository extends BaseRepository<IUserSignup> implements IUserSignupRepository {
 
-    constructor(){
+    constructor() {
         super(UserModel)
     }
 
     async updateUserToActive(email: string): Promise<void> {
-        await UserModel.updateOne({email:email},{$set:{isActive:true}})
+        await UserModel.updateOne({ email: email }, { $set: { isActive: true } })
     }
 
 }

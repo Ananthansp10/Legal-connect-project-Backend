@@ -12,7 +12,7 @@ export class GetUnverifiedLawyersUseCase implements IGetUnverifiedLawyersUseCase
 
    async execute(): Promise<ILawyerResponse[]> {
 
-       let result:ILawyerSignup[] | null= await this._lawyerRepo.findAllUnverifiedLawyer()
+       const result:ILawyerSignup[] | null= await this._lawyerRepo.findAllUnverifiedLawyer()
 
        let response:ILawyerResponse[]=[]
 

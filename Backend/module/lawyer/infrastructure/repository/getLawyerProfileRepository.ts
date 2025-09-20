@@ -6,18 +6,18 @@ import { Types } from "mongoose";
 
 
 
-export class GetLawyerProfileRepository extends BaseRepository<LawyerProfileEntity> implements IGetLawyerProfileRepository{
+export class GetLawyerProfileRepository extends BaseRepository<LawyerProfileEntity> implements IGetLawyerProfileRepository {
 
-    constructor(){
+    constructor() {
         super(lawyerProfileModel)
     }
 
     async getLawyerProfile(lawyerId: string): Promise<LawyerProfileEntity | null> {
-       return await lawyerProfileModel.findOne({lawyerId:lawyerId})
+        return await lawyerProfileModel.findOne({ lawyerId: lawyerId })
     }
 
     async getLawyerProfileImage(lawyerId: Types.ObjectId): Promise<string | null> {
-        let lawyerDetails=await lawyerProfileModel.findOne({lawyerId:lawyerId})
+        const lawyerDetails = await lawyerProfileModel.findOne({ lawyerId: lawyerId })
         return lawyerDetails?.personalInfo.profileImage || null
     }
 }

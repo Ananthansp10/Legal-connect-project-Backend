@@ -1,6 +1,6 @@
-import { IPlansEntity } from "../../domain/entity/plansEntity";
+import { PlansRequestDto } from "../../domain/dtos/plansDto";
 
 
-export interface IAddPlanUseCase{
-    execute(data:IPlansEntity):Promise<void>;
+export interface IAddPlanUseCase {
+    execute(data: PlansRequestDto): Promise<void>;
 }

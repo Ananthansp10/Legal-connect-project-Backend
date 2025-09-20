@@ -14,7 +14,7 @@ export class LawyerVerificationUseCase implements ILawyerVerificationUseCase{
 
     async execute(lawyerId: string, status: string, reason: string): Promise<boolean> {
 
-        let lawyer:ILawyerSignup | null=await this._lawyerVerificationRepo.findById(lawyerId)
+        const lawyer:ILawyerSignup | null=await this._lawyerVerificationRepo.findById(lawyerId)
 
         this._lawyerVerifyEmailService.sendVerificationEmail(lawyer?.email!,lawyer?.name!,status,reason)
 

@@ -1,12 +1,12 @@
 
 
-export interface UserSigninDto{
-    userData:{
-        id:string;
-        name:string;
-        email:string,
-        googleId ? :string
+export interface UserSigninDto {
+    userData: {
+        id: string;
+        name: string;
+        email: string,
+        googleId?: string
     };
-    accessToken:string;
-    refreshToken:string
+    accessToken: string;
+    refreshToken: string
 }

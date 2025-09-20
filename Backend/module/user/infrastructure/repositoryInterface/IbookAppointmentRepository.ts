@@ -3,5 +3,6 @@ import { IAppointmentEntity } from "../../domain/entity/appointmentEntity";
 import { IBaseRepository } from "./IbaseRepository";
 
 
-export interface IBookAppointmentRepository extends IBaseRepository<IAppointmentEntity>{
+export interface IBookAppointmentRepository extends IBaseRepository<IAppointmentEntity> {
+    findAppointmentExist(lawyerId: Types.ObjectId, date: string, time: string): Promise<boolean>;
 }

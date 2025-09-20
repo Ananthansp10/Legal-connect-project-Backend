@@ -3,13 +3,13 @@ import { IPlanManagementRepository } from "../../infrastructure/repositoryInterf
 import { IManagePlanStatusUseCase } from "../use-case-interface/IManagePlanStatusUseCase";
 
 
-export class ManagePlanStatusUseCase implements IManagePlanStatusUseCase{
+export class ManagePlanStatusUseCase implements IManagePlanStatusUseCase {
 
     constructor(
-        private _planManagementRepository:IPlanManagementRepository
-    ){}
+        private _planManagementRepository: IPlanManagementRepository
+    ) { }
 
     async execute(planId: Types.ObjectId, status: string): Promise<void> {
-        await this._planManagementRepository.setPlanStatus(planId,status)
+        await this._planManagementRepository.setPlanStatus(planId, status)
     }
 }

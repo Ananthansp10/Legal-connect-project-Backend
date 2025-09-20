@@ -4,9 +4,9 @@ import { UserModel } from "../models/userSignupModel";
 import { BaseRepository } from "./baseRepository";
 
 
-export class GoogleAuthRepository extends BaseRepository<IUserSignup> implements IGoogleAuthRepository{
+export class GoogleAuthRepository extends BaseRepository<IUserSignup> implements IGoogleAuthRepository {
 
-    constructor(){
+    constructor() {
         super(UserModel)
     }
 }

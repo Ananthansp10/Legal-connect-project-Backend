@@ -4,9 +4,9 @@ import { LawyerModel } from "../models/lawyerModel";
 import { BaseRepository } from "./baseRepository";
 
 
-export class LawyerSignupRepository extends BaseRepository<ILawyerSignup> implements ILawyerSignupRepository{
+export class LawyerSignupRepository extends BaseRepository<ILawyerSignup> implements ILawyerSignupRepository {
 
-    constructor(){
+    constructor() {
         super(LawyerModel)
     }
 }

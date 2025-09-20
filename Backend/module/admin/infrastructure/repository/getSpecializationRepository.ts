@@ -3,9 +3,9 @@ import { IGetSpecializationRepository } from "../repositoryInterface/IGetSpecial
 import { specializationModel } from "../models/specializationModel";
 
 
-export class GetSpecializationRepository implements IGetSpecializationRepository{
+export class GetSpecializationRepository implements IGetSpecializationRepository {
 
     async getSpecialization(): Promise<ISpecializationEntity[] | null> {
-       return await specializationModel.find({isDeleted:false})
+        return await specializationModel.find({ isDeleted: false })
     }
 }

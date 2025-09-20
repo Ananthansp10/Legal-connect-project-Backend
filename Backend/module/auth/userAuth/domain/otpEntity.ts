@@ -1,6 +1,6 @@
 
 
-export interface IOtpEntity{
-    email:string;
-    otp:string;
+export interface IOtpEntity {
+    email: string;
+    otp: string;
 }

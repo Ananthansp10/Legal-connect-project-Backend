@@ -5,9 +5,9 @@ import { LawyerProfileEntity } from "../../../lawyer/domain/entity/lawyerProfile
 
 
 
-export interface IReportedAccountsRepository{
-    findReportedAccounts(userType:string):Promise<IReportAccountEntity[]>;
-    findUserDetails(userId:Types.ObjectId):Promise<UserProfileEntitie | null>;
-    findLawyerDetails(lawyerId:Types.ObjectId):Promise<LawyerProfileEntity | null>
-    updateReportAccountStatus(reportAccountId:Types.ObjectId):Promise<void>;
+export interface IReportedAccountsRepository {
+    findReportedAccounts(userType: string): Promise<IReportAccountEntity[]>;
+    findUserDetails(userId: Types.ObjectId): Promise<UserProfileEntitie | null>;
+    findLawyerDetails(lawyerId: Types.ObjectId): Promise<LawyerProfileEntity | null>
+    updateReportAccountStatus(reportAccountId: Types.ObjectId): Promise<void>;
 }

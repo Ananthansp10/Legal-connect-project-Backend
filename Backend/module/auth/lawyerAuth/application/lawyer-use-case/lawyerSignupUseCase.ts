@@ -8,41 +8,41 @@ import { ILawyerSignupRepository } from "../../infrastructure/repositoryInterfac
 import { ILawyerSignupUseCase } from "../lawyer-use-case-interface/IlawyerSignupUseCase";
 import { LawyerSignupMapper as mapper } from "../mapper/lawyerSignupMapper";
 
-export class LawyerSignupUseCase implements ILawyerSignupUseCase{
+export class LawyerSignupUseCase implements ILawyerSignupUseCase {
 
     constructor(
-        private _lawyerRepo:ILawyerSignupRepository,
-        private _hashService:IHashService
-    ){}
+        private _lawyerRepo: ILawyerSignupRepository,
+        private _hashService: IHashService
+    ) { }
 
-    async registerLawyer(data: ILawyerSignup): Promise<LawyerSignupResponseDto> {
-        
-        let emailExist:ILawyerSignup | null=await this._lawyerRepo.findByEmail(data.email)
+    async registerLawyer(data: LawyerSignupRequestDto): Promise<LawyerSignupResponseDto> {
 
-        if(emailExist && emailExist.verified){
-            throw new AppException(AppError.USER_ALREADY_EXISTS,AppStatusCode.CONFLICT)
+        const emailExist: ILawyerSignup | null = await this._lawyerRepo.findByEmail(data.email)
+
+        if (emailExist && emailExist.verified) {
+            throw new AppException(AppError.USER_ALREADY_EXISTS, AppStatusCode.CONFLICT)
         }
 
-        if(emailExist && emailExist.reason){
-            let currentDate=new Date()
-            let sixMonthLater=new Date(emailExist.createdAt!)
-            sixMonthLater.setMonth(sixMonthLater.getMonth()+6)
+        if (emailExist && emailExist.reason) {
+            const currentDate = new Date()
+            let sixMonthLater = new Date(emailExist.createdAt!)
+            sixMonthLater.setMonth(sixMonthLater.getMonth() + 6)
 
-            if(currentDate.getDay()==sixMonthLater.getDay() && currentDate.getMonth()==sixMonthLater.getMonth()){
+            if (currentDate.getDay() == sixMonthLater.getDay() && currentDate.getMonth() == sixMonthLater.getMonth()) {
                 await this._lawyerRepo.deleteByEmail(emailExist.email)
                 await this._lawyerRepo.create(data)
-            }else{
-                throw new AppException("Your Account has been rejected please try again after six month",AppStatusCode.ACCOUNT_BLOCKED)
+            } else {
+                throw new AppException("Your Account has been rejected please try again after six month", AppStatusCode.ACCOUNT_BLOCKED)
             }
         }
 
-        let hashedPassword=await this._hashService.hash(data.password)
+        const hashedPassword = await this._hashService.hash(data.password)
 
-        let lawyerObj=mapper.toRequest({...data,password:hashedPassword})
+        const lawyerObj = mapper.toRequest({ ...data, password: hashedPassword })
 
-        let dbResponse:ILawyerSignup | null=await this._lawyerRepo.create(lawyerObj)
+        const dbResponse: ILawyerSignup | null = await this._lawyerRepo.create(lawyerObj)
 
-        let response=mapper.toResponse(dbResponse!)
+        const response = mapper.toResponse(dbResponse!)
 
         return response
 

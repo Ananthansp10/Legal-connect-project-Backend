@@ -5,9 +5,9 @@ import { BaseRepository } from "./baseRepository";
 
 
 
-export class GetLawyerRepository extends BaseRepository<LawyerProfileEntity> implements IGetLawyerRepository{
+export class GetLawyerRepository extends BaseRepository<LawyerProfileEntity> implements IGetLawyerRepository {
 
-    constructor(){
+    constructor() {
         super(lawyerProfileModel)
     }
 
@@ -16,18 +16,18 @@ export class GetLawyerRepository extends BaseRepository<LawyerProfileEntity> imp
     }
 
     async getLawyerById(lawyerId: string): Promise<LawyerProfileEntity | null> {
-        return await lawyerProfileModel.findOne({lawyerId:lawyerId})
+        return await lawyerProfileModel.findOne({ lawyerId: lawyerId })
     }
 
     async getLawyerBySpecialization(specialization: string): Promise<LawyerProfileEntity[] | null> {
-        if(specialization=="All Specializations"){
+        if (specialization == "All Specializations") {
             return await lawyerProfileModel.find()
-        }else{
-            return await lawyerProfileModel.find({'proffessionalInfo.practiceAreas':{$in:[specialization]}})
+        } else {
+            return await lawyerProfileModel.find({ 'proffessionalInfo.practiceAreas': { $in: [specialization] } })
         }
     }
 
     async getLawyerByName(name: string): Promise<LawyerProfileEntity[] | null> {
-        return await lawyerProfileModel.find({"personalInfo.name":{ $regex: new RegExp(`^${name}$`, 'i') }})
+        return await lawyerProfileModel.find({ "personalInfo.name": { $regex: new RegExp(`^${name}$`, 'i') } })
     }
 }

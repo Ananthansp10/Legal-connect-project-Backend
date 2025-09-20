@@ -5,9 +5,9 @@ import { BaseRepository } from "./baseRepository";
 
 
 
-export class UserProfileRepository extends BaseRepository<UserProfileEntitie> implements IUserProfileRepository{
+export class UserProfileRepository extends BaseRepository<UserProfileEntitie> implements IUserProfileRepository {
 
-    constructor(){
+    constructor() {
         super(userProfileModel)
     }
 }

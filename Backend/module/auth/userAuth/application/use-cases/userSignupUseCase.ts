@@ -11,52 +11,52 @@ import { UserSignupMapper as userSignupMapper } from "../mapper/userSignupMapper
 import { IUserSignupUseCase } from "../use-case-Interface/IUserSignupUseCase";
 import { AppStatusCode } from "../../../../../common/statusCode/AppStatusCode";
 
-export class UserSignupUseCase implements IUserSignupUseCase{
+export class UserSignupUseCase implements IUserSignupUseCase {
 
-    private _userRepo:IUserSignupRepository
-    private _sendEmail:ISendOtpMailService
-    private _generateOtp:IGenerateOtpService
-    private _hashPassword:IHashService
-    private _otpAction:IOtpService
-    private _hashOtp:IHashService
+    private _userRepo: IUserSignupRepository
+    private _sendEmail: ISendOtpMailService
+    private _generateOtp: IGenerateOtpService
+    private _hashPassword: IHashService
+    private _otpAction: IOtpService
+    private _hashOtp: IHashService
 
-    constructor(userRepo:IUserSignupRepository,otpEmailService:ISendOtpMailService,generateOtpSrvice:IGenerateOtpService,hashService:IHashService,otpService:IOtpService){
-        this._userRepo=userRepo
-        this._sendEmail=otpEmailService
-        this._generateOtp=generateOtpSrvice
-        this._hashPassword=hashService
-        this._otpAction=otpService
-        this._hashOtp=hashService
+    constructor(userRepo: IUserSignupRepository, otpEmailService: ISendOtpMailService, generateOtpSrvice: IGenerateOtpService, hashService: IHashService, otpService: IOtpService) {
+        this._userRepo = userRepo
+        this._sendEmail = otpEmailService
+        this._generateOtp = generateOtpSrvice
+        this._hashPassword = hashService
+        this._otpAction = otpService
+        this._hashOtp = hashService
     }
 
-    async registerUser(data: IUserSignup): Promise<UserSignupResponseDto | null> {
+    async registerUser(data: UserSignupRequestDto): Promise<UserSignupResponseDto | null> {
         try {
-            let userExist:IUserSignup | null=await this._userRepo.findByEmail(data.email)
-            if(userExist){
-                throw new AppException(AppError.USER_ALREADY_EXISTS,AppStatusCode.CONFLICT)
-            }else{
+            const userExist: IUserSignup | null = await this._userRepo.findByEmail(data.email)
+            if (userExist) {
+                throw new AppException(AppError.USER_ALREADY_EXISTS, AppStatusCode.CONFLICT)
+            } else {
 
-                let user=userSignupMapper.toRequest(data)
+                const user = userSignupMapper.toRequest(data)
 
-                let otp=this._generateOtp.generateOtp()
+                const otp = this._generateOtp.generateOtp()
 
-                let hashedPassword=await this._hashPassword.hash(user.password!)
+                const hashedPassword = await this._hashPassword.hash(user.password!)
 
-                let hashedOtp=await this._hashOtp.hash(otp)
+                const hashedOtp = await this._hashOtp.hash(otp)
 
-                await this._otpAction.saveOtp(user.email,hashedOtp)
+                await this._otpAction.saveOtp(user.email, hashedOtp)
 
-                this._sendEmail.sendOtpMail(user.email,otp)
+                this._sendEmail.sendOtpMail(user.email, otp)
 
-                setTimeout(()=>{
+                setTimeout(() => {
                     this._otpAction.deleteOtp(user.email)
-                },60000*2)
+                }, 60000 * 2)
 
-                let newUser={...user,password:hashedPassword}
+                const newUser = { ...user, password: hashedPassword }
 
-               let userObj= await this._userRepo.create(newUser)
+                const userObj = await this._userRepo.create(newUser)
 
-               return userSignupMapper.toResponse(userObj!)
+                return userSignupMapper.toResponse(userObj!)
             }
         } catch (error) {
             throw error;

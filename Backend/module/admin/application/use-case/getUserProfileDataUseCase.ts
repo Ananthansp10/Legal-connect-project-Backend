@@ -11,7 +11,7 @@ export class GetUserProfileDataUseCase implements IGetUserProfileDataUseCase{
     ){}
 
     async execute(lawyerId: Types.ObjectId): Promise<UserProfileDataDto | null> {
-        let userProfileData=await this._userRepo.getUserDetails(lawyerId)
+        const userProfileData=await this._userRepo.getUserDetails(lawyerId)
         if(!userProfileData){
             return null
         }else{

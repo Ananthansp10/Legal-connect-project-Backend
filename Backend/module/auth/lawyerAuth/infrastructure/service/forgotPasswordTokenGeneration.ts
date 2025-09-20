@@ -4,7 +4,7 @@ import jwt from 'jsonwebtoken'
 export class ForgotPasswordTokenGeneration implements IForgotPasswordTokenGeneration{
 
     async generateForgotPasswordToken(payload:object): Promise<string> {
-        let token=jwt.sign(payload,process.env.FORGOT_PASSWORD_TOKEN_SECRET!,{expiresIn:"15m"})
+        const token=jwt.sign(payload,process.env.FORGOT_PASSWORD_TOKEN_SECRET!,{expiresIn:"15m"})
         return token
     }
 }

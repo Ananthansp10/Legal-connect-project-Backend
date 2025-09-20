@@ -4,11 +4,11 @@ import { IBankDetailsRepository } from "../../infrastructure/repositoryInterface
 import { ICheckBankDetailsUseCase } from "../use-case-interface/ICheckBankDetailsUseCase";
 
 
-export class CheckBankDetailsUseCase implements ICheckBankDetailsUseCase{
+export class CheckBankDetailsUseCase implements ICheckBankDetailsUseCase {
 
     constructor(
-        private _bankDetailsRepo:IBankDetailsRepository
-    ){}
+        private _bankDetailsRepo: IBankDetailsRepository
+    ) { }
 
     async execute(lawyerId: Types.ObjectId): Promise<BankDetailsDto | null> {
         return await this._bankDetailsRepo.findBankDetails(lawyerId)

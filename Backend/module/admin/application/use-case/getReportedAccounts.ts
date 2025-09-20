@@ -11,9 +11,7 @@ export class GetReportedAccountsUseCase implements IGetReportedAccountsUseCase{
     ){}
 
     async execute(userType: string): Promise<ReportAccountDto[] | null> {
-        console.log(userType)
-        let reportedAccounts=await this._reportedAccountsRepo.findReportedAccounts(userType)
-        console.log(reportedAccounts)
+        const reportedAccounts=await this._reportedAccountsRepo.findReportedAccounts(userType)
         return await ReportedAccountsMapper.toResponse(reportedAccounts,this._reportedAccountsRepo)
     }
 }

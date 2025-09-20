@@ -12,11 +12,11 @@ export class GetLawyerProfileDataUseCase implements IGetLawyerProfileDataUseCase
     ){}
 
     async execute(lawyerId: Types.ObjectId): Promise<LawyerProfileDataDto | null> {
-        let lawyerProfileDetails=await this._lawyerRepo.getLawyerDetails(lawyerId)
+        const lawyerProfileDetails=await this._lawyerRepo.getLawyerDetails(lawyerId)
         if(!lawyerProfileDetails){
             return null;
         }else{
-            let lawyerProfileDataObj={
+            const lawyerProfileDataObj={
                 personalInfo:lawyerProfileDetails.personalInfo,
                 professionalInfo:lawyerProfileDetails.proffessionalInfo
             }

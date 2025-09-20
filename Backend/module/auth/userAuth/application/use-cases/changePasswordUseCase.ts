@@ -3,14 +3,14 @@ import { IForgotPasswordRepository } from "../../infrastructure/repositoryInterf
 import { IChangePasswordUseCase } from "../use-case-Interface/IchangePasswordUseCase";
 
 
-export class ChangePasswordUseCase implements IChangePasswordUseCase{
+export class ChangePasswordUseCase implements IChangePasswordUseCase {
 
-    constructor(private _forgotPasswordRepo:IForgotPasswordRepository,private _hashService:IHashService){}
+    constructor(private _forgotPasswordRepo: IForgotPasswordRepository, private _hashService: IHashService) { }
 
-   async changePassword(email: string, password: string): Promise<void> {
+    async changePassword(email: string, password: string): Promise<void> {
 
-        let hashedPassword=await this._hashService.hash(password)
-        
-        await this._forgotPasswordRepo.updatePasswordByEmail(email,hashedPassword)
+        const hashedPassword = await this._hashService.hash(password)
+
+        await this._forgotPasswordRepo.updatePasswordByEmail(email, hashedPassword)
     }
 }

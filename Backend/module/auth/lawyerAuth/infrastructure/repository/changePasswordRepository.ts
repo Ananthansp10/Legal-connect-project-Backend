@@ -1,16 +1,16 @@
 import { ILawyerSignup } from "../../domain/entity/lawyerEntity";
-import { IChangePasswordRepository } from "../repositoryInterface/IchangePasswordRepository";
+import { IChangePasswordRepository } from "../repositoryInterface/IChangePasswordRepository";
 import { LawyerModel } from "../models/lawyerModel";
 import { BaseRepository } from "./baseRepository";
 
 
-export class ChangePasswordRepository extends BaseRepository<ILawyerSignup> implements IChangePasswordRepository{
+export class ChangePasswordRepository extends BaseRepository<ILawyerSignup> implements IChangePasswordRepository {
 
-    constructor(){
+    constructor() {
         super(LawyerModel)
     }
 
     async changePassword(email: string, password: string): Promise<void> {
-        await LawyerModel.updateOne({email:email},{$set:{password:password}})
+        await LawyerModel.updateOne({ email: email }, { $set: { password: password } })
     }
 }

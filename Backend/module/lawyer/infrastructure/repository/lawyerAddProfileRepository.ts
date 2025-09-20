@@ -4,9 +4,9 @@ import { lawyerProfileModel } from "../models/lawyerProfileModel";
 import { BaseRepository } from "./baseRepository";
 
 
-export class LawyerAddProfileRepository extends BaseRepository<LawyerProfileEntity> implements ILawyerAddProfile{
+export class LawyerAddProfileRepository extends BaseRepository<LawyerProfileEntity> implements ILawyerAddProfile {
 
-    constructor(){
+    constructor() {
         super(lawyerProfileModel)
     }
 }

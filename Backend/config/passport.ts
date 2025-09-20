@@ -4,10 +4,10 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-interface User{
-  googleId:string;
-  name:string;
-  email?:string;
+interface User {
+  googleId: string;
+  name: string;
+  email?: string;
 }
 
 export default passport.use(
@@ -19,7 +19,7 @@ export default passport.use(
     },
     async (accessToken: string, refreshToken: string, profile, done: VerifyCallback) => {
       try {
-        const user:User = {
+        const user: User = {
           googleId: profile.id,
           name: profile.displayName,
           email: profile.emails?.[0]?.value,

@@ -1,19 +1,17 @@
-import mongoose from "mongoose";
 import { AppException } from "../../../../common/error/errorException";
-import { AppStatus } from "../../../../common/status/appStatus";
 import { PaymentStatus } from "../../../../common/status/paymentStatus";
 import { AppStatusCode } from "../../../../common/statusCode/AppStatusCode";
 import { IAppointmentRepository } from "../../infrastructure/repositoryInterface/IAppointmentRepository";
-import { IVerifyPaymentUseCase, PaymentData } from "../use-case-interface/IVerifyPaymentUseCase";
+import { IVerifyPaymentUseCase, PaymentDataRequestDto } from "../use-case-interface/IVerifyPaymentUseCase";
 import crypto from 'crypto'
 
-export class VerifyPaymentUseCase implements IVerifyPaymentUseCase{
+export class VerifyPaymentUseCase implements IVerifyPaymentUseCase {
 
     constructor(
-        private _appointmentRepo:IAppointmentRepository
-    ){}
+        private _appointmentRepo: IAppointmentRepository
+    ) { }
 
-    async execute(data: PaymentData): Promise<void> {
+    async execute(data: PaymentDataRequestDto): Promise<void> {
         try {
             const { razorpay_order_id, razorpay_payment_id, razorpay_signature, appointmentId } = data
 
@@ -23,11 +21,11 @@ export class VerifyPaymentUseCase implements IVerifyPaymentUseCase{
 
             const generatedSignature = hmac.digest("hex")
 
-            if(generatedSignature===razorpay_signature){
-                await this._appointmentRepo.updatePayment(appointmentId,PaymentStatus.SUCCESS,razorpay_payment_id)
-            }else{
-                await this._appointmentRepo.updatePayment(appointmentId,PaymentStatus.FAILED,razorpay_payment_id)
-                throw new AppException("Payment failed",AppStatusCode.PAYMENT_FAILED)
+            if (generatedSignature === razorpay_signature) {
+                await this._appointmentRepo.updatePayment(appointmentId, PaymentStatus.SUCCESS, razorpay_payment_id)
+            } else {
+                await this._appointmentRepo.updatePayment(appointmentId, PaymentStatus.FAILED, razorpay_payment_id)
+                throw new AppException("Payment failed", AppStatusCode.PAYMENT_FAILED)
             }
 
             return

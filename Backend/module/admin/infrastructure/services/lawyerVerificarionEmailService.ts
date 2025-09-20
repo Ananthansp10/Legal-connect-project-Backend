@@ -2,7 +2,7 @@ import { ILawyerVerificationEmailService } from "./ILawyerVerificationEmailServi
 import { transporter } from "../../../../config/nodemailerConfig";
 
 
-export class LawyerVerificationEmail implements ILawyerVerificationEmailService{
+export class LawyerVerificationEmail implements ILawyerVerificationEmailService {
 
     async sendVerificationEmail(to: string, name: string, status: string, reason: string): Promise<void> {
         let subject = ''
@@ -31,14 +31,14 @@ export class LawyerVerificationEmail implements ILawyerVerificationEmailService{
 
         try {
             await transporter.sendMail({
-            from: "Legal Platform",
-            to: to,
-            subject,
-            html
+                from: "Legal Platform",
+                to: to,
+                subject,
+                html
             })
             console.log(`${status} email sent to ${to}`)
         } catch (err) {
             console.error("Failed to send email:", err)
         }
-            }
+    }
 }

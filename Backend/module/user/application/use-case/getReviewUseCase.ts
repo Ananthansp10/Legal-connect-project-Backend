@@ -4,18 +4,18 @@ import { IFeedbackRepository } from "../../infrastructure/repositoryInterface/IF
 import { IGetReviewUseCase } from "../use-case-interface/IGetReviewUseCase";
 
 
-export class GetReviewUseCase implements IGetReviewUseCase{
+export class GetReviewUseCase implements IGetReviewUseCase {
 
     constructor(
-        private _feedbackRepo:IFeedbackRepository
-    ){}
+        private _feedbackRepo: IFeedbackRepository
+    ) { }
 
     async execute(lawyerId: Types.ObjectId): Promise<ReviewResponseDto | null> {
-        let reviews=await this._feedbackRepo.getfeedback(lawyerId)
-        let reviewResponseObj={
-            reviewsCount:reviews?.reviews.length || 0,
-            rating:reviews?.reviews ? reviews.reviews.reduce((acc,rev)=>acc+rev.rating,0)/reviews.reviews.length : 0,
-            reviews:reviews?.reviews.reverse() || []
+        const reviews = await this._feedbackRepo.getfeedback(lawyerId)
+        const reviewResponseObj = {
+            reviewsCount: reviews?.reviews.length || 0,
+            rating: reviews?.reviews ? reviews.reviews.reduce((acc, rev) => acc + rev.rating, 0) / reviews.reviews.length : 0,
+            reviews: reviews?.reviews.reverse() || []
         }
         return reviewResponseObj
     }

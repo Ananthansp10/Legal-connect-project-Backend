@@ -9,17 +9,17 @@ import { IAppointmentsRepository } from "../repositoryInterface/IAppointmentsRep
 
 
 
-export class AppointmentRepository implements IAppointmentsRepository{
+export class AppointmentRepository implements IAppointmentsRepository {
 
     async findAppointments(appointmentStatus: string): Promise<IAppointmentEntity[] | null> {
-        return await appointmentModel.find(appointmentStatus!='All'? {appointmentStatus:appointmentStatus}:{})
+        return await appointmentModel.find(appointmentStatus != 'All' ? { appointmentStatus: appointmentStatus } : {})
     }
 
     async findUserDetails(userId: Types.ObjectId): Promise<UserProfileEntitie | null> {
-        return await userProfileModel.findOne({userId:userId})
+        return await userProfileModel.findOne({ userId: userId })
     }
 
     async findLawyerDetails(lawyerId: Types.ObjectId): Promise<LawyerProfileEntity | null> {
-        return await lawyerProfileModel.findOne({lawyerId:lawyerId})
+        return await lawyerProfileModel.findOne({ lawyerId: lawyerId })
     }
 }

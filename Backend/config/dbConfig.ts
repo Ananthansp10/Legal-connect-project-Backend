@@ -5,7 +5,7 @@ require('dotenv').config();
 
 const connectDB = async (): Promise<void> => {
   try {
-    const mongoURI  = process.env.MONGO_URI!
+    const mongoURI = process.env.MONGO_URI!
 
     await mongoose.connect(mongoURI, {
       dbName: 'LegalConsultation',

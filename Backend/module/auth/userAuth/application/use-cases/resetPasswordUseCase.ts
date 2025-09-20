@@ -7,27 +7,27 @@ import { IResetPasswordUseCase } from "../use-case-Interface/IresetPasswordUseCa
 import bcrypt from 'bcrypt'
 import { AppStatusCode } from "../../../../../common/statusCode/AppStatusCode";
 
-export class ResetPasswordUseCase implements IResetPasswordUseCase{
+export class ResetPasswordUseCase implements IResetPasswordUseCase {
 
-    constructor(private _resetPasswordRepo:IResetPasswordRepository,private _hashService:IHashService){}
+    constructor(private _resetPasswordRepo: IResetPasswordRepository, private _hashService: IHashService) { }
 
-   async execute(email: string, oldPassword: string, newPassword: string): Promise<void> {
-        
-        let userExist:IUserSignup | null=await this._resetPasswordRepo.findByEmail(email)
+    async execute(email: string, oldPassword: string, newPassword: string): Promise<void> {
 
-        if(!userExist){
-            throw new AppException(AppError.USER_NOT_FOUND,AppStatusCode.NOT_FOUND)
+        const userExist: IUserSignup | null = await this._resetPasswordRepo.findByEmail(email)
+
+        if (!userExist) {
+            throw new AppException(AppError.USER_NOT_FOUND, AppStatusCode.NOT_FOUND)
         }
 
-        let isPasswordMatch=await bcrypt.compare(oldPassword,userExist.password!)
+        const isPasswordMatch = await bcrypt.compare(oldPassword, userExist.password!)
 
-        if(!isPasswordMatch){
-            throw new AppException(AppError.OLD_PASSWORD_WRONG,AppStatusCode.UNAUTHORIZED)
+        if (!isPasswordMatch) {
+            throw new AppException(AppError.OLD_PASSWORD_WRONG, AppStatusCode.UNAUTHORIZED)
         }
 
-        let newHashhedPassword=await this._hashService.hash(newPassword)
+        const newHashhedPassword = await this._hashService.hash(newPassword)
 
-        await this._resetPasswordRepo.changePassword(email,newHashhedPassword)
+        await this._resetPasswordRepo.changePassword(email, newHashhedPassword)
 
     }
 }

@@ -1,5 +1,5 @@
 
 
-export interface IVerifyUserStatusUseCase{
-    execute(userId:string,status:string):Promise<boolean>;
+export interface IVerifyUserStatusUseCase {
+    execute(userId: string, status: string): Promise<boolean>;
 }

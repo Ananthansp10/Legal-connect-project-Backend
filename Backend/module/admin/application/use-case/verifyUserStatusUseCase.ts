@@ -3,18 +3,18 @@ import { IUserRepository } from "../../infrastructure/repositoryInterface/IuserR
 import { IVerifyUserStatusUseCase } from "../use-case-interface/IVerifyUserStatusUseCase";
 
 
-export class VerifyUserStatusUseCase implements IVerifyUserStatusUseCase{
+export class VerifyUserStatusUseCase implements IVerifyUserStatusUseCase {
 
     constructor(
-        private _userRepo:IUserRepository
-    ){}
+        private _userRepo: IUserRepository
+    ) { }
 
     async execute(userId: string, status: string): Promise<boolean> {
         try {
-            await this._userRepo.updateUserStatus(userId,status)
-            if(status==AppStatus.UNBLOCK){
+            await this._userRepo.updateUserStatus(userId, status)
+            if (status == AppStatus.UNBLOCK) {
                 return false;
-            }else{
+            } else {
                 return true;
             }
         } catch (error) {

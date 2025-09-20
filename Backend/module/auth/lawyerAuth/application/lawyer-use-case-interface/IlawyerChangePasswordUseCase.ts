@@ -1,5 +1,5 @@
 
 
-export interface ILawyerChangePasswordUseCase{
-    changePassword(email:string,password:string,token:string):Promise<void>;
+export interface ILawyerChangePasswordUseCase {
+    changePassword(email: string, password: string, token: string): Promise<void>;
 }

@@ -4,14 +4,14 @@ import { ILawyerChatRepository } from "../../infrastructure/repositoryInterface/
 import { IGetLawyerChatUseCase } from "../use-case-interface/IGetLawyerChatUseCase";
 
 
-export class GetLawyerChatUseCase implements IGetLawyerChatUseCase{
+export class GetLawyerChatUseCase implements IGetLawyerChatUseCase {
 
     constructor(
-        private _chatRepo:ILawyerChatRepository
-    ){}
+        private _chatRepo: ILawyerChatRepository
+    ) { }
 
     async execute(lawyerId: Types.ObjectId, userId: Types.ObjectId): Promise<Messages[] | null> {
-        let chat=await this._chatRepo.findChat(lawyerId,userId)
+        const chat = await this._chatRepo.findChat(lawyerId, userId)
         return chat
     }
 }

@@ -5,23 +5,23 @@ import { ISendOtpMailService } from "../../infrastructure/services/IsendOtpMailS
 import { IResendOtpUseCase } from "../use-case-Interface/IResendOtpUseCase";
 
 
-export class ResendOtpUseCase implements IResendOtpUseCase{
+export class ResendOtpUseCase implements IResendOtpUseCase {
 
-    constructor(private _otpService:IOtpService, private _generateOtpService:IGenerateOtpService, private _hashService:IHashService, private _sendEmailService:ISendOtpMailService){}
+    constructor(private _otpService: IOtpService, private _generateOtpService: IGenerateOtpService, private _hashService: IHashService, private _sendEmailService: ISendOtpMailService) { }
 
     async resendOtp(email: string): Promise<void> {
 
-        let otp:string=this._generateOtpService.generateOtp()
+        const otp: string = this._generateOtpService.generateOtp()
 
-        let hashedOtp=await this._hashService.hash(otp)
+        const hashedOtp = await this._hashService.hash(otp)
 
-        await this._otpService.saveOtp(email,hashedOtp)
+        await this._otpService.saveOtp(email, hashedOtp)
 
-        this._sendEmailService.sendOtpMail(email,otp)
+        this._sendEmailService.sendOtpMail(email, otp)
 
         setTimeout(() => {
             this._otpService.deleteOtp(email)
-        }, 60000*2);
+        }, 60000 * 2);
 
     }
 

@@ -8,29 +8,29 @@ import { userProfileModel } from "../../../user/infrastructure/models/userProfil
 import { UserProfileEntitie } from "../../../user/domain/entity/userProfileUserEntity";
 
 
-export class UserRepository extends BaseRepository<IUserSignup> implements IUserRepository{
+export class UserRepository extends BaseRepository<IUserSignup> implements IUserRepository {
 
-    constructor(){
+    constructor() {
         super(UserModel)
     }
 
     async updateUserStatus(userId: string, status: string): Promise<void> {
-        if(status==AppStatus.UNBLOCK){
-            await UserModel.findByIdAndUpdate(userId,{$set:{isBlock:false}})
-        }else{
-            await UserModel.findByIdAndUpdate(userId,{$set:{isBlock:true}})
+        if (status == AppStatus.UNBLOCK) {
+            await UserModel.findByIdAndUpdate(userId, { $set: { isBlock: false } })
+        } else {
+            await UserModel.findByIdAndUpdate(userId, { $set: { isBlock: true } })
         }
     }
 
     async searchUser(name: string): Promise<IUserSignup[] | null> {
-        return await UserModel.find({name: { $regex: new RegExp(name, "i") }})
+        return await UserModel.find({ name: { $regex: new RegExp(name, "i") } })
     }
 
     async filterUser(status: string): Promise<IUserSignup[] | null> {
-        return await UserModel.find(status == 'unblock' ? {isBlock:false} : status == 'block' ? {isBlock:true} : {})
+        return await UserModel.find(status == 'unblock' ? { isBlock: false } : status == 'block' ? { isBlock: true } : {})
     }
 
     async getUserDetails(userId: Types.ObjectId): Promise<UserProfileEntitie | null> {
-        return await userProfileModel.findOne({userId:userId}) 
+        return await userProfileModel.findOne({ userId: userId })
     }
 }

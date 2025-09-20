@@ -1,6 +1,6 @@
 
 
-export interface StateReportDto{
-    _id:string;
-    usersCount:number;
+export interface StateReportDto {
+    _id: string;
+    usersCount: number;
 }

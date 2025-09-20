@@ -4,18 +4,18 @@ import { ILawyerVerificationRepository } from "../repositoryInterface/lawyerVeri
 import { BaseRepository } from "./baseRepository";
 
 
-export class LawyerVerificationRepository extends BaseRepository<ILawyerSignup> implements ILawyerVerificationRepository{
+export class LawyerVerificationRepository extends BaseRepository<ILawyerSignup> implements ILawyerVerificationRepository {
 
-    constructor(){
+    constructor() {
         super(LawyerModel)
     }
 
     async updateLawyerVerification(lawyerId: string, status: boolean, reason: string): Promise<void> {
-        
-        if(reason=="null"){
-            await LawyerModel.findByIdAndUpdate(lawyerId,{$set:{verified:status}})
-        }else{
-            await LawyerModel.findByIdAndUpdate(lawyerId,{$set:{verified:status,reason:reason}})
+
+        if (reason == "null") {
+            await LawyerModel.findByIdAndUpdate(lawyerId, { $set: { verified: status } })
+        } else {
+            await LawyerModel.findByIdAndUpdate(lawyerId, { $set: { verified: status, reason: reason } })
         }
 
     }

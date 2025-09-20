@@ -8,25 +8,25 @@ import { ILawyerSignupRepository } from "../../infrastructure/repositoryInterfac
 import { ILawyerForgotPasswordUseCase } from "../lawyer-use-case-interface/IlawyerForgotPasswordUseCase";
 
 
-export class LawyerForgotPasswordUseCase implements ILawyerForgotPasswordUseCase{
+export class LawyerForgotPasswordUseCase implements ILawyerForgotPasswordUseCase {
 
     constructor(
-        private _emailService:IForgotPasswordEmailService, 
-        private _ForgotPasswordTokenGenerate:IForgotPasswordTokenGeneration,
-        private _lawyerRepo:ILawyerSignupRepository
-    ){}
+        private _emailService: IForgotPasswordEmailService,
+        private _ForgotPasswordTokenGenerate: IForgotPasswordTokenGeneration,
+        private _lawyerRepo: ILawyerSignupRepository
+    ) { }
 
     async execute(email: string): Promise<void> {
         try {
-            let lawyer:ILawyerSignup | null=await this._lawyerRepo.findByEmail(email)
+            const lawyer: ILawyerSignup | null = await this._lawyerRepo.findByEmail(email)
 
-            if(!lawyer){
-                throw new AppException(AppError.USER_NOT_FOUND,AppStatusCode.NOT_FOUND)
+            if (!lawyer) {
+                throw new AppException(AppError.USER_NOT_FOUND, AppStatusCode.NOT_FOUND)
             }
 
-            let token:string=await this._ForgotPasswordTokenGenerate.generateForgotPasswordToken({email:email})
+            const token: string = await this._ForgotPasswordTokenGenerate.generateForgotPasswordToken({ email: email })
 
-            this._emailService.sendForgotPasswordEMail(email,lawyer.name,token)
+            this._emailService.sendForgotPasswordEMail(email, lawyer.name, token)
 
         } catch (error) {
             throw error

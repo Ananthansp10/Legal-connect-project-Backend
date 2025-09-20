@@ -4,20 +4,20 @@ import { IFeedbackRepository } from "../../infrastructure/repositoryInterface/IF
 import { IAddReviewUseCase } from "../use-case-interface/IAddReviewUseCase";
 
 
-export class AddReviewUseCase implements IAddReviewUseCase{
+export class AddReviewUseCase implements IAddReviewUseCase {
 
     constructor(
-        private _feedbackRepo:IFeedbackRepository
-    ){}
+        private _feedbackRepo: IFeedbackRepository
+    ) { }
 
     async execute(lawyerId: Types.ObjectId, data: Reviews): Promise<void> {
-        let reviewExist=await this._feedbackRepo.getfeedback(lawyerId)
-        if(reviewExist){
-            await this._feedbackRepo.addReview(lawyerId,data)
-        }else{
-            let reviewObj={
-                lawyerId:lawyerId,
-                reviews:[data]
+        const reviewExist = await this._feedbackRepo.getfeedback(lawyerId)
+        if (reviewExist) {
+            await this._feedbackRepo.addReview(lawyerId, data)
+        } else {
+            const reviewObj = {
+                lawyerId: lawyerId,
+                reviews: [data]
             }
             await this._feedbackRepo.saveReview(reviewObj)
         }

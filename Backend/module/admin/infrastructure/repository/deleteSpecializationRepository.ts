@@ -2,9 +2,9 @@ import { IDeleteSpecializationRepository } from "../repositoryInterface/IDeleteS
 import { specializationModel } from "../models/specializationModel";
 
 
-export class DeleteSpecializationRepository implements IDeleteSpecializationRepository{
+export class DeleteSpecializationRepository implements IDeleteSpecializationRepository {
 
     async deleteSpecialization(specId: string): Promise<void> {
-        await specializationModel.findByIdAndUpdate({_id:specId},{$set:{isDeleted:true}})
+        await specializationModel.findByIdAndUpdate({ _id: specId }, { $set: { isDeleted: true } })
     }
 }

@@ -1,6 +1,6 @@
-import { IAdmin } from "../../domain/entity/adminEntity";
+import { adminSignInDto } from "../../domain/dtos/adminSigninDto";
 
 
-export interface IAdminSigninUseCase{
-    execute(data:IAdmin):Promise<{accessToken:string,refreshToken:string}>;
+export interface IAdminSigninUseCase {
+    execute(data: adminSignInDto): Promise<{ accessToken: string, refreshToken: string }>;
 }

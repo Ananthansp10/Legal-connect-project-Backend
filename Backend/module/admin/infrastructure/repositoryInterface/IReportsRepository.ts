@@ -5,12 +5,12 @@ import { StateReportDto } from "../../domain/dtos/stateReportDto";
 
 
 
-export interface IReportsRepository{
-    getTotalRevenue():Promise<number>;
-    getTotalAppointments():Promise<number>;
-    getTotalUsers():Promise<number>;
-    getTotalSubscribedLawyers():Promise<number>;
-    getSubscriptionPlanReport():Promise<SpecializationReportDto[] | null>;
-    getStateReport():Promise<StateReportDto[] | null>;
-    getLawyerDetails():Promise<LawyerDetailsDto[] | null>;
+export interface IReportsRepository {
+    getTotalRevenue(): Promise<number>;
+    getTotalAppointments(): Promise<number>;
+    getTotalUsers(): Promise<number>;
+    getTotalSubscribedLawyers(): Promise<number>;
+    getSubscriptionPlanReport(): Promise<SpecializationReportDto[] | null>;
+    getStateReport(): Promise<StateReportDto[] | null>;
+    getLawyerDetails(): Promise<LawyerDetailsDto[] | null>;
 }

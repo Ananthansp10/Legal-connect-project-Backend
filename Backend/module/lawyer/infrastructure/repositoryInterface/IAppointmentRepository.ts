@@ -3,8 +3,8 @@ import { IAppointmentEntity } from "../../../user/domain/entity/appointmentEntit
 import { UserProfileEntitie } from "../../../user/domain/entity/userProfileUserEntity";
 
 
-export interface IAppointmentRepository{
-    getAppointments(lawyerId:Types.ObjectId,appointmentStatus:string,startIndex:number,endIndex:number):Promise<{appointments:IAppointmentEntity[],totalAppointments:number} | null>;
-    findUserDetails(userId:Types.ObjectId):Promise<UserProfileEntitie | null>;
-    updateStatus(appointmentId:Types.ObjectId,appointmentStatus:string):Promise<void>;
+export interface IAppointmentRepository {
+    getAppointments(lawyerId: Types.ObjectId, appointmentStatus: string, startIndex: number, endIndex: number): Promise<{ appointments: IAppointmentEntity[], totalAppointments: number } | null>;
+    findUserDetails(userId: Types.ObjectId): Promise<UserProfileEntitie | null>;
+    updateStatus(appointmentId: Types.ObjectId, appointmentStatus: string): Promise<void>;
 }

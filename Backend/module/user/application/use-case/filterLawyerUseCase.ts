@@ -5,17 +5,17 @@ import { IFilterLawyerUseCase } from "../use-case-interface/IFilterLawyerUseCase
 
 
 
-export class FilterLawyerUseCase implements IFilterLawyerUseCase{
+export class FilterLawyerUseCase implements IFilterLawyerUseCase {
 
     constructor(
-        private _getLawyerProfileRepo:IGetLawyerRepository
-    ){}
+        private _getLawyerProfileRepo: IGetLawyerRepository
+    ) { }
 
     async execute(specialization: string): Promise<getLawyerResponse[] | null> {
-        let lawyer:LawyerProfileEntity[] | null=await this._getLawyerProfileRepo.getLawyerBySpecialization(specialization)
-        let response:getLawyerResponse[]=[]
-        if(lawyer){
-            response=GetLawyerMapper.toResponse(lawyer)
+        const lawyer: LawyerProfileEntity[] | null = await this._getLawyerProfileRepo.getLawyerBySpecialization(specialization)
+        let response: getLawyerResponse[] = []
+        if (lawyer) {
+            response = GetLawyerMapper.toResponse(lawyer)
         }
         return response
     }

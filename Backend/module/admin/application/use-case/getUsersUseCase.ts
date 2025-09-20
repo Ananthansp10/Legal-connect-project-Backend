@@ -12,7 +12,7 @@ export class GetUsersUseCase implements IGetUsersUseCase {
 
     async execute(startIndex:number,limit:number): Promise<{data:IUserResponse[],totalData:number}> {
         try {
-            let user:{data:IUserSignup[],totalData:number} | null=await this._userRepo.findAll(startIndex,limit)
+            const user:{data:IUserSignup[],totalData:number} | null=await this._userRepo.findAll(startIndex,limit)
             let response:IUserResponse[]=[]
             if(user){
                 response=await UserMapper.toResponse(user.data)

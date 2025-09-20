@@ -1,21 +1,21 @@
 
 
-export interface Address{
-    street:string;
-    country:string;
-    state:string;
-    city:string;
+export interface Address {
+  street: string;
+  country: string;
+  state: string;
+  city: string;
 }
 
-interface PersonalInfo{
-      name: string;
-      email: string;
-      phoneNumber: string;
-      DOB: string;
-      gender: string;
-      address: Address;
-      language: string[];
-      profileImage: string;
+interface PersonalInfo {
+  name: string;
+  email: string;
+  phoneNumber: string;
+  DOB: string;
+  gender: string;
+  address: Address;
+  language: string[];
+  profileImage: string;
 }
 
 interface Education {
@@ -40,7 +40,7 @@ interface ProfessionalInfo {
 }
 
 
-export interface LawyerProfileDataDto{
-    personalInfo:PersonalInfo,
-    professionalInfo:ProfessionalInfo
+export interface LawyerProfileDataDto {
+  personalInfo: PersonalInfo,
+  professionalInfo: ProfessionalInfo
 }

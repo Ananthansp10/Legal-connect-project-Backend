@@ -3,11 +3,11 @@ import { IAppointmentRepository } from "../../infrastructure/repositoryInterface
 import { IResheduleAppointmentUseCase } from "../use-case-interface/IResheduleAppointmentUseCase";
 
 
-export class ResheduleAppointmentUseCase implements IResheduleAppointmentUseCase{
+export class ResheduleAppointmentUseCase implements IResheduleAppointmentUseCase {
 
     constructor(
-        private _appointmentRepo:IAppointmentRepository
-    ){}
+        private _appointmentRepo: IAppointmentRepository
+    ) { }
 
     async execute(appointmentId: Types.ObjectId): Promise<void> {
         await this._appointmentRepo.resheduleAppointment(appointmentId)

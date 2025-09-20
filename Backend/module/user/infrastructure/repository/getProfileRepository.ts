@@ -4,13 +4,13 @@ import { userProfileModel } from "../models/userProfileModel";
 import { BaseRepository } from "./baseRepository";
 
 
-export class GetProfileRepository extends BaseRepository<UserProfileEntitie> implements IGetProfileRepository{
+export class GetProfileRepository extends BaseRepository<UserProfileEntitie> implements IGetProfileRepository {
 
-    constructor(){
+    constructor() {
         super(userProfileModel)
     }
 
     async getProfile(userId: string): Promise<UserProfileEntitie | null> {
-        return await userProfileModel.findOne({userId:userId})
+        return await userProfileModel.findOne({ userId: userId })
     }
 }

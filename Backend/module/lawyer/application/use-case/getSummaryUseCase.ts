@@ -4,11 +4,11 @@ import { ISummaryRepository } from "../../infrastructure/repositoryInterface/ISu
 import { IGetSummaryUseCase } from "../use-case-interface/IGetSummaryUseCase";
 
 
-export class GetSummaryUseCase implements IGetSummaryUseCase{
+export class GetSummaryUseCase implements IGetSummaryUseCase {
 
     constructor(
-        private _summaryRepo:ISummaryRepository
-    ){}
+        private _summaryRepo: ISummaryRepository
+    ) { }
 
     async execute(lawyerId: Types.ObjectId): Promise<SummaryDto | null> {
         return await this._summaryRepo.getSummary(lawyerId)

@@ -52,23 +52,23 @@ import { AddBankAccountDetailsUseCase } from '../module/lawyer/application/use-c
 import { SummaryRepository } from '../module/lawyer/infrastructure/repository/summaryRepository';
 import { GetSummaryUseCase } from '../module/lawyer/application/use-case/getSummaryUseCase';
 import { CheckBankDetailsUseCase } from '../module/lawyer/application/use-case/checkBankDetailsUseCase';
-const router=express.Router()
+const router = express.Router()
 
-const lawyerSignupMongoRepo=new LawyerSignupRepository()
-const hashService=new HashService()
-const lawyerSignupApplication=new LawyerSignupUseCase(lawyerSignupMongoRepo,hashService)
-const lawyerSigninMongoRepo=new LawyerSigninRepository()
-const tokenGenerationService=new TokenGenerationService()
-const authCookieService=new CookieTokenService()
-const lawyerSigninApplication=new LawyerSigninUseCase(lawyerSigninMongoRepo,tokenGenerationService)
-const emailService=new ForgotPasswordEmailService()
-const forgotPasswordTokenGenerateService=new ForgotPasswordTokenGeneration()
-const forgotPasswordAplication=new LawyerForgotPasswordUseCase(emailService,forgotPasswordTokenGenerateService,lawyerSignupMongoRepo)
-const lawyerChangePasswordRepo=new ChangePasswordRepository()
-const changePasswordApplication=new LawyerChangePasswordUseCase(lawyerChangePasswordRepo,hashService)
-const resetPasswordApplication=new LawyerResetPasswordUseCase(lawyerChangePasswordRepo,hashService)
+const lawyerSignupMongoRepo = new LawyerSignupRepository()
+const hashService = new HashService()
+const lawyerSignupApplication = new LawyerSignupUseCase(lawyerSignupMongoRepo, hashService)
+const lawyerSigninMongoRepo = new LawyerSigninRepository()
+const tokenGenerationService = new TokenGenerationService()
+const authCookieService = new CookieTokenService()
+const lawyerSigninApplication = new LawyerSigninUseCase(lawyerSigninMongoRepo, tokenGenerationService)
+const emailService = new ForgotPasswordEmailService()
+const forgotPasswordTokenGenerateService = new ForgotPasswordTokenGeneration()
+const forgotPasswordAplication = new LawyerForgotPasswordUseCase(emailService, forgotPasswordTokenGenerateService, lawyerSignupMongoRepo)
+const lawyerChangePasswordRepo = new ChangePasswordRepository()
+const changePasswordApplication = new LawyerChangePasswordUseCase(lawyerChangePasswordRepo, hashService)
+const resetPasswordApplication = new LawyerResetPasswordUseCase(lawyerChangePasswordRepo, hashService)
 
-const lawyerAuthController=new LawyerAuthController(
+const lawyerAuthController = new LawyerAuthController(
     lawyerSignupApplication,
     lawyerSigninApplication,
     forgotPasswordAplication,
@@ -76,46 +76,46 @@ const lawyerAuthController=new LawyerAuthController(
     resetPasswordApplication
 )
 
-const lawyerAddProfileRepo=new LawyerAddProfileRepository()
-const lawyerAddProfileApplication=new LawyerAddProfileUseCase(lawyerAddProfileRepo)
-const getLawyerProfileMongoRepo=new GetLawyerProfileRepository()
-const getLawyerProfileApplication=new GetLawyerProfileUseCase(getLawyerProfileMongoRepo)
-const editLawyerProfileMongoRepo=new EditLawyerProfileRepository()
-const lawyerEditProfileApplication=new LawyerEditProfileUseCase(editLawyerProfileMongoRepo)
-const getLawyerProfileImageUseCase=new GetLawyerProfileImageUseCase(getLawyerProfileMongoRepo)
+const lawyerAddProfileRepo = new LawyerAddProfileRepository()
+const lawyerAddProfileApplication = new LawyerAddProfileUseCase(lawyerAddProfileRepo)
+const getLawyerProfileMongoRepo = new GetLawyerProfileRepository()
+const getLawyerProfileApplication = new GetLawyerProfileUseCase(getLawyerProfileMongoRepo)
+const editLawyerProfileMongoRepo = new EditLawyerProfileRepository()
+const lawyerEditProfileApplication = new LawyerEditProfileUseCase(editLawyerProfileMongoRepo)
+const getLawyerProfileImageUseCase = new GetLawyerProfileImageUseCase(getLawyerProfileMongoRepo)
 
-const lawyerProfileController=new LawyerProfileController(
+const lawyerProfileController = new LawyerProfileController(
     lawyerAddProfileApplication,
     getLawyerProfileApplication,
     lawyerEditProfileApplication,
     getLawyerProfileImageUseCase
 )
 
-const addSlotMongoRepo=new AddSlotRepository()
-const addSlotApplication=new AddSlotUseCase(addSlotMongoRepo)
-const getSlotMongoRepo=new GetSlotRepository()
-const getSlotApplication=new GetSlotUseCase(getSlotMongoRepo)
-const updateRuleMongoRepo=new UpdateRuleStatusRepository
-const updateRuleStatusApplication=new UpdateRuleStatusUseCase(updateRuleMongoRepo)
-const appointmentRepo=new AppointmentRepository()
-const getAppointmentUseCase=new GetAppointmentUseCase(appointmentRepo)
-const planRepo=new PlanRepository()
-const updateAppointmentStatusUseCase=new UpdateAppointmentStatusUseCase(appointmentRepo,planRepo)
-const subscriptionPlanRepo=new SubscriptionPlanRepository()
-const getSubscriptionPlanUseCase=new GetSubscriptionPlanUseCase(subscriptionPlanRepo)
-const addPlanUseCase=new AddPlanUseCase(planRepo)
-const chatRepo=new LawyerChatRepository()
-const getLawyerAllChatsUseCase=new GetLawyerAllChatUseCase(chatRepo)
-const getLawyerChatUseCase=new GetLawyerChatUseCase(chatRepo)
-const getUserChatProfileUseCase=new GetUserChatProfileUseCase(chatRepo)
-const updateChatReadStatusUseCase=new UpdateReadStatusUseCase(chatRepo)
-const bankDetailsRepo=new BankDetailsRepository()
-const addBankDetailsUseCase=new AddBankAccountDetailsUseCase(bankDetailsRepo)
-const summaryRepo=new SummaryRepository()
-const getSummaryUseCase=new GetSummaryUseCase(summaryRepo)
-const checkBankDetailsUseCase=new CheckBankDetailsUseCase(bankDetailsRepo)
+const addSlotMongoRepo = new AddSlotRepository()
+const addSlotApplication = new AddSlotUseCase(addSlotMongoRepo)
+const getSlotMongoRepo = new GetSlotRepository()
+const getSlotApplication = new GetSlotUseCase(getSlotMongoRepo)
+const updateRuleMongoRepo = new UpdateRuleStatusRepository
+const updateRuleStatusApplication = new UpdateRuleStatusUseCase(updateRuleMongoRepo)
+const appointmentRepo = new AppointmentRepository()
+const getAppointmentUseCase = new GetAppointmentUseCase(appointmentRepo)
+const planRepo = new PlanRepository()
+const updateAppointmentStatusUseCase = new UpdateAppointmentStatusUseCase(appointmentRepo, planRepo)
+const subscriptionPlanRepo = new SubscriptionPlanRepository()
+const getSubscriptionPlanUseCase = new GetSubscriptionPlanUseCase(subscriptionPlanRepo)
+const addPlanUseCase = new AddPlanUseCase(planRepo)
+const chatRepo = new LawyerChatRepository()
+const getLawyerAllChatsUseCase = new GetLawyerAllChatUseCase(chatRepo)
+const getLawyerChatUseCase = new GetLawyerChatUseCase(chatRepo)
+const getUserChatProfileUseCase = new GetUserChatProfileUseCase(chatRepo)
+const updateChatReadStatusUseCase = new UpdateReadStatusUseCase(chatRepo)
+const bankDetailsRepo = new BankDetailsRepository()
+const addBankDetailsUseCase = new AddBankAccountDetailsUseCase(bankDetailsRepo)
+const summaryRepo = new SummaryRepository()
+const getSummaryUseCase = new GetSummaryUseCase(summaryRepo)
+const checkBankDetailsUseCase = new CheckBankDetailsUseCase(bankDetailsRepo)
 
-const lawyerController=new LawyerController(
+const lawyerController = new LawyerController(
     addSlotApplication,
     getSlotApplication,
     updateRuleStatusApplication,
@@ -132,71 +132,71 @@ const lawyerController=new LawyerController(
     checkBankDetailsUseCase
 )
 
-const createRazorpayOrderUseCase=new CreateRazorpayOrderUseCase()
-const verifyRazorpayPaymentUseCase=new VerifyRazorpayPaymentUseCase()
+const createRazorpayOrderUseCase = new CreateRazorpayOrderUseCase()
+const verifyRazorpayPaymentUseCase = new VerifyRazorpayPaymentUseCase()
 
-const paymentController=new PaymentController(
+const paymentController = new PaymentController(
     createRazorpayOrderUseCase,
     verifyRazorpayPaymentUseCase
 )
 
-router.post('/signup',upload.array('files',2),(req,res)=>lawyerAuthController.registerLawyer(req as MulterRequest,res))
+router.post('/signup', upload.array('files', 2), (req, res) => lawyerAuthController.registerLawyer(req as MulterRequest, res))
 
-router.post('/signin',(req,res)=>lawyerAuthController.siginLawyer(req,res,authCookieService))
+router.post('/signin', (req, res) => lawyerAuthController.siginLawyer(req, res, authCookieService))
 
-router.post('/logout',(req,res)=>lawyerAuthController.logout(req,res))
+router.post('/logout', (req, res) => lawyerAuthController.logout(req, res))
 
-router.post('/forgot-password-email',(req,res)=>lawyerAuthController.forgotPassword(req,res))
+router.post('/forgot-password-email', (req, res) => lawyerAuthController.forgotPassword(req, res))
 
-router.post('/new-password',(req,res)=>lawyerAuthController.changePassword(req,res))
+router.post('/new-password', (req, res) => lawyerAuthController.changePassword(req, res))
 
-router.post('/reset-password',verifyToken,verifyRole(['lawyer']),(req,res)=>lawyerAuthController.resetPassword(req,res))
+router.post('/reset-password', verifyToken, verifyRole(['lawyer']), (req, res) => lawyerAuthController.resetPassword(req, res))
 
-router.post('/add-profile',verifyToken,verifyRole(['lawyer']),upload.fields([
+router.post('/add-profile', verifyToken, verifyRole(['lawyer']), upload.fields([
     { name: 'profileImage', maxCount: 1 },
     { name: 'barCouncilCertificate', maxCount: 1 },
     { name: 'degreeCertificate', maxCount: 1 },
     { name: 'experienceCertificate', maxCount: 1 },
     { name: 'idProof', maxCount: 1 }
-  ]),(req,res)=>lawyerProfileController.addLawyerProfile(req,res))
+]), (req, res) => lawyerProfileController.addLawyerProfile(req, res))
 
-router.get('/get-profile/:lawyerId',verifyToken,verifyRole(['lawyer']),(req,res)=>lawyerProfileController.getLawyerProfile(req,res))
+router.get('/get-profile/:lawyerId', verifyToken, verifyRole(['lawyer']), (req, res) => lawyerProfileController.getLawyerProfile(req, res))
 
-router.patch('/edit-profile',verifyToken,verifyRole(['lawyer']),upload.single('profileImage'),(req,res)=>lawyerProfileController.editLawyerProfile(req,res))
+router.patch('/edit-profile', verifyToken, verifyRole(['lawyer']), upload.single('profileImage'), (req, res) => lawyerProfileController.editLawyerProfile(req, res))
 
-router.post('/add-slot/:lawyerId',verifyToken,verifyRole(['lawyer']),(req,res)=>lawyerController.addSlot(req,res))
+router.post('/add-slot/:lawyerId', verifyToken, verifyRole(['lawyer']), (req, res) => lawyerController.addSlot(req, res))
 
-router.get('/get-slots/:lawyerId/:type',verifyToken,verifyRole(['lawyer']),(req,res)=>lawyerController.getSlot(req,res))
+router.get('/get-slots/:lawyerId/:type', verifyToken, verifyRole(['lawyer']), (req, res) => lawyerController.getSlot(req, res))
 
-router.patch('/update-rule-status/:ruleId/:ruleStatus',verifyToken,verifyRole(['lawyer']),(req,res)=>lawyerController.updateRuleStatus(req,res))
+router.patch('/update-rule-status/:ruleId/:ruleStatus', verifyToken, verifyRole(['lawyer']), (req, res) => lawyerController.updateRuleStatus(req, res))
 
-router.get('/get-appointments/:lawyerId/:appointmentStatus/:startIndex/:limit',verifyToken,verifyRole(['lawyer']),(req,res)=>lawyerController.getAppointments(req,res))
+router.get('/get-appointments/:lawyerId/:appointmentStatus/:startIndex/:limit', verifyToken, verifyRole(['lawyer']), (req, res) => lawyerController.getAppointments(req, res))
 
-router.patch('/appointment/:appointmentId/:appointmentStatus/:lawyerId',verifyToken,verifyRole(['lawyer']),(req,res)=>lawyerController.updateAppointmentStatus(req,res))
+router.patch('/appointment/:appointmentId/:appointmentStatus/:lawyerId', verifyToken, verifyRole(['lawyer']), (req, res) => lawyerController.updateAppointmentStatus(req, res))
 
-router.get('/get-profile-image/:lawyerId',verifyToken,verifyRole(['lawyer']),(req,res)=>lawyerProfileController.getLawyerProfileImage(req,res))
+router.get('/get-profile-image/:lawyerId', verifyToken, verifyRole(['lawyer']), (req, res) => lawyerProfileController.getLawyerProfileImage(req, res))
 
-router.get('/subscription-plans',verifyToken,verifyRole(['lawyer']),(req,res)=>lawyerController.getSubscriptionPlan(req,res))
+router.get('/subscription-plans', verifyToken, verifyRole(['lawyer']), (req, res) => lawyerController.getSubscriptionPlan(req, res))
 
-router.post('/create-razorpay-order',verifyToken,verifyRole(['lawyer']),(req,res)=>paymentController.createRazorpayOrder(req,res))
+router.post('/create-razorpay-order', verifyToken, verifyRole(['lawyer']), (req, res) => paymentController.createRazorpayOrder(req, res))
 
-router.post('/verify-payment',verifyToken,verifyRole(['lawyer']),(req,res)=>paymentController.verifyPayment(req,res))
+router.post('/verify-payment', verifyToken, verifyRole(['lawyer']), (req, res) => paymentController.verifyPayment(req, res))
 
-router.post('/add-plan/:lawyerId/:planId/:price',verifyToken,verifyRole(['lawyer']),(req,res)=>lawyerController.addPlan(req,res))
+router.post('/add-plan/:lawyerId/:planId/:price', verifyToken, verifyRole(['lawyer']), (req, res) => lawyerController.addPlan(req, res))
 
-router.get('/get-all-chats/:lawyerId',verifyToken,verifyRole(['lawyer']),(req,res)=>lawyerController.getAllChats(req,res))
+router.get('/get-all-chats/:lawyerId', verifyToken, verifyRole(['lawyer']), (req, res) => lawyerController.getAllChats(req, res))
 
-router.get('/get-chat/:lawyerId/:userId',verifyToken,verifyRole(['lawyer']),(req,res)=>lawyerController.getChat(req,res))
+router.get('/get-chat/:lawyerId/:userId', verifyToken, verifyRole(['lawyer']), (req, res) => lawyerController.getChat(req, res))
 
-router.get('/get-user-chat-profile/:userId',verifyToken,verifyRole(['lawyer']),(req,res)=>lawyerController.getUserChatProfile(req,res))
+router.get('/get-user-chat-profile/:userId', verifyToken, verifyRole(['lawyer']), (req, res) => lawyerController.getUserChatProfile(req, res))
 
-router.post('/update-chat-read-status/:lawyerId/:userId',verifyToken,verifyRole(['lawyer']),(req,res)=>lawyerController.updateChatReadStatus(req,res))
+router.post('/update-chat-read-status/:lawyerId/:userId', verifyToken, verifyRole(['lawyer']), (req, res) => lawyerController.updateChatReadStatus(req, res))
 
-router.post('/add-bank-account',verifyToken,verifyRole(['lawyer']),(req,res)=>lawyerController.addBankAccount(req,res))
+router.post('/add-bank-account', verifyToken, verifyRole(['lawyer']), (req, res) => lawyerController.addBankAccount(req, res))
 
-router.get('/get-summary/:lawyerId',verifyToken,verifyRole(['lawyer']),(req,res)=>lawyerController.getSummary(req,res))
+router.get('/get-summary/:lawyerId', verifyToken, verifyRole(['lawyer']), (req, res) => lawyerController.getSummary(req, res))
 
-router.get('/check-bank-details/:lawyerId',verifyToken,verifyRole(['lawyer']),(req,res)=>lawyerController.checkBankDetails(req,res))
+router.get('/check-bank-details/:lawyerId', verifyToken, verifyRole(['lawyer']), (req, res) => lawyerController.checkBankDetails(req, res))
 
 
 

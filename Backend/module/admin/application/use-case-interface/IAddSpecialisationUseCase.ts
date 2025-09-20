@@ -1,7 +1,7 @@
-import { ISpecializationEntity } from "../../domain/entity/specializationEntity";
+import { SpecializationRequestDto } from "../../domain/dtos/specializationDto";
 
 
 
-export interface IAddSpecializationUseCase{
-    execute(data:ISpecializationEntity):Promise<void>;
+export interface IAddSpecializationUseCase {
+    execute(data: SpecializationRequestDto): Promise<void>;
 }

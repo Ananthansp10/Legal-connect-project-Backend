@@ -4,9 +4,9 @@ import { UserModel } from "../models/userSignupModel";
 import { BaseRepository } from "./baseRepository";
 
 
-export class CheckAccountStatusRepository extends BaseRepository<IUserSignup> implements ICheckAccoutStatusRepository{
+export class CheckAccountStatusRepository extends BaseRepository<IUserSignup> implements ICheckAccoutStatusRepository {
 
-    constructor(){
+    constructor() {
         super(UserModel)
     }
 }

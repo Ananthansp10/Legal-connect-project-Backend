@@ -1,5 +1,5 @@
 
 
-export interface IOtpVerificationUseCase{
-    verifyOtp(email:string,otp:string):Promise<boolean>;
+export interface IOtpVerificationUseCase {
+    verifyOtp(email: string, otp: string): Promise<boolean>;
 }

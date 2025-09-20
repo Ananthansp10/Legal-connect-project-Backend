@@ -7,13 +7,13 @@ import { appointmentModel } from "../models/appointmentModel";
 
 
 
-export class GetLawyerSlotRepository implements IGetLawyerSlotRepository{
+export class GetLawyerSlotRepository implements IGetLawyerSlotRepository {
 
-   async findSlot(lawyerId:Types.ObjectId,date:string): Promise<ISlotAvailablityEntity[]> {
-       return await availableSlotModel.find({lawyerId:lawyerId,status:true,startDate:{$lte:date},endDate:{$gte:date}})
-   }
+    async findSlot(lawyerId: Types.ObjectId, date: string): Promise<ISlotAvailablityEntity[]> {
+        return await availableSlotModel.find({ lawyerId: lawyerId, status: true, startDate: { $lte: date }, endDate: { $gte: date } })
+    }
 
-   async findAppointmentSlot(lawyerId: Types.ObjectId, date: string, time: string): Promise<IAppointmentEntity | null> {
-       return await appointmentModel.findOne({lawyerId:lawyerId,date:date,time:time})
-   }
+    async findAppointmentSlot(lawyerId: Types.ObjectId, date: string, time: string): Promise<IAppointmentEntity | null> {
+        return await appointmentModel.findOne({ lawyerId: lawyerId, date: date, time: time })
+    }
 }

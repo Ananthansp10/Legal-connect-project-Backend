@@ -6,26 +6,26 @@ import { IOtpVerificationUseCase } from "../use-case-Interface/IOtpVerificationU
 import { IUserSignupRepository } from "../../infrastructure/repositoryInterface/IUserSignupRepository";
 import { AppStatusCode } from "../../../../../common/statusCode/AppStatusCode";
 
-export class OtpVerificationUseCase implements IOtpVerificationUseCase{
+export class OtpVerificationUseCase implements IOtpVerificationUseCase {
 
-    private _otpVerificationRepo:IOtpVerificationRepository;
-    private _userRepo:IUserSignupRepository
+    private _otpVerificationRepo: IOtpVerificationRepository;
+    private _userRepo: IUserSignupRepository
 
-    constructor(otpVerificationRepo:IOtpVerificationRepository,userRepo:IUserSignupRepository){
-        this._otpVerificationRepo=otpVerificationRepo
-        this._userRepo=userRepo
+    constructor(otpVerificationRepo: IOtpVerificationRepository, userRepo: IUserSignupRepository) {
+        this._otpVerificationRepo = otpVerificationRepo
+        this._userRepo = userRepo
     }
 
-    async verifyOtp(email:string,otp:string):Promise<boolean>{
+    async verifyOtp(email: string, otp: string): Promise<boolean> {
         try {
-            let isOtpExist=await this._otpVerificationRepo.findOtpByEmail(email)
-            if(!isOtpExist){
-                throw new AppException(AppError.OTP_EXPIRED,AppStatusCode.BAD_REQUEST_CODE)
-            }else{
-                let isOtpMatch=await bcrypt.compare(otp,isOtpExist.otp)
-                if(!isOtpMatch){
-                    throw new AppException(AppError.INVALID_OTP,AppStatusCode.BAD_REQUEST_CODE)
-                }else{
+            const isOtpExist = await this._otpVerificationRepo.findOtpByEmail(email)
+            if (!isOtpExist) {
+                throw new AppException(AppError.OTP_EXPIRED, AppStatusCode.BAD_REQUEST_CODE)
+            } else {
+                const isOtpMatch = await bcrypt.compare(otp, isOtpExist.otp)
+                if (!isOtpMatch) {
+                    throw new AppException(AppError.INVALID_OTP, AppStatusCode.BAD_REQUEST_CODE)
+                } else {
                     await this._userRepo.updateUserToActive(email)
                     return true
                 }

@@ -3,11 +3,11 @@ import { IReportedAccountsRepository } from "../../infrastructure/repositoryInte
 import { IUpdateReportedAccountStatusUseCase } from "../use-case-interface/IUpdateReportAccountStatusUseCase";
 
 
-export class UpdateReportedAccountUseCase implements IUpdateReportedAccountStatusUseCase{
+export class UpdateReportedAccountUseCase implements IUpdateReportedAccountStatusUseCase {
 
     constructor(
-        private _reportedAccountRepo:IReportedAccountsRepository
-    ){}
+        private _reportedAccountRepo: IReportedAccountsRepository
+    ) { }
 
     async execute(reportedAccountId: Types.ObjectId): Promise<void> {
         await this._reportedAccountRepo.updateReportAccountStatus(reportedAccountId)

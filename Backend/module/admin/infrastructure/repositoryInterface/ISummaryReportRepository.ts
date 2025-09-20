@@ -13,21 +13,21 @@ import { CountryChartDto } from "../../domain/dtos/countryChartDto";
 
 
 
-export interface ISummaryReportRepository{
-    getTotalUsers():Promise<number | null>;
-    getTotalLawyers():Promise<number | null>;
-    getTodaysAppointments():Promise<number | null>;
-    getTotalUnverifiedLawyers():Promise<number | null>;
-    getRevenueChart():Promise<RevenueChartDto[] | null>;
-    getWeeklyAppointments():Promise<WeeklyAppointmentsDto[] | null>;
-    getSpecializationChart():Promise<SpecializationChartDto[] | null>;
-    getLawyerProfile(lawyerId:Types.ObjectId):Promise<LawyerProfileEntity | null>;
-    getLawyerApppointments(lawyerId:Types.ObjectId):Promise<IAppointmentEntity[] | null>;
-    getLawyers():Promise<ILawyerSignup[] | null>;
-    getLawyerRating(lawyerId:Types.ObjectId):Promise<FeedbackEntity | null>;
-    getUsers():Promise<IUserSignup[] | null>;
-    getUserProfile(userId:Types.ObjectId):Promise<UserProfileEntitie | null>;
-    getUserAppointments(userId:Types.ObjectId):Promise<IAppointmentEntity[] | null>;
-    getStateChart():Promise<StateChartDto[] | null>;
-    getCountryChart():Promise<CountryChartDto[] | null>;
+export interface ISummaryReportRepository {
+    getTotalUsers(): Promise<number | null>;
+    getTotalLawyers(): Promise<number | null>;
+    getTodaysAppointments(): Promise<number | null>;
+    getTotalUnverifiedLawyers(): Promise<number | null>;
+    getRevenueChart(): Promise<RevenueChartDto[] | null>;
+    getWeeklyAppointments(): Promise<WeeklyAppointmentsDto[] | null>;
+    getSpecializationChart(): Promise<SpecializationChartDto[] | null>;
+    getLawyerProfile(lawyerId: Types.ObjectId): Promise<LawyerProfileEntity | null>;
+    getLawyerApppointments(lawyerId: Types.ObjectId): Promise<IAppointmentEntity[] | null>;
+    getLawyers(): Promise<ILawyerSignup[] | null>;
+    getLawyerRating(lawyerId: Types.ObjectId): Promise<FeedbackEntity | null>;
+    getUsers(): Promise<IUserSignup[] | null>;
+    getUserProfile(userId: Types.ObjectId): Promise<UserProfileEntitie | null>;
+    getUserAppointments(userId: Types.ObjectId): Promise<IAppointmentEntity[] | null>;
+    getStateChart(): Promise<StateChartDto[] | null>;
+    getCountryChart(): Promise<CountryChartDto[] | null>;
 }

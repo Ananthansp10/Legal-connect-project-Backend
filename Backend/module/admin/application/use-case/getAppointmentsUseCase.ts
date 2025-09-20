@@ -10,14 +10,14 @@ export class GetAppointmentsUseCase implements IGetAppointmentsUseCase{
 
     async execute(appointmentStatus: string): Promise<AppointmentsData[] | []> {
 
-        let appointments=await this._appointmentRepo.findAppointments(appointmentStatus)
+        const appointments=await this._appointmentRepo.findAppointments(appointmentStatus)
         if(!appointments || appointments.length==0){
             return [];
         }
         let appointmentsDetails=await Promise.all(
             appointments?.map(async(appointment)=>{
-                let userDetails=await this._appointmentRepo.findUserDetails(appointment.userId)
-                let lawyerDetails=await this._appointmentRepo.findLawyerDetails(appointment.lawyerId)
+                const userDetails=await this._appointmentRepo.findUserDetails(appointment.userId)
+                const lawyerDetails=await this._appointmentRepo.findLawyerDetails(appointment.lawyerId)
 
                 return{
                     userName:userDetails?.name!,

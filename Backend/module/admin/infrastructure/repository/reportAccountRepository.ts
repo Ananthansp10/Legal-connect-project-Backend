@@ -8,21 +8,21 @@ import { userProfileModel } from "../../../user/infrastructure/models/userProfil
 import { lawyerProfileModel } from "../../../lawyer/infrastructure/models/lawyerProfileModel";
 
 
-export class ReportAccountRepository implements IReportedAccountsRepository{
+export class ReportAccountRepository implements IReportedAccountsRepository {
 
     async findReportedAccounts(userType: string): Promise<IReportAccountEntity[]> {
-        return await reportAccountModel.find(userType=='All' ? {status:'Pending'} : {userType:userType,status:'Pending'})
+        return await reportAccountModel.find(userType == 'All' ? { status: 'Pending' } : { userType: userType, status: 'Pending' })
     }
 
     async findUserDetails(userId: Types.ObjectId): Promise<UserProfileEntitie | null> {
-        return await userProfileModel.findOne({userId:userId})
+        return await userProfileModel.findOne({ userId: userId })
     }
 
     async findLawyerDetails(lawyerId: Types.ObjectId): Promise<LawyerProfileEntity | null> {
-        return await lawyerProfileModel.findOne({lawyerId:lawyerId})
+        return await lawyerProfileModel.findOne({ lawyerId: lawyerId })
     }
 
     async updateReportAccountStatus(reportAccountId: Types.ObjectId): Promise<void> {
-        await reportAccountModel.findByIdAndUpdate(reportAccountId,{$set:{status:'Resolved'}})
+        await reportAccountModel.findByIdAndUpdate(reportAccountId, { $set: { status: 'Resolved' } })
     }
 }

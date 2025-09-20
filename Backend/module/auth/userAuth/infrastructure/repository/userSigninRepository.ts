@@ -4,9 +4,9 @@ import { UserModel } from "../models/userSignupModel";
 import { BaseRepository } from "./baseRepository";
 
 
-export class UserSigninRepository extends BaseRepository<IUserSignup> implements IUserSigninRepository{
+export class UserSigninRepository extends BaseRepository<IUserSignup> implements IUserSigninRepository {
 
-    constructor(){
+    constructor() {
         super(UserModel)
     }
 }

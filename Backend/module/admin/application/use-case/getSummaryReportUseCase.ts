@@ -12,13 +12,13 @@ export class GetSummaryReportUseCase implements IGetSummaryReportUseCase{
 
     async execute(): Promise<SummaryReportDto> {
       try {
-         let totalUsers=await this._summaryReportRepo.getTotalUsers() || 0
-         let totalLawyers=await this._summaryReportRepo.getTotalLawyers() || 0
-         let todaysAppointments=await this._summaryReportRepo.getTodaysAppointments() || 0
-         let pendingVerification=await this._summaryReportRepo.getTotalUnverifiedLawyers() || 0
-         let revenueChart=await this._summaryReportRepo.getRevenueChart() || []
-         let weeklyAppointments=await this._summaryReportRepo.getWeeklyAppointments()
-         let specializationChart=await this._summaryReportRepo.getSpecializationChart()
+         const totalUsers=await this._summaryReportRepo.getTotalUsers() || 0
+         const totalLawyers=await this._summaryReportRepo.getTotalLawyers() || 0
+         const todaysAppointments=await this._summaryReportRepo.getTodaysAppointments() || 0
+         const pendingVerification=await this._summaryReportRepo.getTotalUnverifiedLawyers() || 0
+         const revenueChart=await this._summaryReportRepo.getRevenueChart() || []
+         const weeklyAppointments=await this._summaryReportRepo.getWeeklyAppointments()
+         const specializationChart=await this._summaryReportRepo.getSpecializationChart()
 
          const lawyers=await this._summaryReportRepo.getLawyers()
          const topLawyers=await Promise.all(
@@ -39,8 +39,8 @@ export class GetSummaryReportUseCase implements IGetSummaryReportUseCase{
         const users=await this._summaryReportRepo.getUsers()
         const topUsers=await Promise.all(
             (users ?? []).map(async(data)=>{
-                let userProfile=await this._summaryReportRepo.getUserProfile(new mongoose.Types.ObjectId(data._id))
-                let userAppointments=await this._summaryReportRepo.getUserAppointments(new mongoose.Types.ObjectId(data._id))
+                const userProfile=await this._summaryReportRepo.getUserProfile(new mongoose.Types.ObjectId(data._id))
+                const userAppointments=await this._summaryReportRepo.getUserAppointments(new mongoose.Types.ObjectId(data._id))
                 return{
                     name:userProfile?.name!,
                     profileImage:userProfile?.profileImage!,
@@ -51,8 +51,8 @@ export class GetSummaryReportUseCase implements IGetSummaryReportUseCase{
             })
         )
 
-        let stateChart=await this._summaryReportRepo.getStateChart()
-        let countryChart=await this._summaryReportRepo.getCountryChart()
+        const stateChart=await this._summaryReportRepo.getStateChart()
+        const countryChart=await this._summaryReportRepo.getCountryChart()
 
         return{
                 totalUsers,

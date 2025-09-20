@@ -5,6 +5,6 @@ import { IBaseRepository } from "./IbaseRepository";
 
 
 
-export interface IEditLawyerProfileRepository extends IBaseRepository<LawyerProfileEntity>{
-    editLawyerProfile(lawyerId:Types.ObjectId,data:LawyerEditProfileResponse):Promise<void>;
+export interface IEditLawyerProfileRepository extends IBaseRepository<LawyerProfileEntity> {
+    editLawyerProfile(lawyerId: Types.ObjectId, data: LawyerEditProfileResponse): Promise<void>;
 }

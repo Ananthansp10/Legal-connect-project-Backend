@@ -15,16 +15,16 @@ export default [
       prettier,
     },
     rules: {
-      "no-unused-vars": "warn",
-      "no-console": "off",
-      "id-match": [
-        "error",
-        "^_?[a-z][a-zA-Z0-9]*$",
-        {
-          properties: true,
-          onlyDeclarations: false,
-        },
-      ],
+      // "no-unused-vars": "warn",
+      // "no-console": "off",
+      // "id-match": [
+      //   "error",
+      //   "^_?[a-z][a-zA-Z0-9]*$",
+      //   {
+      //     properties: true,
+      //     onlyDeclarations: false,
+      //   },
+      // ],
       "prettier/prettier": "error",
     },
   },

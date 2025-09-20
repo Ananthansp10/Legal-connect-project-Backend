@@ -11,7 +11,7 @@ export class FilterUserUseCase implements IFilterUserUseCase{
     ){}
 
     async execute(status: string): Promise<IUserResponse[] | null> {
-        let users=await this._userRepo.filterUser(status)
+        const users=await this._userRepo.filterUser(status)
         let response:IUserResponse[]=[]
         if(users){
             response=await UserMapper.toResponse(users)

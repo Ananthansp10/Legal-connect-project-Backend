@@ -1,6 +1,6 @@
 
 
-export interface SpecializationReportDto{
-    _id:string;
-    specializationCount:number;
+export interface SpecializationReportDto {
+    _id: string;
+    specializationCount: number;
 }

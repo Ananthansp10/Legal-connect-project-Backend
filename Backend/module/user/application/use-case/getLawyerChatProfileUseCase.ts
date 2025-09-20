@@ -4,19 +4,19 @@ import { IChatRepository } from "../../infrastructure/repositoryInterface/IChatR
 import { IGetLawyerChatProfileUseCase } from "../use-case-interface/IGetLawyerChatProfileUseCase";
 
 
-export class GetLawyerChatProfileUseCase implements IGetLawyerChatProfileUseCase{
+export class GetLawyerChatProfileUseCase implements IGetLawyerChatProfileUseCase {
 
     constructor(
-        private _chatRepo:IChatRepository
-    ){}
+        private _chatRepo: IChatRepository
+    ) { }
 
     async execute(lawyerId: Types.ObjectId): Promise<LawyerChatProfileDto | null> {
-        let lawyerDetails=await this._chatRepo.findLawyerDetails(lawyerId)
+        const lawyerDetails = await this._chatRepo.findLawyerDetails(lawyerId)
         return {
-            name:lawyerDetails?.personalInfo.name!,
-            profileImage:lawyerDetails?.personalInfo.profileImage!,
-            specialization:lawyerDetails?.proffessionalInfo.practiceAreas[0]!,
-            courtName:lawyerDetails?.proffessionalInfo.courtName!
+            name: lawyerDetails?.personalInfo.name!,
+            profileImage: lawyerDetails?.personalInfo.profileImage!,
+            specialization: lawyerDetails?.proffessionalInfo.practiceAreas[0]!,
+            courtName: lawyerDetails?.proffessionalInfo.courtName!
         }
     }
 }

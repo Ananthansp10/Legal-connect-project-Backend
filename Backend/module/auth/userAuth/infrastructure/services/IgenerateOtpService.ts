@@ -1,5 +1,5 @@
 
 
-export interface IGenerateOtpService{
-    generateOtp():string;
+export interface IGenerateOtpService {
+    generateOtp(): string;
 }

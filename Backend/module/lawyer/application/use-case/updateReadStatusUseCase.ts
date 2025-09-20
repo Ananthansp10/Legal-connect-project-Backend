@@ -3,13 +3,13 @@ import { ILawyerChatRepository } from "../../infrastructure/repositoryInterface/
 import { IUpdateReadStatusUseCase } from "../use-case-interface/IUpdateReadStatusUseCase";
 
 
-export class UpdateReadStatusUseCase implements IUpdateReadStatusUseCase{
+export class UpdateReadStatusUseCase implements IUpdateReadStatusUseCase {
 
     constructor(
-        private _chatRepo:ILawyerChatRepository
-    ){}
+        private _chatRepo: ILawyerChatRepository
+    ) { }
 
     async execute(lawyerId: Types.ObjectId, userId: Types.ObjectId): Promise<void> {
-        await this._chatRepo.updateReadStatus(lawyerId,userId)
+        await this._chatRepo.updateReadStatus(lawyerId, userId)
     }
 }

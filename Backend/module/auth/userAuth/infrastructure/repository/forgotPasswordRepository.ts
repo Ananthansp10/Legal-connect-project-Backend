@@ -2,9 +2,9 @@ import { IForgotPasswordRepository } from "../repositoryInterface/IForgotPasswor
 import { UserModel } from "../models/userSignupModel";
 
 
-export class ForgotPasswordRepository implements IForgotPasswordRepository{
+export class ForgotPasswordRepository implements IForgotPasswordRepository {
 
     async updatePasswordByEmail(email: string, password: string): Promise<void> {
-        await UserModel.updateOne({email:email},{$set:{password:password}})
+        await UserModel.updateOne({ email: email }, { $set: { password: password } })
     }
 }

@@ -6,28 +6,28 @@ import { IRefundPayment } from "../../infrastructure/services/IRefundPaymentServ
 
 
 
-export class CancelAppointmentUseCase implements ICancelAppointmentUseCase{
+export class CancelAppointmentUseCase implements ICancelAppointmentUseCase {
 
     constructor(
-        private _appointmentRepo:IAppointmentRepository,
-        private _refundPaymentService:IRefundPayment
-    ){}
+        private _appointmentRepo: IAppointmentRepository,
+        private _refundPaymentService: IRefundPayment
+    ) { }
 
     async execute(appointmentId: Types.ObjectId): Promise<void> {
         try {
-            let appointment=await this._appointmentRepo.findAppointmentById(appointmentId)
-            let currentDate=new Date().toISOString().split('T')[0]
+            const appointment = await this._appointmentRepo.findAppointmentById(appointmentId)
+            const currentDate = new Date().toISOString().split('T')[0]
 
-        if(appointment){
-            if(appointment.date>currentDate){
-                await this._appointmentRepo.cancelAppointment(appointmentId)
-                if(appointment.paymentId){
-                    await this._refundPaymentService.execute(appointmentId,appointment.paymentId!)
+            if (appointment) {
+                if (appointment.date > currentDate) {
+                    await this._appointmentRepo.cancelAppointment(appointmentId)
+                    if (appointment.paymentId) {
+                        await this._refundPaymentService.execute(appointmentId, appointment.paymentId!)
+                    }
+                } else {
+                    throw new AppException("Appointment can't cancel Today", 403)
                 }
-            }else{
-                throw new AppException("Appointment can't cancel Today",403)
             }
-        }
         } catch (error) {
             throw error
         }

@@ -2,6 +2,6 @@ import { Types } from "mongoose";
 
 
 
-export interface IUpdateRuleStatusUseCase{
-    execute(ruleId:Types.ObjectId,ruleStatus:string):Promise<string>;
+export interface IUpdateRuleStatusUseCase {
+    execute(ruleId: Types.ObjectId, ruleStatus: string): Promise<string>;
 }

@@ -14,6 +14,6 @@ export interface RazorpayOrder {
 }
 
 
-export interface ICreateRazorpayOrderUseCase{
-    execute(planId:Types.ObjectId,price:number):Promise<RazorpayOrder>;
+export interface ICreateRazorpayOrderUseCase {
+  execute(planId: Types.ObjectId, price: number): Promise<RazorpayOrder>;
 }

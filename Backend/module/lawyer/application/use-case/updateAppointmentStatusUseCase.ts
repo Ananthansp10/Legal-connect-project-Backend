@@ -13,7 +13,7 @@ export class UpdateAppointmentStatusUseCase implements IUpdateAppointmentStatus{
 
     async execute(appointmentId: Types.ObjectId, appointmentStatus: string, lawyerId:Types.ObjectId): Promise<void> {
         if(appointmentStatus=='Accepted'){
-            let subscribed=await this._planRepo.findPlan(lawyerId)
+            const subscribed=await this._planRepo.findPlan(lawyerId)
             if(!subscribed){
                 throw new AppException("Cant accept ! please subscribe to continue",403)
             }else{

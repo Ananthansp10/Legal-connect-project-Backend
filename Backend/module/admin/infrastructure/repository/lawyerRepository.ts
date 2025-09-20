@@ -9,29 +9,29 @@ import { LawyerProfileEntity } from "../../../lawyer/domain/entity/lawyerProfile
 
 
 
-export class LawyerRepository extends BaseRepository<ILawyerSignup> implements ILawyerRepository{
+export class LawyerRepository extends BaseRepository<ILawyerSignup> implements ILawyerRepository {
 
-    constructor(){
+    constructor() {
         super(LawyerModel)
     }
 
     async updateLawyerStatus(lawyerId: string, status: string): Promise<void> {
-        if(status==AppStatus.UNBLOCK){
-            await LawyerModel.findByIdAndUpdate(lawyerId,{$set:{isBlock:false}})
-        }else{
-            await LawyerModel.findByIdAndUpdate(lawyerId,{$set:{isBlock:true}})
+        if (status == AppStatus.UNBLOCK) {
+            await LawyerModel.findByIdAndUpdate(lawyerId, { $set: { isBlock: false } })
+        } else {
+            await LawyerModel.findByIdAndUpdate(lawyerId, { $set: { isBlock: true } })
         }
     }
 
     async searchLawyer(name: string): Promise<ILawyerSignup[] | null> {
-        return await LawyerModel.find({name:name})
+        return await LawyerModel.find({ name: name })
     }
 
     async filterLawyer(status: string): Promise<ILawyerSignup[] | null> {
-        return await LawyerModel.find(status == 'unblock' ? {isBlock:false} : status == 'block' ? {isBlock:true} : {})
+        return await LawyerModel.find(status == 'unblock' ? { isBlock: false } : status == 'block' ? { isBlock: true } : {})
     }
 
     async getLawyerDetails(lawyerId: Types.ObjectId): Promise<LawyerProfileEntity | null> {
-        return await lawyerProfileModel.findOne({lawyerId:lawyerId})
+        return await lawyerProfileModel.findOne({ lawyerId: lawyerId })
     }
 }

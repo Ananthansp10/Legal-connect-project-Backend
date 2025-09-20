@@ -32,7 +32,7 @@ export class AdminController {
 
     async getAppointments(req: Request, res: Response) {
         try {
-            let result = await this._getAppointmentsUseCase.execute(req.params.appointmentStatus)
+            const result = await this._getAppointmentsUseCase.execute(req.params.appointmentStatus)
             res.status(AppStatusCode.SUCCESS_CODE).json({ success: true, message: 'Appointments found successfully', data: result })
         } catch (error) {
             res.status(AppStatusCode.INTERNAL_ERROR_CODE).json({ success: false, message: AppError.UNKNOWN_ERROR })
@@ -41,7 +41,7 @@ export class AdminController {
 
     async getReportedAccounts(req: Request, res: Response) {
         try {
-            let result = await this._getReportedAccountUseCase.execute(req.params.userType == 'All' ? req.params.userType : req.params.userType.toLowerCase().slice(0, req.params.userType.length - 1))
+            const result = await this._getReportedAccountUseCase.execute(req.params.userType == 'All' ? req.params.userType : req.params.userType.toLowerCase().slice(0, req.params.userType.length - 1))
             res.status(AppStatusCode.SUCCESS_CODE).json({ success: true, message: "Reported Accounts found successfully", data: result })
         } catch (error) {
             res.status(AppStatusCode.INTERNAL_ERROR_CODE).json({ success: false, message: AppError.UNKNOWN_ERROR })
@@ -99,7 +99,7 @@ export class AdminController {
 
     async getPlans(req: Request, res: Response) {
         try {
-            let result = await this._getPlanUseCase.execute()
+            const result = await this._getPlanUseCase.execute()
             res.status(AppStatusCode.SUCCESS_CODE).json({ success: true, messgae: "Plans found successfully", data: result })
         } catch (error) {
             res.status(AppStatusCode.INTERNAL_ERROR_CODE).json({ success: false, message: AppError.UNKNOWN_ERROR })
@@ -108,7 +108,7 @@ export class AdminController {
 
     async getSummaryReport(req: Request, res: Response) {
         try {
-            let result = await this._getSummaryReportUseCase.execute()
+            const result = await this._getSummaryReportUseCase.execute()
             res.status(AppStatusCode.SUCCESS_CODE).json({ success: true, message: "Summary report found successfully", data: result })
         } catch (error) {
             res.status(AppStatusCode.INTERNAL_ERROR_CODE).json({ success: false, message: AppError.UNKNOWN_ERROR })
@@ -117,7 +117,7 @@ export class AdminController {
 
     async getReports(req: Request, res: Response) {
         try {
-            let result = await this._getReportsUseCase.execute()
+            const result = await this._getReportsUseCase.execute()
             res.status(AppStatusCode.SUCCESS_CODE).json({ success: true, message: "Reports found successfully", data: result })
         } catch (error) {
             res.status(AppStatusCode.INTERNAL_ERROR_CODE).json({ success: false, message: AppError.UNKNOWN_ERROR })

@@ -4,11 +4,11 @@ import { IDeleteSpecializationUseCase } from "../use-case-interface/IDeleteSpeci
 
 
 
-export class DeleteSpecializationUseCase implements IDeleteSpecializationUseCase{
+export class DeleteSpecializationUseCase implements IDeleteSpecializationUseCase {
 
     constructor(
-        private _deleteSpecializationRepo:IDeleteSpecializationRepository
-    ){}
+        private _deleteSpecializationRepo: IDeleteSpecializationRepository
+    ) { }
 
     async execute(specId: string): Promise<void> {
         await this._deleteSpecializationRepo.deleteSpecialization(specId)

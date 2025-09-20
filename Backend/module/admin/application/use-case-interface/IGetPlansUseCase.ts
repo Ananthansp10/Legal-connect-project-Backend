@@ -1,6 +1,6 @@
-import { IPlansEntity } from "../../domain/entity/plansEntity";
+import { PlansResponseDto } from "../../domain/dtos/plansDto";
 
 
-export interface IGetPlansUseCase{
-    execute():Promise<IPlansEntity[] | null>;
+export interface IGetPlansUseCase {
+    execute(): Promise<PlansResponseDto[] | null>;
 }

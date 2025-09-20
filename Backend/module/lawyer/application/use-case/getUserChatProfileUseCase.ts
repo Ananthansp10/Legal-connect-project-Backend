@@ -11,7 +11,7 @@ export class GetUserChatProfileUseCase implements IGetUserChatProfileUseCase{
     ){}
 
     async execute(userId: Types.ObjectId): Promise<UserChatProfileDto | null> {
-        let userProfile=await this._chatRepo.findUserDetails(userId)
+        const userProfile=await this._chatRepo.findUserDetails(userId)
         return {
             name:userProfile?.name!,
             profileImage:userProfile?.profileImage!,
