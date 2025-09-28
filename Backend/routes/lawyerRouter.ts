@@ -1,4 +1,4 @@
-import express from 'express'
+import express from 'express';
 import { LawyerAuthController, MulterRequest } from '../module/auth/lawyerAuth/interface/controller/lawyerAuthController';
 import { LawyerSignupRepository } from '../module/auth/lawyerAuth/infrastructure/repository/lawyerSignupRepository';
 import { LawyerSignupUseCase } from '../module/auth/lawyerAuth/application/lawyer-use-case/lawyerSignupUseCase';
@@ -52,6 +52,10 @@ import { AddBankAccountDetailsUseCase } from '../module/lawyer/application/use-c
 import { SummaryRepository } from '../module/lawyer/infrastructure/repository/summaryRepository';
 import { GetSummaryUseCase } from '../module/lawyer/application/use-case/getSummaryUseCase';
 import { CheckBankDetailsUseCase } from '../module/lawyer/application/use-case/checkBankDetailsUseCase';
+import { StartMeetingUseCase } from '../module/lawyer/application/use-case/startMeetingUseCase';
+import { AddNotesUseCase } from '../module/lawyer/application/use-case/addNotesUseCase';
+import { AddReviewUseCase } from '../module/lawyer/application/use-case/addReviewUseCase';
+import { GetConsultationHistoryUseCase } from '../module/lawyer/application/use-case/getConsultationHistoryUseCase';
 const router = express.Router()
 
 const lawyerSignupMongoRepo = new LawyerSignupRepository()
@@ -100,7 +104,8 @@ const updateRuleStatusApplication = new UpdateRuleStatusUseCase(updateRuleMongoR
 const appointmentRepo = new AppointmentRepository()
 const getAppointmentUseCase = new GetAppointmentUseCase(appointmentRepo)
 const planRepo = new PlanRepository()
-const updateAppointmentStatusUseCase = new UpdateAppointmentStatusUseCase(appointmentRepo, planRepo)
+const bankDetailsRepo = new BankDetailsRepository()
+const updateAppointmentStatusUseCase = new UpdateAppointmentStatusUseCase(appointmentRepo, planRepo, bankDetailsRepo)
 const subscriptionPlanRepo = new SubscriptionPlanRepository()
 const getSubscriptionPlanUseCase = new GetSubscriptionPlanUseCase(subscriptionPlanRepo)
 const addPlanUseCase = new AddPlanUseCase(planRepo)
@@ -109,11 +114,14 @@ const getLawyerAllChatsUseCase = new GetLawyerAllChatUseCase(chatRepo)
 const getLawyerChatUseCase = new GetLawyerChatUseCase(chatRepo)
 const getUserChatProfileUseCase = new GetUserChatProfileUseCase(chatRepo)
 const updateChatReadStatusUseCase = new UpdateReadStatusUseCase(chatRepo)
-const bankDetailsRepo = new BankDetailsRepository()
 const addBankDetailsUseCase = new AddBankAccountDetailsUseCase(bankDetailsRepo)
 const summaryRepo = new SummaryRepository()
 const getSummaryUseCase = new GetSummaryUseCase(summaryRepo)
 const checkBankDetailsUseCase = new CheckBankDetailsUseCase(bankDetailsRepo)
+const startMeetingUseCase = new StartMeetingUseCase(appointmentRepo)
+const addNotesUseCase = new AddNotesUseCase(appointmentRepo)
+const addFeedbackUseCase = new AddReviewUseCase(appointmentRepo)
+const getConsultationHistoryUseCase = new GetConsultationHistoryUseCase(appointmentRepo)
 
 const lawyerController = new LawyerController(
     addSlotApplication,
@@ -129,7 +137,11 @@ const lawyerController = new LawyerController(
     updateChatReadStatusUseCase,
     addBankDetailsUseCase,
     getSummaryUseCase,
-    checkBankDetailsUseCase
+    checkBankDetailsUseCase,
+    startMeetingUseCase,
+    addNotesUseCase,
+    addFeedbackUseCase,
+    getConsultationHistoryUseCase
 )
 
 const createRazorpayOrderUseCase = new CreateRazorpayOrderUseCase()
@@ -198,7 +210,13 @@ router.get('/get-summary/:lawyerId', verifyToken, verifyRole(['lawyer']), (req, 
 
 router.get('/check-bank-details/:lawyerId', verifyToken, verifyRole(['lawyer']), (req, res) => lawyerController.checkBankDetails(req, res))
 
+router.post('/start-meeting/:appointmentId', verifyToken, verifyRole(['lawyer']), (req, res) => lawyerController.startMeeting(req, res))
 
+router.post('/add-notes/:appointmentId', verifyToken, verifyRole(['lawyer']), (req, res) => lawyerController.addNotes(req, res))
+
+router.post('/add-feedback/:appointmentId', verifyToken, verifyRole(['lawyer']), (req, res) => lawyerController.addReview(req, res))
+
+router.get('/get-consultation-history/:caseId', verifyToken, verifyRole(['lawyer']), (req, res) => lawyerController.getConsultationHistory(req, res))
 
 
 export default router;

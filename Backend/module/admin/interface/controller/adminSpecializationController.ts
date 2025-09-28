@@ -27,8 +27,8 @@ export class AdminSpecializationController {
 
     async getSpecialization(req: Request, res: Response): Promise<void> {
         try {
-            const result = await this._getSpecializationApplication.execute()
-            res.status(AppStatusCode.SUCCESS_CODE).json({ success: true, message: "Specialization data found successfully", data: result })
+            const result = await this._getSpecializationApplication.execute(parseInt(req.params.startIndex), parseInt(req.params.limit))
+            res.status(AppStatusCode.SUCCESS_CODE).json({ success: true, message: "Specialization data found successfully", data: result?.specializations, totalSpecialization: result?.totalSpecializations })
         } catch (error) {
             res.status(AppStatusCode.INTERNAL_ERROR_CODE).json({ success: false, message: AppError.UNKNOWN_ERROR })
         }

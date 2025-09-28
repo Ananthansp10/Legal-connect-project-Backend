@@ -5,7 +5,7 @@ import { UserProfileEntitie } from "../../../user/domain/entity/userProfileUserE
 
 
 export interface IAppointmentsRepository {
-    findAppointments(appointmentStatus: string): Promise<IAppointmentEntity[] | null>;
+    findAppointments(appointmentStatus: string, startIndex: number, limit: number): Promise<{ appointments: IAppointmentEntity[], totalAppointments: number } | null>;
     findUserDetails(userId: Types.ObjectId): Promise<UserProfileEntitie | null>;
     findLawyerDetails(lawyerId: Types.ObjectId): Promise<LawyerProfileEntity | null>;
 }

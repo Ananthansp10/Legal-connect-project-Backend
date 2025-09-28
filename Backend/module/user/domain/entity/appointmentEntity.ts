@@ -16,4 +16,8 @@ export interface IAppointmentEntity {
     refundStatus?: string;
     paymentDate?: string;
     meetStart?: boolean;
+    notes?: string;
+    feedback?: string;
+    rating?: number;
+    caseId?: number;
 }

@@ -15,8 +15,8 @@ const updateChatReadStatusUseCase = new UpdateChatReadStatusUseCase(chatRepo);
 const lawyerChatRepo = new LawyerChatRepository();
 const updateLawyerChatReadStatusUseCase = new UpdateReadStatusUseCase(lawyerChatRepo);
 
-const userSocketMap = new Map<string, string>(); // userId → socketId
-const rooms: { [roomId: string]: string[] } = {}; // roomId → [socketId]
+const userSocketMap = new Map<string, string>();
+const roomMap = new Map<string, { lawyer?: string; user?: string }>();
 
 export const initSocket = (server: HTTPServer) => {
   io = new SocketIOServer(server, {
@@ -59,36 +59,44 @@ export const initSocket = (server: HTTPServer) => {
       );
     });
 
-    // WebRTC signaling
-    socket.on("join-room", (roomId: string, role: string) => {
-      console.log(`${role} has joined room ${roomId}`);
-      socket.join(roomId);
+     socket.on("join-room", (roomId: string, role: "lawyer" | "user") => {
+    socket.join(roomId);
+    if (!roomMap.has(roomId)) roomMap.set(roomId, {});
+    const room = roomMap.get(roomId)!;
+    room[role] = socket.id;
 
-      if (!rooms[roomId]) rooms[roomId] = [];
-      rooms[roomId].push(socket.id);
+    console.log(`${role} joined room ${roomId}`);
 
-      // Send existing peers to new peer
-      const otherPeers = rooms[roomId].filter((id) => id !== socket.id);
-      socket.emit("all-peers", otherPeers);
+    // If both are present, notify
+    if (room.lawyer && room.user) {
+      io.to(room.lawyer).emit("ready");
+      io.to(room.user).emit("ready");
+    }
+  });
 
-      // Notify other peers that a new peer has joined
-      socket.to(roomId).emit("peer-joined", { socketId: socket.id, role });
-    });
+  // Lawyer sends offer
+  socket.on("offer", ({ roomId, offer }) => {
+    const room = roomMap.get(roomId);
+    if (room?.user) {
+      io.to(room.user).emit("callUser", { from: socket.id, signal: offer });
+    }
+  });
 
-    // Forward offer
-    socket.on("offer", ({ offer, to }: { offer: RTCSessionDescriptionInit; to: string }) => {
-      io.to(to).emit("offer", { offer, from: socket.id });
-    });
+  // User sends answer
+  socket.on("answerCall", ({ roomId, answer }) => {
+    const room = roomMap.get(roomId);
+    if (room?.lawyer) {
+      io.to(room.lawyer).emit("receive-answer", answer);
+    }
+  });
 
-    // Forward answer
-    socket.on("answer", ({ answer, to }: { answer: RTCSessionDescriptionInit; to: string }) => {
-      io.to(to).emit("answer", { answer, from: socket.id });
-    });
+  // ICE candidates
+  socket.on("ice-candidate", ({ roomId, candidate, to }) => {
+    if (to) {
+      io.to(to).emit("ice-candidate", candidate);
+    }
+  });
 
-    // Forward ICE candidate
-    socket.on("ice-candidate", ({ candidate, to }: { candidate: RTCIceCandidateInit; to: string }) => {
-      io.to(to).emit("ice-candidate", { candidate, from: socket.id });
-    });
 
     // Disconnect
     socket.on("disconnect", () => {
@@ -100,13 +108,6 @@ export const initSocket = (server: HTTPServer) => {
           userSocketMap.delete(userId);
           break;
         }
-      }
-
-      // Remove from rooms
-      for (const roomId in rooms) {
-        rooms[roomId] = rooms[roomId].filter((id) => id !== socket.id);
-        socket.to(roomId).emit("peer-left", socket.id);
-        if (rooms[roomId].length === 0) delete rooms[roomId];
       }
     });
   });

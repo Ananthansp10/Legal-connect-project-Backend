@@ -37,7 +37,10 @@ export class GetAppointmentUseCase implements IGetAppointmentUseCase {
           payment: appointment?.payment ? appointment.payment : '',
           problem: appointment.problem,
           fee: appointment.fee,
-          paymentDate: appointment.paymentDate
+          paymentDate: appointment.paymentDate,
+          meetStart: appointment.meetStart,
+          note: appointment.notes,
+          caseId: appointment.caseId
         };
       })
     );

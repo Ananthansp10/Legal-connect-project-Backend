@@ -4,14 +4,14 @@ import { ReportedAccountsMapper } from "../mapper/reportedAccountsMapper";
 import { IGetReportedAccountsUseCase } from "../use-case-interface/IGetReportedAccountsUseCase";
 
 
-export class GetReportedAccountsUseCase implements IGetReportedAccountsUseCase{
+export class GetReportedAccountsUseCase implements IGetReportedAccountsUseCase {
 
     constructor(
-        private _reportedAccountsRepo:IReportedAccountsRepository
-    ){}
+        private _reportedAccountsRepo: IReportedAccountsRepository
+    ) { }
 
-    async execute(userType: string): Promise<ReportAccountDto[] | null> {
-        const reportedAccounts=await this._reportedAccountsRepo.findReportedAccounts(userType)
-        return await ReportedAccountsMapper.toResponse(reportedAccounts,this._reportedAccountsRepo)
+    async execute(userType: string, startIndex: number, limit: number): Promise<{ reportedAccounts: ReportAccountDto[] | null, totalReportedAccounts: number } | null> {
+        const reportedAccounts = await this._reportedAccountsRepo.findReportedAccounts(userType, startIndex, limit)
+        return {reportedAccounts:await ReportedAccountsMapper.toResponse(reportedAccounts.reportedAccounts || [], this._reportedAccountsRepo), totalReportedAccounts:reportedAccounts.totalReportedAccounts}
     }
 }

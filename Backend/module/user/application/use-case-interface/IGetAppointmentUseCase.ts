@@ -20,6 +20,9 @@ export interface AppointmentsData {
     problem: string;
     fee: number;
     paymentDate?: string;
+    meetStart?: boolean;
+    notes?: string;
+    caseId?: number;
 }
 
 

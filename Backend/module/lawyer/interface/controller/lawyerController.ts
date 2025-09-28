@@ -17,6 +17,10 @@ import { IUpdateReadStatusUseCase } from "../../application/use-case-interface/I
 import { IAddBankAccountDetailsUseCase } from "../../application/use-case-interface/IAddBankAccountDetailsUseCase";
 import { IGetSummaryUseCase } from "../../application/use-case-interface/IGetSummaryUseCase";
 import { ICheckBankDetailsUseCase } from "../../application/use-case-interface/ICheckBankDetailsUseCase";
+import { IStartMeetingUseCase } from "../../application/use-case-interface/IStartMeetingUseCase";
+import { IAddNotesUseCase } from "../../application/use-case-interface/IAddNotesUseCase";
+import { IAddReviewUseCase } from "../../application/use-case-interface/IAddReviewUseCase";
+import { IGetConsultationHistoryUseCase } from "../../application/use-case-interface/IGetConsultationHistoryUseCase";
 
 
 export class LawyerController {
@@ -35,7 +39,11 @@ export class LawyerController {
         private _updateChatReadStatusUseCase: IUpdateReadStatusUseCase,
         private _addBankAccountDetailsUseCase: IAddBankAccountDetailsUseCase,
         private _getSummaryUseCase: IGetSummaryUseCase,
-        private checkBankDetailsUseCase: ICheckBankDetailsUseCase
+        private checkBankDetailsUseCase: ICheckBankDetailsUseCase,
+        private _startMeetingUseCase: IStartMeetingUseCase,
+        private _addNotesUseCase: IAddNotesUseCase,
+        private _addFeedBackUseCase: IAddReviewUseCase,
+        private _getConsultationHistoryUseCase: IGetConsultationHistoryUseCase
     ) { }
 
     async addSlot(req: Request, res: Response): Promise<void> {
@@ -164,6 +172,42 @@ export class LawyerController {
         try {
             const result = await this.checkBankDetailsUseCase.execute(new mongoose.Types.ObjectId(req.params.lawyerId))
             res.status(AppStatusCode.SUCCESS_CODE).json({ success: result ? true : false, message: result ? "Bank Details found successfully" : "Bank details not found" })
+        } catch (error) {
+            res.status(AppStatusCode.INTERNAL_ERROR_CODE).json({ success: false, message: AppError.UNKNOWN_ERROR })
+        }
+    }
+
+    async startMeeting(req: Request, res: Response) {
+        try {
+            await this._startMeetingUseCase.execute(new mongoose.Types.ObjectId(req.params.appointmentId))
+            res.status(AppStatusCode.SUCCESS_CODE).json({ success: true, message: "Appointment meeting started" })
+        } catch (error) {
+            res.status(AppStatusCode.INTERNAL_ERROR_CODE).json({ success: false, message: AppError.UNKNOWN_ERROR })
+        }
+    }
+
+    async addNotes(req: Request, res: Response) {
+        try {
+            await this._addNotesUseCase.execute(new mongoose.Types.ObjectId(req.params.appointmentId), req.body.note)
+            res.status(AppStatusCode.SUCCESS_CODE).json({ success: true, message: "Final notes summary added" })
+        } catch (error) {
+            res.status(AppStatusCode.INTERNAL_ERROR_CODE).json({ success: false, message: AppError.UNKNOWN_ERROR })
+        }
+    }
+
+    async addReview(req: Request, res: Response) {
+        try {
+            await this._addFeedBackUseCase.execute(new mongoose.Types.ObjectId(req.params.appointmentId), req.body)
+            res.status(AppStatusCode.SUCCESS_CODE).json({ success: true, message: "Feedback added" })
+        } catch (error) {
+            res.status(AppStatusCode.INTERNAL_ERROR_CODE).json({ success: false, message: AppError.UNKNOWN_ERROR })
+        }
+    }
+
+    async getConsultationHistory(req: Request, res: Response) {
+        try {
+            let result = await this._getConsultationHistoryUseCase.execute(parseInt(req.params.caseId))
+            res.status(AppStatusCode.SUCCESS_CODE).json({ success: true, message: "Consultation history found successfully", data: result })
         } catch (error) {
             res.status(AppStatusCode.INTERNAL_ERROR_CODE).json({ success: false, message: AppError.UNKNOWN_ERROR })
         }

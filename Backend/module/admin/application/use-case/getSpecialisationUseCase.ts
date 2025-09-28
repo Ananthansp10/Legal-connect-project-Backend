@@ -10,8 +10,8 @@ export class GetSpecializationUseCase implements IGetSpecializationUseCase {
         private _getSpecializationRepo: IGetSpecializationRepository
     ) { }
 
-    async execute(): Promise<SpecializationResponseDto[] | null> {
+    async execute(startIndex: number, limit: number): Promise<{ specializations: SpecializationResponseDto[], totalSpecializations: number } | null> {
 
-        return await this._getSpecializationRepo.getSpecialization()
+        return await this._getSpecializationRepo.getSpecialization(startIndex, limit)
     }
 }

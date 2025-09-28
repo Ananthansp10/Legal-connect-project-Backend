@@ -1,4 +1,6 @@
 import { LawyerDetailsDto } from "./lawyerDetailsDto";
+import { RevenueDateChartDto } from "./revenueDateChartDto";
+import { SpecializationCategoryChartDto } from "./specializationCategoryChartDto";
 import { SpecializationReportDto } from "./specializationReportDto";
 import { StateReportDto } from "./stateReportDto";
 
@@ -11,4 +13,6 @@ export interface ReportsDto {
     subscriptionPlanReport: SpecializationReportDto[];
     stateReport: StateReportDto[];
     lawyerDetails: LawyerDetailsDto[];
+    revenueDateChart: RevenueDateChartDto[];
+    specializationChart: SpecializationCategoryChartDto[];
 }

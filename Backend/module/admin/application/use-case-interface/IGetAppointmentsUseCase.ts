@@ -13,5 +13,5 @@ export interface AppointmentsData {
 }
 
 export interface IGetAppointmentsUseCase {
-    execute(appointmentStatus: string): Promise<AppointmentsData[] | []>;
+    execute(appointmentStatus: string, startIndex: number, limit: number): Promise<{ appointments: AppointmentsData[] | [], totalAppointments: number } | []>;
 }

@@ -1,5 +1,5 @@
-import { IReportRepository, ReportDataRequestDto } from "../../infrastructure/repositoryInterface/IReportReposiitory";
-import { IReportLawyerUseCase } from "../use-case-interface/IReportLawyerUseCase";
+import { IReportRepository, ReportDataRequestDto } from '../../infrastructure/repositoryInterface/IReportReposiitory';
+import { IReportLawyerUseCase } from '../use-case-interface/IReportLawyerUseCase';
 
 
 export class ReportLawyerUseCase implements IReportLawyerUseCase {

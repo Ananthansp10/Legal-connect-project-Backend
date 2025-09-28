@@ -10,8 +10,10 @@ import { lawyerProfileModel } from "../../../lawyer/infrastructure/models/lawyer
 
 export class ReportAccountRepository implements IReportedAccountsRepository {
 
-    async findReportedAccounts(userType: string): Promise<IReportAccountEntity[]> {
-        return await reportAccountModel.find(userType == 'All' ? { status: 'Pending' } : { userType: userType, status: 'Pending' })
+    async findReportedAccounts(userType: string, startIndex: number, limit: number): Promise<{ reportedAccounts: IReportAccountEntity[], totalReportedAccounts: number }> {
+        let reportedAccounts = await reportAccountModel.find(userType == 'All' ? { status: 'Pending' } : { userType: userType, status: 'Pending' }).skip(startIndex).limit(limit)
+        let totalReportedAccounts = await reportAccountModel.countDocuments(userType == 'All' ? { status: 'Pending' } : { userType: userType, status: 'Pending' })
+        return { reportedAccounts, totalReportedAccounts }
     }
 
     async findUserDetails(userId: Types.ObjectId): Promise<UserProfileEntitie | null> {

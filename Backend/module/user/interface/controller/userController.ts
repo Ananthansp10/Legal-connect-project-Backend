@@ -93,7 +93,7 @@ export class UserController {
 
     async bookAppointment(req: Request, res: Response) {
         try {
-            await this._bookAppointmentApplication.execute(req.body)
+            await this._bookAppointmentApplication.execute(req.body, req.params.caseId)
             res.status(AppStatusCode.SUCCESS_CODE).json({ success: true, message: "Appointment booked successfully" })
         } catch (error) {
             if (error instanceof AppException) {
@@ -116,7 +116,7 @@ export class UserController {
     async cancelAppointment(req: Request, res: Response) {
         try {
             await this._cancelAppointmentUseCase.execute(new mongoose.Types.ObjectId(req.params.appointmentId))
-            res.status(AppStatusCode.SUCCESS_CODE).json({ success: true, message: "Appointment cancelled successfully and payment refunded" })
+            res.status(AppStatusCode.SUCCESS_CODE).json({ success: true, message: "Appointment cancelled successfully" })
         } catch (error) {
             if (error instanceof AppException) {
                 res.status(error.statusCode).json({ success: false, message: error.message })
@@ -131,7 +131,6 @@ export class UserController {
             let result = await this._getTodaysAppointmentUseCase.execute(new mongoose.Types.ObjectId(req.params.userId))
             res.status(AppStatusCode.SUCCESS_CODE).json({ success: true, message: 'Todays appointments found', data: result })
         } catch (error) {
-            console.log(error)
             res.status(AppStatusCode.INTERNAL_ERROR_CODE).json({ success: false, message: AppError.UNKNOWN_ERROR })
         }
     }

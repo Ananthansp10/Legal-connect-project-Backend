@@ -1,6 +1,6 @@
-import { Types } from "mongoose";
-import { IPlanManagementRepository } from "../../infrastructure/repositoryInterface/IPlanManagementRepository";
-import { IDeletePlanUseCase } from "../use-case-interface/IDeletePlanUseCase";
+import { Types } from 'mongoose';
+import { IPlanManagementRepository } from '../../infrastructure/repositoryInterface/IPlanManagementRepository';
+import { IDeletePlanUseCase } from '../use-case-interface/IDeletePlanUseCase';
 
 
 export class DeletePlanUseCase implements IDeletePlanUseCase {

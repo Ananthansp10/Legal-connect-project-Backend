@@ -4,6 +4,7 @@ import { AppStatusCode } from "../../../../common/statusCode/AppStatusCode";
 import { AppError } from "../../../../common/error/AppEnumError";
 import { IVerifyPaymentUseCase } from "../../application/use-case-interface/IVerifyPaymentUseCase";
 import { AppException } from "../../../../common/error/errorException";
+import mongoose from "mongoose";
 
 export class PaymentController {
 
@@ -14,7 +15,7 @@ export class PaymentController {
 
     async createOrder(req: Request, res: Response): Promise<void> {
         try {
-            const result = await this._createRazorpayOrderUseCase.execute(req.body.id, req.body.fee)
+            const result = await this._createRazorpayOrderUseCase.execute(req.body.id, req.body.fee, req.body.lawyerId)
             res.status(AppStatusCode.SUCCESS_CODE).json({ success: true, data: result })
         } catch (error) {
             res.status(AppStatusCode.INTERNAL_ERROR_CODE).json({ success: false, message: AppError.UNKNOWN_ERROR })

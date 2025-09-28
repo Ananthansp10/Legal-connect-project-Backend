@@ -62,6 +62,7 @@ import { RefundPayment } from "../module/user/infrastructure/services/refundPaym
 import { FeedbackRepository } from "../module/user/infrastructure/repository/feedbackRepository";
 import { AddReviewUseCase } from "../module/user/application/use-case/addReviewUseCase";
 import { GetReviewUseCase } from "../module/user/application/use-case/getReviewUseCase";
+import { BankDetailsRepository } from "../module/user/infrastructure/repository/bankDetailsRepository";
 
 const userSignupMongoRepo = new UserSignupRepository();
 const otpsendEmail = new sendOtpMailService();
@@ -178,6 +179,7 @@ const feedbackRepo = new FeedbackRepository();
 const addReviewUseCase = new AddReviewUseCase(feedbackRepo);
 const getReviewUseCase = new GetReviewUseCase(feedbackRepo);
 
+
 const userController = new UserController(
     getLawyerApplication,
     getLawyerDetailsApplication,
@@ -197,7 +199,9 @@ const userController = new UserController(
     getReviewUseCase,
 );
 
-const createRazorpayOrderUseCase = new CreateRazorpayOrderUseCase();
+const bankRepo = new BankDetailsRepository()
+
+const createRazorpayOrderUseCase = new CreateRazorpayOrderUseCase(bankRepo);
 const verifyPaymentUseCase = new VerifyPaymentUseCase(appointmentRepo);
 
 const paymentController = new PaymentController(
@@ -326,7 +330,7 @@ router.get(
 );
 
 router.post(
-    "/book-appointment",
+    "/book-appointment/:caseId",
     verifyToken,
     verifyRole(["user"]),
     verifyAccountStatus(checkUserAccountStatusMongoRepo),

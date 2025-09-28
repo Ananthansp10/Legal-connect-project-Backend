@@ -1,6 +1,6 @@
-import { Request, Response, NextFunction } from "express";
+import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken'
-import { AppStatusCode } from "../common/statusCode/AppStatusCode";
+import { AppStatusCode } from '../common/statusCode/AppStatusCode';
 
 interface JwtPayload {
     id: string;

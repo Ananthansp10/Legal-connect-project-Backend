@@ -11,13 +11,14 @@ export class BookAppointmentUseCase implements IBookAppointmentUseCase {
         private _bookAppointmentRepo: IBookAppointmentRepository
     ) { }
 
-    async execute(data: AppointmentRequestDto): Promise<void> {
+    async execute(data: AppointmentRequestDto, caseId: string): Promise<void> {
         try {
             const appointmentExist = await this._bookAppointmentRepo.findAppointmentExist(data.lawyerId, data.date, data.time)
             if (appointmentExist) {
                 throw new AppException("Appointment Already Taken", 403)
             }
-            await this._bookAppointmentRepo.create({ ...data, appointmentStatus: AppointmentStatus.PENDING })
+            const customCaseId = caseId ? parseInt(caseId) : Date.now()
+            await this._bookAppointmentRepo.create({ ...data, appointmentStatus: AppointmentStatus.PENDING, meetStart: false, caseId: customCaseId })
         } catch (error) {
             throw error
         }

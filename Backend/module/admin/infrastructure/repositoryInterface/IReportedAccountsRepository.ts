@@ -6,7 +6,7 @@ import { LawyerProfileEntity } from "../../../lawyer/domain/entity/lawyerProfile
 
 
 export interface IReportedAccountsRepository {
-    findReportedAccounts(userType: string): Promise<IReportAccountEntity[]>;
+    findReportedAccounts(userType: string, startIndex: number, limit: number): Promise<{ reportedAccounts: IReportAccountEntity[] | null, totalReportedAccounts: number }>;
     findUserDetails(userId: Types.ObjectId): Promise<UserProfileEntitie | null>;
     findLawyerDetails(lawyerId: Types.ObjectId): Promise<LawyerProfileEntity | null>
     updateReportAccountStatus(reportAccountId: Types.ObjectId): Promise<void>;

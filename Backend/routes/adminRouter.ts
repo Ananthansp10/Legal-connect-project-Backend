@@ -217,7 +217,7 @@ router.post(
 );
 
 router.get(
-    "/get-specialization",
+    "/get-specialization/:startIndex/:limit",
     verifyToken,
     verifyRole(["admin"]),
     (req, res) => adminSpecializationController.getSpecialization(req, res),
@@ -239,14 +239,14 @@ router.post(
 );
 
 router.get(
-    "/get-appointments/:appointmentStatus",
+    "/get-appointments/:appointmentStatus/:startIndex/:limit",
     verifyToken,
     verifyRole(["admin"]),
     (req, res) => adminController.getAppointments(req, res),
 );
 
 router.get(
-    "/reported-accounts/:userType",
+    "/reported-accounts/:userType/:startIndex/:limit",
     verifyToken,
     verifyRole(["admin"]),
     (req, res) => adminController.getReportedAccounts(req, res),
@@ -337,7 +337,7 @@ router.get(
     (req, res) => adminController.getSummaryReport(req, res),
 );
 
-router.get("/get-reports", verifyToken, verifyRole(["admin"]), (req, res) =>
+router.get("/get-reports/:revenueDateRange/:specializationType", verifyToken, verifyRole(["admin"]), (req, res) =>
     adminController.getReports(req, res),
 );
 

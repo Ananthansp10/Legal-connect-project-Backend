@@ -9,7 +9,7 @@ export class GetReportsUseCase implements IGetReportsUseCase {
         private _reportsRepo: IReportsRepository
     ) { }
 
-    async execute(): Promise<ReportsDto> {
+    async execute(revenueDateRange: string, specializationType: string): Promise<ReportsDto> {
         let totalRevenue = await this._reportsRepo.getTotalRevenue() || 0
         let totalAppointments = await this._reportsRepo.getTotalAppointments() || 0
         let totalUsers = await this._reportsRepo.getTotalUsers() || 0
@@ -17,6 +17,8 @@ export class GetReportsUseCase implements IGetReportsUseCase {
         let subscriptionPlanReport = await this._reportsRepo.getSubscriptionPlanReport() || []
         let stateReport = await this._reportsRepo.getStateReport() || []
         let lawyerDetails = await this._reportsRepo.getLawyerDetails() || []
+        let revenueDateChart = await this._reportsRepo.getRevenueDateChart(revenueDateRange) || []
+        let specializationChart = await this._reportsRepo.getSpecializationChart(specializationType) || []
 
         return {
             totalRevenue,
@@ -25,7 +27,9 @@ export class GetReportsUseCase implements IGetReportsUseCase {
             totalSubscribedLawyers,
             subscriptionPlanReport,
             stateReport,
-            lawyerDetails
+            lawyerDetails,
+            revenueDateChart,
+            specializationChart
         }
     }
 }

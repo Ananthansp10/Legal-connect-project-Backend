@@ -5,6 +5,7 @@ import { appointmentModel } from "../../../user/infrastructure/models/appointmen
 import { AppointmentStatus } from "../../../../common/status/appointmentStatus";
 import { UserProfileEntitie } from "../../../user/domain/entity/userProfileUserEntity";
 import { userProfileModel } from "../../../user/infrastructure/models/userProfileModel";
+import { ConsultationHistoryRequestDto } from "../../domain/dtos/consultationHistoryDto";
 
 
 export class AppointmentRepository implements IAppointmentRepository {
@@ -36,5 +37,50 @@ export class AppointmentRepository implements IAppointmentRepository {
 
     async updateStatus(appointmentId: Types.ObjectId, appointmentStatus: string): Promise<void> {
         await appointmentModel.findByIdAndUpdate(appointmentId, { $set: { appointmentStatus: appointmentStatus } })
+    }
+
+    async startMeet(appointmentId: Types.ObjectId): Promise<void> {
+        await appointmentModel.findByIdAndUpdate(appointmentId, { $set: { meetStart: true } })
+    }
+
+    async addNotes(appointmentId: Types.ObjectId, note: string): Promise<void> {
+        await appointmentModel.findByIdAndUpdate(appointmentId, { $set: { notes: note } })
+    }
+
+    async addFeedback(appointmentId: Types.ObjectId, review: { feedback: string; rating: number; }): Promise<void> {
+        await appointmentModel.findByIdAndUpdate(appointmentId, { $set: { feedback: review.feedback, rating: review.rating } })
+    }
+
+    async getConsultationHistory(caseId: number): Promise<ConsultationHistoryRequestDto[] | null> {
+        const result = await appointmentModel.aggregate([
+            {
+                $match: {
+                    caseId: caseId
+                }
+            },
+            {
+                $lookup: {
+                    from: "users",
+                    localField: "userId",
+                    foreignField: "_id",
+                    as: "userDetails"
+                }
+            },
+            {
+                $lookup: {
+                    from: "lawyers",
+                    localField: "lawyerId",
+                    foreignField: "_id",
+                    as: "lawyerDetails"
+                }
+            },
+            {
+                $unwind:"$userDetails"
+            },
+            {
+                $unwind:"$lawyerDetails"
+            }
+        ])
+        return result
     }
 }

@@ -32,7 +32,7 @@ export class AdminController {
 
     async getAppointments(req: Request, res: Response) {
         try {
-            const result = await this._getAppointmentsUseCase.execute(req.params.appointmentStatus)
+            const result = await this._getAppointmentsUseCase.execute(req.params.appointmentStatus, parseInt(req.params.startIndex), parseInt(req.params.limit))
             res.status(AppStatusCode.SUCCESS_CODE).json({ success: true, message: 'Appointments found successfully', data: result })
         } catch (error) {
             res.status(AppStatusCode.INTERNAL_ERROR_CODE).json({ success: false, message: AppError.UNKNOWN_ERROR })
@@ -41,8 +41,8 @@ export class AdminController {
 
     async getReportedAccounts(req: Request, res: Response) {
         try {
-            const result = await this._getReportedAccountUseCase.execute(req.params.userType == 'All' ? req.params.userType : req.params.userType.toLowerCase().slice(0, req.params.userType.length - 1))
-            res.status(AppStatusCode.SUCCESS_CODE).json({ success: true, message: "Reported Accounts found successfully", data: result })
+            const result = await this._getReportedAccountUseCase.execute(req.params.userType == 'All' ? req.params.userType : req.params.userType.toLowerCase().slice(0, req.params.userType.length - 1), parseInt(req.params.startIndex), parseInt(req.params.limit))
+            res.status(AppStatusCode.SUCCESS_CODE).json({ success: true, message: "Reported Accounts found successfully", data: result?.reportedAccounts, totalReportedAccounts: result?.totalReportedAccounts })
         } catch (error) {
             res.status(AppStatusCode.INTERNAL_ERROR_CODE).json({ success: false, message: AppError.UNKNOWN_ERROR })
         }
@@ -117,7 +117,7 @@ export class AdminController {
 
     async getReports(req: Request, res: Response) {
         try {
-            const result = await this._getReportsUseCase.execute()
+            const result = await this._getReportsUseCase.execute(req.params.revenueDateRange, req.params.specializationType)
             res.status(AppStatusCode.SUCCESS_CODE).json({ success: true, message: "Reports found successfully", data: result })
         } catch (error) {
             res.status(AppStatusCode.INTERNAL_ERROR_CODE).json({ success: false, message: AppError.UNKNOWN_ERROR })

@@ -7,5 +7,5 @@ export interface RazorpayOrder {
 }
 
 export interface ICreateRazorpayOrderUseCase {
-    execute(appointmentId: Types.ObjectId, fee: number): Promise<RazorpayOrder>;
+    execute(appointmentId: Types.ObjectId, fee: number, lawyerId: Types.ObjectId): Promise<RazorpayOrder>;
 }

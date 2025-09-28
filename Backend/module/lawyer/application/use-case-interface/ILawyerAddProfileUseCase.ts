@@ -1,5 +1,4 @@
 import { LawyerProfileResponseDto } from "../../domain/dtos/lawyerProfileDto";
-import { LawyerProfileEntity } from "../../domain/entity/lawyerProfileEntity";
 import { ILawyerProfileRequest } from "../mapper/lawyerProfileMapper";
 
 

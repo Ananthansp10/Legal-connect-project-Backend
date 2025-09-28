@@ -47,6 +47,18 @@ const appointmentSchema = new Schema<IAppointmentEntity>({
   meetStart: {
     type: Boolean,
   },
+  notes: {
+    type: String,
+  },
+  feedback: {
+    type: String
+  },
+  rating: {
+    type: Number
+  },
+  caseId:{
+    type: Number
+  }
 });
 
 export const appointmentModel = mongoose.model<IAppointmentEntity>(

@@ -12,7 +12,7 @@ export class AppointmentRepository implements IAppointmentRepository {
 
   async findAppointmentByUserId(userId: Types.ObjectId, appointmentStatus: string, startIndex: number, limit: number): Promise<{ appointments: IAppointmentEntity[], totalAppointments: number } | null> {
     let result
-    const totalAppointments = await appointmentModel.countDocuments({ userId: userId, appointmentStatus: appointmentStatus })
+    const totalAppointments = await appointmentModel.countDocuments({ userId: userId, appointmentStatus: appointmentStatus == 'Upcoming' ? 'Booked' : appointmentStatus })
     if (appointmentStatus == AppointmentStatus.PENDING) {
       result = await appointmentModel.find({ userId: userId, appointmentStatus: AppointmentStatus.PENDING }).skip(startIndex).limit(limit)
     } else if (appointmentStatus == AppointmentStatus.ACCEPTED) {

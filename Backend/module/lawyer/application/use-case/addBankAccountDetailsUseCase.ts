@@ -11,76 +11,80 @@ export class AddBankAccountDetailsUseCase implements IAddBankAccountDetailsUseCa
 
   async execute(data: BankDetailsRequestDto): Promise<void> {
     try {
-      // 1️⃣ Create Contact
-      const contactResponse = await axios.post(
+      const keyId = process.env.RAZORPAY_KEY_ID
+      const keySecret = process.env.RAZORPAY_KEY_SECRET
+      const auth = "Basic " + Buffer.from(`${keyId}:${keySecret}`).toString("base64")
+
+      const linkedAccount = await axios.post(
+        "https://api.razorpay.com/v2/accounts",
+        {
+          type: "route",
+          reference_id: data.lawyerId.toString().slice(0,20),
+          email: data.email,
+          phone: data.phoneNumber,
+          legal_business_name: "Legal Connect",
+          business_type: "individual",
+          contact_name: "John Doe",
+          profile: {
+            category: "services",
+            subcategory: "professional_services",
+            addresses: {
+              registered: {
+                street1: "123, MG Road",
+                street2: "1st Block",
+                city: "Bengaluru",
+                state: "Karnataka",
+                postal_code: "560001",
+                country: "IN"
+              }
+            }
+          }
+        },
+        { headers: { Authorization: auth, "Content-Type": "application/json" } }
+      );
+
+      console.log("Linked Account ID:", linkedAccount);
+
+      const contact = await axios.post(
         "https://api.razorpay.com/v1/contacts",
         {
           name: data.name,
           email: data.email,
           contact: data.phoneNumber,
           type: "vendor",
-          reference_id: data.lawyerId,
-          notes: { role: "Lawyer in Legal Connect App" },
+          reference_id: linkedAccount.data.id,
         },
-        {
-          auth: {
-            username: process.env.RAZORPAY_KEY_ID!,
-            password: process.env.RAZORPAY_KEY_SECRET!,
-          },
-        }
+        { headers: { Authorization: auth } }
       );
-      const contactId = contactResponse.data.id;
-      console.log("Contact Created:", contactId);
 
-      // 2️⃣ Create Fund Account (Linked Bank Account)
-      const fundAccountResponse = await axios.post(
+      console.log("✅ Contact Created:", contact.data.id);
+
+      const fundAccount = await axios.post(
         "https://api.razorpay.com/v1/fund_accounts",
         {
-          contact_id: contactId,
+          contact_id: contact.data.id,
           account_type: "bank_account",
           bank_account: {
             name: data.name,
             ifsc: data.ifscCode,
             account_number: data.bankAccountNumber,
           },
-          notes: { purpose: "lawyer payout" }
         },
-        {
-          auth: {
-            username: process.env.RAZORPAY_KEY_ID!,
-            password: process.env.RAZORPAY_KEY_SECRET!,
-          },
-        }
+        { headers: { Authorization: auth } }
       );
-      const fundAccountId = fundAccountResponse.data.id;
-      console.log("Fund Account Created:", fundAccountId);
 
-      // 3️⃣ Create Payout
-      const payoutResponse = await axios.post(
-        "https://api.razorpay.com/v2/payouts",
-        {
-          fund_account_id: fundAccountId,
-          amount: 10000, // amount in paise (₹100)
-          currency: "INR",
-          mode: "IMPS",
-          purpose: "payout",
-          queue_if_low_balance: true,
-          notes: { invoice_id: `INV_${Date.now()}` },
-        },
-        {
-          auth: {
-            username: process.env.RAZORPAY_KEY_ID!,
-            password: process.env.RAZORPAY_KEY_SECRET!,
-          },
-        }
-      );
-      console.log("Payout Success:", payoutResponse.data);
+      console.log("✅ Fund Account Created:", fundAccount.data.id);
 
-      // 4️⃣ Optionally save contact and fund account details in your repository
-      // await this._bankDetailsRepo.addBankDetails(data.lawyerId, contactId, fundAccountId);
+      await this._bankDetailsRepo.addBankDetails(data.lawyerId, linkedAccount.data.id, fundAccount.data.id);
 
     } catch (error: any) {
       console.error("Razorpay Error:", error.response?.data || error.message);
+
+      if (error.response) {
+        console.error("Status:", error.response.status);
+        console.error("Headers:", error.response.headers);
+      }
+
       throw error;
     }
   }

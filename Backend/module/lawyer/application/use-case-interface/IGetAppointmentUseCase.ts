@@ -17,6 +17,7 @@ export interface Appointment {
   payment: string;
   fee: number;
   paymentDate?: string;
+  notes?: string;
 }
 
 export interface IGetAppointmentUseCase {
