@@ -1,6 +1,4 @@
-
-
 export interface WeeklyAppointmentsDto {
-    dayName: string;
-    appointmentsCount: number;
+  dayName: string;
+  appointmentsCount: number;
 }

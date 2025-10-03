@@ -1,8 +1,6 @@
-
-
 export interface UserChatProfileDto {
-    name: string;
-    profileImage: string;
-    country: string;
-    state: string;
+  name: string;
+  profileImage: string;
+  country: string;
+  state: string;
 }

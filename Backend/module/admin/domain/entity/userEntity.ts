@@ -1,5 +1,3 @@
-
-
 export interface IUserSignup {
   _id?: string;
   name: string;

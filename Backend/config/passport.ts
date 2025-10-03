@@ -1,5 +1,8 @@
 import passport from "passport";
-import { Strategy as GoogleStrategy, VerifyCallback } from "passport-google-oauth20";
+import {
+  Strategy as GoogleStrategy,
+  VerifyCallback,
+} from "passport-google-oauth20";
 import dotenv from "dotenv";
 
 dotenv.config();
@@ -17,7 +20,12 @@ export default passport.use(
       clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
       callbackURL: "/api/user/auth/google/callback",
     },
-    async (accessToken: string, refreshToken: string, profile, done: VerifyCallback) => {
+    async (
+      accessToken: string,
+      refreshToken: string,
+      profile,
+      done: VerifyCallback,
+    ) => {
       try {
         const user: User = {
           googleId: profile.id,
@@ -29,8 +37,8 @@ export default passport.use(
       } catch (err) {
         return done(err, undefined);
       }
-    }
-  )
+    },
+  ),
 );
 
 passport.serializeUser((user: Express.User, done) => {

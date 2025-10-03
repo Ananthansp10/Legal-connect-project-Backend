@@ -4,22 +4,21 @@ import { IBaseRepository } from "../../infrastructure/repositoryInterface/IBaseR
 import { IGetUnverifiedLawyersUseCase } from "../use-case-interface/IGetUnverifiedLawyerUseCase";
 import { UnverifiedLawyerMapper } from "../mapper/unverifiedLawyerMapper";
 
-export class GetUnverifiedLawyersUseCase implements IGetUnverifiedLawyersUseCase{
+export class GetUnverifiedLawyersUseCase
+  implements IGetUnverifiedLawyersUseCase
+{
+  constructor(private _lawyerRepo: IBaseRepository<ILawyerSignup>) {}
 
-    constructor(
-        private _lawyerRepo:IBaseRepository<ILawyerSignup>
-    ){}
+  async execute(): Promise<ILawyerResponse[]> {
+    const result: ILawyerSignup[] | null =
+      await this._lawyerRepo.findAllUnverifiedLawyer();
 
-   async execute(): Promise<ILawyerResponse[]> {
+    let response: ILawyerResponse[] = [];
 
-       const result:ILawyerSignup[] | null= await this._lawyerRepo.findAllUnverifiedLawyer()
-
-       let response:ILawyerResponse[]=[]
-
-       if(result){
-            response=await UnverifiedLawyerMapper.toResponse(result)
-       }
-
-       return response
+    if (result) {
+      response = await UnverifiedLawyerMapper.toResponse(result);
     }
+
+    return response;
+  }
 }

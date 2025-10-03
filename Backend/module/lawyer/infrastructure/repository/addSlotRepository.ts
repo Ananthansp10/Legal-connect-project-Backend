@@ -2,10 +2,8 @@ import { ISlotAvailablityEntity } from "../../domain/entity/slotAvailablityEntit
 import { IAddSlotRepository } from "../repositoryInterface/IAddSlotRepository";
 import { availableSlotModel } from "../models/slotAvailablityModel";
 
-
 export class AddSlotRepository implements IAddSlotRepository {
-
-    async addSlot(data: ISlotAvailablityEntity): Promise<void> {
-        await availableSlotModel.create({ ...data, status: true })
-    }
+  async addSlot(data: ISlotAvailablityEntity): Promise<void> {
+    await availableSlotModel.create({ ...data, status: true });
+  }
 }

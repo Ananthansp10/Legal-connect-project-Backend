@@ -1,4 +1,4 @@
-import app, { server } from "./app";
+import { server } from "./app";
 const port = process.env.PORT;
 import db from "../Backend/config/dbConfig";
 //import logger from './logger';

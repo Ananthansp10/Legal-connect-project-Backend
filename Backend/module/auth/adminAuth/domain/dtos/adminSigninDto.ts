@@ -1,6 +1,4 @@
-
-
-export interface adminSignInDto {
-    email: string;
-    password: string;
+export interface AdminSignInDto {
+  email: string;
+  password: string;
 }

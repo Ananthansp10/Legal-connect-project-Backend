@@ -5,15 +5,22 @@ import { IEditLawyerProfileRepository } from "../repositoryInterface/IEditLawyer
 import { lawyerProfileModel } from "../models/lawyerProfileModel";
 import { BaseRepository } from "./baseRepository";
 
+export class EditLawyerProfileRepository
+  extends BaseRepository<LawyerProfileEntity>
+  implements IEditLawyerProfileRepository
+{
+  constructor() {
+    super(lawyerProfileModel);
+  }
 
-export class EditLawyerProfileRepository extends BaseRepository<LawyerProfileEntity> implements IEditLawyerProfileRepository {
-
-    constructor() {
-        super(lawyerProfileModel)
-    }
-
-    async editLawyerProfile(lawyerId: Types.ObjectId, data: LawyerEditProfileResponse): Promise<void> {
-        const { fee, ...personalInfo } = data
-        await lawyerProfileModel.updateOne({ lawyerId: lawyerId }, { $set: { personalInfo: personalInfo, 'proffessionalInfo.fee': fee } })
-    }
+  async editLawyerProfile(
+    lawyerId: Types.ObjectId,
+    data: LawyerEditProfileResponse,
+  ): Promise<void> {
+    const { fee, ...personalInfo } = data;
+    await lawyerProfileModel.updateOne(
+      { lawyerId: lawyerId },
+      { $set: { personalInfo: personalInfo, "proffessionalInfo.fee": fee } },
+    );
+  }
 }

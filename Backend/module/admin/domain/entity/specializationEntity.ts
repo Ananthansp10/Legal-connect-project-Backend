@@ -1,8 +1,5 @@
-
-
-
 export interface ISpecializationEntity {
-    name: string;
-    description: string;
-    isDeleted: boolean;
+  name: string;
+  description: string;
+  isDeleted: boolean;
 }

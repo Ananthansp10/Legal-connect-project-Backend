@@ -1,5 +1,3 @@
-
-
 export interface IResendOtpUseCase {
-    resendOtp(email: string): Promise<void>
+  resendOtp(email: string): Promise<void>;
 }

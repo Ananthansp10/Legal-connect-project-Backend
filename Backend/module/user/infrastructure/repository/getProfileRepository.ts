@@ -3,14 +3,15 @@ import { IGetProfileRepository } from "../repositoryInterface/IGetProfileReposit
 import { userProfileModel } from "../models/userProfileModel";
 import { BaseRepository } from "./baseRepository";
 
+export class GetProfileRepository
+  extends BaseRepository<UserProfileEntitie>
+  implements IGetProfileRepository
+{
+  constructor() {
+    super(userProfileModel);
+  }
 
-export class GetProfileRepository extends BaseRepository<UserProfileEntitie> implements IGetProfileRepository {
-
-    constructor() {
-        super(userProfileModel)
-    }
-
-    async getProfile(userId: string): Promise<UserProfileEntitie | null> {
-        return await userProfileModel.findOne({ userId: userId })
-    }
+  async getProfile(userId: string): Promise<UserProfileEntitie | null> {
+    return await userProfileModel.findOne({ userId: userId });
+  }
 }

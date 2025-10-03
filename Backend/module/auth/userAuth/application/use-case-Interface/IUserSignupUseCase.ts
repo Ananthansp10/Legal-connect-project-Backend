@@ -1,7 +1,10 @@
-import { UserSignupRequestDto, UserSignupResponseDto } from "../../domain/dto/userSignupDto";
-import { IUserSignup } from "../../domain/userRegisterEntity";
-
+import {
+  UserSignupRequestDto,
+  UserSignupResponseDto,
+} from "../../domain/dto/userSignupDto";
 
 export interface IUserSignupUseCase {
-    registerUser(data: UserSignupRequestDto): Promise<UserSignupResponseDto | null>
+  registerUser(
+    data: UserSignupRequestDto,
+  ): Promise<UserSignupResponseDto | null>;
 }

@@ -1,5 +1,3 @@
-
-
 export interface IForgotPasswordTokenGeneration {
-    generateForgotPasswordToken(payload: object): Promise<string>
+  generateForgotPasswordToken(payload: object): Promise<string>;
 }

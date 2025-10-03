@@ -1,6 +1,4 @@
-
-
 export interface StateChartDto {
-    _id: string;
-    consultations: number;
+  _id: string;
+  consultations: number;
 }

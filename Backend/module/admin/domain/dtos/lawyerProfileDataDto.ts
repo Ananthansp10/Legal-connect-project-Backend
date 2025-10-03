@@ -1,5 +1,3 @@
-
-
 export interface Address {
   street: string;
   country: string;
@@ -24,7 +22,6 @@ interface Education {
   year: string;
 }
 
-
 interface ProfessionalInfo {
   practiceAreas: string[];
   barRegisterNumber: string;
@@ -39,8 +36,7 @@ interface ProfessionalInfo {
   documents: string[];
 }
 
-
 export interface LawyerProfileDataDto {
-  personalInfo: PersonalInfo,
-  professionalInfo: ProfessionalInfo
+  personalInfo: PersonalInfo;
+  professionalInfo: ProfessionalInfo;
 }

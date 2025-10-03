@@ -4,14 +4,18 @@ import { IEditProfileRepository } from "../repositoryInterface/IEditProfileRepos
 import { userProfileModel } from "../models/userProfileModel";
 import { BaseRepository } from "./baseRepository";
 
+export class EditProfileRepository
+  extends BaseRepository<UserProfileEntitie>
+  implements IEditProfileRepository
+{
+  constructor() {
+    super(userProfileModel);
+  }
 
-export class EditProfileRepository extends BaseRepository<UserProfileEntitie> implements IEditProfileRepository {
-
-    constructor() {
-        super(userProfileModel)
-    }
-
-    async editUserProfile(userId: string, data: UserProfileEntitie): Promise<UserProfileMapper> {
-        return await userProfileModel.updateOne({ userId: userId }, { $set: data })
-    }
+  async editUserProfile(
+    userId: string,
+    data: UserProfileEntitie,
+  ): Promise<UserProfileMapper> {
+    return await userProfileModel.updateOne({ userId: userId }, { $set: data });
+  }
 }

@@ -4,26 +4,41 @@ import { ILawyerVerificationEmailService } from "../../infrastructure/services/I
 import { ILawyerVerificationRepository } from "../../infrastructure/repositoryInterface/lawyerVerificationRepository";
 import { ILawyerVerificationUseCase } from "../use-case-interface/ILawyerVerificationUseCase";
 
+export class LawyerVerificationUseCase implements ILawyerVerificationUseCase {
+  constructor(
+    private _lawyerVerificationRepo: ILawyerVerificationRepository,
+    private _lawyerVerifyEmailService: ILawyerVerificationEmailService,
+  ) {}
 
-export class LawyerVerificationUseCase implements ILawyerVerificationUseCase{
+  async execute(
+    lawyerId: string,
+    status: string,
+    reason: string,
+  ): Promise<boolean> {
+    const lawyer: ILawyerSignup | null =
+      await this._lawyerVerificationRepo.findById(lawyerId);
 
-    constructor(
-        private _lawyerVerificationRepo:ILawyerVerificationRepository,
-        private _lawyerVerifyEmailService:ILawyerVerificationEmailService
-    ){}
+    this._lawyerVerifyEmailService.sendVerificationEmail(
+      lawyer?.email!,
+      lawyer?.name!,
+      status,
+      reason,
+    );
 
-    async execute(lawyerId: string, status: string, reason: string): Promise<boolean> {
-
-        const lawyer:ILawyerSignup | null=await this._lawyerVerificationRepo.findById(lawyerId)
-
-        this._lawyerVerifyEmailService.sendVerificationEmail(lawyer?.email!,lawyer?.name!,status,reason)
-
-        if(status==AppStatus.APPROVE){
-            await this._lawyerVerificationRepo.updateLawyerVerification(lawyerId,true,reason)
-            return true
-        }else{
-            await this._lawyerVerificationRepo.updateLawyerVerification(lawyerId,false,reason)
-            return false
-        }
+    if (status == AppStatus.APPROVE) {
+      await this._lawyerVerificationRepo.updateLawyerVerification(
+        lawyerId,
+        true,
+        reason,
+      );
+      return true;
+    } else {
+      await this._lawyerVerificationRepo.updateLawyerVerification(
+        lawyerId,
+        false,
+        reason,
+      );
+      return false;
     }
+  }
 }

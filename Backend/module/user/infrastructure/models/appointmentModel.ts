@@ -51,14 +51,14 @@ const appointmentSchema = new Schema<IAppointmentEntity>({
     type: String,
   },
   feedback: {
-    type: String
+    type: String,
   },
   rating: {
-    type: Number
+    type: Number,
   },
-  caseId:{
-    type: Number
-  }
+  caseId: {
+    type: Number,
+  },
 });
 
 export const appointmentModel = mongoose.model<IAppointmentEntity>(

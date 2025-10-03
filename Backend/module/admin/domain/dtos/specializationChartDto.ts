@@ -1,16 +1,15 @@
-
 export interface SpecializationData {
-    _id?: string;
-    count?: number;
-    average?: number;
-    specializationName?: string;
+  _id?: string;
+  count?: number;
+  average?: number;
+  specializationName?: string;
 }
 
 interface TotalLawyers {
-    totalLawyers: number;
+  totalLawyers: number;
 }
 
 export interface SpecializationChartDto {
-    totalLawyers: TotalLawyers[];
-    specializations: SpecializationData[];
+  totalLawyers: TotalLawyers[];
+  specializations: SpecializationData[];
 }

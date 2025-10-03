@@ -13,7 +13,6 @@ export interface RazorpayOrder {
   created_at?: number;
 }
 
-
 export interface ICreateRazorpayOrderUseCase {
   execute(planId: Types.ObjectId, price: number): Promise<RazorpayOrder>;
 }

@@ -1,16 +1,17 @@
 import { IUserSignup } from "../../domain/userRegisterEntity";
 import { IUserSignupRepository } from "../repositoryInterface/IUserSignupRepository";
 import { BaseRepository } from "./baseRepository";
-import { UserModel } from "../models/userSignupModel";
+import { userModel } from "../models/userSignupModel";
 
-export class UserSignupRepository extends BaseRepository<IUserSignup> implements IUserSignupRepository {
+export class UserSignupRepository
+  extends BaseRepository<IUserSignup>
+  implements IUserSignupRepository
+{
+  constructor() {
+    super(userModel);
+  }
 
-    constructor() {
-        super(UserModel)
-    }
-
-    async updateUserToActive(email: string): Promise<void> {
-        await UserModel.updateOne({ email: email }, { $set: { isActive: true } })
-    }
-
+  async updateUserToActive(email: string): Promise<void> {
+    await userModel.updateOne({ email: email }, { $set: { isActive: true } });
+  }
 }

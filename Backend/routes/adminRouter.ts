@@ -9,7 +9,7 @@ import { LawyerVerificationUseCase } from "../module/admin/application/use-case/
 import { verifyToken } from "../middlewares/verifyTokenMiddleware";
 import { verifyRole } from "../middlewares/verifyRoleMiddleware";
 import { BaseRepository } from "../module/admin/infrastructure/repository/baseRepository";
-import { LawyerModel } from "../module/auth/lawyerAuth/infrastructure/models/lawyerModel";
+import { lawyerModel } from "../module/auth/lawyerAuth/infrastructure/models/lawyerModel";
 import { GetUnverifiedLawyersUseCase } from "../module/admin/application/use-case/getUnverifiedLawyerUseCase";
 import { LawyerVerificationEmail } from "../module/admin/infrastructure/services/lawyerVerificarionEmailService";
 import { LawyerRepository } from "../module/admin/infrastructure/repository/lawyerRepository";
@@ -58,38 +58,38 @@ const tokenCookieService = new CookieTokenService();
 const lawyerVerificationRepo = new LawyerVerificationRepository();
 const lawyerVerifyEmailService = new LawyerVerificationEmail();
 const verifyLawyerApplication = new LawyerVerificationUseCase(
-    lawyerVerificationRepo,
-    lawyerVerifyEmailService,
+  lawyerVerificationRepo,
+  lawyerVerifyEmailService,
 );
-const adminLawyerRepo = new BaseRepository(LawyerModel);
+const adminLawyerRepo = new BaseRepository(lawyerModel);
 const getUnverifiedLawyerApplication = new GetUnverifiedLawyersUseCase(
-    adminLawyerRepo,
+  adminLawyerRepo,
 );
 const lawyerMongoRepo = new LawyerRepository();
 const getLawyersApplication = new GetLawyersUseCase(lawyerMongoRepo);
 
 const adminAuthController = new AdminAuthController(
-    adminSigninApplication,
-    tokenCookieService,
+  adminSigninApplication,
+  tokenCookieService,
 );
 
 const verifyLawyerStatusApplication = new VerifyLawyerStatusUseCase(
-    lawyerMongoRepo,
+  lawyerMongoRepo,
 );
 const searchLawyerUseCase = new SearchLawyerUseCase(lawyerMongoRepo);
 const filterLawyerUseCase = new FilterLawyerUseCase(lawyerMongoRepo);
 const getLawyerProfileUseCase = new GetLawyerProfileDataUseCase(
-    lawyerMongoRepo,
+  lawyerMongoRepo,
 );
 
 const adminLawyerManagementController = new AdminLawyerManagementController(
-    verifyLawyerApplication,
-    getUnverifiedLawyerApplication,
-    getLawyersApplication,
-    verifyLawyerStatusApplication,
-    searchLawyerUseCase,
-    filterLawyerUseCase,
-    getLawyerProfileUseCase,
+  verifyLawyerApplication,
+  getUnverifiedLawyerApplication,
+  getLawyersApplication,
+  verifyLawyerStatusApplication,
+  searchLawyerUseCase,
+  filterLawyerUseCase,
+  getLawyerProfileUseCase,
 );
 
 const userMongoRepo = new UserRepository();
@@ -100,51 +100,51 @@ const filterUserUseCase = new FilterUserUseCase(userMongoRepo);
 const getUserProfileUseCase = new GetUserProfileDataUseCase(userMongoRepo);
 
 const adminUserManagementController = new AdminUserManagementController(
-    getUserApplication,
-    verifyUserStatusApplication,
-    searchUserUseCase,
-    filterUserUseCase,
-    getUserProfileUseCase,
+  getUserApplication,
+  verifyUserStatusApplication,
+  searchUserUseCase,
+  filterUserUseCase,
+  getUserProfileUseCase,
 );
 
 const addSpecializationMongoRepo = new AddSpecializationRepository();
 const addSpecializationApplication = new AddSpecializationUseCase(
-    addSpecializationMongoRepo,
+  addSpecializationMongoRepo,
 );
 const getSpecializationMongoRepo = new GetSpecializationRepository();
 const getSpecializationApplication = new GetSpecializationUseCase(
-    getSpecializationMongoRepo,
+  getSpecializationMongoRepo,
 );
 const editSpecializationRepo = new EditSpecializationRepository();
 const editSpecializationApplication = new EditSpecializationUseCase(
-    editSpecializationRepo,
+  editSpecializationRepo,
 );
 const deleteSpecializationRepo = new DeleteSpecializationRepository();
 const deleteSpecializationApplication = new DeleteSpecializationUseCase(
-    deleteSpecializationRepo,
+  deleteSpecializationRepo,
 );
 
 const adminSpecializationController = new AdminSpecializationController(
-    addSpecializationApplication,
-    getSpecializationApplication,
-    editSpecializationApplication,
-    deleteSpecializationApplication,
+  addSpecializationApplication,
+  getSpecializationApplication,
+  editSpecializationApplication,
+  deleteSpecializationApplication,
 );
 
 const appointmentRepo = new AppointmentRepository();
 const getAppointmentUseCase = new GetAppointmentsUseCase(appointmentRepo);
 const reportedAccountRepo = new ReportAccountRepository();
 const getReportedAccountUseCase = new GetReportedAccountsUseCase(
-    reportedAccountRepo,
+  reportedAccountRepo,
 );
 const updateReportedAccountUseCase = new UpdateReportedAccountUseCase(
-    reportedAccountRepo,
+  reportedAccountRepo,
 );
 const planeManagementRepo = new PlanManagementRepository();
 const addPlanUseCase = new AddPlanUseCase(planeManagementRepo);
 const editPlanUseCase = new EditPlanUseCase(planeManagementRepo);
 const managePlanStatusUseCase = new ManagePlanStatusUseCase(
-    planeManagementRepo,
+  planeManagementRepo,
 );
 const deletePlanUseCase = new DeletePlanUseCase(planeManagementRepo);
 const getPlansUseCase = new GetPlansUseCase(planeManagementRepo);
@@ -154,16 +154,16 @@ const reportsRepo = new ReportsRepository();
 const getReportsUseCase = new GetReportsUseCase(reportsRepo);
 
 const adminController = new AdminController(
-    getAppointmentUseCase,
-    getReportedAccountUseCase,
-    updateReportedAccountUseCase,
-    addPlanUseCase,
-    editPlanUseCase,
-    managePlanStatusUseCase,
-    deletePlanUseCase,
-    getPlansUseCase,
-    getSummaryReportUseCase,
-    getReportsUseCase,
+  getAppointmentUseCase,
+  getReportedAccountUseCase,
+  updateReportedAccountUseCase,
+  addPlanUseCase,
+  editPlanUseCase,
+  managePlanStatusUseCase,
+  deletePlanUseCase,
+  getPlansUseCase,
+  getSummaryReportUseCase,
+  getReportsUseCase,
 );
 
 router.post("/signin", (req, res) => adminAuthController.signin(req, res));
@@ -171,174 +171,177 @@ router.post("/signin", (req, res) => adminAuthController.signin(req, res));
 router.post("/logout", (req, res) => adminAuthController.logout(req, res));
 
 router.get(
-    "/unverifiedLawyers",
-    verifyToken,
-    verifyRole(["admin"]),
-    (req, res) => adminLawyerManagementController.getUnverifiedLawyers(req, res),
+  "/unverifiedLawyers",
+  verifyToken,
+  verifyRole(["admin"]),
+  (req, res) => adminLawyerManagementController.getUnverifiedLawyers(req, res),
 );
 
 router.patch(
-    "/verification/:lawyerId/:status/:reason",
-    verifyToken,
-    verifyRole(["admin"]),
-    (req, res) => adminLawyerManagementController.verifyLawyer(req, res),
+  "/verification/:lawyerId/:status/:reason",
+  verifyToken,
+  verifyRole(["admin"]),
+  (req, res) => adminLawyerManagementController.verifyLawyer(req, res),
 );
 
 router.get("/getlawyers", verifyToken, verifyRole(["admin"]), (req, res) =>
-    adminLawyerManagementController.getLawyers(req, res),
+  adminLawyerManagementController.getLawyers(req, res),
 );
 
 router.get(
-    "/getusers/:startIndex/:limit",
-    verifyToken,
-    verifyRole(["admin"]),
-    (req, res) => adminUserManagementController.getUsers(req, res),
+  "/getusers/:startIndex/:limit",
+  verifyToken,
+  verifyRole(["admin"]),
+  (req, res) => adminUserManagementController.getUsers(req, res),
 );
 
 router.patch(
-    "/lawyer/:lawyerId/:status",
-    verifyToken,
-    verifyRole(["admin"]),
-    (req, res) => adminLawyerManagementController.verifyLawyerStatus(req, res),
+  "/lawyer/:lawyerId/:status",
+  verifyToken,
+  verifyRole(["admin"]),
+  (req, res) => adminLawyerManagementController.verifyLawyerStatus(req, res),
 );
 
 router.patch(
-    "/user/:userId/:status",
-    verifyToken,
-    verifyRole(["admin"]),
-    (req, res) => adminUserManagementController.verifyUserStatus(req, res),
+  "/user/:userId/:status",
+  verifyToken,
+  verifyRole(["admin"]),
+  (req, res) => adminUserManagementController.verifyUserStatus(req, res),
 );
 
 router.post(
-    "/add-specialization",
-    verifyToken,
-    verifyRole(["admin"]),
-    (req, res) => adminSpecializationController.addSpecialization(req, res),
+  "/add-specialization",
+  verifyToken,
+  verifyRole(["admin"]),
+  (req, res) => adminSpecializationController.addSpecialization(req, res),
 );
 
 router.get(
-    "/get-specialization/:startIndex/:limit",
-    verifyToken,
-    verifyRole(["admin"]),
-    (req, res) => adminSpecializationController.getSpecialization(req, res),
+  "/get-specialization/:startIndex/:limit",
+  verifyToken,
+  verifyRole(["admin"]),
+  (req, res) => adminSpecializationController.getSpecialization(req, res),
 );
 
 router.post(
-    "/edit-specialization",
-    verifyToken,
-    verifyRole(["admin"]),
-    (req, res) => adminSpecializationController.editSpecialization(req, res),
+  "/edit-specialization",
+  verifyToken,
+  verifyRole(["admin"]),
+  (req, res) => adminSpecializationController.editSpecialization(req, res),
 );
 
 router.post(
-    "/delete-specialization/:specId",
-    verifyToken,
-    verifyRole(["admin"]),
-    (req, res) =>
-        adminSpecializationController.DeleteSpecializationApplication(req, res),
+  "/delete-specialization/:specId",
+  verifyToken,
+  verifyRole(["admin"]),
+  (req, res) =>
+    adminSpecializationController.DeleteSpecializationApplication(req, res),
 );
 
 router.get(
-    "/get-appointments/:appointmentStatus/:startIndex/:limit",
-    verifyToken,
-    verifyRole(["admin"]),
-    (req, res) => adminController.getAppointments(req, res),
+  "/get-appointments/:appointmentStatus/:startIndex/:limit",
+  verifyToken,
+  verifyRole(["admin"]),
+  (req, res) => adminController.getAppointments(req, res),
 );
 
 router.get(
-    "/reported-accounts/:userType/:startIndex/:limit",
-    verifyToken,
-    verifyRole(["admin"]),
-    (req, res) => adminController.getReportedAccounts(req, res),
+  "/reported-accounts/:userType/:startIndex/:limit",
+  verifyToken,
+  verifyRole(["admin"]),
+  (req, res) => adminController.getReportedAccounts(req, res),
 );
 
 router.post(
-    "/update-reportedAccount-status/:reportedAccountId",
-    verifyToken,
-    verifyRole(["admin"]),
-    (req, res) => adminController.updateReportedAccountStatus(req, res),
+  "/update-reportedAccount-status/:reportedAccountId",
+  verifyToken,
+  verifyRole(["admin"]),
+  (req, res) => adminController.updateReportedAccountStatus(req, res),
 );
 
 router.post("/add-plan", verifyToken, verifyRole(["admin"]), (req, res) =>
-    adminController.addPlan(req, res),
+  adminController.addPlan(req, res),
 );
 
 router.put(
-    "/edit-plan/:planId",
-    verifyToken,
-    verifyRole(["admin"]),
-    (req, res) => adminController.editPlan(req, res),
+  "/edit-plan/:planId",
+  verifyToken,
+  verifyRole(["admin"]),
+  (req, res) => adminController.editPlan(req, res),
 );
 
 router.post(
-    "/manage-plan-status/:planId/:status",
-    verifyToken,
-    verifyRole(["admin"]),
-    (req, res) => adminController.managePlanStatus(req, res),
+  "/manage-plan-status/:planId/:status",
+  verifyToken,
+  verifyRole(["admin"]),
+  (req, res) => adminController.managePlanStatus(req, res),
 );
 
 router.post(
-    "/delete-plan/:planId",
-    verifyToken,
-    verifyRole(["admin"]),
-    (req, res) => adminController.DeletePlanUseCase(req, res),
+  "/delete-plan/:planId",
+  verifyToken,
+  verifyRole(["admin"]),
+  (req, res) => adminController.DeletePlanUseCase(req, res),
 );
 
 router.get("/plans", verifyToken, verifyRole(["admin"]), (req, res) =>
-    adminController.getPlans(req, res),
+  adminController.getPlans(req, res),
 );
 
 router.get(
-    "/search-user/:name",
-    verifyToken,
-    verifyRole(["admin"]),
-    (req, res) => adminUserManagementController.searchUser(req, res),
+  "/search-user/:name",
+  verifyToken,
+  verifyRole(["admin"]),
+  (req, res) => adminUserManagementController.searchUser(req, res),
 );
 
 router.get(
-    "/search-lawyer/:name",
-    verifyToken,
-    verifyRole(["admin"]),
-    (req, res) => adminLawyerManagementController.searchLawyer(req, res),
+  "/search-lawyer/:name",
+  verifyToken,
+  verifyRole(["admin"]),
+  (req, res) => adminLawyerManagementController.searchLawyer(req, res),
 );
 
 router.get(
-    "/filter-user/:status",
-    verifyToken,
-    verifyRole(["admin"]),
-    (req, res) => adminUserManagementController.filterUser(req, res),
+  "/filter-user/:status",
+  verifyToken,
+  verifyRole(["admin"]),
+  (req, res) => adminUserManagementController.filterUser(req, res),
 );
 
 router.get(
-    "/filter-lawyer/:status",
-    verifyToken,
-    verifyRole(["admin"]),
-    (req, res) => adminLawyerManagementController.filterLawyer(req, res),
+  "/filter-lawyer/:status",
+  verifyToken,
+  verifyRole(["admin"]),
+  (req, res) => adminLawyerManagementController.filterLawyer(req, res),
 );
 
 router.get(
-    "/get-user-profile/:userId",
-    verifyToken,
-    verifyRole(["admin"]),
-    (req, res) => adminUserManagementController.getUserProfile(req, res),
+  "/get-user-profile/:userId",
+  verifyToken,
+  verifyRole(["admin"]),
+  (req, res) => adminUserManagementController.getUserProfile(req, res),
 );
 
 router.get(
-    "/get-lawyer-profile/:lawyerId",
-    verifyToken,
-    verifyRole(["admin"]),
-    (req, res) => adminLawyerManagementController.getLawyerProfile(req, res),
+  "/get-lawyer-profile/:lawyerId",
+  verifyToken,
+  verifyRole(["admin"]),
+  (req, res) => adminLawyerManagementController.getLawyerProfile(req, res),
 );
 
 router.get(
-    "/get-summary-report",
-    verifyToken,
-    verifyRole(["admin"]),
-    (req, res) => adminController.getSummaryReport(req, res),
+  "/get-summary-report",
+  verifyToken,
+  verifyRole(["admin"]),
+  (req, res) => adminController.getSummaryReport(req, res),
 );
 
-router.get("/get-reports/:revenueDateRange/:specializationType", verifyToken, verifyRole(["admin"]), (req, res) =>
-    adminController.getReports(req, res),
+router.get(
+  "/get-reports/:revenueDateRange/:specializationType",
+  verifyToken,
+  verifyRole(["admin"]),
+  (req, res) => adminController.getReports(req, res),
 );
 
 export default router;

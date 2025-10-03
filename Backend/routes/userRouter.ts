@@ -71,61 +71,61 @@ const hashData = new HashService();
 const otpService = new OtpService();
 const otpMongoRepo = new OtpVerificationRepository();
 const otpVerificationUseCase = new OtpVerificationUseCase(
-    otpMongoRepo,
-    userSignupMongoRepo,
+  otpMongoRepo,
+  userSignupMongoRepo
 );
 const userSignupApplication = new UserSignupUseCase(
-    userSignupMongoRepo,
-    otpsendEmail,
-    generateOtp,
-    hashData,
-    otpService,
+  userSignupMongoRepo,
+  otpsendEmail,
+  generateOtp,
+  hashData,
+  otpService
 );
 const resendOtpApplication = new ResendOtpUseCase(
-    otpService,
-    generateOtp,
-    hashData,
-    otpsendEmail,
+  otpService,
+  generateOtp,
+  hashData,
+  otpsendEmail
 );
 const forgotPasswordApplication = new ForgotPasswordUseCase(
-    otpService,
-    generateOtp,
-    hashData,
-    otpsendEmail,
+  otpService,
+  generateOtp,
+  hashData,
+  otpsendEmail
 );
 const forgotPasswordRepo = new ForgotPasswordRepository();
 const changePasswordApplication = new ChangePasswordUseCase(
-    forgotPasswordRepo,
-    hashData,
+  forgotPasswordRepo,
+  hashData
 );
 const userSigninMongoRepo = new UserSigninRepository();
 const tokenGenerationService = new TokenGenerationService();
 const userSigninApplication = new UserSigninUseCase(
-    userSigninMongoRepo,
-    tokenGenerationService,
+  userSigninMongoRepo,
+  tokenGenerationService
 );
 const cookieTokenService = new CookieTokenService();
 const googleAuthMongoRepo = new GoogleAuthRepository();
 const googleAuthApplication = new GoogleAuthUseCase(
-    googleAuthMongoRepo,
-    tokenGenerationService,
+  googleAuthMongoRepo,
+  tokenGenerationService
 );
 const resetPasswordMongoRepo = new ResetPasswordRepository();
 const resetPasswordApplication = new ResetPasswordUseCase(
-    resetPasswordMongoRepo,
-    hashData,
+  resetPasswordMongoRepo,
+  hashData
 );
 const checkUserAccountStatusMongoRepo = new CheckAccountStatusRepository();
 
 const userAuthController = new UserAuthController(
-    userSignupApplication,
-    otpVerificationUseCase,
-    resendOtpApplication,
-    forgotPasswordApplication,
-    changePasswordApplication,
-    userSigninApplication,
-    googleAuthApplication,
-    resetPasswordApplication,
+  userSignupApplication,
+  otpVerificationUseCase,
+  resendOtpApplication,
+  forgotPasswordApplication,
+  changePasswordApplication,
+  userSigninApplication,
+  googleAuthApplication,
+  resetPasswordApplication
 );
 
 const userProfileRepo = new UserProfileRepository();
@@ -135,13 +135,13 @@ const userGetProfileRepo = new GetProfileRepository();
 const userGetProfileApplication = new GetUserProfileUseCase(userGetProfileRepo);
 const userEditProfileRepo = new EditProfileRepository();
 const editUserProfileApplication = new EditUserProfileUseCase(
-    userEditProfileRepo,
+  userEditProfileRepo
 );
 
 const userProfileController = new UserProfileController(
-    userAddProfileApplication,
-    userGetProfileApplication,
-    editUserProfileApplication,
+  userAddProfileApplication,
+  userGetProfileApplication,
+  editUserProfileApplication
 );
 
 const getLawyerRepo = new GetLawyerRepository();
@@ -154,20 +154,20 @@ const filterLawyerApplication = new FilterLawyerUseCase(getLawyerRepo);
 const searchLawyerApplication = new SearchLawyerUseCase(getLawyerRepo);
 const bookAppointmentRepo = new BookAppointmentRepository();
 const bookAppointmentApplication = new BookAppointmentUseCase(
-    bookAppointmentRepo,
+  bookAppointmentRepo
 );
 const appointmentRepo = new AppointmentRepository();
 const getAppointmentUseCase = new GetAppointmentUseCase(appointmentRepo);
 const refundPaymentService = new RefundPayment(appointmentRepo);
 const cancelAppointmentUseCase = new CancelAppointmentUseCase(
-    appointmentRepo,
-    refundPaymentService,
+  appointmentRepo,
+  refundPaymentService
 );
 const getTodaysAppointmentsUseCase = new GetTodaysAppointmentsUseCase(
-    appointmentRepo,
+  appointmentRepo
 );
 const resheduleAppointmentUseCase = new ResheduleAppointmentUseCase(
-    appointmentRepo,
+  appointmentRepo
 );
 const reportRepo = new ReportRepository();
 const reportLawyerUseCase = new ReportLawyerUseCase(reportRepo);
@@ -179,254 +179,253 @@ const feedbackRepo = new FeedbackRepository();
 const addReviewUseCase = new AddReviewUseCase(feedbackRepo);
 const getReviewUseCase = new GetReviewUseCase(feedbackRepo);
 
-
 const userController = new UserController(
-    getLawyerApplication,
-    getLawyerDetailsApplication,
-    getLawyerSlotApplication,
-    filterLawyerApplication,
-    searchLawyerApplication,
-    bookAppointmentApplication,
-    getAppointmentUseCase,
-    cancelAppointmentUseCase,
-    getTodaysAppointmentsUseCase,
-    resheduleAppointmentUseCase,
-    reportLawyerUseCase,
-    getUserChatUseCase,
-    getUserAllChatUseCase,
-    getLawyerChatProfileUseCase,
-    addReviewUseCase,
-    getReviewUseCase,
+  getLawyerApplication,
+  getLawyerDetailsApplication,
+  getLawyerSlotApplication,
+  filterLawyerApplication,
+  searchLawyerApplication,
+  bookAppointmentApplication,
+  getAppointmentUseCase,
+  cancelAppointmentUseCase,
+  getTodaysAppointmentsUseCase,
+  resheduleAppointmentUseCase,
+  reportLawyerUseCase,
+  getUserChatUseCase,
+  getUserAllChatUseCase,
+  getLawyerChatProfileUseCase,
+  addReviewUseCase,
+  getReviewUseCase
 );
 
-const bankRepo = new BankDetailsRepository()
+const bankRepo = new BankDetailsRepository();
 
 const createRazorpayOrderUseCase = new CreateRazorpayOrderUseCase(bankRepo);
 const verifyPaymentUseCase = new VerifyPaymentUseCase(appointmentRepo);
 
 const paymentController = new PaymentController(
-    createRazorpayOrderUseCase,
-    verifyPaymentUseCase,
+  createRazorpayOrderUseCase,
+  verifyPaymentUseCase
 );
 
 router.post("/signup", (req, res) => userAuthController.registerUser(req, res));
 
 router.post("/otp-verification", (req, res) =>
-    userAuthController.verifyOtp(req, res),
+  userAuthController.verifyOtp(req, res)
 );
 
 router.post("/resend-otp", (req, res) =>
-    userAuthController.resendOtp(req, res),
+  userAuthController.resendOtp(req, res)
 );
 
 router.post("/forgot-password", (req, res) =>
-    userAuthController.forgotPassword(req, res),
+  userAuthController.forgotPassword(req, res)
 );
 
 router.post("/change-password", (req, res) =>
-    userAuthController.changePassword(req, res),
+  userAuthController.changePassword(req, res)
 );
 
 router.post("/signin", (req, res) =>
-    userAuthController.signin(req, res, cookieTokenService),
+  userAuthController.signin(req, res, cookieTokenService)
 );
 
 router.get(
-    "/auth/google",
-    passport.authenticate("google", {
-        scope: ["profile", "email"],
-        session: false,
-    }),
+  "/auth/google",
+  passport.authenticate("google", {
+    scope: ["profile", "email"],
+    session: false,
+  })
 );
 
 router.get(
-    "/auth/google/callback",
-    passport.authenticate("google", {
-        session: false,
-        failureRedirect: "http://localhost:5173/googleFail",
-    }),
-    (req, res) =>
-        userAuthController.googleAuthentication(req, res, cookieTokenService),
+  "/auth/google/callback",
+  passport.authenticate("google", {
+    session: false,
+    failureRedirect: "http://localhost:5173/googleFail",
+  }),
+  (req, res) =>
+    userAuthController.googleAuthentication(req, res, cookieTokenService)
 );
 
 router.get("/getGoogleAuthDetails", (req, res) =>
-    userAuthController.getGoogleAuthDetails(req, res),
+  userAuthController.getGoogleAuthDetails(req, res)
 );
 
 router.post("/logout", (req, res) => userAuthController.logout(req, res));
 
 router.post(
-    "/reset-password",
-    verifyToken,
-    verifyRole(["user"]),
-    verifyAccountStatus(checkUserAccountStatusMongoRepo),
-    (req, res) => userAuthController.resetPassword(req, res),
+  "/reset-password",
+  verifyToken,
+  verifyRole(["user"]),
+  verifyAccountStatus(checkUserAccountStatusMongoRepo),
+  (req, res) => userAuthController.resetPassword(req, res)
 );
 
 router.post(
-    "/add-profile",
-    verifyToken,
-    verifyRole(["user"]),
-    verifyAccountStatus(checkUserAccountStatusMongoRepo),
-    upload.single("profileImage"),
-    (req, res) => userProfileController.addProfile(req, res),
+  "/add-profile",
+  verifyToken,
+  verifyRole(["user"]),
+  verifyAccountStatus(checkUserAccountStatusMongoRepo),
+  upload.single("profileImage"),
+  (req, res) => userProfileController.addProfile(req, res)
 );
 
 router.get(
-    "/get-profile/:userId",
-    verifyToken,
-    verifyRole(["user"]),
-    verifyAccountStatus(checkUserAccountStatusMongoRepo),
-    (req, res) => userProfileController.getUserProfile(req, res),
+  "/get-profile/:userId",
+  verifyToken,
+  verifyRole(["user"]),
+  verifyAccountStatus(checkUserAccountStatusMongoRepo),
+  (req, res) => userProfileController.getUserProfile(req, res)
 );
 
 router.put(
-    "/edit-profile",
-    verifyToken,
-    verifyRole(["user"]),
-    verifyAccountStatus(checkUserAccountStatusMongoRepo),
-    upload.single("profileImage"),
-    (req, res) => userProfileController.editUserProfile(req, res),
+  "/edit-profile",
+  verifyToken,
+  verifyRole(["user"]),
+  verifyAccountStatus(checkUserAccountStatusMongoRepo),
+  upload.single("profileImage"),
+  (req, res) => userProfileController.editUserProfile(req, res)
 );
 
 router.get(
-    "/get-lawyers",
-    verifyToken,
-    verifyRole(["user"]),
-    verifyAccountStatus(checkUserAccountStatusMongoRepo),
-    (req, res) => userController.getLawyers(req, res),
+  "/get-lawyers",
+  verifyToken,
+  verifyRole(["user"]),
+  verifyAccountStatus(checkUserAccountStatusMongoRepo),
+  (req, res) => userController.getLawyers(req, res)
 );
 
 router.get(
-    "/get-lawyer-details/:lawyerId",
-    verifyToken,
-    verifyRole(["user"]),
-    verifyAccountStatus(checkUserAccountStatusMongoRepo),
-    (req, res) => userController.getLawyerDetails(req, res),
+  "/get-lawyer-details/:lawyerId",
+  verifyToken,
+  verifyRole(["user"]),
+  verifyAccountStatus(checkUserAccountStatusMongoRepo),
+  (req, res) => userController.getLawyerDetails(req, res)
 );
 
 router.get(
-    "/get-slot-details/:lawyerId/:date",
-    verifyToken,
-    verifyRole(["user"]),
-    verifyAccountStatus(checkUserAccountStatusMongoRepo),
-    (req, res) => userController.getSlotDetails(req, res),
+  "/get-slot-details/:lawyerId/:date",
+  verifyToken,
+  verifyRole(["user"]),
+  verifyAccountStatus(checkUserAccountStatusMongoRepo),
+  (req, res) => userController.getSlotDetails(req, res)
 );
 
 router.get(
-    "/filter-lawyer/:specialization",
-    verifyToken,
-    verifyRole(["user"]),
-    verifyAccountStatus(checkUserAccountStatusMongoRepo),
-    (req, res) => userController.filterLawyerBySpecialization(req, res),
+  "/filter-lawyer/:specialization",
+  verifyToken,
+  verifyRole(["user"]),
+  verifyAccountStatus(checkUserAccountStatusMongoRepo),
+  (req, res) => userController.filterLawyerBySpecialization(req, res)
 );
 
 router.get(
-    "/search-lawyer/:name",
-    verifyToken,
-    verifyRole(["user"]),
-    verifyAccountStatus(checkUserAccountStatusMongoRepo),
-    (req, res) => userController.searchLawyerByName(req, res),
+  "/search-lawyer/:name",
+  verifyToken,
+  verifyRole(["user"]),
+  verifyAccountStatus(checkUserAccountStatusMongoRepo),
+  (req, res) => userController.searchLawyerByName(req, res)
 );
 
 router.post(
-    "/book-appointment/:caseId",
-    verifyToken,
-    verifyRole(["user"]),
-    verifyAccountStatus(checkUserAccountStatusMongoRepo),
-    (req, res) => userController.bookAppointment(req, res),
+  "/book-appointment/:caseId",
+  verifyToken,
+  verifyRole(["user"]),
+  verifyAccountStatus(checkUserAccountStatusMongoRepo),
+  (req, res) => userController.bookAppointment(req, res)
 );
 
 router.get(
-    "/get-appointments/:userId/:appointmentStatus/:startIndex/:limit",
-    verifyToken,
-    verifyRole(["user"]),
-    verifyAccountStatus(checkUserAccountStatusMongoRepo),
-    (req, res) => userController.getAppointment(req, res),
+  "/get-appointments/:userId/:appointmentStatus/:startIndex/:limit",
+  verifyToken,
+  verifyRole(["user"]),
+  verifyAccountStatus(checkUserAccountStatusMongoRepo),
+  (req, res) => userController.getAppointment(req, res)
 );
 
 router.post(
-    "/create-order",
-    verifyToken,
-    verifyRole(["user"]),
-    verifyAccountStatus(checkUserAccountStatusMongoRepo),
-    (req, res) => paymentController.createOrder(req, res),
+  "/create-order",
+  verifyToken,
+  verifyRole(["user"]),
+  verifyAccountStatus(checkUserAccountStatusMongoRepo),
+  (req, res) => paymentController.createOrder(req, res)
 );
 
 router.post("/verify-payment", (req, res) =>
-    paymentController.verifyPayment(req, res),
+  paymentController.verifyPayment(req, res)
 );
 
 router.post(
-    "/cancel-appointment/:appointmentId",
-    verifyToken,
-    verifyRole(["user"]),
-    verifyAccountStatus(checkUserAccountStatusMongoRepo),
-    (req, res) => userController.cancelAppointment(req, res),
+  "/cancel-appointment/:appointmentId",
+  verifyToken,
+  verifyRole(["user"]),
+  verifyAccountStatus(checkUserAccountStatusMongoRepo),
+  (req, res) => userController.cancelAppointment(req, res)
 );
 
 router.get(
-    "/get-todays-appointments/:userId",
-    verifyToken,
-    verifyRole(["user"]),
-    verifyAccountStatus(checkUserAccountStatusMongoRepo),
-    (req, res) => userController.getTodaysAppointments(req, res),
+  "/get-todays-appointments/:userId",
+  verifyToken,
+  verifyRole(["user"]),
+  verifyAccountStatus(checkUserAccountStatusMongoRepo),
+  (req, res) => userController.getTodaysAppointments(req, res)
 );
 
 router.post(
-    "/reshedule-appointment/:appointmentId",
-    verifyToken,
-    verifyRole(["user"]),
-    verifyAccountStatus(checkUserAccountStatusMongoRepo),
-    (req, res) => userController.resheduleAppointment(req, res),
+  "/reshedule-appointment/:appointmentId",
+  verifyToken,
+  verifyRole(["user"]),
+  verifyAccountStatus(checkUserAccountStatusMongoRepo),
+  (req, res) => userController.resheduleAppointment(req, res)
 );
 
 router.post(
-    "/report-lawyer",
-    verifyToken,
-    verifyRole(["user"]),
-    verifyAccountStatus(checkUserAccountStatusMongoRepo),
-    (req, res) => userController.reportLawyer(req, res),
+  "/report-lawyer",
+  verifyToken,
+  verifyRole(["user"]),
+  verifyAccountStatus(checkUserAccountStatusMongoRepo),
+  (req, res) => userController.reportLawyer(req, res)
 );
 
 router.get(
-    "/get-user-chat/:userId/:lawyerId",
-    verifyToken,
-    verifyRole(["user"]),
-    verifyAccountStatus(checkUserAccountStatusMongoRepo),
-    (req, res) => userController.getUserChat(req, res),
+  "/get-user-chat/:userId/:lawyerId",
+  verifyToken,
+  verifyRole(["user"]),
+  verifyAccountStatus(checkUserAccountStatusMongoRepo),
+  (req, res) => userController.getUserChat(req, res)
 );
 
 router.get(
-    "/get-user-all-chats/:userId",
-    verifyToken,
-    verifyRole(["user"]),
-    verifyAccountStatus(checkUserAccountStatusMongoRepo),
-    (req, res) => userController.getUserAllChats(req, res),
+  "/get-user-all-chats/:userId",
+  verifyToken,
+  verifyRole(["user"]),
+  verifyAccountStatus(checkUserAccountStatusMongoRepo),
+  (req, res) => userController.getUserAllChats(req, res)
 );
 
 router.get(
-    "/get-lawyer-chat-profile/:lawyerId",
-    verifyToken,
-    verifyRole(["user"]),
-    verifyAccountStatus(checkUserAccountStatusMongoRepo),
-    (req, res) => userController.getLawyerChatProfile(req, res),
+  "/get-lawyer-chat-profile/:lawyerId",
+  verifyToken,
+  verifyRole(["user"]),
+  verifyAccountStatus(checkUserAccountStatusMongoRepo),
+  (req, res) => userController.getLawyerChatProfile(req, res)
 );
 
 router.post(
-    "/add-review/:lawyerId",
-    verifyToken,
-    verifyRole(["user"]),
-    verifyAccountStatus(checkUserAccountStatusMongoRepo),
-    (req, res) => userController.addReview(req, res),
+  "/add-review/:lawyerId",
+  verifyToken,
+  verifyRole(["user"]),
+  verifyAccountStatus(checkUserAccountStatusMongoRepo),
+  (req, res) => userController.addReview(req, res)
 );
 
 router.get(
-    "/get-review/:lawyerId",
-    verifyToken,
-    verifyRole(["user", "lawyer"]),
-    verifyAccountStatus(checkUserAccountStatusMongoRepo),
-    (req, res) => userController.getReview(req, res),
+  "/get-review/:lawyerId",
+  verifyToken,
+  verifyRole(["user", "lawyer"]),
+  verifyAccountStatus(checkUserAccountStatusMongoRepo),
+  (req, res) => userController.getReview(req, res)
 );
 
 export default router;

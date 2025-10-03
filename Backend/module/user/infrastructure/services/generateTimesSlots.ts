@@ -14,14 +14,14 @@ export async function generateSlots(
   rule: ISlotAvailablityEntity,
   lawyerId: Types.ObjectId,
   date: string,
-  slotRepo: IGetLawyerSlotRepository
+  slotRepo: IGetLawyerSlotRepository,
 ) {
   const { startTime, endTime, breakTimes, days } = rule;
 
   interface SlotData {
     startTime: string;
     endTime: string;
-    isBooked: boolean
+    isBooked: boolean;
   }
 
   interface BreakTimeData {

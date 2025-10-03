@@ -10,7 +10,8 @@ export interface TodaysAppointmentResponseDataDto {
   specialization: string;
 }
 
-
 export interface IGetTodaysAppointmentsUseCase {
-  execute(userId: Types.ObjectId): Promise<TodaysAppointmentResponseDataDto[] | []>;
+  execute(
+    userId: Types.ObjectId,
+  ): Promise<TodaysAppointmentResponseDataDto[] | []>;
 }

@@ -42,9 +42,9 @@ app.use(cookieParser());
 
 app.use(express.json());
 
-
 //app.use(morgan('dev'))
 app.use(morgan("combined", { stream: accessLogStream }));
+
 
 app.use("/api/user", userRouter);
 app.use("/api/lawyer", lawyerRouter);

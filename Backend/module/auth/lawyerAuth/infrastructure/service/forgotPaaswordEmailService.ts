@@ -1,16 +1,19 @@
-import { transporter } from "../../../../../config/nodemailerConfig"
-import { IForgotPasswordEmailService } from "./IforgotPasswordEmailService"
+import { transporter } from "../../../../../config/nodemailerConfig";
+import { IForgotPasswordEmailService } from "./IforgotPasswordEmailService";
 
 export class ForgotPasswordEmailService implements IForgotPasswordEmailService {
+  async sendForgotPasswordEMail(
+    toEmail: string,
+    userName: string,
+    token: string,
+  ): Promise<void> {
+    const resetLink = `http://localhost:5173/auth/lawyer/forgotpassword?email=${encodeURIComponent(toEmail)}&token=${encodeURIComponent(token)}`;
 
-    async sendForgotPasswordEMail(toEmail: string, userName: string, token: string): Promise<void> {
-        const resetLink = `http://localhost:5173/auth/lawyer/forgotpassword?email=${encodeURIComponent(toEmail)}&token=${encodeURIComponent(token)}`
-
-        const mailOptions = {
-            from: "Legal Platform",
-            to: toEmail,
-            subject: 'Password Reset Request',
-            html: `
+    const mailOptions = {
+      from: "Legal Platform",
+      to: toEmail,
+      subject: "Password Reset Request",
+      html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; background: #f8fafc; padding: 30px; border-radius: 10px;">
             <h2 style="color: #334155;">Hello ${userName},</h2>
             <p style="color: #64748b;">
@@ -30,13 +33,13 @@ export class ForgotPasswordEmailService implements IForgotPasswordEmailService {
             <p style="color: #64748b;">Regards,<br/>Legal Platform Team</p>
         </div>
         `,
-        }
+    };
 
-        try {
-            await transporter.sendMail(mailOptions)
-            console.log('Forgot password email sent to', toEmail)
-        } catch (error) {
-            console.error('Error sending forgot password email:', error)
-        }
+    try {
+      await transporter.sendMail(mailOptions);
+      console.log("Forgot password email sent to", toEmail);
+    } catch (error) {
+      console.error("Error sending forgot password email:", error);
     }
+  }
 }

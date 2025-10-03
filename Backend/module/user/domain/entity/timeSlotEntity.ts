@@ -1,7 +1,5 @@
-
-
 export interface ITimeSlotEntity {
-    startTime: string;
-    endTime: string;
-    isBooked: boolean;
+  startTime: string;
+  endTime: string;
+  isBooked: boolean;
 }

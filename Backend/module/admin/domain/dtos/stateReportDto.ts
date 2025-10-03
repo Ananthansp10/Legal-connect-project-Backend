@@ -1,6 +1,4 @@
-
-
 export interface StateReportDto {
-    _id: string;
-    usersCount: number;
+  _id: string;
+  usersCount: number;
 }

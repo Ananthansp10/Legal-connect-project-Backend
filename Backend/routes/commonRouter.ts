@@ -9,37 +9,37 @@ import { AppStatusCode } from "../common/statusCode/AppStatusCode";
 const checkUserAccountStatusMongoRepo = new CheckAccountStatusRepository();
 
 router.post(
-    "/verify-auth",
-    verifyToken,
-    verifyRole(["user"]),
-    verifyAccountStatus(checkUserAccountStatusMongoRepo),
-    (req, res) => {
-        res
-            .status(AppStatusCode.SUCCESS_CODE)
-            .json({ success: true, message: "Authorization successfull" });
-    },
+  "/verify-auth",
+  verifyToken,
+  verifyRole(["user"]),
+  verifyAccountStatus(checkUserAccountStatusMongoRepo),
+  (req, res) => {
+    res
+      .status(AppStatusCode.SUCCESS_CODE)
+      .json({ success: true, message: "Authorization successfull" });
+  },
 );
 
 router.post(
-    "/verify-lawyer-auth",
-    verifyToken,
-    verifyRole(["lawyer"]),
-    (req, res) => {
-        res
-            .status(AppStatusCode.SUCCESS_CODE)
-            .json({ success: true, message: "Authorization successfull" });
-    },
+  "/verify-lawyer-auth",
+  verifyToken,
+  verifyRole(["lawyer"]),
+  (req, res) => {
+    res
+      .status(AppStatusCode.SUCCESS_CODE)
+      .json({ success: true, message: "Authorization successfull" });
+  },
 );
 
 router.post(
-    "/verify-admin-auth",
-    verifyToken,
-    verifyRole(["admin"]),
-    (req, res) => {
-        res
-            .status(AppStatusCode.SUCCESS_CODE)
-            .json({ success: true, message: "Authorization successfull" });
-    },
+  "/verify-admin-auth",
+  verifyToken,
+  verifyRole(["admin"]),
+  (req, res) => {
+    res
+      .status(AppStatusCode.SUCCESS_CODE)
+      .json({ success: true, message: "Authorization successfull" });
+  },
 );
 
 export default router;

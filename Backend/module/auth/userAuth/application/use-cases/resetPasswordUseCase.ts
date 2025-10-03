@@ -4,30 +4,41 @@ import { IResetPasswordRepository } from "../../infrastructure/repositoryInterfa
 import { AppError } from "../../../../../common/error/AppEnumError";
 import { AppException } from "../../../../../common/error/errorException";
 import { IResetPasswordUseCase } from "../use-case-Interface/IresetPasswordUseCase";
-import bcrypt from 'bcrypt'
+import bcrypt from "bcrypt";
 import { AppStatusCode } from "../../../../../common/statusCode/AppStatusCode";
 
 export class ResetPasswordUseCase implements IResetPasswordUseCase {
+  constructor(
+    private _resetPasswordRepo: IResetPasswordRepository,
+    private _hashService: IHashService,
+  ) {}
 
-    constructor(private _resetPasswordRepo: IResetPasswordRepository, private _hashService: IHashService) { }
+  async execute(
+    email: string,
+    oldPassword: string,
+    newPassword: string,
+  ): Promise<void> {
+    const userExist: IUserSignup | null =
+      await this._resetPasswordRepo.findByEmail(email);
 
-    async execute(email: string, oldPassword: string, newPassword: string): Promise<void> {
-
-        const userExist: IUserSignup | null = await this._resetPasswordRepo.findByEmail(email)
-
-        if (!userExist) {
-            throw new AppException(AppError.USER_NOT_FOUND, AppStatusCode.NOT_FOUND)
-        }
-
-        const isPasswordMatch = await bcrypt.compare(oldPassword, userExist.password!)
-
-        if (!isPasswordMatch) {
-            throw new AppException(AppError.OLD_PASSWORD_WRONG, AppStatusCode.UNAUTHORIZED)
-        }
-
-        const newHashhedPassword = await this._hashService.hash(newPassword)
-
-        await this._resetPasswordRepo.changePassword(email, newHashhedPassword)
-
+    if (!userExist) {
+      throw new AppException(AppError.USER_NOT_FOUND, AppStatusCode.NOT_FOUND);
     }
+
+    const isPasswordMatch = await bcrypt.compare(
+      oldPassword,
+      userExist.password!,
+    );
+
+    if (!isPasswordMatch) {
+      throw new AppException(
+        AppError.OLD_PASSWORD_WRONG,
+        AppStatusCode.UNAUTHORIZED,
+      );
+    }
+
+    const newHashhedPassword = await this._hashService.hash(newPassword);
+
+    await this._resetPasswordRepo.changePassword(email, newHashhedPassword);
+  }
 }

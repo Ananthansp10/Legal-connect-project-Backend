@@ -3,23 +3,23 @@ import { IBankDetailsRepository } from "../../infrastructure/repositoryInterface
 import { IAddBankAccountDetailsUseCase } from "../use-case-interface/IAddBankAccountDetailsUseCase";
 import { BankDetailsRequestDto } from "../../domain/dtos/bankDetailsDto";
 
-export class AddBankAccountDetailsUseCase implements IAddBankAccountDetailsUseCase {
-
-  constructor(
-    private _bankDetailsRepo: IBankDetailsRepository
-  ) { }
+export class AddBankAccountDetailsUseCase
+  implements IAddBankAccountDetailsUseCase
+{
+  constructor(private _bankDetailsRepo: IBankDetailsRepository) {}
 
   async execute(data: BankDetailsRequestDto): Promise<void> {
     try {
-      const keyId = process.env.RAZORPAY_KEY_ID
-      const keySecret = process.env.RAZORPAY_KEY_SECRET
-      const auth = "Basic " + Buffer.from(`${keyId}:${keySecret}`).toString("base64")
+      const keyId = process.env.RAZORPAY_KEY_ID;
+      const keySecret = process.env.RAZORPAY_KEY_SECRET;
+      const auth =
+        "Basic " + Buffer.from(`${keyId}:${keySecret}`).toString("base64");
 
       const linkedAccount = await axios.post(
-        "https://api.razorpay.com/v2/accounts",
+        process.env.LINKED_ACCOUNT_URL!,
         {
           type: "route",
-          reference_id: data.lawyerId.toString().slice(0,20),
+          reference_id: data.lawyerId.toString().slice(0, 20),
           email: data.email,
           phone: data.phoneNumber,
           legal_business_name: "Legal Connect",
@@ -35,18 +35,20 @@ export class AddBankAccountDetailsUseCase implements IAddBankAccountDetailsUseCa
                 city: "Bengaluru",
                 state: "Karnataka",
                 postal_code: "560001",
-                country: "IN"
-              }
-            }
-          }
+                country: "IN",
+              },
+            },
+          },
         },
-        { headers: { Authorization: auth, "Content-Type": "application/json" } }
+        {
+          headers: { Authorization: auth, "Content-Type": "application/json" },
+        }
       );
 
       console.log("Linked Account ID:", linkedAccount);
 
       const contact = await axios.post(
-        "https://api.razorpay.com/v1/contacts",
+        process.env.CONTACT_URL!,
         {
           name: data.name,
           email: data.email,
@@ -60,7 +62,7 @@ export class AddBankAccountDetailsUseCase implements IAddBankAccountDetailsUseCa
       console.log("✅ Contact Created:", contact.data.id);
 
       const fundAccount = await axios.post(
-        "https://api.razorpay.com/v1/fund_accounts",
+        process.env.FUND_ACCOUNT_URL!,
         {
           contact_id: contact.data.id,
           account_type: "bank_account",
@@ -75,8 +77,11 @@ export class AddBankAccountDetailsUseCase implements IAddBankAccountDetailsUseCa
 
       console.log("✅ Fund Account Created:", fundAccount.data.id);
 
-      await this._bankDetailsRepo.addBankDetails(data.lawyerId, linkedAccount.data.id, fundAccount.data.id);
-
+      await this._bankDetailsRepo.addBankDetails(
+        data.lawyerId,
+        linkedAccount.data.id,
+        fundAccount.data.id
+      );
     } catch (error: any) {
       console.error("Razorpay Error:", error.response?.data || error.message);
 

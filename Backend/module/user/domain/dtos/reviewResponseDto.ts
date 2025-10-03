@@ -1,8 +1,7 @@
 import { Reviews } from "../entity/feedbackEntity";
 
-
 export interface ReviewResponseDto {
-    reviewsCount: number;
-    rating: number;
-    reviews: Reviews[];
+  reviewsCount: number;
+  rating: number;
+  reviews: Reviews[];
 }

@@ -4,19 +4,16 @@ import { ILawyerRepository } from "../../infrastructure/repositoryInterface/ILaw
 import { LawyerMapper } from "../mapper/lawyerMapper";
 import { ISearchLawyerUseCase } from "../use-case-interface/ISearchLawyerUseCase";
 
-
 export class SearchLawyerUseCase implements ISearchLawyerUseCase {
+  constructor(private _lawyerRepo: ILawyerRepository) {}
 
-    constructor(
-        private _lawyerRepo: ILawyerRepository
-    ) { }
-
-    async execute(name: string): Promise<ILawyerResponse[] | null> {
-        const lawyer: ILawyerSignup[] | null = await this._lawyerRepo.searchLawyer(name)
-        let response: ILawyerResponse[] = []
-        if (lawyer) {
-            response = await LawyerMapper.toResponse(lawyer)
-        }
-        return response
+  async execute(name: string): Promise<ILawyerResponse[] | null> {
+    const lawyer: ILawyerSignup[] | null =
+      await this._lawyerRepo.searchLawyer(name);
+    let response: ILawyerResponse[] = [];
+    if (lawyer) {
+      response = await LawyerMapper.toResponse(lawyer);
     }
+    return response;
+  }
 }

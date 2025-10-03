@@ -21,5 +21,10 @@ export interface Appointment {
 }
 
 export interface IGetAppointmentUseCase {
-  execute(lawyerId: Types.ObjectId, appointmentStatus: string, startIndex: number, endIndex: number): Promise<{ appointments: Appointment[], totalAppointments: number } | null>;
+  execute(
+    lawyerId: Types.ObjectId,
+    appointmentStatus: string,
+    startIndex: number,
+    endIndex: number,
+  ): Promise<{ appointments: Appointment[]; totalAppointments: number } | null>;
 }

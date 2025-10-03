@@ -1,5 +1,7 @@
-
-
 export interface IResetPasswordUseCase {
-    execute(email: string, oldPassword: string, newPassword: string): Promise<void>;
+  execute(
+    email: string,
+    oldPassword: string,
+    newPassword: string,
+  ): Promise<void>;
 }
