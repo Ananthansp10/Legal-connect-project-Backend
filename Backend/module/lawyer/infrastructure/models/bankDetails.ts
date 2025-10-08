@@ -1,20 +1,22 @@
 import mongoose, { Schema } from "mongoose";
-import fundAccount from "razorpay/dist/types/fundAccount";
 
-const bankDetailsSchema=new mongoose.Schema({
-    lawyerId:{
-        type:Schema.Types.ObjectId,
-        ref:'lawyer',
-        required:true
-    },
-    contactId:{
-        type:String,
-        required:true
-    },
-    fundAccountId:{
-        type:String,
-        required:true
-    }
-})
+const bankDetailsSchema = new mongoose.Schema({
+  lawyerId: {
+    type: Schema.Types.ObjectId,
+    ref: "lawyer",
+    required: true,
+  },
+  contactId: {
+    type: String,
+    required: true,
+  },
+  fundAccountId: {
+    type: String,
+    required: true,
+  },
+});
 
-export const bankDetailsModel=mongoose.model('bankDetails',bankDetailsSchema)
+export const bankDetailsModel = mongoose.model(
+  "bankDetails",
+  bankDetailsSchema
+);

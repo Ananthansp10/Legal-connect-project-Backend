@@ -1,201 +1,347 @@
-import express from 'express'
-import { AdminAuthController } from '../module/auth/adminAuth/interface/controller/adminAuthController';
-import { TokenGenerationService } from '../module/auth/userAuth/infrastructure/services/tokenGenerationService';
-import { AdminSigninUseCase } from '../module/auth/adminAuth/application/use-cases/adminSigninUseCase';
-import { CookieTokenService } from '../module/auth/userAuth/infrastructure/services/cookieTokenService';
-import { AdminLawyerManagementController } from '../module/admin/interface/controller/adminLawyerManagementController';
-import { LawyerVerificationRepository } from '../module/admin/infrastructure/repository/lawyerVerificationRepository';
-import { LawyerVerificationUseCase } from '../module/admin/application/use-case/lawyerVerificationUseCase';
-import { verifyToken } from '../middlewares/verifyTokenMiddleware';
-import { verifyRole } from '../middlewares/verifyRoleMiddleware';
-import { BaseRepository } from '../module/admin/infrastructure/repository/baseRepository';
-import { LawyerModel } from '../module/auth/lawyerAuth/infrastructure/models/lawyerModel';
-import { GetUnverifiedLawyersUseCase } from '../module/admin/application/use-case/getUnverifiedLawyerUseCase';
-import { LawyerVerificationEmail } from '../module/admin/infrastructure/services/lawyerVerificarionEmailService';
-import { LawyerRepository } from '../module/admin/infrastructure/repository/lawyerRepository';
-import { GetLawyersUseCase } from '../module/admin/application/use-case/getLawyersUseCase';
-import { AdminUserManagementController } from '../module/admin/interface/controller/adminUserManagementController';
-import { UserRepository } from '../module/admin/infrastructure/repository/userRepository';
-import { GetUsersUseCase } from '../module/admin/application/use-case/getUsersUseCase';
-import { VerifyLawyerStatusUseCase } from '../module/admin/application/use-case/verifyLawyerStatusUseCase';
-import { VerifyUserStatusUseCase } from '../module/admin/application/use-case/verifyUserStatusUseCase';
-import { AdminSpecializationController } from '../module/admin/interface/controller/adminSpecializationController';
-import { AddSpecializationRepository } from '../module/admin/infrastructure/repository/addSpecializationRepository';
-import { AddSpecializationUseCase } from '../module/admin/application/use-case/addSpecializationUseCase';
-import { GetSpecializationRepository } from '../module/admin/infrastructure/repository/getSpecializationRepository';
-import { GetSpecializationUseCase } from '../module/admin/application/use-case/getSpecialisationUseCase';
-import { EditSpecializationRepository } from '../module/admin/infrastructure/repository/editSpecializationRepository';
-import { EditSpecializationUseCase } from '../module/admin/application/use-case/editSpecializationUseCase';
-import { DeleteSpecializationRepository } from '../module/admin/infrastructure/repository/deleteSpecializationRepository';
-import { DeleteSpecializationUseCase } from '../module/admin/application/use-case/deleteSpecializationUseCase';
-import { AdminController } from '../module/admin/interface/controller/adminController';
-import { AppointmentRepository } from '../module/admin/infrastructure/repository/appointmentRepository';
-import { GetAppointmentsUseCase } from '../module/admin/application/use-case/getAppointmentsUseCase';
-import { ReportAccountRepository } from '../module/admin/infrastructure/repository/reportAccountRepository';
-import { GetReportedAccountsUseCase } from '../module/admin/application/use-case/getReportedAccounts';
-import { UpdateReportedAccountUseCase } from '../module/admin/application/use-case/updateReportedAccountUseCase';
-import { PlanManagementRepository } from '../module/admin/infrastructure/repository/planManagementRepository';
-import { AddPlanUseCase } from '../module/admin/application/use-case/addPlanUseCase';
-import { EditPlanUseCase } from '../module/admin/application/use-case/editPlanUseCase';
-import { ManagePlanStatusUseCase } from '../module/admin/application/use-case/managePlanStatusUseCase';
-import { DeletePlanUseCase } from '../module/admin/application/use-case/deletePlanUseCase';
-import { GetPlansUseCase } from '../module/admin/application/use-case/getPlansUseCase';
-import { SearchUserUseCase } from '../module/admin/application/use-case/searchUserUseCase';
-import { SearchLawyerUseCase } from '../module/admin/application/use-case/searchLawyerUseCase';
-import { FilterLawyerUseCase } from '../module/admin/application/use-case/filterLawyerUseCase';
-import { FilterUserUseCase } from '../module/admin/application/use-case/filterUserUseCase';
-import { GetLawyerProfileDataUseCase } from '../module/admin/application/use-case/getLawyerProfileDataUseCase';
-import { GetUserProfileDataUseCase } from '../module/admin/application/use-case/getUserProfileDataUseCase';
-import { SummaryReportRepository } from '../module/admin/infrastructure/repository/summaryReportRepository';
-import { GetSummaryReportUseCase } from '../module/admin/application/use-case/getSummaryReportUseCase';
-import { ReportsRepository } from '../module/admin/infrastructure/repository/reportsRepository';
-import { GetReportsUseCase } from '../module/admin/application/use-case/getReportsUseCase';
-const router=express.Router()
+import express from "express";
+import { AdminAuthController } from "../module/auth/adminAuth/interface/controller/adminAuthController";
+import { TokenGenerationService } from "../module/auth/userAuth/infrastructure/services/tokenGenerationService";
+import { AdminSigninUseCase } from "../module/auth/adminAuth/application/use-cases/adminSigninUseCase";
+import { CookieTokenService } from "../module/auth/userAuth/infrastructure/services/cookieTokenService";
+import { AdminLawyerManagementController } from "../module/admin/interface/controller/adminLawyerManagementController";
+import { LawyerVerificationRepository } from "../module/admin/infrastructure/repository/lawyerVerificationRepository";
+import { LawyerVerificationUseCase } from "../module/admin/application/use-case/lawyerVerificationUseCase";
+import { verifyToken } from "../middlewares/verifyTokenMiddleware";
+import { verifyRole } from "../middlewares/verifyRoleMiddleware";
+import { BaseRepository } from "../module/admin/infrastructure/repository/baseRepository";
+import { lawyerModel } from "../module/auth/lawyerAuth/infrastructure/models/lawyerModel";
+import { GetUnverifiedLawyersUseCase } from "../module/admin/application/use-case/getUnverifiedLawyerUseCase";
+import { LawyerVerificationEmail } from "../module/admin/infrastructure/services/lawyerVerificarionEmailService";
+import { LawyerRepository } from "../module/admin/infrastructure/repository/lawyerRepository";
+import { GetLawyersUseCase } from "../module/admin/application/use-case/getLawyersUseCase";
+import { AdminUserManagementController } from "../module/admin/interface/controller/adminUserManagementController";
+import { UserRepository } from "../module/admin/infrastructure/repository/userRepository";
+import { GetUsersUseCase } from "../module/admin/application/use-case/getUsersUseCase";
+import { VerifyLawyerStatusUseCase } from "../module/admin/application/use-case/verifyLawyerStatusUseCase";
+import { VerifyUserStatusUseCase } from "../module/admin/application/use-case/verifyUserStatusUseCase";
+import { AdminSpecializationController } from "../module/admin/interface/controller/adminSpecializationController";
+import { AddSpecializationRepository } from "../module/admin/infrastructure/repository/addSpecializationRepository";
+import { AddSpecializationUseCase } from "../module/admin/application/use-case/addSpecializationUseCase";
+import { GetSpecializationRepository } from "../module/admin/infrastructure/repository/getSpecializationRepository";
+import { GetSpecializationUseCase } from "../module/admin/application/use-case/getSpecialisationUseCase";
+import { EditSpecializationRepository } from "../module/admin/infrastructure/repository/editSpecializationRepository";
+import { EditSpecializationUseCase } from "../module/admin/application/use-case/editSpecializationUseCase";
+import { DeleteSpecializationRepository } from "../module/admin/infrastructure/repository/deleteSpecializationRepository";
+import { DeleteSpecializationUseCase } from "../module/admin/application/use-case/deleteSpecializationUseCase";
+import { AdminController } from "../module/admin/interface/controller/adminController";
+import { AppointmentRepository } from "../module/admin/infrastructure/repository/appointmentRepository";
+import { GetAppointmentsUseCase } from "../module/admin/application/use-case/getAppointmentsUseCase";
+import { ReportAccountRepository } from "../module/admin/infrastructure/repository/reportAccountRepository";
+import { GetReportedAccountsUseCase } from "../module/admin/application/use-case/getReportedAccounts";
+import { UpdateReportedAccountUseCase } from "../module/admin/application/use-case/updateReportedAccountUseCase";
+import { PlanManagementRepository } from "../module/admin/infrastructure/repository/planManagementRepository";
+import { AddPlanUseCase } from "../module/admin/application/use-case/addPlanUseCase";
+import { EditPlanUseCase } from "../module/admin/application/use-case/editPlanUseCase";
+import { ManagePlanStatusUseCase } from "../module/admin/application/use-case/managePlanStatusUseCase";
+import { DeletePlanUseCase } from "../module/admin/application/use-case/deletePlanUseCase";
+import { GetPlansUseCase } from "../module/admin/application/use-case/getPlansUseCase";
+import { SearchUserUseCase } from "../module/admin/application/use-case/searchUserUseCase";
+import { SearchLawyerUseCase } from "../module/admin/application/use-case/searchLawyerUseCase";
+import { FilterLawyerUseCase } from "../module/admin/application/use-case/filterLawyerUseCase";
+import { FilterUserUseCase } from "../module/admin/application/use-case/filterUserUseCase";
+import { GetLawyerProfileDataUseCase } from "../module/admin/application/use-case/getLawyerProfileDataUseCase";
+import { GetUserProfileDataUseCase } from "../module/admin/application/use-case/getUserProfileDataUseCase";
+import { SummaryReportRepository } from "../module/admin/infrastructure/repository/summaryReportRepository";
+import { GetSummaryReportUseCase } from "../module/admin/application/use-case/getSummaryReportUseCase";
+import { ReportsRepository } from "../module/admin/infrastructure/repository/reportsRepository";
+import { GetReportsUseCase } from "../module/admin/application/use-case/getReportsUseCase";
+const router = express.Router();
 
-const tokenGenerateService=new TokenGenerationService()
-const adminSigninApplication=new AdminSigninUseCase(tokenGenerateService)
-const tokenCookieService=new CookieTokenService()
-const lawyerVerificationRepo=new LawyerVerificationRepository()
-const lawyerVerifyEmailService=new LawyerVerificationEmail()
-const verifyLawyerApplication=new LawyerVerificationUseCase(lawyerVerificationRepo,lawyerVerifyEmailService)
-const adminLawyerRepo=new BaseRepository(LawyerModel)
-const getUnverifiedLawyerApplication=new GetUnverifiedLawyersUseCase(adminLawyerRepo)
-const lawyerMongoRepo=new LawyerRepository()
-const getLawyersApplication=new GetLawyersUseCase(lawyerMongoRepo)
+const tokenGenerateService = new TokenGenerationService();
+const adminSigninApplication = new AdminSigninUseCase(tokenGenerateService);
+const tokenCookieService = new CookieTokenService();
+const lawyerVerificationRepo = new LawyerVerificationRepository();
+const lawyerVerifyEmailService = new LawyerVerificationEmail();
+const verifyLawyerApplication = new LawyerVerificationUseCase(
+  lawyerVerificationRepo,
+  lawyerVerifyEmailService,
+);
+const adminLawyerRepo = new BaseRepository(lawyerModel);
+const getUnverifiedLawyerApplication = new GetUnverifiedLawyersUseCase(
+  adminLawyerRepo,
+);
+const lawyerMongoRepo = new LawyerRepository();
+const getLawyersApplication = new GetLawyersUseCase(lawyerMongoRepo);
 
-const adminAuthController=new AdminAuthController(adminSigninApplication,tokenCookieService)
+const adminAuthController = new AdminAuthController(
+  adminSigninApplication,
+  tokenCookieService,
+);
 
-const verifyLawyerStatusApplication=new VerifyLawyerStatusUseCase(lawyerMongoRepo)
-const searchLawyerUseCase=new SearchLawyerUseCase(lawyerMongoRepo)
-const filterLawyerUseCase=new FilterLawyerUseCase(lawyerMongoRepo)
-const getLawyerProfileUseCase=new GetLawyerProfileDataUseCase(lawyerMongoRepo)
+const verifyLawyerStatusApplication = new VerifyLawyerStatusUseCase(
+  lawyerMongoRepo,
+);
+const searchLawyerUseCase = new SearchLawyerUseCase(lawyerMongoRepo);
+const filterLawyerUseCase = new FilterLawyerUseCase(lawyerMongoRepo);
+const getLawyerProfileUseCase = new GetLawyerProfileDataUseCase(
+  lawyerMongoRepo,
+);
 
-const adminLawyerManagementController=new AdminLawyerManagementController(
-    verifyLawyerApplication,
-    getUnverifiedLawyerApplication,
-    getLawyersApplication,
-    verifyLawyerStatusApplication,
-    searchLawyerUseCase,
-    filterLawyerUseCase,
-    getLawyerProfileUseCase
-)
+const adminLawyerManagementController = new AdminLawyerManagementController(
+  verifyLawyerApplication,
+  getUnverifiedLawyerApplication,
+  getLawyersApplication,
+  verifyLawyerStatusApplication,
+  searchLawyerUseCase,
+  filterLawyerUseCase,
+  getLawyerProfileUseCase,
+);
 
-const userMongoRepo=new UserRepository()
-const getUserApplication=new GetUsersUseCase(userMongoRepo)
-const verifyUserStatusApplication=new VerifyUserStatusUseCase(userMongoRepo)
-const searchUserUseCase=new SearchUserUseCase(userMongoRepo)
-const filterUserUseCase=new FilterUserUseCase(userMongoRepo)
-const getUserProfileUseCase=new GetUserProfileDataUseCase(userMongoRepo)
+const userMongoRepo = new UserRepository();
+const getUserApplication = new GetUsersUseCase(userMongoRepo);
+const verifyUserStatusApplication = new VerifyUserStatusUseCase(userMongoRepo);
+const searchUserUseCase = new SearchUserUseCase(userMongoRepo);
+const filterUserUseCase = new FilterUserUseCase(userMongoRepo);
+const getUserProfileUseCase = new GetUserProfileDataUseCase(userMongoRepo);
 
-const adminUserManagementController=new AdminUserManagementController(
-    getUserApplication,
-    verifyUserStatusApplication,
-    searchUserUseCase,
-    filterUserUseCase,
-    getUserProfileUseCase
-)
+const adminUserManagementController = new AdminUserManagementController(
+  getUserApplication,
+  verifyUserStatusApplication,
+  searchUserUseCase,
+  filterUserUseCase,
+  getUserProfileUseCase,
+);
 
-const addSpecializationMongoRepo=new AddSpecializationRepository()
-const addSpecializationApplication=new AddSpecializationUseCase(addSpecializationMongoRepo)
-const getSpecializationMongoRepo=new GetSpecializationRepository()
-const getSpecializationApplication=new GetSpecializationUseCase(getSpecializationMongoRepo)
-const editSpecializationRepo=new EditSpecializationRepository()
-const editSpecializationApplication=new EditSpecializationUseCase(editSpecializationRepo)
-const deleteSpecializationRepo=new DeleteSpecializationRepository()
-const deleteSpecializationApplication=new DeleteSpecializationUseCase(deleteSpecializationRepo)
+const addSpecializationMongoRepo = new AddSpecializationRepository();
+const addSpecializationApplication = new AddSpecializationUseCase(
+  addSpecializationMongoRepo,
+);
+const getSpecializationMongoRepo = new GetSpecializationRepository();
+const getSpecializationApplication = new GetSpecializationUseCase(
+  getSpecializationMongoRepo,
+);
+const editSpecializationRepo = new EditSpecializationRepository();
+const editSpecializationApplication = new EditSpecializationUseCase(
+  editSpecializationRepo,
+);
+const deleteSpecializationRepo = new DeleteSpecializationRepository();
+const deleteSpecializationApplication = new DeleteSpecializationUseCase(
+  deleteSpecializationRepo,
+);
 
-const adminSpecializationController=new AdminSpecializationController(
-    addSpecializationApplication,
-    getSpecializationApplication,
-    editSpecializationApplication,
-    deleteSpecializationApplication
-)
+const adminSpecializationController = new AdminSpecializationController(
+  addSpecializationApplication,
+  getSpecializationApplication,
+  editSpecializationApplication,
+  deleteSpecializationApplication,
+);
 
-const appointmentRepo=new AppointmentRepository()
-const getAppointmentUseCase=new GetAppointmentsUseCase(appointmentRepo)
-const reportedAccountRepo=new ReportAccountRepository()
-const getReportedAccountUseCase=new GetReportedAccountsUseCase(reportedAccountRepo)
-const updateReportedAccountUseCase=new UpdateReportedAccountUseCase(reportedAccountRepo)
-const planeManagementRepo=new PlanManagementRepository()
-const addPlanUseCase=new AddPlanUseCase(planeManagementRepo)
-const editPlanUseCase=new EditPlanUseCase(planeManagementRepo)
-const managePlanStatusUseCase=new ManagePlanStatusUseCase(planeManagementRepo)
-const deletePlanUseCase=new DeletePlanUseCase(planeManagementRepo)
-const getPlansUseCase=new GetPlansUseCase(planeManagementRepo)
-const summaryReportRepo=new SummaryReportRepository()
-const getSummaryReportUseCase=new GetSummaryReportUseCase(summaryReportRepo)
-const reportsRepo=new ReportsRepository()
-const getReportsUseCase=new GetReportsUseCase(reportsRepo)
+const appointmentRepo = new AppointmentRepository();
+const getAppointmentUseCase = new GetAppointmentsUseCase(appointmentRepo);
+const reportedAccountRepo = new ReportAccountRepository();
+const getReportedAccountUseCase = new GetReportedAccountsUseCase(
+  reportedAccountRepo,
+);
+const updateReportedAccountUseCase = new UpdateReportedAccountUseCase(
+  reportedAccountRepo,
+);
+const planeManagementRepo = new PlanManagementRepository();
+const addPlanUseCase = new AddPlanUseCase(planeManagementRepo);
+const editPlanUseCase = new EditPlanUseCase(planeManagementRepo);
+const managePlanStatusUseCase = new ManagePlanStatusUseCase(
+  planeManagementRepo,
+);
+const deletePlanUseCase = new DeletePlanUseCase(planeManagementRepo);
+const getPlansUseCase = new GetPlansUseCase(planeManagementRepo);
+const summaryReportRepo = new SummaryReportRepository();
+const getSummaryReportUseCase = new GetSummaryReportUseCase(summaryReportRepo);
+const reportsRepo = new ReportsRepository();
+const getReportsUseCase = new GetReportsUseCase(reportsRepo);
 
+const adminController = new AdminController(
+  getAppointmentUseCase,
+  getReportedAccountUseCase,
+  updateReportedAccountUseCase,
+  addPlanUseCase,
+  editPlanUseCase,
+  managePlanStatusUseCase,
+  deletePlanUseCase,
+  getPlansUseCase,
+  getSummaryReportUseCase,
+  getReportsUseCase,
+);
 
-const adminController=new AdminController(
-    getAppointmentUseCase,
-    getReportedAccountUseCase,
-    updateReportedAccountUseCase,
-    addPlanUseCase,
-    editPlanUseCase,
-    managePlanStatusUseCase,
-    deletePlanUseCase,
-    getPlansUseCase,
-    getSummaryReportUseCase,
-    getReportsUseCase
-)
+router.post("/signin", (req, res) => adminAuthController.signin(req, res));
 
+router.post("/logout", (req, res) => adminAuthController.logout(req, res));
 
-router.post('/signin',(req,res)=>adminAuthController.signin(req,res))
+router.get(
+  "/unverifiedLawyers",
+  verifyToken,
+  verifyRole(["admin"]),
+  (req, res) => adminLawyerManagementController.getUnverifiedLawyers(req, res),
+);
 
-router.post('/logout',(req,res)=>adminAuthController.logout(req,res))
+router.patch(
+  "/verification/:lawyerId/:status/:reason",
+  verifyToken,
+  verifyRole(["admin"]),
+  (req, res) => adminLawyerManagementController.verifyLawyer(req, res),
+);
 
-router.get('/unverifiedLawyers',verifyToken,verifyRole(['admin']),(req,res)=>adminLawyerManagementController.getUnverifiedLawyers(req,res))
+router.get("/getlawyers", verifyToken, verifyRole(["admin"]), (req, res) =>
+  adminLawyerManagementController.getLawyers(req, res),
+);
 
-router.patch('/verification/:lawyerId/:status/:reason',verifyToken,verifyRole(['admin']),(req,res)=>adminLawyerManagementController.verifyLawyer(req,res))
+router.get(
+  "/getusers/:startIndex/:limit",
+  verifyToken,
+  verifyRole(["admin"]),
+  (req, res) => adminUserManagementController.getUsers(req, res),
+);
 
-router.get('/getlawyers',verifyToken,verifyRole(['admin']),(req,res)=>adminLawyerManagementController.getLawyers(req,res))
+router.patch(
+  "/lawyer/:lawyerId/:status",
+  verifyToken,
+  verifyRole(["admin"]),
+  (req, res) => adminLawyerManagementController.verifyLawyerStatus(req, res),
+);
 
-router.get('/getusers/:startIndex/:limit',verifyToken,verifyRole(['admin']),(req,res)=>adminUserManagementController.getUsers(req,res))
+router.patch(
+  "/user/:userId/:status",
+  verifyToken,
+  verifyRole(["admin"]),
+  (req, res) => adminUserManagementController.verifyUserStatus(req, res),
+);
 
-router.patch('/lawyer/:lawyerId/:status',verifyToken,verifyRole(['admin']),(req,res)=>adminLawyerManagementController.verifyLawyerStatus(req,res))
+router.post(
+  "/add-specialization",
+  verifyToken,
+  verifyRole(["admin"]),
+  (req, res) => adminSpecializationController.addSpecialization(req, res),
+);
 
-router.patch('/user/:userId/:status',verifyToken,verifyRole(['admin']),(req,res)=>adminUserManagementController.verifyUserStatus(req,res))
+router.get(
+  "/get-specialization/:startIndex/:limit",
+  verifyToken,
+  verifyRole(["admin"]),
+  (req, res) => adminSpecializationController.getSpecialization(req, res),
+);
 
-router.post('/add-specialization',verifyToken,verifyRole(['admin']),(req,res)=>adminSpecializationController.addSpecialization(req,res))
+router.post(
+  "/edit-specialization",
+  verifyToken,
+  verifyRole(["admin"]),
+  (req, res) => adminSpecializationController.editSpecialization(req, res),
+);
 
-router.get('/get-specialization',verifyToken,verifyRole(['admin']),(req,res)=>adminSpecializationController.getSpecialization(req,res))
+router.post(
+  "/delete-specialization/:specId",
+  verifyToken,
+  verifyRole(["admin"]),
+  (req, res) =>
+    adminSpecializationController.DeleteSpecializationApplication(req, res),
+);
 
-router.post('/edit-specialization',verifyToken,verifyRole(['admin']),(req,res)=>adminSpecializationController.editSpecialization(req,res))
+router.get(
+  "/get-appointments/:appointmentStatus/:startIndex/:limit",
+  verifyToken,
+  verifyRole(["admin"]),
+  (req, res) => adminController.getAppointments(req, res),
+);
 
-router.post('/delete-specialization/:specId',verifyToken,verifyRole(['admin']),(req,res)=>adminSpecializationController.DeleteSpecializationApplication(req,res))
+router.get(
+  "/reported-accounts/:userType/:startIndex/:limit",
+  verifyToken,
+  verifyRole(["admin"]),
+  (req, res) => adminController.getReportedAccounts(req, res),
+);
 
-router.get('/get-appointments/:appointmentStatus',verifyToken,verifyRole(['admin']),(req,res)=>adminController.getAppointments(req,res))
+router.post(
+  "/update-reportedAccount-status/:reportedAccountId",
+  verifyToken,
+  verifyRole(["admin"]),
+  (req, res) => adminController.updateReportedAccountStatus(req, res),
+);
 
-router.get('/reported-accounts/:userType',verifyToken,verifyRole(['admin']),(req,res)=>adminController.getReportedAccounts(req,res))
+router.post("/add-plan", verifyToken, verifyRole(["admin"]), (req, res) =>
+  adminController.addPlan(req, res),
+);
 
-router.post('/update-reportedAccount-status/:reportedAccountId',verifyToken,verifyRole(['admin']),(req,res)=>adminController.updateReportedAccountStatus(req,res))
+router.put(
+  "/edit-plan/:planId",
+  verifyToken,
+  verifyRole(["admin"]),
+  (req, res) => adminController.editPlan(req, res),
+);
 
-router.post('/add-plan',verifyToken,verifyRole(['admin']),(req,res)=>adminController.addPlan(req,res))
+router.post(
+  "/manage-plan-status/:planId/:status",
+  verifyToken,
+  verifyRole(["admin"]),
+  (req, res) => adminController.managePlanStatus(req, res),
+);
 
-router.put('/edit-plan/:planId',verifyToken,verifyRole(['admin']),(req,res)=>adminController.editPlan(req,res))
+router.post(
+  "/delete-plan/:planId",
+  verifyToken,
+  verifyRole(["admin"]),
+  (req, res) => adminController.DeletePlanUseCase(req, res),
+);
 
-router.post('/manage-plan-status/:planId/:status',verifyToken,verifyRole(['admin']),(req,res)=>adminController.managePlanStatus(req,res))
+router.get("/plans", verifyToken, verifyRole(["admin"]), (req, res) =>
+  adminController.getPlans(req, res),
+);
 
-router.post('/delete-plan/:planId',verifyToken,verifyRole(['admin']),(req,res)=>adminController.DeletePlanUseCase(req,res))
+router.get(
+  "/search-user/:name",
+  verifyToken,
+  verifyRole(["admin"]),
+  (req, res) => adminUserManagementController.searchUser(req, res),
+);
 
-router.get('/plans',verifyToken,verifyRole(['admin']),(req,res)=>adminController.getPlans(req,res))
+router.get(
+  "/search-lawyer/:name",
+  verifyToken,
+  verifyRole(["admin"]),
+  (req, res) => adminLawyerManagementController.searchLawyer(req, res),
+);
 
-router.get('/search-user/:name',verifyToken,verifyRole(['admin']),(req,res)=>adminUserManagementController.searchUser(req,res))
+router.get(
+  "/filter-user/:status",
+  verifyToken,
+  verifyRole(["admin"]),
+  (req, res) => adminUserManagementController.filterUser(req, res),
+);
 
-router.get('/search-lawyer/:name',verifyToken,verifyRole(['admin']),(req,res)=>adminLawyerManagementController.searchLawyer(req,res))
+router.get(
+  "/filter-lawyer/:status",
+  verifyToken,
+  verifyRole(["admin"]),
+  (req, res) => adminLawyerManagementController.filterLawyer(req, res),
+);
 
-router.get('/filter-user/:status',verifyToken,verifyRole(['admin']),(req,res)=>adminUserManagementController.filterUser(req,res))
+router.get(
+  "/get-user-profile/:userId",
+  verifyToken,
+  verifyRole(["admin"]),
+  (req, res) => adminUserManagementController.getUserProfile(req, res),
+);
 
-router.get('/filter-lawyer/:status',verifyToken,verifyRole(['admin']),(req,res)=>adminLawyerManagementController.filterLawyer(req,res))
+router.get(
+  "/get-lawyer-profile/:lawyerId",
+  verifyToken,
+  verifyRole(["admin"]),
+  (req, res) => adminLawyerManagementController.getLawyerProfile(req, res),
+);
 
-router.get('/get-user-profile/:userId',verifyToken,verifyRole(['admin']),(req,res)=>adminUserManagementController.getUserProfile(req,res))
+router.get(
+  "/get-summary-report",
+  verifyToken,
+  verifyRole(["admin"]),
+  (req, res) => adminController.getSummaryReport(req, res),
+);
 
-router.get('/get-lawyer-profile/:lawyerId',verifyToken,verifyRole(['admin']),(req,res)=>adminLawyerManagementController.getLawyerProfile(req,res))
-
-router.get('/get-summary-report',verifyToken,verifyRole(['admin']),(req,res)=>adminController.getSummaryReport(req,res))
-
-router.get('/get-reports',verifyToken,verifyRole(['admin']),(req,res)=>adminController.getReports(req,res))
+router.get(
+  "/get-reports/:revenueDateRange/:specializationType",
+  verifyToken,
+  verifyRole(["admin"]),
+  (req, res) => adminController.getReports(req, res),
+);
 
 export default router;

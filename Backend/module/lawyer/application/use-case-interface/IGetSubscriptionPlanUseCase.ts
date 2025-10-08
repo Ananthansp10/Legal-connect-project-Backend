@@ -1,6 +1,5 @@
-import { IPlansEntity } from "../../../admin/domain/entity/plansEntity";
+import { PlansResponseDto } from "../../domain/dtos/plansDto";
 
-
-export interface IGetSubscriptionPlanUseCase{
-    execute():Promise<IPlansEntity[] | null>;
+export interface IGetSubscriptionPlanUseCase {
+  execute(): Promise<PlansResponseDto[] | null>;
 }

@@ -3,14 +3,22 @@ import { IBankDetailsRepository } from "../repositoryInterface/IBankDetailsRepos
 import { bankDetailsModel } from "../models/bankDetails";
 import { BankDetailsDto } from "../../domain/dtos/bankDetailsDto";
 
+export class BankDetailsRepository implements IBankDetailsRepository {
+  async addBankDetails(
+    lawyerId: Types.ObjectId,
+    contactId: string,
+    fundAccountId: string,
+  ): Promise<void> {
+    await bankDetailsModel.create({
+      lawyerId: lawyerId,
+      contactId: contactId,
+      fundAccountId: fundAccountId,
+    });
+  }
 
-export class BankDetailsRepository implements IBankDetailsRepository{
-
-    async addBankDetails(lawyerId: Types.ObjectId, contactId: string, fundAccountId: string): Promise<void> {
-        await bankDetailsModel.create({lawyerId:lawyerId,contactId:contactId,fundAccountId:fundAccountId})
-    }
-
-    async findBankDetails(lawyerId: Types.ObjectId): Promise<BankDetailsDto | null> {
-        return await bankDetailsModel.findOne({lawyerId:lawyerId})
-    }
+  async findBankDetails(
+    lawyerId: Types.ObjectId,
+  ): Promise<BankDetailsDto | null> {
+    return await bankDetailsModel.findOne({ lawyerId: lawyerId });
+  }
 }

@@ -3,17 +3,29 @@ import { IReportedAccountsRepository } from "../../infrastructure/repositoryInte
 import { ReportedAccountsMapper } from "../mapper/reportedAccountsMapper";
 import { IGetReportedAccountsUseCase } from "../use-case-interface/IGetReportedAccountsUseCase";
 
+export class GetReportedAccountsUseCase implements IGetReportedAccountsUseCase {
+  constructor(private _reportedAccountsRepo: IReportedAccountsRepository) {}
 
-export class GetReportedAccountsUseCase implements IGetReportedAccountsUseCase{
-
-    constructor(
-        private _reportedAccountsRepo:IReportedAccountsRepository
-    ){}
-
-    async execute(userType: string): Promise<ReportAccountDto[] | null> {
-        console.log(userType)
-        let reportedAccounts=await this._reportedAccountsRepo.findReportedAccounts(userType)
-        console.log(reportedAccounts)
-        return await ReportedAccountsMapper.toResponse(reportedAccounts,this._reportedAccountsRepo)
-    }
+  async execute(
+    userType: string,
+    startIndex: number,
+    limit: number,
+  ): Promise<{
+    reportedAccounts: ReportAccountDto[] | null;
+    totalReportedAccounts: number;
+  } | null> {
+    const reportedAccounts =
+      await this._reportedAccountsRepo.findReportedAccounts(
+        userType,
+        startIndex,
+        limit,
+      );
+    return {
+      reportedAccounts: await ReportedAccountsMapper.toResponse(
+        reportedAccounts.reportedAccounts || [],
+        this._reportedAccountsRepo,
+      ),
+      totalReportedAccounts: reportedAccounts.totalReportedAccounts,
+    };
+  }
 }

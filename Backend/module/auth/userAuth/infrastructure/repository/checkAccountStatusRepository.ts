@@ -1,12 +1,13 @@
 import { IUserSignup } from "../../domain/userRegisterEntity";
 import { ICheckAccoutStatusRepository } from "../repositoryInterface/ICheckAccountStatusRepository";
-import { UserModel } from "../models/userSignupModel";
+import { userModel } from "../models/userSignupModel";
 import { BaseRepository } from "./baseRepository";
 
-
-export class CheckAccountStatusRepository extends BaseRepository<IUserSignup> implements ICheckAccoutStatusRepository{
-
-    constructor(){
-        super(UserModel)
-    }
+export class CheckAccountStatusRepository
+  extends BaseRepository<IUserSignup>
+  implements ICheckAccoutStatusRepository
+{
+  constructor() {
+    super(userModel);
+  }
 }

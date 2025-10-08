@@ -1,6 +1,5 @@
-import { ReportData } from "../../infrastructure/repositoryInterface/IReportReposiitory";
+import { ReportDataRequestDto as ReportDataRequestDto } from "../../infrastructure/repositoryInterface/IReportReposiitory";
 
-
-export interface IReportLawyerUseCase{
-    execute(data:ReportData):Promise<void>;
+export interface IReportLawyerUseCase {
+  execute(data: ReportDataRequestDto): Promise<void>;
 }

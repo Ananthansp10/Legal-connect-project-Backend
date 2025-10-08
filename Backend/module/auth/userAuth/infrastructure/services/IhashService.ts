@@ -1,6 +1,3 @@
-
-
-export interface IHashService{
-
-    hash(data:string):Promise<string>;
+export interface IHashService {
+  hash(data: string): Promise<string>;
 }

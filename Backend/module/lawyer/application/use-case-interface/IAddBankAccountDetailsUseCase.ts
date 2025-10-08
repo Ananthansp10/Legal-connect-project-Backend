@@ -1,6 +1,5 @@
-import { BankDetailsEntity } from "../../domain/entity/BankDetailsEntity";
+import { BankDetailsRequestDto } from "../../domain/dtos/bankDetailsDto";
 
-
-export interface IAddBankAccountDetailsUseCase{
-    execute(data:BankDetailsEntity):Promise<void>;
+export interface IAddBankAccountDetailsUseCase {
+  execute(data: BankDetailsRequestDto): Promise<void>;
 }

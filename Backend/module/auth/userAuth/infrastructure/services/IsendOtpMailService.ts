@@ -1,5 +1,3 @@
-
-
-export interface ISendOtpMailService{
-    sendOtpMail(to:string,otp:string):Promise<void>;
+export interface ISendOtpMailService {
+  sendOtpMail(to: string, otp: string): Promise<void>;
 }

@@ -1,47 +1,69 @@
 import { Types } from "mongoose";
 import { IAppointmentEntity } from "../../domain/entity/appointmentEntity";
 import { IAppointmentRepository } from "../../infrastructure/repositoryInterface/IAppointmentRepository";
-import { AppointmentsData, IGetAppointmentUseCase } from "../use-case-interface/IGetAppointmentUseCase";
+import {
+  AppointmentsData,
+  IGetAppointmentUseCase,
+} from "../use-case-interface/IGetAppointmentUseCase";
 
+export class GetAppointmentUseCase implements IGetAppointmentUseCase {
+  constructor(private _appointmentRepository: IAppointmentRepository) {}
 
-export class GetAppointmentUseCase implements IGetAppointmentUseCase{
+  async execute(
+    userId: Types.ObjectId,
+    appointmentStatus: string,
+    startIndex: number,
+    limit: number,
+  ): Promise<{
+    appointments: AppointmentsData[];
+    totalAppointments: number;
+  } | null> {
+    const appointments =
+      await this._appointmentRepository.findAppointmentByUserId(
+        userId,
+        appointmentStatus,
+        startIndex,
+        limit,
+      );
 
-    constructor(
-        private _appointmentRepository:IAppointmentRepository
-    ){}
+    if (!appointments || appointments.appointments.length == 0) return null;
 
-   async execute(userId: Types.ObjectId,appointmentStatus:string,startIndex:number,limit:number): Promise<{appointments:AppointmentsData[],totalAppointments:number} | null> {
-  let appointments = await this._appointmentRepository.findAppointmentByUserId(userId,appointmentStatus,startIndex,limit);
+    const appointmentDetails = await Promise.all(
+      appointments.appointments.map(async (appointment) => {
+        const lawyerDetails =
+          await this._appointmentRepository.findLawyerDetails(
+            appointment.lawyerId,
+          );
 
-  if (!appointments || appointments.appointments.length==0) return null;
+        const lawyerData = {
+          _id: lawyerDetails?.lawyerId!,
+          name: lawyerDetails?.personalInfo.name!,
+          specialization: lawyerDetails?.proffessionalInfo.practiceAreas!,
+          profileImage: lawyerDetails?.personalInfo.profileImage!,
+          fee: lawyerDetails?.proffessionalInfo.fee!,
+        };
 
-  let appointmentDetails = await Promise.all(
-    appointments.appointments.map(async (appointment) => {
-      let lawyerDetails = await this._appointmentRepository.findLawyerDetails(appointment.lawyerId);
+        return {
+          _id: appointment._id!,
+          lawyer: lawyerData!,
+          date: appointment.date,
+          time: appointment.time,
+          mode: appointment.consultationMode,
+          status: appointment.appointmentStatus,
+          payment: appointment?.payment ? appointment.payment : "",
+          problem: appointment.problem,
+          fee: appointment.fee,
+          paymentDate: appointment.paymentDate,
+          meetStart: appointment.meetStart,
+          note: appointment.notes,
+          caseId: appointment.caseId,
+        };
+      }),
+    );
 
-      let lawyerData = {
-        _id:lawyerDetails?.lawyerId!,
-        name: lawyerDetails?.personalInfo.name!,
-        specialization: lawyerDetails?.proffessionalInfo.practiceAreas!,
-        profileImage: lawyerDetails?.personalInfo.profileImage!,
-        fee:lawyerDetails?.proffessionalInfo.fee!
-      };
-
-      return {
-        _id:appointment._id!,
-        lawyer: lawyerData!,
-        date: appointment.date,
-        time: appointment.time,
-        mode: appointment.consultationMode,
-        status: appointment.appointmentStatus,
-        payment:appointment?.payment ? appointment.payment : '',
-        problem:appointment.problem,
-        fee:appointment.fee,
-        paymentDate:appointment.paymentDate
-      };
-    })
-  );
-
-  return {appointments:appointmentDetails,totalAppointments:appointments.totalAppointments};
-}
+    return {
+      appointments: appointmentDetails,
+      totalAppointments: appointments.totalAppointments,
+    };
+  }
 }
