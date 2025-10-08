@@ -1,7 +1,7 @@
 import mongoose, { Schema } from "mongoose";
-import { UserProfileEntitie } from "../../domain/entity/userProfileUserEntity";
+import { IUserProfileEntitie } from "../../domain/entity/userProfileUserEntity";
 
-const userProfileSchema = new Schema<UserProfileEntitie>({
+const userProfileSchema = new Schema<IUserProfileEntitie>({
   userId: {
     type: Schema.Types.ObjectId,
     ref: "users",
@@ -40,7 +40,7 @@ const userProfileSchema = new Schema<UserProfileEntitie>({
   },
 });
 
-export const userProfileModel = mongoose.model<UserProfileEntitie>(
+export const userProfileModel = mongoose.model<IUserProfileEntitie>(
   "userProfile",
   userProfileSchema,
 );

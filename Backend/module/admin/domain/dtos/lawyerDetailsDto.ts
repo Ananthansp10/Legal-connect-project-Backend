@@ -1,4 +1,4 @@
-export interface LawyerDetailsDto {
+export interface ILawyerDetailsDto {
   name: string;
   specialization: string;
   plan: string;

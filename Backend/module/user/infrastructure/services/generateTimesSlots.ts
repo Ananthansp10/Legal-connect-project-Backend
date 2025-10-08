@@ -18,18 +18,18 @@ export async function generateSlots(
 ) {
   const { startTime, endTime, breakTimes, days } = rule;
 
-  interface SlotData {
+  interface ISlotData {
     startTime: string;
     endTime: string;
     isBooked: boolean;
   }
 
-  interface BreakTimeData {
+  interface IBreakTimeData {
     startTime: string;
     endTime: string;
   }
 
-  let slots: SlotData[] = [];
+  let slots: ISlotData[] = [];
 
   const dayOfWeek = dayjs(date).format("ddd").toLowerCase();
   if (!days.includes(dayOfWeek)) {
@@ -42,7 +42,7 @@ export async function generateSlots(
   while (start.add(30, "minute").isSameOrBefore(end)) {
     let slotEnd = start.add(30, "minute");
 
-    let isInBreak = breakTimes?.some((breakObj: BreakTimeData) => {
+    let isInBreak = breakTimes?.some((breakObj: IBreakTimeData) => {
       let breakStart = dayjs(breakObj.startTime, "h:mm A");
       let breakEnd = dayjs(breakObj.endTime, "h:mm A");
 
@@ -65,7 +65,7 @@ export async function generateSlots(
 
       start = slotEnd.add(15, "minute");
     } else {
-      let overlappingBreak = breakTimes.find((b: BreakTimeData) => {
+      let overlappingBreak = breakTimes.find((b: IBreakTimeData) => {
         let breakStart = dayjs(b.startTime, "h:mm A");
         let breakEnd = dayjs(b.endTime, "h:mm A");
         return start.isBefore(breakEnd) && slotEnd.isAfter(breakStart);

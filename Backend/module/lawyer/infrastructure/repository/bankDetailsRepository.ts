@@ -1,7 +1,7 @@
 import { Types } from "mongoose";
 import { IBankDetailsRepository } from "../repositoryInterface/IBankDetailsRepository";
 import { bankDetailsModel } from "../models/bankDetails";
-import { BankDetailsDto } from "../../domain/dtos/bankDetailsDto";
+import { IBankDetailsDto } from "../../domain/dtos/bankDetailsDto";
 
 export class BankDetailsRepository implements IBankDetailsRepository {
   async addBankDetails(
@@ -18,7 +18,7 @@ export class BankDetailsRepository implements IBankDetailsRepository {
 
   async findBankDetails(
     lawyerId: Types.ObjectId,
-  ): Promise<BankDetailsDto | null> {
+  ): Promise<IBankDetailsDto | null> {
     return await bankDetailsModel.findOne({ lawyerId: lawyerId });
   }
 }

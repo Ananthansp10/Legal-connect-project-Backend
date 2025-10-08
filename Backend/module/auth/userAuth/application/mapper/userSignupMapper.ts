@@ -1,11 +1,11 @@
 import {
-  UserSignupRequestDto,
-  UserSignupResponseDto,
+  IUserSignupRequestDto,
+  IUserSignupResponseDto,
 } from "../../domain/dto/userSignupDto";
 import { IUserSignup } from "../../domain/userRegisterEntity";
 
 export class UserSignupMapper {
-  static toRequest(data: IUserSignup): UserSignupRequestDto {
+  static toRequest(data: IUserSignup): IUserSignupRequestDto {
     return {
       name: data.name,
       email: data.email,
@@ -16,7 +16,7 @@ export class UserSignupMapper {
     };
   }
 
-  static toResponse(data: IUserSignup): UserSignupResponseDto {
+  static toResponse(data: IUserSignup): IUserSignupResponseDto {
     return {
       _id: data._id!,
       name: data.name,

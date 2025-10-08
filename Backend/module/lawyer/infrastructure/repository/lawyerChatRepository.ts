@@ -1,7 +1,7 @@
 import { Types } from "mongoose";
-import { IChatEntity, Messages } from "../../../user/domain/entity/chatEntity";
+import { IChatEntity, IMessages } from "../../../user/domain/entity/chatEntity";
 import { ILawyerChatRepository } from "../repositoryInterface/ILawyerChatRepository";
-import { UserProfileEntitie } from "../../../user/domain/entity/userProfileUserEntity";
+import { IUserProfileEntitie } from "../../../user/domain/entity/userProfileUserEntity";
 import { chatModel } from "../../../user/infrastructure/models/chatModel";
 import { userProfileModel } from "../../../user/infrastructure/models/userProfileModel";
 
@@ -13,7 +13,7 @@ export class LawyerChatRepository implements ILawyerChatRepository {
   async findChat(
     lawyerId: Types.ObjectId,
     userId: Types.ObjectId,
-  ): Promise<Messages[] | null> {
+  ): Promise<IMessages[] | null> {
     const chat = await chatModel.findOne({
       participants: { $all: [lawyerId, userId] },
     });
@@ -27,7 +27,7 @@ export class LawyerChatRepository implements ILawyerChatRepository {
   async addMesssage(
     lawyerId: Types.ObjectId,
     userId: Types.ObjectId,
-    message: Messages,
+    message: IMessages,
   ): Promise<void> {
     await chatModel.updateOne(
       { participants: { $all: [lawyerId, userId] } },
@@ -37,7 +37,7 @@ export class LawyerChatRepository implements ILawyerChatRepository {
 
   async findUserDetails(
     userId: Types.ObjectId,
-  ): Promise<UserProfileEntitie | null> {
+  ): Promise<IUserProfileEntitie | null> {
     return await userProfileModel.findOne({ userId: userId });
   }
 

@@ -5,7 +5,7 @@ import { lawyerProfileModel } from "../../../lawyer/infrastructure/models/lawyer
 import { ILawyerSignup } from "../../domain/entity/lawyerEntity";
 import { ILawyerRepository } from "../repositoryInterface/ILawyerRepository";
 import { BaseRepository } from "./baseRepository";
-import { LawyerProfileEntity } from "../../../lawyer/domain/entity/lawyerProfileEntity";
+import { ILawyerProfileEntity } from "../../../lawyer/domain/entity/lawyerProfileEntity";
 
 export class LawyerRepository
   extends BaseRepository<ILawyerSignup>
@@ -43,7 +43,7 @@ export class LawyerRepository
 
   async getLawyerDetails(
     lawyerId: Types.ObjectId,
-  ): Promise<LawyerProfileEntity | null> {
+  ): Promise<ILawyerProfileEntity | null> {
     return await lawyerProfileModel.findOne({ lawyerId: lawyerId });
   }
 }

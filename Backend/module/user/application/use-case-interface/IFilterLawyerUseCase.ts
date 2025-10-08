@@ -1,5 +1,5 @@
-import { getLawyerResponse } from "../mapper/getLawyerMapper";
+import { IGetLawyerResponse } from "../mapper/getLawyerMapper";
 
 export interface IFilterLawyerUseCase {
-  execute(specialization: string): Promise<getLawyerResponse[] | null>;
+  execute(specialization: string): Promise<IGetLawyerResponse[] | null>;
 }

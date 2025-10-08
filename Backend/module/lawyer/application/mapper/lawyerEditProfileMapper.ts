@@ -1,6 +1,6 @@
 import { Types } from "mongoose";
 
-export interface LawyerEditProfileRequest {
+export interface ILawyerEditProfileRequest {
   lawyerId: Types.ObjectId;
   name: string;
   email: string;
@@ -16,7 +16,7 @@ export interface LawyerEditProfileRequest {
   fee: number;
 }
 
-export interface LawyerEditProfileResponse {
+export interface ILawyerEditProfileResponse {
   name: string;
   email: string;
   phoneNumber: string;
@@ -34,9 +34,9 @@ export interface LawyerEditProfileResponse {
 
 export class EditLawyerProfileMapper {
   static async toResponse(
-    data: LawyerEditProfileRequest,
+    data: ILawyerEditProfileRequest,
     imageUrl: string,
-  ): Promise<LawyerEditProfileResponse> {
+  ): Promise<ILawyerEditProfileResponse> {
     return {
       name: data.name,
       email: data.email,

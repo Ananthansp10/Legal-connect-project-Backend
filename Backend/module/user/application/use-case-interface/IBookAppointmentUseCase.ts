@@ -1,5 +1,5 @@
-import { AppointmentRequestDto } from "../../domain/dtos/appointmentDto";
+import { IAppointmentRequestDto } from "../../domain/dtos/appointmentDto";
 
 export interface IBookAppointmentUseCase {
-  execute(data: AppointmentRequestDto, caseId: string): Promise<void>;
+  execute(data: IAppointmentRequestDto, caseId: string): Promise<void>;
 }

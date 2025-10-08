@@ -1,8 +1,7 @@
 import { Types } from "mongoose";
-import { LawyerProfileDataDto } from "../../domain/dtos/lawyerProfileDataDto";
+import { ILawyerProfileDataDto } from "../../domain/dtos/lawyerProfileDataDto";
 import { ILawyerRepository } from "../../infrastructure/repositoryInterface/ILawyerRepository";
 import { IGetLawyerProfileDataUseCase } from "../use-case-interface/IGetLawyerProfileUseCase";
-import { Certificate } from "node:crypto";
 
 export class GetLawyerProfileDataUseCase
   implements IGetLawyerProfileDataUseCase
@@ -11,7 +10,7 @@ export class GetLawyerProfileDataUseCase
 
   async execute(
     lawyerId: Types.ObjectId,
-  ): Promise<LawyerProfileDataDto | null> {
+  ): Promise<ILawyerProfileDataDto | null> {
     const lawyerProfileDetails =
       await this._lawyerRepo.getLawyerDetails(lawyerId);
     if (!lawyerProfileDetails) {

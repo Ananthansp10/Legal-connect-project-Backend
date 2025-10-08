@@ -1,6 +1,6 @@
 import { Types } from "mongoose";
 import { IAppointmentEntity } from "../../domain/entity/appointmentEntity";
-import { LawyerProfileEntity } from "../../../lawyer/domain/entity/lawyerProfileEntity";
+import { ILawyerProfileEntity } from "../../../lawyer/domain/entity/lawyerProfileEntity";
 
 export interface IAppointmentRepository {
   findAppointmentByUserId(
@@ -14,7 +14,7 @@ export interface IAppointmentRepository {
   } | null>;
   findLawyerDetails(
     lawyerId: Types.ObjectId,
-  ): Promise<LawyerProfileEntity | null>;
+  ): Promise<ILawyerProfileEntity | null>;
   updatePayment(
     appointmentId: Types.ObjectId,
     status: string,

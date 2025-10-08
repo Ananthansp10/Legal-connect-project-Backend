@@ -1,14 +1,14 @@
-import { UserProfileEntitie } from "../../domain/entity/userProfileUserEntity";
+import { IUserProfileEntitie } from "../../domain/entity/userProfileUserEntity";
 import { IUserProfileRepository } from "../../infrastructure/repositoryInterface/IUserProfileRepository";
 import { IAddProfileUseCase } from "../use-case-interface/IAddProfileUseCase";
-import { UserProfile, UserProfileMapper } from "../mapper/userProfileMapper";
+import { IUserProfile, UserProfileMapper } from "../mapper/userProfileMapper";
 
 export class AddProfileUseCase implements IAddProfileUseCase {
   constructor(private _userProfileRepo: IUserProfileRepository) {}
 
-  async execute(data: UserProfile, imageUrl: string): Promise<void> {
+  async execute(data: IUserProfile, imageUrl: string): Promise<void> {
     try {
-      const profileData: UserProfileEntitie = UserProfileMapper.toRequest(
+      const profileData: IUserProfileEntitie = UserProfileMapper.toRequest(
         data,
         imageUrl,
       );

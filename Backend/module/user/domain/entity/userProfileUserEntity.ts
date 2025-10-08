@@ -1,6 +1,6 @@
 import { Types } from "mongoose";
 
-export interface Address {
+export interface IAddress {
   street: string;
   city: string;
   state: string;
@@ -8,7 +8,7 @@ export interface Address {
   zipCode: string;
 }
 
-export interface UserProfileEntitie {
+export interface IUserProfileEntitie {
   id?: Types.ObjectId;
   userId: Types.ObjectId;
   name: string;
@@ -19,5 +19,5 @@ export interface UserProfileEntitie {
   proffession: string;
   company: string;
   profileImage: string;
-  address: Address;
+  address: IAddress;
 }

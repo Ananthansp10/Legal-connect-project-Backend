@@ -1,21 +1,21 @@
-import { CountryChartDto } from "./countryChartDto";
-import { RevenueChartDto } from "./revenueChartDto";
-import { SpecializationData } from "./specializationChartDto";
-import { StateChartDto } from "./stateChartDto";
-import { TopLawyersDto } from "./topLawyersDto";
-import { TopUserssDto } from "./topUsersDto";
-import { WeeklyAppointmentsDto } from "./weeklyAppointmentDto";
+import { ICountryChartDto } from "./countryChartDto";
+import { IRevenueChartDto } from "./revenueChartDto";
+import { ISpecializationData } from "./specializationChartDto";
+import { IStateChartDto } from "./stateChartDto";
+import { ITopLawyersDto } from "./topLawyersDto";
+import { ITopUserssDto } from "./topUsersDto";
+import { IWeeklyAppointmentsDto } from "./weeklyAppointmentDto";
 
-export interface SummaryReportDto {
+export interface ISummaryReportDto {
   totalUsers: number;
   totalLawyers: number;
   todaysAppointments: number;
   pendingVerification: number;
-  revenueChart: RevenueChartDto[];
-  weeklyAppointments: WeeklyAppointmentsDto[];
-  specializationChart: SpecializationData[];
-  topLawyers: TopLawyersDto[];
-  topUsers: TopUserssDto[];
-  stateChart: StateChartDto[];
-  countryChart: CountryChartDto[];
+  revenueChart: IRevenueChartDto[];
+  weeklyAppointments: IWeeklyAppointmentsDto[];
+  specializationChart: ISpecializationData[];
+  topLawyers: ITopLawyersDto[];
+  topUsers: ITopUserssDto[];
+  stateChart: IStateChartDto[];
+  countryChart: ICountryChartDto[];
 }

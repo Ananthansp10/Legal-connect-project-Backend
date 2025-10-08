@@ -1,18 +1,18 @@
-import { LawyerProfileEntity } from "../../../lawyer/domain/entity/lawyerProfileEntity";
+import { ILawyerProfileEntity } from "../../../lawyer/domain/entity/lawyerProfileEntity";
 import { IGetLawyerRepository } from "../../infrastructure/repositoryInterface/IGetLawyerRepository";
-import { getLawyerResponse } from "../mapper/getLawyerMapper";
+import { IGetLawyerResponse } from "../mapper/getLawyerMapper";
 import { GetLawyerMapper } from "../mapper/getLawyerMapper";
 import { IGetLawyerUseCase } from "../use-case-interface/IGetLawyersUseCase";
 
 export class GetLawyerUseCase implements IGetLawyerUseCase {
   constructor(private _getLawyerRepo: IGetLawyerRepository) {}
 
-  async execute(): Promise<getLawyerResponse[] | null> {
+  async execute(): Promise<IGetLawyerResponse[] | null> {
     try {
-      const lawyer: LawyerProfileEntity[] | null =
+      const lawyer: ILawyerProfileEntity[] | null =
         await this._getLawyerRepo.findAll();
 
-      let response: getLawyerResponse[] = [];
+      let response: IGetLawyerResponse[] = [];
 
       if (lawyer) {
         response = GetLawyerMapper.toResponse(lawyer);

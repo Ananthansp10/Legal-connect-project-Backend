@@ -1,6 +1,6 @@
 import { Types } from "mongoose";
 
-export interface RazorpayOrder {
+export interface IRazorpayOrder {
   orderId: string;
   amount: number;
   currency: string;
@@ -11,5 +11,5 @@ export interface ICreateRazorpayOrderUseCase {
     appointmentId: Types.ObjectId,
     fee: number,
     lawyerId: Types.ObjectId,
-  ): Promise<RazorpayOrder>;
+  ): Promise<IRazorpayOrder>;
 }

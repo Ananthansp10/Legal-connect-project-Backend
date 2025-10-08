@@ -1,10 +1,10 @@
 import { Types } from "mongoose";
-import { BankEntity } from "../../domain/entity/bankEntity";
+import { IBankEntity } from "../../domain/entity/bankEntity";
 import { IBankDetailsRepository } from "../repositoryInterface/IBankDetailsRepository";
 import { bankDetailsModel } from "../../../lawyer/infrastructure/models/bankDetails";
 
 export class BankDetailsRepository implements IBankDetailsRepository {
-  async findBankDetails(lawyerId: Types.ObjectId): Promise<BankEntity | null> {
+  async findBankDetails(lawyerId: Types.ObjectId): Promise<IBankEntity | null> {
     return await bankDetailsModel.findOne({ lawyerId: lawyerId });
   }
 }

@@ -1,6 +1,6 @@
 import { Types } from "mongoose";
 
-export interface TodaysAppointmentResponseDataDto {
+export interface ITodaysAppointmentResponseDataDto {
   _id: Types.ObjectId;
   name: string;
   profileImage: string;
@@ -13,5 +13,5 @@ export interface TodaysAppointmentResponseDataDto {
 export interface IGetTodaysAppointmentsUseCase {
   execute(
     userId: Types.ObjectId,
-  ): Promise<TodaysAppointmentResponseDataDto[] | []>;
+  ): Promise<ITodaysAppointmentResponseDataDto[] | []>;
 }

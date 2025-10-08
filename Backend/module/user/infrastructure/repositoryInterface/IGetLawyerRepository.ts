@@ -1,12 +1,12 @@
-import { LawyerProfileEntity } from "../../../lawyer/domain/entity/lawyerProfileEntity";
+import { ILawyerProfileEntity } from "../../../lawyer/domain/entity/lawyerProfileEntity";
 import { IBaseRepository } from "./IbaseRepository";
 
 export interface IGetLawyerRepository
-  extends IBaseRepository<LawyerProfileEntity> {
-  getLawyers(): Promise<LawyerProfileEntity[]>;
-  getLawyerById(lawyerId: string): Promise<LawyerProfileEntity | null>;
+  extends IBaseRepository<ILawyerProfileEntity> {
+  getLawyers(): Promise<ILawyerProfileEntity[]>;
+  getLawyerById(lawyerId: string): Promise<ILawyerProfileEntity | null>;
   getLawyerBySpecialization(
     specialization: string,
-  ): Promise<LawyerProfileEntity[] | null>;
-  getLawyerByName(name: string): Promise<LawyerProfileEntity[] | null>;
+  ): Promise<ILawyerProfileEntity[] | null>;
+  getLawyerByName(name: string): Promise<ILawyerProfileEntity[] | null>;
 }

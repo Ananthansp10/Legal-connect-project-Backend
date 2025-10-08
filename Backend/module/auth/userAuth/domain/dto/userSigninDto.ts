@@ -1,4 +1,4 @@
-export interface UserSigninDto {
+export interface IUserSigninDto {
   userData: {
     id: string;
     name: string;

@@ -1,7 +1,7 @@
-import { SlotRequestDto } from "../../domain/dtos/slotDtos";
+import { ISlotRequestDto } from "../../domain/dtos/slotDtos";
 
 export class SlotMapper {
-  static toResponse(data: SlotRequestDto) {
+  static toResponse(data: ISlotRequestDto) {
     return {
       lawyerId: data.lawyerId,
       availablity: [

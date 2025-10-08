@@ -1,5 +1,5 @@
 import { Types } from "mongoose";
-import { Messages } from "../../domain/entity/chatEntity";
+import { IMessages } from "../../domain/entity/chatEntity";
 import { IChatRepository } from "../../infrastructure/repositoryInterface/IChatRepository";
 import { IAddChatUseCase } from "../use-case-interface/IAddChatUseCase";
 
@@ -9,7 +9,7 @@ export class AddChatUseCase implements IAddChatUseCase {
   async execute(
     userId: Types.ObjectId,
     lawyerId: Types.ObjectId,
-    message: Messages,
+    message: IMessages,
   ): Promise<void> {
     const findChatExist = await this._chatRepo.findChatConnection(
       userId,

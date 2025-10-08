@@ -1,9 +1,9 @@
 import { Types } from "mongoose";
-import { SlotAvailablityRequestDto } from "../../domain/dtos/slotAvailablityDto";
+import { ISlotAvailablityRequestDto } from "../../domain/dtos/slotAvailablityDto";
 
 export interface IAddSlotUseCase {
   execute(
     lawyerId: Types.ObjectId,
-    data: SlotAvailablityRequestDto,
+    data: ISlotAvailablityRequestDto,
   ): Promise<void>;
 }

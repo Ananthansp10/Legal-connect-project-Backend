@@ -2,7 +2,7 @@ import { Types } from "mongoose";
 import { IAppointmentEntity } from "../../domain/entity/appointmentEntity";
 import { IAppointmentRepository } from "../repositoryInterface/IAppointmentRepository";
 import { appointmentModel } from "../models/appointmentModel";
-import { LawyerProfileEntity } from "../../../lawyer/domain/entity/lawyerProfileEntity";
+import { ILawyerProfileEntity } from "../../../lawyer/domain/entity/lawyerProfileEntity";
 import { lawyerProfileModel } from "../../../lawyer/infrastructure/models/lawyerProfileModel";
 import { AppointmentStatus } from "../../../../common/status/appointmentStatus";
 import { PaymentStatus } from "../../../../common/status/paymentStatus";
@@ -68,7 +68,7 @@ export class AppointmentRepository implements IAppointmentRepository {
 
   async findLawyerDetails(
     lawyerId: Types.ObjectId,
-  ): Promise<LawyerProfileEntity | null> {
+  ): Promise<ILawyerProfileEntity | null> {
     return await lawyerProfileModel.findOne({ lawyerId: lawyerId });
   }
 

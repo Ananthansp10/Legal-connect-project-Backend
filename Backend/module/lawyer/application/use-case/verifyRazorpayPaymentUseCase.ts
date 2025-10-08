@@ -1,14 +1,14 @@
 import { AppException } from "../../../../common/error/errorException";
 import {
   IVerifyRazorpayPaymentUseCase,
-  RazorpayPaymentData,
+  IRazorpayPaymentData,
 } from "../use-case-interface/IVerifyRazorpayPaymentUseCase";
 import crypto from "crypto";
 
 export class VerifyRazorpayPaymentUseCase
   implements IVerifyRazorpayPaymentUseCase
 {
-  async execute(data: RazorpayPaymentData): Promise<void> {
+  async execute(data: IRazorpayPaymentData): Promise<void> {
     try {
       const { razorpay_order_id, razorpay_payment_id, razorpay_signature } =
         data;

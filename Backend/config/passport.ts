@@ -7,7 +7,7 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-interface User {
+interface IUser {
   googleId: string;
   name: string;
   email?: string;
@@ -27,7 +27,7 @@ export default passport.use(
       done: VerifyCallback,
     ) => {
       try {
-        const user: User = {
+        const user: IUser = {
           googleId: profile.id,
           name: profile.displayName,
           email: profile.emails?.[0]?.value,

@@ -1,7 +1,7 @@
 import { Types } from "mongoose";
 import {
   ICreateRazorpayOrderUseCase,
-  RazorpayOrder,
+  IRazorpayOrder,
 } from "../use-case-interface/ICreateRazorpayOrderUseCase";
 import { razorpay } from "../../../../config/razorpayConfig";
 import { IBankDetailsRepository } from "../../infrastructure/repositoryInterface/IBankDetailsRepository";
@@ -13,7 +13,7 @@ export class CreateRazorpayOrderUseCase implements ICreateRazorpayOrderUseCase {
     appointmentId: Types.ObjectId,
     fee: number,
     lawyerId: Types.ObjectId,
-  ): Promise<RazorpayOrder> {
+  ): Promise<IRazorpayOrder> {
     try {
       const lawyerBankDetails = await this._bankRepo.findBankDetails(lawyerId);
       let transfer;

@@ -25,15 +25,13 @@ export class AdminUserManagementController {
           parseInt(req.params.startIndex),
           parseInt(req.params.limit),
         );
-      res
-        .status(AppStatusCode.SUCCESS_CODE)
-        .json({
-          success: true,
-          message: "Data found successfully",
-          data: result.data,
-          totalData: result.totalData,
-        });
-    } catch (error) {
+      res.status(AppStatusCode.SUCCESS_CODE).json({
+        success: true,
+        message: "Data found successfully",
+        data: result.data,
+        totalData: result.totalData,
+      });
+    } catch (_error) {
       res
         .status(AppStatusCode.INTERNAL_ERROR_CODE)
         .json({ success: false, message: AppError.UNKNOWN_ERROR });
@@ -55,7 +53,7 @@ export class AdminUserManagementController {
           .status(AppStatusCode.SUCCESS_CODE)
           .json({ success: true, message: "User unblocked successfully" });
       }
-    } catch (error) {
+    } catch (_error) {
       res
         .status(AppStatusCode.INTERNAL_ERROR_CODE)
         .json({ success: false, message: AppError.UNKNOWN_ERROR });
@@ -65,14 +63,12 @@ export class AdminUserManagementController {
   async searchUser(req: Request, res: Response) {
     try {
       const result = await this._searchUserUseCase.execute(req.params.name);
-      res
-        .status(AppStatusCode.SUCCESS_CODE)
-        .json({
-          success: true,
-          message: "Search data found successfully",
-          data: result,
-        });
-    } catch (error) {
+      res.status(AppStatusCode.SUCCESS_CODE).json({
+        success: true,
+        message: "Search data found successfully",
+        data: result,
+      });
+    } catch (_error) {
       res
         .status(AppStatusCode.INTERNAL_ERROR_CODE)
         .json({ success: false, message: AppError.UNKNOWN_ERROR });
@@ -82,14 +78,12 @@ export class AdminUserManagementController {
   async filterUser(req: Request, res: Response) {
     try {
       const result = await this._filterUserUseCase.execute(req.params.status);
-      res
-        .status(AppStatusCode.SUCCESS_CODE)
-        .json({
-          success: true,
-          message: "Filtered data found successfully",
-          data: result,
-        });
-    } catch (error) {
+      res.status(AppStatusCode.SUCCESS_CODE).json({
+        success: true,
+        message: "Filtered data found successfully",
+        data: result,
+      });
+    } catch (_error) {
       res
         .status(AppStatusCode.INTERNAL_ERROR_CODE)
         .json({ success: false, message: AppError.UNKNOWN_ERROR });
@@ -101,14 +95,12 @@ export class AdminUserManagementController {
       const result = await this._getUserProfileDataUseCase.execute(
         new mongoose.Types.ObjectId(req.params.userId),
       );
-      res
-        .status(AppStatusCode.SUCCESS_CODE)
-        .json({
-          success: true,
-          message: "User profile found successfully",
-          data: result,
-        });
-    } catch (error) {
+      res.status(AppStatusCode.SUCCESS_CODE).json({
+        success: true,
+        message: "User profile found successfully",
+        data: result,
+      });
+    } catch (_error) {
       res
         .status(AppStatusCode.INTERNAL_ERROR_CODE)
         .json({ success: false, message: AppError.UNKNOWN_ERROR });

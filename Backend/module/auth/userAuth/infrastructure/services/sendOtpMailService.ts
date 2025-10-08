@@ -1,7 +1,7 @@
 import { ISendOtpMailService } from "./IsendOtpMailService";
 import { transporter } from "../../../../../config/nodemailerConfig";
 
-export class sendOtpMailService implements ISendOtpMailService {
+export class SendOtpMailService implements ISendOtpMailService {
   async sendOtpMail(to: string, otp: string): Promise<void> {
     const mailOptions = {
       from: `"LegalConnect" <${process.env.EMAIL}>`,

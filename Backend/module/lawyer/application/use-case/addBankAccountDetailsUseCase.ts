@@ -1,14 +1,14 @@
 import axios from "axios";
 import { IBankDetailsRepository } from "../../infrastructure/repositoryInterface/IBankDetailsRepository";
 import { IAddBankAccountDetailsUseCase } from "../use-case-interface/IAddBankAccountDetailsUseCase";
-import { BankDetailsRequestDto } from "../../domain/dtos/bankDetailsDto";
+import { IBankDetailsRequestDto } from "../../domain/dtos/bankDetailsDto";
 
 export class AddBankAccountDetailsUseCase
   implements IAddBankAccountDetailsUseCase
 {
   constructor(private _bankDetailsRepo: IBankDetailsRepository) {}
 
-  async execute(data: BankDetailsRequestDto): Promise<void> {
+  async execute(data: IBankDetailsRequestDto): Promise<void> {
     try {
       const keyId = process.env.RAZORPAY_KEY_ID;
       const keySecret = process.env.RAZORPAY_KEY_SECRET;
@@ -42,7 +42,7 @@ export class AddBankAccountDetailsUseCase
         },
         {
           headers: { Authorization: auth, "Content-Type": "application/json" },
-        }
+        },
       );
 
       console.log("Linked Account ID:", linkedAccount);
@@ -56,7 +56,7 @@ export class AddBankAccountDetailsUseCase
           type: "vendor",
           reference_id: linkedAccount.data.id,
         },
-        { headers: { Authorization: auth } }
+        { headers: { Authorization: auth } },
       );
 
       console.log("✅ Contact Created:", contact.data.id);
@@ -72,7 +72,7 @@ export class AddBankAccountDetailsUseCase
             account_number: data.bankAccountNumber,
           },
         },
-        { headers: { Authorization: auth } }
+        { headers: { Authorization: auth } },
       );
 
       console.log("✅ Fund Account Created:", fundAccount.data.id);
@@ -80,7 +80,7 @@ export class AddBankAccountDetailsUseCase
       await this._bankDetailsRepo.addBankDetails(
         data.lawyerId,
         linkedAccount.data.id,
-        fundAccount.data.id
+        fundAccount.data.id,
       );
     } catch (error: any) {
       console.error("Razorpay Error:", error.response?.data || error.message);

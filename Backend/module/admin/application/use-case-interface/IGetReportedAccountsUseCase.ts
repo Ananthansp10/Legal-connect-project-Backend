@@ -1,4 +1,4 @@
-import { ReportAccountDto } from "../../domain/dtos/reportAccountDto";
+import { IReportAccountDto } from "../../domain/dtos/reportAccountDto";
 
 export interface IGetReportedAccountsUseCase {
   execute(
@@ -6,7 +6,7 @@ export interface IGetReportedAccountsUseCase {
     startIndex: number,
     limit: number,
   ): Promise<{
-    reportedAccounts: ReportAccountDto[] | null;
+    reportedAccounts: IReportAccountDto[] | null;
     totalReportedAccounts: number;
   } | null>;
 }

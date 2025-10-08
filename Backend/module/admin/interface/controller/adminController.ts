@@ -13,6 +13,9 @@ import { IGetPlansUseCase } from "../../application/use-case-interface/IGetPlans
 import { AppException } from "../../../../common/error/errorException";
 import { IGetSummaryReportUseCase } from "../../application/use-case-interface/IGetSummaryReportUseCase";
 import { IGetReportsUseCase } from "../../application/use-case-interface/IGetReportsUseCase";
+import { ISearchAppointmentUseCase } from "../../application/use-case-interface/ISearchAppointmentUseCase";
+import { IGetPlanSummaryReportUseCase } from "../../application/use-case-interface/IGetPlanSummaryReportUseCase";
+import { ISearchPlanUseCase } from "../../application/use-case-interface/ISearchPlanUseCase";
 
 export class AdminController {
   constructor(
@@ -26,6 +29,9 @@ export class AdminController {
     private _getPlanUseCase: IGetPlansUseCase,
     private _getSummaryReportUseCase: IGetSummaryReportUseCase,
     private _getReportsUseCase: IGetReportsUseCase,
+    private _searchAppointmentUseCase: ISearchAppointmentUseCase,
+    private _getPlanSummaryReportUseCase: IGetPlanSummaryReportUseCase,
+    private _searchPlanUseCase: ISearchPlanUseCase,
   ) {}
 
   async getAppointments(req: Request, res: Response) {
@@ -35,14 +41,12 @@ export class AdminController {
         parseInt(req.params.startIndex),
         parseInt(req.params.limit),
       );
-      res
-        .status(AppStatusCode.SUCCESS_CODE)
-        .json({
-          success: true,
-          message: "Appointments found successfully",
-          data: result,
-        });
-    } catch (error) {
+      res.status(AppStatusCode.SUCCESS_CODE).json({
+        success: true,
+        message: "Appointments found successfully",
+        data: result,
+      });
+    } catch (_error) {
       res
         .status(AppStatusCode.INTERNAL_ERROR_CODE)
         .json({ success: false, message: AppError.UNKNOWN_ERROR });
@@ -60,15 +64,13 @@ export class AdminController {
         parseInt(req.params.startIndex),
         parseInt(req.params.limit),
       );
-      res
-        .status(AppStatusCode.SUCCESS_CODE)
-        .json({
-          success: true,
-          message: "Reported Accounts found successfully",
-          data: result?.reportedAccounts,
-          totalReportedAccounts: result?.totalReportedAccounts,
-        });
-    } catch (error) {
+      res.status(AppStatusCode.SUCCESS_CODE).json({
+        success: true,
+        message: "Reported Accounts found successfully",
+        data: result?.reportedAccounts,
+        totalReportedAccounts: result?.totalReportedAccounts,
+      });
+    } catch (_error) {
       res
         .status(AppStatusCode.INTERNAL_ERROR_CODE)
         .json({ success: false, message: AppError.UNKNOWN_ERROR });
@@ -83,7 +85,7 @@ export class AdminController {
       res
         .status(AppStatusCode.SUCCESS_CODE)
         .json({ success: true, message: "Updated Reported Account" });
-    } catch (error) {
+    } catch (_error) {
       res
         .status(AppStatusCode.INTERNAL_ERROR_CODE)
         .json({ success: false, message: AppError.UNKNOWN_ERROR });
@@ -118,7 +120,7 @@ export class AdminController {
       res
         .status(AppStatusCode.SUCCESS_CODE)
         .json({ success: true, message: "Plan updated successfully" });
-    } catch (error) {
+    } catch (_error) {
       res
         .status(AppStatusCode.INTERNAL_ERROR_CODE)
         .json({ success: false, message: AppError.UNKNOWN_ERROR });
@@ -131,16 +133,14 @@ export class AdminController {
         new mongoose.Types.ObjectId(req.params.planId),
         req.params.status,
       );
-      res
-        .status(AppStatusCode.SUCCESS_CODE)
-        .json({
-          success: true,
-          message:
-            req.params.status == "Activate"
-              ? "Plan Activated"
-              : "Plan Deactivated",
-        });
-    } catch (error) {
+      res.status(AppStatusCode.SUCCESS_CODE).json({
+        success: true,
+        message:
+          req.params.status == "Activate"
+            ? "Plan Activated"
+            : "Plan Deactivated",
+      });
+    } catch (_error) {
       res
         .status(AppStatusCode.INTERNAL_ERROR_CODE)
         .json({ success: false, message: AppError.UNKNOWN_ERROR });
@@ -155,7 +155,7 @@ export class AdminController {
       res
         .status(AppStatusCode.SUCCESS_CODE)
         .json({ success: true, message: "Plan deleted successfully" });
-    } catch (error) {
+    } catch (_error) {
       res
         .status(AppStatusCode.INTERNAL_ERROR_CODE)
         .json({ success: false, message: AppError.UNKNOWN_ERROR });
@@ -165,14 +165,12 @@ export class AdminController {
   async getPlans(req: Request, res: Response) {
     try {
       const result = await this._getPlanUseCase.execute();
-      res
-        .status(AppStatusCode.SUCCESS_CODE)
-        .json({
-          success: true,
-          messgae: "Plans found successfully",
-          data: result,
-        });
-    } catch (error) {
+      res.status(AppStatusCode.SUCCESS_CODE).json({
+        success: true,
+        messgae: "Plans found successfully",
+        data: result,
+      });
+    } catch (_error) {
       res
         .status(AppStatusCode.INTERNAL_ERROR_CODE)
         .json({ success: false, message: AppError.UNKNOWN_ERROR });
@@ -182,14 +180,12 @@ export class AdminController {
   async getSummaryReport(req: Request, res: Response) {
     try {
       const result = await this._getSummaryReportUseCase.execute();
-      res
-        .status(AppStatusCode.SUCCESS_CODE)
-        .json({
-          success: true,
-          message: "Summary report found successfully",
-          data: result,
-        });
-    } catch (error) {
+      res.status(AppStatusCode.SUCCESS_CODE).json({
+        success: true,
+        message: "Summary report found successfully",
+        data: result,
+      });
+    } catch (_error) {
       res
         .status(AppStatusCode.INTERNAL_ERROR_CODE)
         .json({ success: false, message: AppError.UNKNOWN_ERROR });
@@ -202,14 +198,60 @@ export class AdminController {
         req.params.revenueDateRange,
         req.params.specializationType,
       );
-      res
-        .status(AppStatusCode.SUCCESS_CODE)
-        .json({
-          success: true,
-          message: "Reports found successfully",
-          data: result,
-        });
+      res.status(AppStatusCode.SUCCESS_CODE).json({
+        success: true,
+        message: "Reports found successfully",
+        data: result,
+      });
     } catch (error) {
+      console.log(error);
+      res
+        .status(AppStatusCode.INTERNAL_ERROR_CODE)
+        .json({ success: false, message: AppError.UNKNOWN_ERROR });
+    }
+  }
+
+  async searchAppointments(req: Request, res: Response) {
+    try {
+      let result = await this._searchAppointmentUseCase.execute(
+        req.params.name,
+      );
+      res.status(AppStatusCode.SUCCESS_CODE).json({
+        success: true,
+        message: "Appointment found successfully",
+        data: result,
+      });
+    } catch (_error) {
+      res
+        .status(AppStatusCode.INTERNAL_ERROR_CODE)
+        .json({ success: false, message: AppError.UNKNOWN_ERROR });
+    }
+  }
+
+  async getPlanSummaryReport(req: Request, res: Response) {
+    try {
+      let result = await this._getPlanSummaryReportUseCase.execute();
+      res.status(AppStatusCode.SUCCESS_CODE).json({
+        success: true,
+        message: "Data found successfully",
+        data: result,
+      });
+    } catch (_error) {
+      res
+        .status(AppStatusCode.INTERNAL_ERROR_CODE)
+        .json({ success: false, message: AppError.UNKNOWN_ERROR });
+    }
+  }
+
+  async searchPlan(req: Request, res: Response) {
+    try {
+      let result = await this._searchPlanUseCase.execute(req.params.planName);
+      res.status(AppStatusCode.SUCCESS_CODE).json({
+        success: true,
+        message: "Data found successfully",
+        data: result,
+      });
+    } catch (_error) {
       res
         .status(AppStatusCode.INTERNAL_ERROR_CODE)
         .json({ success: false, message: AppError.UNKNOWN_ERROR });

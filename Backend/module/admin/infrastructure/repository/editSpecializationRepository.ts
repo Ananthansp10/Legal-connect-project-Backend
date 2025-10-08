@@ -1,6 +1,6 @@
 import { Types } from "mongoose";
 import { IEditSpecializationRepository } from "../repositoryInterface/IEditSpecializationRepository";
-import { SpecData } from "../repositoryInterface/IEditSpecializationRepository";
+import { ISpecData } from "../repositoryInterface/IEditSpecializationRepository";
 import { specializationModel } from "../models/specializationModel";
 
 export class EditSpecializationRepository
@@ -8,7 +8,7 @@ export class EditSpecializationRepository
 {
   async editSpecialization(
     specId: Types.ObjectId,
-    data: SpecData,
+    data: ISpecData,
   ): Promise<void> {
     await specializationModel.findByIdAndUpdate(specId, { $set: data });
   }

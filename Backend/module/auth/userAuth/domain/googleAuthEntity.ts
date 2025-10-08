@@ -1,4 +1,4 @@
-export interface GoogleAuthEntity {
+export interface IGoogleAuthEntity {
   id: string;
   name: string;
   email: string;

@@ -1,11 +1,11 @@
 import { Types } from "mongoose";
 
-interface BreakTimes {
+interface IBreakTimes {
   startTime: string;
   endTime: string;
 }
 
-export interface SlotAvailablityRequestDto {
+export interface ISlotAvailablityRequestDto {
   lawyerId?: Types.ObjectId;
   name: string;
   description: string;
@@ -14,13 +14,13 @@ export interface SlotAvailablityRequestDto {
   endTime: string;
   startDate?: string;
   endDate?: string;
-  breakTimes: [BreakTimes];
+  breakTimes: [IBreakTimes];
   priority: number;
   bufferTime: number;
   status: boolean;
 }
 
-export interface SlotAvailablityResponseDto {
+export interface ISlotAvailablityResponseDto {
   lawyerId?: Types.ObjectId;
   name: string;
   description: string;
@@ -29,7 +29,7 @@ export interface SlotAvailablityResponseDto {
   endTime: string;
   startDate?: string;
   endDate?: string;
-  breakTimes: [BreakTimes];
+  breakTimes: [IBreakTimes];
   priority: number;
   bufferTime: number;
   status: boolean;

@@ -1,30 +1,30 @@
 import { Types } from "mongoose";
 
-interface Address {
+interface IAddress {
   street: string;
   country: string;
   state: string;
   city: string;
 }
 
-interface Education {
+interface IEducation {
   degree: string;
   university: string;
   year: string;
 }
 
-interface PersonalInfo {
+interface IPersonalInfo {
   name: string;
   email: string;
   phoneNumber: string;
   DOB: string;
   gender: string;
-  address: Address;
+  address: IAddress;
   language: string[];
   profileImage: string;
 }
 
-interface ProffessionalInfo {
+interface IProffessionalInfo {
   practiceAreas: string[];
   barRegisterNumber: string;
   experience: string;
@@ -34,13 +34,13 @@ interface ProffessionalInfo {
   availableDays: string[];
   startTime: string;
   endTime: string;
-  education: Education;
+  education: IEducation;
   documents: string[];
 }
 
-export interface LawyerProfileResponseDto {
+export interface ILawyerProfileResponseDto {
   _id?: Types.ObjectId;
   lawyerId: Types.ObjectId;
-  personalInfo: PersonalInfo;
-  proffessionalInfo: ProffessionalInfo;
+  personalInfo: IPersonalInfo;
+  proffessionalInfo: IProffessionalInfo;
 }

@@ -1,6 +1,6 @@
 import { Types } from "mongoose";
-import { ReviewResponseDto } from "../../domain/dtos/reviewResponseDto";
+import { IReviewResponseDto } from "../../domain/dtos/reviewResponseDto";
 
 export interface IGetReviewUseCase {
-  execute(lawyerId: Types.ObjectId): Promise<ReviewResponseDto | null>;
+  execute(lawyerId: Types.ObjectId): Promise<IReviewResponseDto | null>;
 }

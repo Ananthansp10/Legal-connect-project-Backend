@@ -1,4 +1,3 @@
-import { Types } from "mongoose";
 import { IDeleteSpecializationRepository } from "../../infrastructure/repositoryInterface/IDeleteSpecializationRepository";
 import { IDeleteSpecializationUseCase } from "../use-case-interface/IDeleteSpecializationUseCase";
 

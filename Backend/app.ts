@@ -13,8 +13,13 @@ import * as rfs from "rotating-file-stream";
 import fs from "fs";
 import path from "path";
 import { initSocket } from "./config/socketIo";
+import { activatePlan } from "./module/lawyer/infrastructure/sheduler/subscriptionPlanSheduler";
+import { expirePlan } from "./module/lawyer/infrastructure/sheduler/subscriptionPlanSheduler";
 
 env.config();
+
+activatePlan();
+expirePlan();
 
 export const server = http.createServer(app);
 
@@ -44,7 +49,6 @@ app.use(express.json());
 
 //app.use(morgan('dev'))
 app.use(morgan("combined", { stream: accessLogStream }));
-
 
 app.use("/api/user", userRouter);
 app.use("/api/lawyer", lawyerRouter);

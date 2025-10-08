@@ -6,7 +6,7 @@ import { AppException } from "../../../../../common/error/errorException";
 import { IUserSigninUseCase } from "../use-case-Interface/IUserSigninUseCase";
 import bcrypt from "bcrypt";
 import { UserSigninMapper as mapper } from "../mapper/userSigninMapper";
-import { UserSigninDto } from "../../domain/dto/userSigninDto";
+import { IUserSigninDto } from "../../domain/dto/userSigninDto";
 import { AppStatusCode } from "../../../../../common/statusCode/AppStatusCode";
 
 export class UserSigninUseCase implements IUserSigninUseCase {
@@ -15,7 +15,7 @@ export class UserSigninUseCase implements IUserSigninUseCase {
     private _tokenGenerationService: ITokenGeneration,
   ) {}
 
-  async execute(email: string, password: string): Promise<UserSigninDto> {
+  async execute(email: string, password: string): Promise<IUserSigninDto> {
     const userExist: IUserSignup | null =
       await this._userSigninRepo.findByEmail(email);
 
@@ -48,7 +48,7 @@ export class UserSigninUseCase implements IUserSigninUseCase {
       role: "user",
     });
 
-    const response: UserSigninDto = mapper.toResponse(
+    const response: IUserSigninDto = mapper.toResponse(
       userExist,
       accessToken,
       refreshToken,

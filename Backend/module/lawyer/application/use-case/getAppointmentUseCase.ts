@@ -1,6 +1,6 @@
 import { Types } from "mongoose";
 import {
-  Appointment,
+  IAppointment,
   IGetAppointmentUseCase,
 } from "../use-case-interface/IGetAppointmentUseCase";
 import { IAppointmentRepository } from "../../infrastructure/repositoryInterface/IAppointmentRepository";
@@ -14,7 +14,7 @@ export class GetAppointmentUseCase implements IGetAppointmentUseCase {
     startIndex: number,
     endIndex: number,
   ): Promise<{
-    appointments: Appointment[];
+    appointments: IAppointment[];
     totalAppointments: number;
   } | null> {
     const appointments =
@@ -35,9 +35,9 @@ export class GetAppointmentUseCase implements IGetAppointmentUseCase {
         return {
           _id: appointment._id,
           user: {
-            _id: userDetails?.id!,
-            name: userDetails?.name!,
-            profileImage: userDetails?.profileImage!,
+            _id: userDetails?.id ?? new Types.ObjectId(""),
+            name: userDetails?.name ?? "",
+            profileImage: userDetails?.profileImage ?? "",
           },
           problem: appointment.problem,
           date: appointment.date,

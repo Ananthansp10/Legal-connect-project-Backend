@@ -8,6 +8,9 @@ export class AddNotesUseCase implements IAddNotesUseCase {
 
   async execute(appointmentId: Types.ObjectId, note: string): Promise<void> {
     await this._appointmentRepo.addNotes(appointmentId, note);
-    await this._appointmentRepo.updateStatus(appointmentId, AppointmentStatus.COMPLETED)
+    await this._appointmentRepo.updateStatus(
+      appointmentId,
+      AppointmentStatus.COMPLETED,
+    );
   }
 }

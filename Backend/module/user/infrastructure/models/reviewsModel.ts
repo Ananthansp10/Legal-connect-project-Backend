@@ -1,7 +1,7 @@
 import mongoose, { Schema } from "mongoose";
-import { FeedbackEntity } from "../../domain/entity/feedbackEntity";
+import { IFeedbackEntity } from "../../domain/entity/feedbackEntity";
 
-const reviewSchema = new mongoose.Schema<FeedbackEntity>({
+const reviewSchema = new mongoose.Schema<IFeedbackEntity>({
   lawyerId: {
     type: Schema.Types.ObjectId,
     ref: "lawyer",
@@ -25,7 +25,7 @@ const reviewSchema = new mongoose.Schema<FeedbackEntity>({
   ],
 });
 
-export const reviewsModel = mongoose.model<FeedbackEntity>(
+export const reviewsModel = mongoose.model<IFeedbackEntity>(
   "reviews",
   reviewSchema,
 );

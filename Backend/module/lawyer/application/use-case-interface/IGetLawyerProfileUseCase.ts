@@ -1,5 +1,5 @@
-import { LawyerProfileResponseDto } from "../../domain/dtos/lawyerProfileDto";
+import { ILawyerProfileResponseDto } from "../../domain/dtos/lawyerProfileDto";
 
 export interface IGetLawyerProfileUseCase {
-  execute(lawyerId: string): Promise<LawyerProfileResponseDto | null>;
+  execute(lawyerId: string): Promise<ILawyerProfileResponseDto | null>;
 }

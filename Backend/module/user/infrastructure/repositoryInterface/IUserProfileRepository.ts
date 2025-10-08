@@ -1,5 +1,5 @@
-import { UserProfileEntitie } from "../../domain/entity/userProfileUserEntity";
+import { IUserProfileEntitie } from "../../domain/entity/userProfileUserEntity";
 import { IBaseRepository } from "./IbaseRepository";
 
 export interface IUserProfileRepository
-  extends IBaseRepository<UserProfileEntitie> {}
+  extends IBaseRepository<IUserProfileEntitie> {}

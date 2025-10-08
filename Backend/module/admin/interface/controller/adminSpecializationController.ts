@@ -20,7 +20,7 @@ export class AdminSpecializationController {
       res
         .status(AppStatusCode.SUCCESS_CODE)
         .json({ success: true, message: "Specialization added successfully" });
-    } catch (error) {
+    } catch (_error) {
       res
         .status(AppStatusCode.INTERNAL_ERROR_CODE)
         .json({ success: false, message: AppError.UNKNOWN_ERROR });
@@ -33,15 +33,13 @@ export class AdminSpecializationController {
         parseInt(req.params.startIndex),
         parseInt(req.params.limit),
       );
-      res
-        .status(AppStatusCode.SUCCESS_CODE)
-        .json({
-          success: true,
-          message: "Specialization data found successfully",
-          data: result?.specializations,
-          totalSpecialization: result?.totalSpecializations,
-        });
-    } catch (error) {
+      res.status(AppStatusCode.SUCCESS_CODE).json({
+        success: true,
+        message: "Specialization data found successfully",
+        data: result?.specializations,
+        totalSpecialization: result?.totalSpecializations,
+      });
+    } catch (_error) {
       res
         .status(AppStatusCode.INTERNAL_ERROR_CODE)
         .json({ success: false, message: AppError.UNKNOWN_ERROR });
@@ -58,7 +56,7 @@ export class AdminSpecializationController {
       res
         .status(AppStatusCode.SUCCESS_CODE)
         .json({ success: true, message: "Specialization edited successfully" });
-    } catch (error) {
+    } catch (_error) {
       res
         .status(AppStatusCode.INTERNAL_ERROR_CODE)
         .json({ success: false, message: AppError.UNKNOWN_ERROR });
@@ -71,13 +69,11 @@ export class AdminSpecializationController {
   ): Promise<void> {
     try {
       await this._deleteSpecializationApplication.execute(req.params.specId);
-      res
-        .status(AppStatusCode.SUCCESS_CODE)
-        .json({
-          success: true,
-          message: "Specialization deleted successfully",
-        });
-    } catch (error) {
+      res.status(AppStatusCode.SUCCESS_CODE).json({
+        success: true,
+        message: "Specialization deleted successfully",
+      });
+    } catch (_error) {
       res
         .status(AppStatusCode.INTERNAL_ERROR_CODE)
         .json({ success: false, message: AppError.UNKNOWN_ERROR });

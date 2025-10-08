@@ -1,12 +1,12 @@
 import { Types } from "mongoose";
-import { LawyerEditProfileResponse } from "../../application/mapper/lawyerEditProfileMapper";
-import { LawyerProfileEntity } from "../../domain/entity/lawyerProfileEntity";
+import { ILawyerEditProfileResponse } from "../../application/mapper/lawyerEditProfileMapper";
+import { ILawyerProfileEntity } from "../../domain/entity/lawyerProfileEntity";
 import { IEditLawyerProfileRepository } from "../repositoryInterface/IEditLawyerProfileRepository";
 import { lawyerProfileModel } from "../models/lawyerProfileModel";
 import { BaseRepository } from "./baseRepository";
 
 export class EditLawyerProfileRepository
-  extends BaseRepository<LawyerProfileEntity>
+  extends BaseRepository<ILawyerProfileEntity>
   implements IEditLawyerProfileRepository
 {
   constructor() {
@@ -15,7 +15,7 @@ export class EditLawyerProfileRepository
 
   async editLawyerProfile(
     lawyerId: Types.ObjectId,
-    data: LawyerEditProfileResponse,
+    data: ILawyerEditProfileResponse,
   ): Promise<void> {
     const { fee, ...personalInfo } = data;
     await lawyerProfileModel.updateOne(
