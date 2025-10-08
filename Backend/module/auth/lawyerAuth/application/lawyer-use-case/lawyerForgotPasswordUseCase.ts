@@ -7,30 +7,35 @@ import { IForgotPasswordTokenGeneration } from "../../infrastructure/service/Ifo
 import { ILawyerSignupRepository } from "../../infrastructure/repositoryInterface/ILawyerSignupRepository";
 import { ILawyerForgotPasswordUseCase } from "../lawyer-use-case-interface/IlawyerForgotPasswordUseCase";
 
+export class LawyerForgotPasswordUseCase
+  implements ILawyerForgotPasswordUseCase
+{
+  constructor(
+    private _emailService: IForgotPasswordEmailService,
+    private _ForgotPasswordTokenGenerate: IForgotPasswordTokenGeneration,
+    private _lawyerRepo: ILawyerSignupRepository,
+  ) {}
 
-export class LawyerForgotPasswordUseCase implements ILawyerForgotPasswordUseCase{
+  async execute(email: string): Promise<void> {
+    try {
+      const lawyer: ILawyerSignup | null =
+        await this._lawyerRepo.findByEmail(email);
 
-    constructor(
-        private _emailService:IForgotPasswordEmailService, 
-        private _ForgotPasswordTokenGenerate:IForgotPasswordTokenGeneration,
-        private _lawyerRepo:ILawyerSignupRepository
-    ){}
+      if (!lawyer) {
+        throw new AppException(
+          AppError.USER_NOT_FOUND,
+          AppStatusCode.NOT_FOUND,
+        );
+      }
 
-    async execute(email: string): Promise<void> {
-        try {
-            let lawyer:ILawyerSignup | null=await this._lawyerRepo.findByEmail(email)
+      const token: string =
+        await this._ForgotPasswordTokenGenerate.generateForgotPasswordToken({
+          email: email,
+        });
 
-            if(!lawyer){
-                throw new AppException(AppError.USER_NOT_FOUND,AppStatusCode.NOT_FOUND)
-            }
-
-            let token:string=await this._ForgotPasswordTokenGenerate.generateForgotPasswordToken({email:email})
-
-            this._emailService.sendForgotPasswordEMail(email,lawyer.name,token)
-
-        } catch (error) {
-            throw error
-        }
-
+      this._emailService.sendForgotPasswordEMail(email, lawyer.name, token);
+    } catch (error) {
+      throw error;
     }
+  }
 }

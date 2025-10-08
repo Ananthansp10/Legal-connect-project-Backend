@@ -7,22 +7,48 @@ import { IReportedAccountsRepository } from "../repositoryInterface/IReportedAcc
 import { userProfileModel } from "../../../user/infrastructure/models/userProfileModel";
 import { lawyerProfileModel } from "../../../lawyer/infrastructure/models/lawyerProfileModel";
 
+export class ReportAccountRepository implements IReportedAccountsRepository {
+  async findReportedAccounts(
+    userType: string,
+    startIndex: number,
+    limit: number,
+  ): Promise<{
+    reportedAccounts: IReportAccountEntity[];
+    totalReportedAccounts: number;
+  }> {
+    let reportedAccounts = await reportAccountModel
+      .find(
+        userType == "All"
+          ? { status: "Pending" }
+          : { userType: userType, status: "Pending" },
+      )
+      .skip(startIndex)
+      .limit(limit);
+    let totalReportedAccounts = await reportAccountModel.countDocuments(
+      userType == "All"
+        ? { status: "Pending" }
+        : { userType: userType, status: "Pending" },
+    );
+    return { reportedAccounts, totalReportedAccounts };
+  }
 
-export class ReportAccountRepository implements IReportedAccountsRepository{
+  async findUserDetails(
+    userId: Types.ObjectId,
+  ): Promise<UserProfileEntitie | null> {
+    return await userProfileModel.findOne({ userId: userId });
+  }
 
-    async findReportedAccounts(userType: string): Promise<IReportAccountEntity[]> {
-        return await reportAccountModel.find(userType=='All' ? {status:'Pending'} : {userType:userType,status:'Pending'})
-    }
+  async findLawyerDetails(
+    lawyerId: Types.ObjectId,
+  ): Promise<LawyerProfileEntity | null> {
+    return await lawyerProfileModel.findOne({ lawyerId: lawyerId });
+  }
 
-    async findUserDetails(userId: Types.ObjectId): Promise<UserProfileEntitie | null> {
-        return await userProfileModel.findOne({userId:userId})
-    }
-
-    async findLawyerDetails(lawyerId: Types.ObjectId): Promise<LawyerProfileEntity | null> {
-        return await lawyerProfileModel.findOne({lawyerId:lawyerId})
-    }
-
-    async updateReportAccountStatus(reportAccountId: Types.ObjectId): Promise<void> {
-        await reportAccountModel.findByIdAndUpdate(reportAccountId,{$set:{status:'Resolved'}})
-    }
+  async updateReportAccountStatus(
+    reportAccountId: Types.ObjectId,
+  ): Promise<void> {
+    await reportAccountModel.findByIdAndUpdate(reportAccountId, {
+      $set: { status: "Resolved" },
+    });
+  }
 }

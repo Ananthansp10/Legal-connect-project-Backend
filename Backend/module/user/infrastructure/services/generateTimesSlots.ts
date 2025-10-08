@@ -1,4 +1,4 @@
-import dayjs from "dayjs";  
+import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat.js";
 import isSameOrBefore from "dayjs/plugin/isSameOrBefore.js";
 import isSameOrAfter from "dayjs/plugin/isSameOrAfter.js";
@@ -14,19 +14,19 @@ export async function generateSlots(
   rule: ISlotAvailablityEntity,
   lawyerId: Types.ObjectId,
   date: string,
-  slotRepo: IGetLawyerSlotRepository
+  slotRepo: IGetLawyerSlotRepository,
 ) {
   const { startTime, endTime, breakTimes, days } = rule;
 
-  interface SlotData{
-    startTime:string;
-    endTime:string;
-    isBooked:boolean
+  interface SlotData {
+    startTime: string;
+    endTime: string;
+    isBooked: boolean;
   }
 
-  interface BreakTimeData{
-    startTime:string;
-    endTime:string;
+  interface BreakTimeData {
+    startTime: string;
+    endTime: string;
   }
 
   let slots: SlotData[] = [];

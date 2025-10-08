@@ -3,21 +3,18 @@ import { IUserProfileRepository } from "../../infrastructure/repositoryInterface
 import { IAddProfileUseCase } from "../use-case-interface/IAddProfileUseCase";
 import { UserProfile, UserProfileMapper } from "../mapper/userProfileMapper";
 
+export class AddProfileUseCase implements IAddProfileUseCase {
+  constructor(private _userProfileRepo: IUserProfileRepository) {}
 
-export class AddProfileUseCase implements IAddProfileUseCase{
-
-    constructor(
-        private _userProfileRepo:IUserProfileRepository
-    ){}
-
-    async execute(data:UserProfile , imageUrl: string): Promise<void> {
-        try {
-            
-           let profileData:UserProfileEntitie=UserProfileMapper.toRequest(data,imageUrl)
-           await this._userProfileRepo.create(profileData)
-        } catch (error) {
-            throw error
-        }
-
+  async execute(data: UserProfile, imageUrl: string): Promise<void> {
+    try {
+      const profileData: UserProfileEntitie = UserProfileMapper.toRequest(
+        data,
+        imageUrl,
+      );
+      await this._userProfileRepo.create(profileData);
+    } catch (error) {
+      throw error;
     }
+  }
 }

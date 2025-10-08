@@ -3,11 +3,11 @@ import { IUserProfileRepository } from "../repositoryInterface/IUserProfileRepos
 import { userProfileModel } from "../models/userProfileModel";
 import { BaseRepository } from "./baseRepository";
 
-
-
-export class UserProfileRepository extends BaseRepository<UserProfileEntitie> implements IUserProfileRepository{
-
-    constructor(){
-        super(userProfileModel)
-    }
+export class UserProfileRepository
+  extends BaseRepository<UserProfileEntitie>
+  implements IUserProfileRepository
+{
+  constructor() {
+    super(userProfileModel);
+  }
 }

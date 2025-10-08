@@ -1,6 +1,4 @@
-
-
-export interface CountryChartDto{
-    _id:string;
-    consultations:number;
+export interface CountryChartDto {
+  _id: string;
+  consultations: number;
 }

@@ -3,10 +3,11 @@ import { ILawyerAddProfile } from "../repositoryInterface/ILawyerAddProfileRepos
 import { lawyerProfileModel } from "../models/lawyerProfileModel";
 import { BaseRepository } from "./baseRepository";
 
-
-export class LawyerAddProfileRepository extends BaseRepository<LawyerProfileEntity> implements ILawyerAddProfile{
-
-    constructor(){
-        super(lawyerProfileModel)
-    }
+export class LawyerAddProfileRepository
+  extends BaseRepository<LawyerProfileEntity>
+  implements ILawyerAddProfile
+{
+  constructor() {
+    super(lawyerProfileModel);
+  }
 }

@@ -1,7 +1,5 @@
 import { IOtpEntity } from "../../domain/otpEntity";
 
-
-export interface IOtpVerificationRepository{
-
-    findOtpByEmail(email:string):Promise<IOtpEntity | null>;
+export interface IOtpVerificationRepository {
+  findOtpByEmail(email: string): Promise<IOtpEntity | null>;
 }

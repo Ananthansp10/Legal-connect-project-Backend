@@ -1,19 +1,18 @@
+import mongoose from "mongoose";
 
-import mongoose from 'mongoose';
-
-require('dotenv').config();
+require("dotenv").config();
 
 const connectDB = async (): Promise<void> => {
   try {
-    const mongoURI  = process.env.MONGO_URI!
+    const mongoURI = process.env.MONGO_URI!;
 
     await mongoose.connect(mongoURI, {
-      dbName: 'LegalConsultation',
+      dbName: "LegalConsultation",
     });
 
-    console.log('MongoDB connected successfully');
+    console.log("MongoDB connected successfully");
   } catch (error) {
-    console.error('MongoDB connection error:', error);
+    console.error("MongoDB connection error:", error);
   }
 };
 

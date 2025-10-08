@@ -6,17 +6,16 @@ import { TopLawyersDto } from "./topLawyersDto";
 import { TopUserssDto } from "./topUsersDto";
 import { WeeklyAppointmentsDto } from "./weeklyAppointmentDto";
 
-
-export interface SummaryReportDto{
-    totalUsers:number;
-    totalLawyers:number;
-    todaysAppointments:number;
-    pendingVerification:number;
-    revenueChart:RevenueChartDto[];
-    weeklyAppointments:WeeklyAppointmentsDto[];
-    specializationChart:SpecializationData[];
-    topLawyers:TopLawyersDto[];
-    topUsers:TopUserssDto[];
-    stateChart:StateChartDto[];
-    countryChart:CountryChartDto[];
+export interface SummaryReportDto {
+  totalUsers: number;
+  totalLawyers: number;
+  todaysAppointments: number;
+  pendingVerification: number;
+  revenueChart: RevenueChartDto[];
+  weeklyAppointments: WeeklyAppointmentsDto[];
+  specializationChart: SpecializationData[];
+  topLawyers: TopLawyersDto[];
+  topUsers: TopUserssDto[];
+  stateChart: StateChartDto[];
+  countryChart: CountryChartDto[];
 }

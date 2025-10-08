@@ -7,19 +7,40 @@ import { appointmentModel } from "../../../user/infrastructure/models/appointmen
 import { userProfileModel } from "../../../user/infrastructure/models/userProfileModel";
 import { IAppointmentsRepository } from "../repositoryInterface/IAppointmentsRepository";
 
+export class AppointmentRepository implements IAppointmentsRepository {
+  async findAppointments(
+    appointmentStatus: string,
+    startIndex: number,
+    limit: number,
+  ): Promise<{
+    appointments: IAppointmentEntity[];
+    totalAppointments: number;
+  } | null> {
+    let appointments = await appointmentModel
+      .find(
+        appointmentStatus != "All"
+          ? { appointmentStatus: appointmentStatus }
+          : {},
+      )
+      .skip(startIndex)
+      .limit(limit);
+    let totalAppointments = await appointmentModel.countDocuments(
+      appointmentStatus != "All"
+        ? { appointmentStatus: appointmentStatus }
+        : {},
+    );
+    return { appointments, totalAppointments };
+  }
 
+  async findUserDetails(
+    userId: Types.ObjectId,
+  ): Promise<UserProfileEntitie | null> {
+    return await userProfileModel.findOne({ userId: userId });
+  }
 
-export class AppointmentRepository implements IAppointmentsRepository{
-
-    async findAppointments(appointmentStatus: string): Promise<IAppointmentEntity[] | null> {
-        return await appointmentModel.find(appointmentStatus!='All'? {appointmentStatus:appointmentStatus}:{})
-    }
-
-    async findUserDetails(userId: Types.ObjectId): Promise<UserProfileEntitie | null> {
-        return await userProfileModel.findOne({userId:userId})
-    }
-
-    async findLawyerDetails(lawyerId: Types.ObjectId): Promise<LawyerProfileEntity | null> {
-        return await lawyerProfileModel.findOne({lawyerId:lawyerId})
-    }
+  async findLawyerDetails(
+    lawyerId: Types.ObjectId,
+  ): Promise<LawyerProfileEntity | null> {
+    return await lawyerProfileModel.findOne({ lawyerId: lawyerId });
+  }
 }

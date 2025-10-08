@@ -1,6 +1,4 @@
-
-
-export interface ITokenGeneration{
-    generateAccessToken(payload:object):string;
-    generateRefreshToken(payload:object):string;
+export interface ITokenGeneration {
+  generateAccessToken(payload: object): string;
+  generateRefreshToken(payload: object): string;
 }

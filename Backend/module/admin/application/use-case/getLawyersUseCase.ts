@@ -4,22 +4,23 @@ import { ILawyerRepository } from "../../infrastructure/repositoryInterface/ILaw
 import { IGetLawyersUseCase } from "../use-case-interface/IGetLawyerUseCase";
 import { LawyerMapper } from "../mapper/lawyerMapper";
 
-export class GetLawyersUseCase implements IGetLawyersUseCase{
+export class GetLawyersUseCase implements IGetLawyersUseCase {
+  constructor(private _lawyerRepo: ILawyerRepository) {}
 
-    constructor(
-        private _lawyerRepo:ILawyerRepository
-    ){}
-
-    async execute(startIndex:number,limit:number): Promise<{data:ILawyerResponse[],totalData:number}> {
-        try {
-            let lawyers:{data:ILawyerSignup[],totalData:number} | null=await this._lawyerRepo.findAll(startIndex,limit)
-            let response:ILawyerResponse[]=[]
-            if(lawyers){
-                response=await LawyerMapper.toResponse(lawyers.data) 
-            }
-            return {data:response,totalData:lawyers?.totalData || 0}
-        } catch (error) {
-            throw error
-        }
+  async execute(
+    startIndex: number,
+    limit: number,
+  ): Promise<{ data: ILawyerResponse[]; totalData: number }> {
+    try {
+      const lawyers: { data: ILawyerSignup[]; totalData: number } | null =
+        await this._lawyerRepo.findAll(startIndex, limit);
+      let response: ILawyerResponse[] = [];
+      if (lawyers) {
+        response = await LawyerMapper.toResponse(lawyers.data);
+      }
+      return { data: response, totalData: lawyers?.totalData || 0 };
+    } catch (error) {
+      throw error;
     }
+  }
 }
