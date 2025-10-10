@@ -187,7 +187,7 @@ router.post(
 router.post(
   "/report-lawyer",
   verifyToken,
-  verifyRole(["user"]),
+  verifyRole(["user", "lawyer"]),
   verifyAccountStatus(checkUserAccountStatusMongoRepo),
   (req, res) => userController.reportLawyer(req, res),
 );

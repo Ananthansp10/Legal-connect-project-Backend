@@ -8,6 +8,9 @@ export interface IAppointmentsData {
   userProfileImage: string;
   lawyerProfileImage: string;
   appointmentStatus: string;
+  rating?: number;
+  feedback?: string;
+  notes?: string;
 }
 
 export interface IGetAppointmentsUseCase {
