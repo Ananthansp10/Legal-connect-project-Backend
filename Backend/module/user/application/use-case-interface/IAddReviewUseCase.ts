@@ -1,6 +1,6 @@
 import { Types } from "mongoose";
-import { Reviews } from "../../domain/entity/feedbackEntity";
+import { IReviews } from "../../domain/entity/feedbackEntity";
 
 export interface IAddReviewUseCase {
-  execute(lawyerId: Types.ObjectId, data: Reviews): Promise<void>;
+  execute(lawyerId: Types.ObjectId, data: IReviews): Promise<void>;
 }

@@ -1,6 +1,6 @@
 import { Types } from "mongoose";
 
-interface LawyerData {
+interface ILawyerData {
   _id: Types.ObjectId;
   name: string;
   specialization: string[];
@@ -8,9 +8,9 @@ interface LawyerData {
   fee: string;
 }
 
-export interface AppointmentsData {
+export interface IAppointmentsData {
   _id: Types.ObjectId;
-  lawyer: LawyerData;
+  lawyer: ILawyerData;
   date: string;
   time: string;
   mode: string;
@@ -31,7 +31,7 @@ export interface IGetAppointmentUseCase {
     startIndex: number,
     limit: number,
   ): Promise<{
-    appointments: AppointmentsData[];
+    appointments: IAppointmentsData[];
     totalAppointments: number;
   } | null>;
 }

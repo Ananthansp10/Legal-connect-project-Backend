@@ -1,8 +1,8 @@
 import { Types } from "mongoose";
-import { FeedbackEntity, Reviews } from "../../domain/entity/feedbackEntity";
+import { IFeedbackEntity, IReviews } from "../../domain/entity/feedbackEntity";
 
 export interface IFeedbackRepository {
-  getfeedback(lawyerId: Types.ObjectId): Promise<FeedbackEntity | null>;
-  saveReview(data: FeedbackEntity): Promise<void>;
-  addReview(lawyerId: Types.ObjectId, data: Reviews): Promise<void>;
+  getfeedback(lawyerId: Types.ObjectId): Promise<IFeedbackEntity | null>;
+  saveReview(data: IFeedbackEntity): Promise<void>;
+  addReview(lawyerId: Types.ObjectId, data: IReviews): Promise<void>;
 }

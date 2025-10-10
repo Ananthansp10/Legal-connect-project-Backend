@@ -1,4 +1,4 @@
-export interface LawyerSigninResponseDto {
+export interface ILawyerSigninResponseDto {
   lawyerDetails: {
     _id?: string;
     name: string;

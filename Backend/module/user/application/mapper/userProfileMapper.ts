@@ -1,7 +1,7 @@
 import { Types } from "mongoose";
-import { UserProfileEntitie } from "../../domain/entity/userProfileUserEntity";
+import { IUserProfileEntitie } from "../../domain/entity/userProfileUserEntity";
 
-export interface UserProfile {
+export interface IUserProfile {
   userId: Types.ObjectId;
   name: string;
   email: string;
@@ -18,7 +18,7 @@ export interface UserProfile {
   zipCode: string;
 }
 export class UserProfileMapper {
-  static toRequest(data: UserProfile, imageUrl: string): UserProfileEntitie {
+  static toRequest(data: IUserProfile, imageUrl: string): IUserProfileEntitie {
     return {
       userId: data.userId,
       name: data.name,

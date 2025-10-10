@@ -1,12 +1,12 @@
 import {
-  ConsultationHistoryRequestDto,
-  ConsultationHistoryResponseDto,
+  IConsultationHistoryRequestDto,
+  IConsultationHistoryResponseDto,
 } from "../../domain/dtos/consultationHistoryDto";
 
 export class ConsultationHistoryMapper {
   static async toResponse(
-    consultationHistory: ConsultationHistoryRequestDto[],
-  ): Promise<ConsultationHistoryResponseDto[]> {
+    consultationHistory: IConsultationHistoryRequestDto[],
+  ): Promise<IConsultationHistoryResponseDto[]> {
     const result = consultationHistory.map((data) => {
       return {
         userName: data.userDetails.name,

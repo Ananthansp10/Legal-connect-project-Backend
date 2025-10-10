@@ -1,13 +1,13 @@
 import { Types } from "mongoose";
 
-export interface Reviews {
+export interface IReviews {
   userName: string;
   date: string;
   feedback: string;
   rating: number;
 }
 
-export interface FeedbackEntity {
+export interface IFeedbackEntity {
   lawyerId: Types.ObjectId;
-  reviews: Reviews[];
+  reviews: IReviews[];
 }

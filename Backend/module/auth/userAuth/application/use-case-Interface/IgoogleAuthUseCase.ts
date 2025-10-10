@@ -1,6 +1,6 @@
-import { GoogleAuthRequestDto } from "../../domain/dto/googleAuthDto";
-import { UserSigninDto } from "../../domain/dto/userSigninDto";
+import { IGoogleAuthRequestDto } from "../../domain/dto/googleAuthDto";
+import { IUserSigninDto } from "../../domain/dto/userSigninDto";
 
 export interface IGoogleAuthUseCase {
-  execute(data: GoogleAuthRequestDto): Promise<UserSigninDto>;
+  execute(data: IGoogleAuthRequestDto): Promise<IUserSigninDto>;
 }

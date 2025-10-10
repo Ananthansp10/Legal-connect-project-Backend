@@ -1,11 +1,11 @@
 import {
-  LawyerSignupRequestDto,
-  LawyerSignupResponseDto,
+  ILawyerSignupRequestDto,
+  ILawyerSignupResponseDto,
 } from "../../domain/dto/lawyerSignupDto";
 import { ILawyerSignup } from "../../domain/entity/lawyerEntity";
 
 export class LawyerSignupMapper {
-  static toRequest(data: ILawyerSignup): LawyerSignupRequestDto {
+  static toRequest(data: ILawyerSignup): ILawyerSignupRequestDto {
     return {
       name: data.name,
       email: data.email,
@@ -20,7 +20,7 @@ export class LawyerSignupMapper {
     };
   }
 
-  static toResponse(data: ILawyerSignup): LawyerSignupResponseDto {
+  static toResponse(data: ILawyerSignup): ILawyerSignupResponseDto {
     return {
       id: data._id!,
       name: data.name,

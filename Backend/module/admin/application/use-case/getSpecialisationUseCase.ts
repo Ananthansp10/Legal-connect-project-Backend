@@ -1,4 +1,4 @@
-import { SpecializationResponseDto } from "../../domain/dtos/specializationDto";
+import { ISpecializationResponseDto } from "../../domain/dtos/specializationDto";
 import { IGetSpecializationRepository } from "../../infrastructure/repositoryInterface/IGetSpecializationRepository";
 import { IGetSpecializationUseCase } from "../use-case-interface/IGetSpecializationUseCase";
 
@@ -9,7 +9,7 @@ export class GetSpecializationUseCase implements IGetSpecializationUseCase {
     startIndex: number,
     limit: number,
   ): Promise<{
-    specializations: SpecializationResponseDto[];
+    specializations: ISpecializationResponseDto[];
     totalSpecializations: number;
   } | null> {
     return await this._getSpecializationRepo.getSpecialization(

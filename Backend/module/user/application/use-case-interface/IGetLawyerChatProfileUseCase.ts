@@ -1,6 +1,6 @@
 import { Types } from "mongoose";
-import { LawyerChatProfileDto } from "../../domain/dtos/lawyerChatProfileDto";
+import { ILawyerChatProfileDto } from "../../domain/dtos/lawyerChatProfileDto";
 
 export interface IGetLawyerChatProfileUseCase {
-  execute(lawyerId: Types.ObjectId): Promise<LawyerChatProfileDto | null>;
+  execute(lawyerId: Types.ObjectId): Promise<ILawyerChatProfileDto | null>;
 }

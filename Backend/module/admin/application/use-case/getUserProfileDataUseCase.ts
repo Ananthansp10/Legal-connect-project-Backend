@@ -1,12 +1,12 @@
 import { Types } from "mongoose";
-import { UserProfileDataDto } from "../../domain/dtos/userProfileDto";
+import { IUserProfileDataDto } from "../../domain/dtos/userProfileDto";
 import { IUserRepository } from "../../infrastructure/repositoryInterface/IuserRepository";
 import { IGetUserProfileDataUseCase } from "../use-case-interface/IGetUserProfileDataUseCase";
 
 export class GetUserProfileDataUseCase implements IGetUserProfileDataUseCase {
   constructor(private _userRepo: IUserRepository) {}
 
-  async execute(lawyerId: Types.ObjectId): Promise<UserProfileDataDto | null> {
+  async execute(lawyerId: Types.ObjectId): Promise<IUserProfileDataDto | null> {
     const userProfileData = await this._userRepo.getUserDetails(lawyerId);
     if (!userProfileData) {
       return null;

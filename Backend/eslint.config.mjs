@@ -22,6 +22,17 @@ export default [
 
       "prettier/prettier": "error",
 
+      "@typescript-eslint/no-empty-object-type": "off",
+
+      "@typescript-eslint/no-unused-vars": [
+        "warn",
+        {
+          argsIgnorePattern: "^_",
+          varsIgnorePattern: "^_",
+          caughtErrorsIgnorePattern: "^_",
+        },
+      ],
+
       "@typescript-eslint/naming-convention": [
         "error",
         {
@@ -33,7 +44,7 @@ export default [
           format: ["PascalCase"],
           custom: {
             regex: "^I[A-Z]",
-            match: false,
+            match: true,
           },
         },
         {

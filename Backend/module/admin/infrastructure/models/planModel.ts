@@ -18,6 +18,10 @@ const plansSchema = new mongoose.Schema<IPlansEntity>({
     type: String,
     required: true,
   },
+  totalAppointments: {
+    type: String,
+    requird: true,
+  },
   features: [
     {
       type: String,

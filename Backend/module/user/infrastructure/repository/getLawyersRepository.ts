@@ -1,27 +1,27 @@
-import { LawyerProfileEntity } from "../../../lawyer/domain/entity/lawyerProfileEntity";
+import { ILawyerProfileEntity } from "../../../lawyer/domain/entity/lawyerProfileEntity";
 import { lawyerProfileModel } from "../../../lawyer/infrastructure/models/lawyerProfileModel";
 import { IGetLawyerRepository } from "../repositoryInterface/IGetLawyerRepository";
 import { BaseRepository } from "./baseRepository";
 
 export class GetLawyerRepository
-  extends BaseRepository<LawyerProfileEntity>
+  extends BaseRepository<ILawyerProfileEntity>
   implements IGetLawyerRepository
 {
   constructor() {
     super(lawyerProfileModel);
   }
 
-  async getLawyers(): Promise<LawyerProfileEntity[]> {
+  async getLawyers(): Promise<ILawyerProfileEntity[]> {
     return await lawyerProfileModel.find();
   }
 
-  async getLawyerById(lawyerId: string): Promise<LawyerProfileEntity | null> {
+  async getLawyerById(lawyerId: string): Promise<ILawyerProfileEntity | null> {
     return await lawyerProfileModel.findOne({ lawyerId: lawyerId });
   }
 
   async getLawyerBySpecialization(
     specialization: string,
-  ): Promise<LawyerProfileEntity[] | null> {
+  ): Promise<ILawyerProfileEntity[] | null> {
     if (specialization == "All Specializations") {
       return await lawyerProfileModel.find();
     } else {
@@ -31,7 +31,7 @@ export class GetLawyerRepository
     }
   }
 
-  async getLawyerByName(name: string): Promise<LawyerProfileEntity[] | null> {
+  async getLawyerByName(name: string): Promise<ILawyerProfileEntity[] | null> {
     return await lawyerProfileModel.find({
       "personalInfo.name": { $regex: new RegExp(`^${name}$`, "i") },
     });

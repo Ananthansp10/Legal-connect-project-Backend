@@ -16,13 +16,11 @@ export class AdminAuthController {
       const { accessToken, refreshToken } =
         await this._adminSigninApplication.execute(req.body);
       this._tokenCookieService.setAuthCookie(res, accessToken, refreshToken);
-      res
-        .status(AppStatusCode.SUCCESS_CODE)
-        .json({
-          success: true,
-          message: "Login successfully",
-          data: { name: "admin" },
-        });
+      res.status(AppStatusCode.SUCCESS_CODE).json({
+        success: true,
+        message: "Login successfully",
+        data: { name: "admin" },
+      });
     } catch (error) {
       if (error instanceof AppException) {
         res
@@ -53,7 +51,7 @@ export class AdminAuthController {
       res
         .status(AppStatusCode.SUCCESS_CODE)
         .json({ success: true, message: "Logout successfully" });
-    } catch (error) {
+    } catch (_error) {
       res
         .status(AppStatusCode.INTERNAL_ERROR_CODE)
         .json({ success: false, message: AppError.UNKNOWN_ERROR });

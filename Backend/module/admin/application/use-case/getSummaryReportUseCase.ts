@@ -1,12 +1,12 @@
 import mongoose from "mongoose";
-import { SummaryReportDto } from "../../domain/dtos/summaryReportDto";
+import { ISummaryReportDto } from "../../domain/dtos/summaryReportDto";
 import { ISummaryReportRepository } from "../../infrastructure/repositoryInterface/ISummaryReportRepository";
 import { IGetSummaryReportUseCase } from "../use-case-interface/IGetSummaryReportUseCase";
 
 export class GetSummaryReportUseCase implements IGetSummaryReportUseCase {
   constructor(private _summaryReportRepo: ISummaryReportRepository) {}
 
-  async execute(): Promise<SummaryReportDto> {
+  async execute(): Promise<ISummaryReportDto> {
     try {
       const totalUsers = (await this._summaryReportRepo.getTotalUsers()) || 0;
       const totalLawyers =
@@ -36,9 +36,10 @@ export class GetSummaryReportUseCase implements IGetSummaryReportUseCase {
             new mongoose.Types.ObjectId(data._id),
           );
           return {
-            name: lawyerProfile?.personalInfo.name!,
-            profileImage: lawyerProfile?.personalInfo.profileImage!,
-            specialization: lawyerProfile?.proffessionalInfo.practiceAreas[0]!,
+            name: lawyerProfile?.personalInfo.name ?? "",
+            profileImage: lawyerProfile?.personalInfo.profileImage ?? "",
+            specialization:
+              lawyerProfile?.proffessionalInfo.practiceAreas[0] ?? "",
             totalConsultation: lawyerAppointments?.length || 0,
             rating: lawyerRating?.reviews
               ? Math.floor(
@@ -63,10 +64,10 @@ export class GetSummaryReportUseCase implements IGetSummaryReportUseCase {
               new mongoose.Types.ObjectId(data._id),
             );
           return {
-            name: userProfile?.name!,
-            profileImage: userProfile?.profileImage!,
-            country: userProfile?.address.country!,
-            state: userProfile?.address.state!,
+            name: userProfile?.name ?? "",
+            profileImage: userProfile?.profileImage ?? "",
+            country: userProfile?.address.country ?? "",
+            state: userProfile?.address.state ?? "",
             totalConsultation: userAppointments?.length || 0,
           };
         }),

@@ -1,5 +1,5 @@
 import { Types } from "mongoose";
-import { Messages } from "../../../user/domain/entity/chatEntity";
+import { IMessages } from "../../../user/domain/entity/chatEntity";
 import { ILawyerChatRepository } from "../../infrastructure/repositoryInterface/ILawyerChatRepository";
 import { IGetLawyerChatUseCase } from "../use-case-interface/IGetLawyerChatUseCase";
 
@@ -9,7 +9,7 @@ export class GetLawyerChatUseCase implements IGetLawyerChatUseCase {
   async execute(
     lawyerId: Types.ObjectId,
     userId: Types.ObjectId,
-  ): Promise<Messages[] | null> {
+  ): Promise<IMessages[] | null> {
     const chat = await this._chatRepo.findChat(lawyerId, userId);
     return chat;
   }

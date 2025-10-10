@@ -1,5 +1,5 @@
-import { PlansResponseDto } from "../../domain/dtos/plansDto";
+import { IPlansResponseDto } from "../../domain/dtos/plansDto";
 
 export interface IGetSubscriptionPlanUseCase {
-  execute(): Promise<PlansResponseDto[] | null>;
+  execute(): Promise<IPlansResponseDto[] | null>;
 }

@@ -1,8 +1,7 @@
 import { Types } from "mongoose";
-import { IAppointmentEntity } from "../../domain/entity/appointmentEntity";
 import { IAppointmentRepository } from "../../infrastructure/repositoryInterface/IAppointmentRepository";
 import {
-  AppointmentsData,
+  IAppointmentsData,
   IGetAppointmentUseCase,
 } from "../use-case-interface/IGetAppointmentUseCase";
 
@@ -15,7 +14,7 @@ export class GetAppointmentUseCase implements IGetAppointmentUseCase {
     startIndex: number,
     limit: number,
   ): Promise<{
-    appointments: AppointmentsData[];
+    appointments: IAppointmentsData[];
     totalAppointments: number;
   } | null> {
     const appointments =
@@ -36,16 +35,16 @@ export class GetAppointmentUseCase implements IGetAppointmentUseCase {
           );
 
         const lawyerData = {
-          _id: lawyerDetails?.lawyerId!,
-          name: lawyerDetails?.personalInfo.name!,
-          specialization: lawyerDetails?.proffessionalInfo.practiceAreas!,
-          profileImage: lawyerDetails?.personalInfo.profileImage!,
-          fee: lawyerDetails?.proffessionalInfo.fee!,
+          _id: lawyerDetails?.lawyerId ?? new Types.ObjectId(""),
+          name: lawyerDetails?.personalInfo.name ?? "",
+          specialization: lawyerDetails?.proffessionalInfo.practiceAreas ?? [],
+          profileImage: lawyerDetails?.personalInfo.profileImage ?? "",
+          fee: lawyerDetails?.proffessionalInfo.fee ?? "",
         };
 
         return {
-          _id: appointment._id!,
-          lawyer: lawyerData!,
+          _id: appointment._id ?? new Types.ObjectId(""),
+          lawyer: lawyerData ?? new Types.ObjectId(""),
           date: appointment.date,
           time: appointment.time,
           mode: appointment.consultationMode,

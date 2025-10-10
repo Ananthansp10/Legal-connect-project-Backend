@@ -14,13 +14,11 @@ export const verifyAccountStatus = (
 
     const findUser = await userAccountCheckRepo.findById(userId);
     if (findUser && findUser.isBlock) {
-      res
-        .status(AppStatusCode.ACCOUNT_BLOCKED)
-        .json({
-          success: false,
-          message: AppError.ACCOUNT_BLOCKED,
-          isBlock: true,
-        });
+      res.status(AppStatusCode.ACCOUNT_BLOCKED).json({
+        success: false,
+        message: AppError.ACCOUNT_BLOCKED,
+        isBlock: true,
+      });
       return;
     }
 

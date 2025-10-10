@@ -1,11 +1,11 @@
-import { SpecializationResponseDto } from "../../domain/dtos/specializationDto";
+import { ISpecializationResponseDto } from "../../domain/dtos/specializationDto";
 
 export interface IGetSpecializationUseCase {
   execute(
     startIndex: number,
     limit: number,
   ): Promise<{
-    specializations: SpecializationResponseDto[];
+    specializations: ISpecializationResponseDto[];
     totalSpecializations: number;
   } | null>;
 }

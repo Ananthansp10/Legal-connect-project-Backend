@@ -1,10 +1,10 @@
-interface GraphData {
+interface IGraphData {
   id: string;
   count: number;
   revenue: number;
 }
 
-export interface SummaryDto {
+export interface ISummaryDto {
   id: string;
   totalConsultations: number;
   totalRevenue: number;
@@ -13,5 +13,5 @@ export interface SummaryDto {
   upcomingConsultations: number;
   pendingConsultations: number;
   completedConsultations: number;
-  graphData: GraphData;
+  graphData: IGraphData;
 }

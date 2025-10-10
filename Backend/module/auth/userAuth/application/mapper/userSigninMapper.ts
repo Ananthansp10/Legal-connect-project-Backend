@@ -1,4 +1,4 @@
-import { UserSigninDto } from "../../domain/dto/userSigninDto";
+import { IUserSigninDto } from "../../domain/dto/userSigninDto";
 import { IUserSignup } from "../../domain/userRegisterEntity";
 
 export class UserSigninMapper {
@@ -6,7 +6,7 @@ export class UserSigninMapper {
     data: IUserSignup,
     accessToken: string,
     refreshToken: string,
-  ): UserSigninDto {
+  ): IUserSigninDto {
     return {
       userData: {
         id: data._id!,

@@ -1,6 +1,6 @@
 import { Types } from "mongoose";
-import { PlansRequestDto } from "../../domain/dtos/plansDto";
+import { IPlansRequestDto } from "../../domain/dtos/plansDto";
 
 export interface IEditPlanUseCase {
-  execute(planId: Types.ObjectId, data: PlansRequestDto): Promise<void>;
+  execute(planId: Types.ObjectId, data: IPlansRequestDto): Promise<void>;
 }

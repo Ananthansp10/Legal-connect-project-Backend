@@ -21,6 +21,7 @@ import { IStartMeetingUseCase } from "../../application/use-case-interface/IStar
 import { IAddNotesUseCase } from "../../application/use-case-interface/IAddNotesUseCase";
 import { IAddReviewUseCase } from "../../application/use-case-interface/IAddReviewUseCase";
 import { IGetConsultationHistoryUseCase } from "../../application/use-case-interface/IGetConsultationHistoryUseCase";
+import { IFindStarterPlanUseCase } from "../../application/use-case-interface/IFindStarterPlanUseCase";
 
 export class LawyerController {
   constructor(
@@ -37,11 +38,12 @@ export class LawyerController {
     private _updateChatReadStatusUseCase: IUpdateReadStatusUseCase,
     private _addBankAccountDetailsUseCase: IAddBankAccountDetailsUseCase,
     private _getSummaryUseCase: IGetSummaryUseCase,
-    private checkBankDetailsUseCase: ICheckBankDetailsUseCase,
+    private _checkBankDetailsUseCase: ICheckBankDetailsUseCase,
     private _startMeetingUseCase: IStartMeetingUseCase,
     private _addNotesUseCase: IAddNotesUseCase,
     private _addFeedBackUseCase: IAddReviewUseCase,
     private _getConsultationHistoryUseCase: IGetConsultationHistoryUseCase,
+    private _findStarterPlanUseCase: IFindStarterPlanUseCase,
   ) {}
 
   async addSlot(req: Request, res: Response): Promise<void> {
@@ -53,7 +55,7 @@ export class LawyerController {
       res
         .status(AppStatusCode.SUCCESS_CODE)
         .json({ success: true, message: "Slot addedd successfully" });
-    } catch (error) {
+    } catch (_error) {
       res
         .status(AppStatusCode.INTERNAL_ERROR_CODE)
         .json({ success: false, message: AppError.UNKNOWN_ERROR });
@@ -66,14 +68,12 @@ export class LawyerController {
         new mongoose.Types.ObjectId(req.params.lawyerId),
         req.params.type,
       );
-      res
-        .status(AppStatusCode.SUCCESS_CODE)
-        .json({
-          success: true,
-          message: "Data found successfully",
-          data: result,
-        });
-    } catch (error) {
+      res.status(AppStatusCode.SUCCESS_CODE).json({
+        success: true,
+        message: "Data found successfully",
+        data: result,
+      });
+    } catch (_error) {
       res
         .status(AppStatusCode.INTERNAL_ERROR_CODE)
         .json({ success: false, message: AppError.UNKNOWN_ERROR });
@@ -86,13 +86,11 @@ export class LawyerController {
         new mongoose.Types.ObjectId(req.params.ruleId),
         req.params.ruleStatus,
       );
-      res
-        .status(AppStatusCode.SUCCESS_CODE)
-        .json({
-          success: true,
-          message: result == "true" ? "Rule has disabled" : "Rule has enabled",
-        });
-    } catch (error) {
+      res.status(AppStatusCode.SUCCESS_CODE).json({
+        success: true,
+        message: result == "true" ? "Rule has disabled" : "Rule has enabled",
+      });
+    } catch (_error) {
       res
         .status(AppStatusCode.INTERNAL_ERROR_CODE)
         .json({ success: false, message: AppError.UNKNOWN_ERROR });
@@ -107,15 +105,13 @@ export class LawyerController {
         parseInt(req.params.startIndex),
         parseInt(req.params.limit),
       );
-      res
-        .status(AppStatusCode.SUCCESS_CODE)
-        .json({
-          success: true,
-          message: "Appointments found successfully",
-          data: result?.appointments,
-          totalAppointments: result?.totalAppointments,
-        });
-    } catch (error) {
+      res.status(AppStatusCode.SUCCESS_CODE).json({
+        success: true,
+        message: "Appointments found successfully",
+        data: result?.appointments,
+        totalAppointments: result?.totalAppointments,
+      });
+    } catch (_error) {
       res
         .status(AppStatusCode.INTERNAL_ERROR_CODE)
         .json({ status: false, message: AppError.UNKNOWN_ERROR });
@@ -129,12 +125,10 @@ export class LawyerController {
         req.params.appointmentStatus,
         new mongoose.Types.ObjectId(req.params.lawyerId),
       );
-      res
-        .status(AppStatusCode.SUCCESS_CODE)
-        .json({
-          success: true,
-          message: `Appointment ${req.params.appointmentStatus} successfully`,
-        });
+      res.status(AppStatusCode.SUCCESS_CODE).json({
+        success: true,
+        message: `Appointment ${req.params.appointmentStatus} successfully`,
+      });
     } catch (error) {
       if (error instanceof AppException) {
         res
@@ -151,14 +145,12 @@ export class LawyerController {
   async getSubscriptionPlan(req: Request, res: Response) {
     try {
       const result = await this._getSubscriptionPlanUseCase.execute();
-      res
-        .status(AppStatusCode.SUCCESS_CODE)
-        .json({
-          success: true,
-          message: "Subscription plan found",
-          data: result,
-        });
-    } catch (error) {
+      res.status(AppStatusCode.SUCCESS_CODE).json({
+        success: true,
+        message: "Subscription plan found",
+        data: result,
+      });
+    } catch (_error) {
       res
         .status(AppStatusCode.INTERNAL_ERROR_CODE)
         .json({ success: true, message: AppError.UNKNOWN_ERROR });
@@ -175,7 +167,7 @@ export class LawyerController {
       res
         .status(AppStatusCode.SUCCESS_CODE)
         .json({ success: true, message: "Subscription plan addedd" });
-    } catch (error) {
+    } catch (_error) {
       res
         .status(AppStatusCode.INTERNAL_ERROR_CODE)
         .json({ success: false, message: AppError.UNKNOWN_ERROR });
@@ -187,14 +179,12 @@ export class LawyerController {
       const result = await this._getLawyerAllChatsUseCase.execute(
         new mongoose.Types.ObjectId(req.params.lawyerId),
       );
-      res
-        .status(AppStatusCode.SUCCESS_CODE)
-        .json({
-          success: true,
-          message: "Lawyer all chats found successfully",
-          data: result,
-        });
-    } catch (error) {
+      res.status(AppStatusCode.SUCCESS_CODE).json({
+        success: true,
+        message: "Lawyer all chats found successfully",
+        data: result,
+      });
+    } catch (_error) {
       res
         .status(AppStatusCode.INTERNAL_ERROR_CODE)
         .json({ success: false, message: AppError.UNKNOWN_ERROR });
@@ -207,14 +197,12 @@ export class LawyerController {
         new mongoose.Types.ObjectId(req.params.lawyerId),
         new mongoose.Types.ObjectId(req.params.userId),
       );
-      res
-        .status(AppStatusCode.SUCCESS_CODE)
-        .json({
-          success: true,
-          message: "Chat found successfully",
-          data: result,
-        });
-    } catch (error) {
+      res.status(AppStatusCode.SUCCESS_CODE).json({
+        success: true,
+        message: "Chat found successfully",
+        data: result,
+      });
+    } catch (_error) {
       res
         .status(AppStatusCode.INTERNAL_ERROR_CODE)
         .json({ success: false, message: AppError.UNKNOWN_ERROR });
@@ -226,14 +214,12 @@ export class LawyerController {
       const result = await this._getUserChatProfileUseCase.execute(
         new mongoose.Types.ObjectId(req.params.userId),
       );
-      res
-        .status(AppStatusCode.SUCCESS_CODE)
-        .json({
-          success: true,
-          message: "User chat profile found",
-          data: result,
-        });
-    } catch (error) {
+      res.status(AppStatusCode.SUCCESS_CODE).json({
+        success: true,
+        message: "User chat profile found",
+        data: result,
+      });
+    } catch (_error) {
       res
         .status(AppStatusCode.INTERNAL_ERROR_CODE)
         .json({ success: false, message: AppError.UNKNOWN_ERROR });
@@ -249,7 +235,7 @@ export class LawyerController {
       res
         .status(AppStatusCode.SUCCESS_CODE)
         .json({ success: true, message: "Chat read status updated" });
-    } catch (error) {
+    } catch (_error) {
       res
         .status(AppStatusCode.INTERNAL_ERROR_CODE)
         .json({ success: false, message: AppError.UNKNOWN_ERROR });
@@ -262,7 +248,7 @@ export class LawyerController {
       res
         .status(AppStatusCode.SUCCESS_CODE)
         .json({ success: true, message: "Bank details added successfully" });
-    } catch (error) {
+    } catch (_error) {
       res
         .status(AppStatusCode.INTERNAL_ERROR_CODE)
         .json({ SUCCESS: false, MESSAGE: AppError.UNKNOWN_ERROR });
@@ -274,14 +260,12 @@ export class LawyerController {
       const result = await this._getSummaryUseCase.execute(
         new mongoose.Types.ObjectId(req.params.lawyerId),
       );
-      res
-        .status(AppStatusCode.SUCCESS_CODE)
-        .json({
-          success: true,
-          message: "Summary found successfully",
-          data: result,
-        });
-    } catch (error) {
+      res.status(AppStatusCode.SUCCESS_CODE).json({
+        success: true,
+        message: "Summary found successfully",
+        data: result,
+      });
+    } catch (_error) {
       res
         .status(AppStatusCode.INTERNAL_ERROR_CODE)
         .json({ success: false, message: AppError.UNKNOWN_ERROR });
@@ -290,18 +274,16 @@ export class LawyerController {
 
   async checkBankDetails(req: Request, res: Response) {
     try {
-      const result = await this.checkBankDetailsUseCase.execute(
+      const result = await this._checkBankDetailsUseCase.execute(
         new mongoose.Types.ObjectId(req.params.lawyerId),
       );
-      res
-        .status(AppStatusCode.SUCCESS_CODE)
-        .json({
-          success: result ? true : false,
-          message: result
-            ? "Bank Details found successfully"
-            : "Bank details not found",
-        });
-    } catch (error) {
+      res.status(AppStatusCode.SUCCESS_CODE).json({
+        success: result ? true : false,
+        message: result
+          ? "Bank Details found successfully"
+          : "Bank details not found",
+      });
+    } catch (_error) {
       res
         .status(AppStatusCode.INTERNAL_ERROR_CODE)
         .json({ success: false, message: AppError.UNKNOWN_ERROR });
@@ -316,7 +298,7 @@ export class LawyerController {
       res
         .status(AppStatusCode.SUCCESS_CODE)
         .json({ success: true, message: "Appointment meeting started" });
-    } catch (error) {
+    } catch (_error) {
       res
         .status(AppStatusCode.INTERNAL_ERROR_CODE)
         .json({ success: false, message: AppError.UNKNOWN_ERROR });
@@ -332,7 +314,7 @@ export class LawyerController {
       res
         .status(AppStatusCode.SUCCESS_CODE)
         .json({ success: true, message: "Final notes summary added" });
-    } catch (error) {
+    } catch (_error) {
       res
         .status(AppStatusCode.INTERNAL_ERROR_CODE)
         .json({ success: false, message: AppError.UNKNOWN_ERROR });
@@ -348,7 +330,7 @@ export class LawyerController {
       res
         .status(AppStatusCode.SUCCESS_CODE)
         .json({ success: true, message: "Feedback added" });
-    } catch (error) {
+    } catch (_error) {
       res
         .status(AppStatusCode.INTERNAL_ERROR_CODE)
         .json({ success: false, message: AppError.UNKNOWN_ERROR });
@@ -360,14 +342,27 @@ export class LawyerController {
       let result = await this._getConsultationHistoryUseCase.execute(
         parseInt(req.params.caseId),
       );
+      res.status(AppStatusCode.SUCCESS_CODE).json({
+        success: true,
+        message: "Consultation history found successfully",
+        data: result,
+      });
+    } catch (_error) {
+      res
+        .status(AppStatusCode.INTERNAL_ERROR_CODE)
+        .json({ success: false, message: AppError.UNKNOWN_ERROR });
+    }
+  }
+
+  async findStarterPlan(req: Request, res: Response) {
+    try {
+      let result = await this._findStarterPlanUseCase.execute(
+        new mongoose.Types.ObjectId(req.params.lawyerId),
+      );
       res
         .status(AppStatusCode.SUCCESS_CODE)
-        .json({
-          success: true,
-          message: "Consultation history found successfully",
-          data: result,
-        });
-    } catch (error) {
+        .json({ success: true, data: result });
+    } catch (_error) {
       res
         .status(AppStatusCode.INTERNAL_ERROR_CODE)
         .json({ success: false, message: AppError.UNKNOWN_ERROR });

@@ -1,4 +1,4 @@
-export interface UserChatProfileDto {
+export interface IUserChatProfileDto {
   name: string;
   profileImage: string;
   country: string;

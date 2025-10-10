@@ -1,4 +1,4 @@
-export interface AppointmentsData {
+export interface IAppointmentsData {
   userName: string;
   lawyerName: string;
   specialization: string;
@@ -16,6 +16,6 @@ export interface IGetAppointmentsUseCase {
     startIndex: number,
     limit: number,
   ): Promise<
-    { appointments: AppointmentsData[] | []; totalAppointments: number } | []
+    { appointments: IAppointmentsData[] | []; totalAppointments: number } | []
   >;
 }

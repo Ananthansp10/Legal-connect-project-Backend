@@ -1,6 +1,6 @@
 import { Types } from "mongoose";
 
-export interface AppointmentRequestDto {
+export interface IAppointmentRequestDto {
   _id?: Types.ObjectId;
   lawyerId: Types.ObjectId;
   userId: Types.ObjectId;

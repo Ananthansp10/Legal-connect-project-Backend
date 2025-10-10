@@ -1,14 +1,14 @@
-import { ReportsDto } from "../../domain/dtos/reportsDto";
+import { IReportsDto } from "../../domain/dtos/reportsDto";
 import { IReportsRepository } from "../../infrastructure/repositoryInterface/IReportsRepository";
 import { IGetReportsUseCase } from "../use-case-interface/IGetReportsUseCase";
 
 export class GetReportsUseCase implements IGetReportsUseCase {
-  constructor(private _reportsRepo: IReportsRepository) { }
+  constructor(private _reportsRepo: IReportsRepository) {}
 
   async execute(
     revenueDateRange: string,
     specializationType: string,
-  ): Promise<ReportsDto> {
+  ): Promise<IReportsDto> {
     let totalRevenue = (await this._reportsRepo.getTotalRevenue()) || 0;
     let totalAppointments =
       (await this._reportsRepo.getTotalAppointments()) || 0;

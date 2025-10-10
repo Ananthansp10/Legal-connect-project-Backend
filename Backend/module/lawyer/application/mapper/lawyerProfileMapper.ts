@@ -1,5 +1,5 @@
 import { Types } from "mongoose";
-import { LawyerProfileEntity } from "../../domain/entity/lawyerProfileEntity";
+import { ILawyerProfileEntity } from "../../domain/entity/lawyerProfileEntity";
 
 export interface ILawyerProfileRequest {
   lawyerId: Types.ObjectId;
@@ -41,7 +41,7 @@ export class LawyerProfileMapper {
       experienceCertificate?: { path: string }[];
       idProof?: { path: string }[];
     },
-  ): Promise<LawyerProfileEntity> {
+  ): Promise<ILawyerProfileEntity> {
     return {
       lawyerId: data.lawyerId,
       personalInfo: {

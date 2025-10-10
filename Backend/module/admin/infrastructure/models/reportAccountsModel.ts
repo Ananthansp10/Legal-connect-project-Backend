@@ -1,5 +1,4 @@
 import mongoose, { Schema } from "mongoose";
-import { ref } from "process";
 import { IReportAccountEntity } from "../../domain/entity/reportAccountEntity";
 
 const reportAccountSchema = new Schema<IReportAccountEntity>({

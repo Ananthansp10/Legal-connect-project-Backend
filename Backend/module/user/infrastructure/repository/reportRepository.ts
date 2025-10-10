@@ -1,8 +1,7 @@
 import { Types } from "mongoose";
 import {
   IReportRepository,
-  ReportDataRequestDto,
-  Reports,
+  IReports,
 } from "../repositoryInterface/IReportReposiitory";
 import { IReportAccountEntity } from "../../../admin/domain/entity/reportAccountEntity";
 import { reportAccountModel } from "../../../admin/infrastructure/models/reportAccountsModel";
@@ -20,7 +19,7 @@ export class ReportRepository implements IReportRepository {
 
   async updateLawyerReport(
     lawyerId: Types.ObjectId,
-    data: Reports,
+    data: IReports,
   ): Promise<void> {
     await reportAccountModel.updateOne(
       { reportedId: lawyerId },

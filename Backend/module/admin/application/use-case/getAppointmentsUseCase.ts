@@ -1,6 +1,6 @@
 import { IAppointmentsRepository } from "../../infrastructure/repositoryInterface/IAppointmentsRepository";
 import {
-  AppointmentsData,
+  IAppointmentsData,
   IGetAppointmentsUseCase,
 } from "../use-case-interface/IGetAppointmentsUseCase";
 
@@ -12,7 +12,7 @@ export class GetAppointmentsUseCase implements IGetAppointmentsUseCase {
     startIndex: number,
     limit: number,
   ): Promise<
-    { appointments: AppointmentsData[] | []; totalAppointments: number } | []
+    { appointments: IAppointmentsData[] | []; totalAppointments: number } | []
   > {
     const appointments = await this._appointmentRepo.findAppointments(
       appointmentStatus,
@@ -32,15 +32,16 @@ export class GetAppointmentsUseCase implements IGetAppointmentsUseCase {
         );
 
         return {
-          userName: userDetails?.name!,
-          lawyerName: lawyerDetails?.personalInfo.name!,
+          userName: userDetails?.name ?? "",
+          lawyerName: lawyerDetails?.personalInfo.name ?? "",
           problem: appointment.problem,
-          specialization: lawyerDetails?.proffessionalInfo.practiceAreas[0]!,
+          specialization:
+            lawyerDetails?.proffessionalInfo.practiceAreas[0] ?? "",
           date: appointment.date,
           time: appointment.time,
           appointmentStatus: appointment.appointmentStatus,
-          userProfileImage: userDetails?.profileImage!,
-          lawyerProfileImage: lawyerDetails?.personalInfo.profileImage!,
+          userProfileImage: userDetails?.profileImage ?? "",
+          lawyerProfileImage: lawyerDetails?.personalInfo.profileImage ?? "",
         };
       }),
     );

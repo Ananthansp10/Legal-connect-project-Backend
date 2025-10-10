@@ -1,15 +1,15 @@
-export interface SpecializationData {
+export interface ISpecializationData {
   _id?: string;
   count?: number;
   average?: number;
   specializationName?: string;
 }
 
-interface TotalLawyers {
+interface ITotalLawyers {
   totalLawyers: number;
 }
 
-export interface SpecializationChartDto {
-  totalLawyers: TotalLawyers[];
-  specializations: SpecializationData[];
+export interface ISpecializationChartDto {
+  totalLawyers: ITotalLawyers[];
+  specializations: ISpecializationData[];
 }

@@ -1,6 +1,6 @@
 import { Types } from "mongoose";
 
-export interface Messages {
+export interface IMessages {
   senderId: Types.ObjectId;
   receiverId: Types.ObjectId;
   message: string;
@@ -10,5 +10,5 @@ export interface Messages {
 
 export interface IChatEntity {
   participants: Types.ObjectId[];
-  messages: Messages[];
+  messages: IMessages[];
 }

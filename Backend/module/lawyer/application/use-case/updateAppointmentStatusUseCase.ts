@@ -4,6 +4,7 @@ import { IUpdateAppointmentStatus } from "../use-case-interface/IUpdateAppointme
 import { IPlanRepository } from "../../infrastructure/repositoryInterface/IPlanRepository";
 import { AppException } from "../../../../common/error/errorException";
 import { IBankDetailsRepository } from "../../infrastructure/repositoryInterface/IBankDetailsRepository";
+import { AppointmentStatus } from "../../../../common/status/appointmentStatus";
 
 export class UpdateAppointmentStatusUseCase
   implements IUpdateAppointmentStatus
@@ -19,7 +20,7 @@ export class UpdateAppointmentStatusUseCase
     appointmentStatus: string,
     lawyerId: Types.ObjectId,
   ): Promise<void> {
-    if (appointmentStatus == "Accepted") {
+    if (appointmentStatus == AppointmentStatus.ACCEPTED) {
       const subscribed = await this._planRepo.findPlan(lawyerId);
       if (!subscribed) {
         throw new AppException(
@@ -35,9 +36,22 @@ export class UpdateAppointmentStatusUseCase
             403,
           );
         }
+        const checkActivePlan = subscribed.plans.filter(
+          (plan) => plan.isActive,
+        );
+        if (checkActivePlan.length == 0) {
+          throw new AppException(
+            "Cant accept ! your plan has been expired ! please subscribe to continue",
+            403,
+          );
+        }
         await this._appointmentRepo.updateStatus(
           appointmentId,
           appointmentStatus,
+        );
+        await this._planRepo.updatePlanAppointment(
+          lawyerId,
+          checkActivePlan[0].planId,
         );
       }
     } else {

@@ -1,9 +1,9 @@
-import { UserProfile, UserProfileMapper } from "../mapper/userProfileMapper";
+import { IUserProfile, UserProfileMapper } from "../mapper/userProfileMapper";
 
 export interface IEditProfileUseCase {
   execute(
     userId: string,
-    data: UserProfile,
+    data: IUserProfile,
     imageUrl: string,
   ): Promise<UserProfileMapper>;
 }

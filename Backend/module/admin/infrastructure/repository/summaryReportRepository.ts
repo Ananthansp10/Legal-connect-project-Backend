@@ -3,20 +3,20 @@ import { lawyerModel } from "../../../auth/lawyerAuth/infrastructure/models/lawy
 import { userModel } from "../../../auth/userAuth/infrastructure/models/userSignupModel";
 import { IAppointmentEntity } from "../../../user/domain/entity/appointmentEntity";
 import { appointmentModel } from "../../../user/infrastructure/models/appointmentModel";
-import { RevenueChartDto } from "../../domain/dtos/revenueChartDto";
-import { SpecializationChartDto } from "../../domain/dtos/specializationChartDto";
-import { WeeklyAppointmentsDto } from "../../domain/dtos/weeklyAppointmentDto";
+import { IRevenueChartDto } from "../../domain/dtos/revenueChartDto";
+import { ISpecializationChartDto } from "../../domain/dtos/specializationChartDto";
+import { IWeeklyAppointmentsDto } from "../../domain/dtos/weeklyAppointmentDto";
 import { ISummaryReportRepository } from "../repositoryInterface/ISummaryReportRepository";
 import { lawyerProfileModel } from "../../../lawyer/infrastructure/models/lawyerProfileModel";
-import { LawyerProfileEntity } from "../../../lawyer/domain/entity/lawyerProfileEntity";
+import { ILawyerProfileEntity } from "../../../lawyer/domain/entity/lawyerProfileEntity";
 import { ILawyerSignup } from "../../../auth/lawyerAuth/domain/entity/lawyerEntity";
 import { reviewsModel } from "../../../user/infrastructure/models/reviewsModel";
-import { FeedbackEntity } from "../../../user/domain/entity/feedbackEntity";
+import { IFeedbackEntity } from "../../../user/domain/entity/feedbackEntity";
 import { IUserSignup } from "../../../auth/userAuth/domain/userRegisterEntity";
 import { userProfileModel } from "../../../user/infrastructure/models/userProfileModel";
-import { UserProfileEntitie } from "../../../user/domain/entity/userProfileUserEntity";
-import { StateChartDto } from "../../domain/dtos/stateChartDto";
-import { CountryChartDto } from "../../domain/dtos/countryChartDto";
+import { IUserProfileEntitie } from "../../../user/domain/entity/userProfileUserEntity";
+import { IStateChartDto } from "../../domain/dtos/stateChartDto";
+import { ICountryChartDto } from "../../domain/dtos/countryChartDto";
 import { subscribersModel } from "../../../lawyer/infrastructure/models/subscribersModel";
 
 export class SummaryReportRepository implements ISummaryReportRepository {
@@ -37,7 +37,7 @@ export class SummaryReportRepository implements ISummaryReportRepository {
     return (await lawyerModel.find({ verified: false })).length;
   }
 
-  async getRevenueChart(): Promise<RevenueChartDto[] | null> {
+  async getRevenueChart(): Promise<IRevenueChartDto[] | null> {
     return await subscribersModel.aggregate([
       {
         $unwind: "$plans",
@@ -56,7 +56,7 @@ export class SummaryReportRepository implements ISummaryReportRepository {
     ]);
   }
 
-  async getWeeklyAppointments(): Promise<WeeklyAppointmentsDto[] | null> {
+  async getWeeklyAppointments(): Promise<IWeeklyAppointmentsDto[] | null> {
     const startOfMonth = new Date();
     startOfMonth.setDate(1);
     startOfMonth.setHours(0, 0, 0, 0);
@@ -115,7 +115,7 @@ export class SummaryReportRepository implements ISummaryReportRepository {
     ]);
   }
 
-  async getSpecializationChart(): Promise<SpecializationChartDto[] | null> {
+  async getSpecializationChart(): Promise<ISpecializationChartDto[] | null> {
     return await lawyerModel.aggregate([
       {
         $facet: {
@@ -131,7 +131,7 @@ export class SummaryReportRepository implements ISummaryReportRepository {
 
   async getLawyerProfile(
     lawyerId: Types.ObjectId,
-  ): Promise<LawyerProfileEntity | null> {
+  ): Promise<ILawyerProfileEntity | null> {
     return await lawyerProfileModel.findOne({ lawyerId: lawyerId });
   }
 
@@ -147,7 +147,7 @@ export class SummaryReportRepository implements ISummaryReportRepository {
 
   async getLawyerRating(
     lawyerId: Types.ObjectId,
-  ): Promise<FeedbackEntity | null> {
+  ): Promise<IFeedbackEntity | null> {
     return await reviewsModel.findOne({ lawyerId: lawyerId });
   }
 
@@ -157,7 +157,7 @@ export class SummaryReportRepository implements ISummaryReportRepository {
 
   async getUserProfile(
     userId: Types.ObjectId,
-  ): Promise<UserProfileEntitie | null> {
+  ): Promise<IUserProfileEntitie | null> {
     return await userProfileModel.findOne({ userId: userId });
   }
 
@@ -167,7 +167,7 @@ export class SummaryReportRepository implements ISummaryReportRepository {
     return await appointmentModel.find({ userId: userId });
   }
 
-  async getStateChart(): Promise<StateChartDto[] | null> {
+  async getStateChart(): Promise<IStateChartDto[] | null> {
     return await appointmentModel.aggregate([
       {
         $lookup: {
@@ -192,7 +192,7 @@ export class SummaryReportRepository implements ISummaryReportRepository {
     ]);
   }
 
-  async getCountryChart(): Promise<CountryChartDto[] | null> {
+  async getCountryChart(): Promise<ICountryChartDto[] | null> {
     return await appointmentModel.aggregate([
       {
         $lookup: {

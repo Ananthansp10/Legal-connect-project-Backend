@@ -1,28 +1,28 @@
-export interface Address {
+export interface IAddress {
   street: string;
   country: string;
   state: string;
   city: string;
 }
 
-interface PersonalInfo {
+interface IPersonalInfo {
   name: string;
   email: string;
   phoneNumber: string;
   DOB: string;
   gender: string;
-  address: Address;
+  address: IAddress;
   language: string[];
   profileImage: string;
 }
 
-interface Education {
+interface IEducation {
   degree: string;
   university: string;
   year: string;
 }
 
-interface ProfessionalInfo {
+interface IProfessionalInfo {
   practiceAreas: string[];
   barRegisterNumber: string;
   experience: string;
@@ -32,11 +32,11 @@ interface ProfessionalInfo {
   availableDays: string[];
   startTime: string;
   endTime: string;
-  education: Education;
+  education: IEducation;
   documents: string[];
 }
 
-export interface LawyerProfileDataDto {
-  personalInfo: PersonalInfo;
-  professionalInfo: ProfessionalInfo;
+export interface ILawyerProfileDataDto {
+  personalInfo: IPersonalInfo;
+  professionalInfo: IProfessionalInfo;
 }

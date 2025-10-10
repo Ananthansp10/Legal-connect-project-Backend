@@ -1,7 +1,7 @@
 import { Types } from "mongoose";
 import { IAppointmentEntity } from "../../../user/domain/entity/appointmentEntity";
-import { UserProfileEntitie } from "../../../user/domain/entity/userProfileUserEntity";
-import { ConsultationHistoryRequestDto } from "../../domain/dtos/consultationHistoryDto";
+import { IUserProfileEntitie } from "../../../user/domain/entity/userProfileUserEntity";
+import { IConsultationHistoryRequestDto } from "../../domain/dtos/consultationHistoryDto";
 
 export interface IAppointmentRepository {
   getAppointments(
@@ -13,7 +13,7 @@ export interface IAppointmentRepository {
     appointments: IAppointmentEntity[];
     totalAppointments: number;
   } | null>;
-  findUserDetails(userId: Types.ObjectId): Promise<UserProfileEntitie | null>;
+  findUserDetails(userId: Types.ObjectId): Promise<IUserProfileEntitie | null>;
   updateStatus(
     appointmentId: Types.ObjectId,
     appointmentStatus: string,
@@ -26,5 +26,5 @@ export interface IAppointmentRepository {
   ): Promise<void>;
   getConsultationHistory(
     caseId: number,
-  ): Promise<ConsultationHistoryRequestDto[] | null>;
+  ): Promise<IConsultationHistoryRequestDto[] | null>;
 }

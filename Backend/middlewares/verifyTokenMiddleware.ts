@@ -43,14 +43,12 @@ export const verifyToken = (
             maxAge: 7 * 24 * 60 * 60000,
           });
           return next();
-        } catch (error) {
-          res
-            .status(AppStatusCode.UNAUTHORIZED)
-            .json({
-              success: false,
-              message: "Invalid refresh token",
-              isUnAuth: true,
-            });
+        } catch (_error) {
+          res.status(AppStatusCode.UNAUTHORIZED).json({
+            success: false,
+            message: "Invalid refresh token",
+            isUnAuth: true,
+          });
           return;
         }
       } else {
@@ -60,14 +58,12 @@ export const verifyToken = (
             process.env.JWT_ACCESS_TOKEN_SECRET!,
           ) as jwt.JwtPayload;
           return next();
-        } catch (error) {
-          res
-            .status(AppStatusCode.UNAUTHORIZED)
-            .json({
-              success: false,
-              message: "Invalid access token",
-              isUnAuth: true,
-            });
+        } catch (_error) {
+          res.status(AppStatusCode.UNAUTHORIZED).json({
+            success: false,
+            message: "Invalid access token",
+            isUnAuth: true,
+          });
           return;
         }
       }
@@ -77,7 +73,7 @@ export const verifyToken = (
         .json({ success: false, message: "Invalid token", isUnAuth: true });
       return;
     }
-  } catch (error) {
+  } catch (_error) {
     res
       .status(AppStatusCode.INTERNAL_ERROR_CODE)
       .json({ success: false, message: AppError.UNKNOWN_ERROR });

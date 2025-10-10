@@ -1,5 +1,5 @@
 import { Types } from "mongoose";
-import { LawyerChatProfileDto } from "../../domain/dtos/lawyerChatProfileDto";
+import { ILawyerChatProfileDto } from "../../domain/dtos/lawyerChatProfileDto";
 import { IChatRepository } from "../../infrastructure/repositoryInterface/IChatRepository";
 import { IGetLawyerChatProfileUseCase } from "../use-case-interface/IGetLawyerChatProfileUseCase";
 
@@ -10,13 +10,13 @@ export class GetLawyerChatProfileUseCase
 
   async execute(
     lawyerId: Types.ObjectId,
-  ): Promise<LawyerChatProfileDto | null> {
+  ): Promise<ILawyerChatProfileDto | null> {
     const lawyerDetails = await this._chatRepo.findLawyerDetails(lawyerId);
     return {
-      name: lawyerDetails?.personalInfo.name!,
-      profileImage: lawyerDetails?.personalInfo.profileImage!,
-      specialization: lawyerDetails?.proffessionalInfo.practiceAreas[0]!,
-      courtName: lawyerDetails?.proffessionalInfo.courtName!,
+      name: lawyerDetails?.personalInfo.name ?? "",
+      profileImage: lawyerDetails?.personalInfo.profileImage ?? "",
+      specialization: lawyerDetails?.proffessionalInfo.practiceAreas[0] ?? "",
+      courtName: lawyerDetails?.proffessionalInfo.courtName ?? "",
     };
   }
 }

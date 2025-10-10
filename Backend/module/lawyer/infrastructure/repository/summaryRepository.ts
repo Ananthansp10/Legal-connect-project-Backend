@@ -1,10 +1,10 @@
 import { Types } from "mongoose";
-import { SummaryDto } from "../../domain/dtos/summaryDto";
+import { ISummaryDto } from "../../domain/dtos/summaryDto";
 import { ISummaryRepository } from "../repositoryInterface/ISummaryRepository";
 import { appointmentModel } from "../../../user/infrastructure/models/appointmentModel";
 
 export class SummaryRepository implements ISummaryRepository {
-  async getSummary(lawyerId: Types.ObjectId): Promise<SummaryDto | null> {
+  async getSummary(lawyerId: Types.ObjectId): Promise<ISummaryDto | null> {
     const result = await appointmentModel.aggregate([
       {
         $match: {
@@ -35,7 +35,7 @@ export class SummaryRepository implements ISummaryRepository {
             { $group: { _id: null, count: { $sum: 1 } } },
           ],
           totalRevenue: [
-            { $match: { appointmentStatus: {$in:['Booked','Completed']} } },
+            { $match: { appointmentStatus: { $in: ["Booked", "Completed"] } } },
             { $group: { _id: null, revenue: { $sum: "$fee" } } },
           ],
           graphData: [

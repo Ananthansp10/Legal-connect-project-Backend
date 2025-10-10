@@ -1,11 +1,11 @@
 import { Types } from "mongoose";
 
-export interface SpecData {
+export interface ISpecData {
   name: string;
   description: string;
   isDeleted: boolean;
 }
 
 export interface IEditSpecializationRepository {
-  editSpecialization(specId: Types.ObjectId, data: SpecData): Promise<void>;
+  editSpecialization(specId: Types.ObjectId, data: ISpecData): Promise<void>;
 }

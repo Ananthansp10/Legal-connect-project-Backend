@@ -1,5 +1,5 @@
-import { UserSigninDto } from "../../domain/dto/userSigninDto";
+import { IUserSigninDto } from "../../domain/dto/userSigninDto";
 
 export interface IUserSigninUseCase {
-  execute(email: string, password: string): Promise<UserSigninDto>;
+  execute(email: string, password: string): Promise<IUserSigninDto>;
 }

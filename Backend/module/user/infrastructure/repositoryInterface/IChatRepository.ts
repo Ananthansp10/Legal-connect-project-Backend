@@ -1,6 +1,6 @@
 import { Types } from "mongoose";
-import { IChatEntity, Messages } from "../../domain/entity/chatEntity";
-import { LawyerProfileEntity } from "../../../lawyer/domain/entity/lawyerProfileEntity";
+import { IChatEntity, IMessages } from "../../domain/entity/chatEntity";
+import { ILawyerProfileEntity } from "../../../lawyer/domain/entity/lawyerProfileEntity";
 
 export interface IChatRepository {
   saveChat(data: IChatEntity): Promise<void>;
@@ -11,12 +11,12 @@ export interface IChatRepository {
   addMessage(
     userId: Types.ObjectId,
     lawyerId: Types.ObjectId,
-    message: Messages,
+    message: IMessages,
   ): Promise<void>;
   findUserChat(userId: Types.ObjectId): Promise<IChatEntity[] | null>;
   findLawyerDetails(
     lawyerId: Types.ObjectId,
-  ): Promise<LawyerProfileEntity | null>;
+  ): Promise<ILawyerProfileEntity | null>;
   updateChatReadStatus(
     userId: Types.ObjectId,
     lawyerId: Types.ObjectId,

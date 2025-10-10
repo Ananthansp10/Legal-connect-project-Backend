@@ -1,10 +1,10 @@
 import {
-  LawyerSignupRequestDto,
-  LawyerSignupResponseDto,
+  ILawyerSignupRequestDto,
+  ILawyerSignupResponseDto,
 } from "../../domain/dto/lawyerSignupDto";
 
 export interface ILawyerSignupUseCase {
   registerLawyer(
-    data: LawyerSignupRequestDto,
-  ): Promise<LawyerSignupResponseDto>;
+    data: ILawyerSignupRequestDto,
+  ): Promise<ILawyerSignupResponseDto>;
 }

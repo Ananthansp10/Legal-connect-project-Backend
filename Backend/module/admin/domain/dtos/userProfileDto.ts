@@ -1,4 +1,4 @@
-export interface Address {
+export interface IAddress {
   street: string;
   city: string;
   state: string;
@@ -6,11 +6,11 @@ export interface Address {
   zipCode: string;
 }
 
-export interface UserProfileDataDto {
+export interface IUserProfileDataDto {
   name: string;
   email: string;
   phoneNumber: string;
-  address: Address;
+  address: IAddress;
   profileImage: string;
   DOB: string;
   gender: string;

@@ -1,6 +1,6 @@
-import { LawyerProfileEntity } from "../../../lawyer/domain/entity/lawyerProfileEntity";
-import { UserProfileEntitie } from "../../../user/domain/entity/userProfileUserEntity";
-import { ReportAccountDto } from "../../domain/dtos/reportAccountDto";
+import { ILawyerProfileEntity } from "../../../lawyer/domain/entity/lawyerProfileEntity";
+import { IUserProfileEntitie } from "../../../user/domain/entity/userProfileUserEntity";
+import { IReportAccountDto } from "../../domain/dtos/reportAccountDto";
 import { IReportAccountEntity } from "../../domain/entity/reportAccountEntity";
 import { IReportedAccountsRepository } from "../../infrastructure/repositoryInterface/IReportedAccountsRepository";
 
@@ -8,7 +8,7 @@ export class ReportedAccountsMapper {
   static async toResponse(
     reportedAccounts: IReportAccountEntity[],
     reportedAccountRepo: IReportedAccountsRepository,
-  ): Promise<ReportAccountDto[] | null> {
+  ): Promise<IReportAccountDto[] | null> {
     const results = await Promise.all(
       reportedAccounts?.map(async (accounts) => {
         let reportedAccountDetails;
@@ -37,8 +37,8 @@ export class ReportedAccountsMapper {
               reporterId: reporters.reporterId,
               reporterName:
                 accounts.userType == "user"
-                  ? (reporterDetails as LawyerProfileEntity).personalInfo.name
-                  : (reporterDetails as UserProfileEntitie).name,
+                  ? (reporterDetails as ILawyerProfileEntity).personalInfo.name
+                  : (reporterDetails as IUserProfileEntitie).name,
               date: reporters.date,
               reason: reporters.reason,
               description: reporters.description,
@@ -50,17 +50,17 @@ export class ReportedAccountsMapper {
           _id: accounts._id!,
           reportedId:
             accounts.userType == "user"
-              ? (reportedAccountDetails as UserProfileEntitie).userId
-              : (reportedAccountDetails as LawyerProfileEntity).lawyerId,
+              ? (reportedAccountDetails as IUserProfileEntitie).userId
+              : (reportedAccountDetails as ILawyerProfileEntity).lawyerId,
           reportedName:
             accounts.userType == "user"
-              ? (reportedAccountDetails as UserProfileEntitie).name
-              : (reportedAccountDetails as LawyerProfileEntity).personalInfo
+              ? (reportedAccountDetails as IUserProfileEntitie).name
+              : (reportedAccountDetails as ILawyerProfileEntity).personalInfo
                   .name,
           reportedUserProfileImage:
             accounts.userType == "user"
-              ? (reportedAccountDetails as UserProfileEntitie).profileImage
-              : (reportedAccountDetails as LawyerProfileEntity).personalInfo
+              ? (reportedAccountDetails as IUserProfileEntitie).profileImage
+              : (reportedAccountDetails as ILawyerProfileEntity).personalInfo
                   .profileImage,
           reportsCount: accounts.reports.length,
           userType: accounts.userType,

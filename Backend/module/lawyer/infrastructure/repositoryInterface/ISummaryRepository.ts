@@ -1,6 +1,6 @@
 import { Types } from "mongoose";
-import { SummaryDto } from "../../domain/dtos/summaryDto";
+import { ISummaryDto } from "../../domain/dtos/summaryDto";
 
 export interface ISummaryRepository {
-  getSummary(lawyerId: Types.ObjectId): Promise<SummaryDto | null>;
+  getSummary(lawyerId: Types.ObjectId): Promise<ISummaryDto | null>;
 }

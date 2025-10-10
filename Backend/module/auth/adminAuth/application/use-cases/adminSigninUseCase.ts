@@ -2,14 +2,14 @@ import { AppError } from "../../../../../common/error/AppEnumError";
 import { AppException } from "../../../../../common/error/errorException";
 import { AppStatusCode } from "../../../../../common/statusCode/AppStatusCode";
 import { ITokenGeneration } from "../../../userAuth/infrastructure/services/ItokenGenerationService";
-import { AdminSignInDto } from "../../domain/dtos/adminSigninDto";
+import { IAdminSignInDto } from "../../domain/dtos/adminSigninDto";
 import { IAdminSigninUseCase } from "../use-case-interface/IadminSigninUseCase";
 
 export class AdminSigninUseCase implements IAdminSigninUseCase {
   constructor(private _tokenGenerateService: ITokenGeneration) {}
 
   async execute(
-    data: AdminSignInDto,
+    data: IAdminSignInDto,
   ): Promise<{ accessToken: string; refreshToken: string }> {
     try {
       if (data.email != process.env.ADMIN_EMAIL) {

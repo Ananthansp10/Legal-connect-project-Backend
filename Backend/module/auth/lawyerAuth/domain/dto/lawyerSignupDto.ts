@@ -1,4 +1,4 @@
-export interface LawyerSignupRequestDto {
+export interface ILawyerSignupRequestDto {
   name: string;
   email: string;
   password: string;
@@ -13,7 +13,7 @@ export interface LawyerSignupRequestDto {
   createdAt: Date;
 }
 
-export interface LawyerSignupResponseDto {
+export interface ILawyerSignupResponseDto {
   id: string;
   name: string;
   email: string;

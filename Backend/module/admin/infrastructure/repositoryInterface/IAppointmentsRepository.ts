@@ -1,7 +1,8 @@
 import { Types } from "mongoose";
-import { LawyerProfileEntity } from "../../../lawyer/domain/entity/lawyerProfileEntity";
+import { ILawyerProfileEntity } from "../../../lawyer/domain/entity/lawyerProfileEntity";
 import { IAppointmentEntity } from "../../../user/domain/entity/appointmentEntity";
-import { UserProfileEntitie } from "../../../user/domain/entity/userProfileUserEntity";
+import { IUserProfileEntitie } from "../../../user/domain/entity/userProfileUserEntity";
+import { IAppointmentDetailsDto } from "../../domain/dtos/appointmentDetailsDto";
 
 export interface IAppointmentsRepository {
   findAppointments(
@@ -12,8 +13,9 @@ export interface IAppointmentsRepository {
     appointments: IAppointmentEntity[];
     totalAppointments: number;
   } | null>;
-  findUserDetails(userId: Types.ObjectId): Promise<UserProfileEntitie | null>;
+  findUserDetails(userId: Types.ObjectId): Promise<IUserProfileEntitie | null>;
   findLawyerDetails(
     lawyerId: Types.ObjectId,
-  ): Promise<LawyerProfileEntity | null>;
+  ): Promise<ILawyerProfileEntity | null>;
+  searchAppointment(name: string): Promise<IAppointmentDetailsDto[] | null>;
 }

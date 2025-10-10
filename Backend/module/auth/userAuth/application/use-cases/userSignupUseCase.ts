@@ -1,6 +1,6 @@
 import {
-  UserSignupRequestDto,
-  UserSignupResponseDto,
+  IUserSignupRequestDto,
+  IUserSignupResponseDto,
 } from "../../domain/dto/userSignupDto";
 import { IUserSignup } from "../../domain/userRegisterEntity";
 import { IGenerateOtpService } from "../../infrastructure/services/IgenerateOtpService";
@@ -38,8 +38,8 @@ export class UserSignupUseCase implements IUserSignupUseCase {
   }
 
   async registerUser(
-    data: UserSignupRequestDto,
-  ): Promise<UserSignupResponseDto | null> {
+    data: IUserSignupRequestDto,
+  ): Promise<IUserSignupResponseDto | null> {
     try {
       const userExist: IUserSignup | null = await this._userRepo.findByEmail(
         data.email,

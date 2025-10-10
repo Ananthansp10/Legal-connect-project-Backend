@@ -4,17 +4,17 @@ import { AppStatusCode } from "../../../../common/statusCode/AppStatusCode";
 import { IAppointmentRepository } from "../../infrastructure/repositoryInterface/IAppointmentRepository";
 import {
   IVerifyPaymentUseCase,
-  PaymentDataRequestDto,
+  IPaymentDataRequestDto,
 } from "../use-case-interface/IVerifyPaymentUseCase";
 import crypto from "crypto";
 
 export class VerifyPaymentUseCase implements IVerifyPaymentUseCase {
   constructor(private _appointmentRepo: IAppointmentRepository) {}
 
-  async execute(data: PaymentDataRequestDto): Promise<void> {
+  async execute(data: IPaymentDataRequestDto): Promise<void> {
     try {
       const {
-        razorpay_order_id,
+        razorpay_order_id: razorpayOrderId,
         razorpay_payment_id,
         razorpay_signature,
         appointmentId,
@@ -25,7 +25,7 @@ export class VerifyPaymentUseCase implements IVerifyPaymentUseCase {
         process.env.RAZORPAY_KEY_SECRET!,
       );
 
-      hmac.update(razorpay_order_id + "|" + razorpay_payment_id);
+      hmac.update(razorpayOrderId + "|" + razorpay_payment_id);
 
       const generatedSignature = hmac.digest("hex");
 

@@ -26,14 +26,12 @@ export class AdminLawyerManagementController {
     try {
       const result: ILawyerResponse[] | null =
         await this._getUnverifiedLawyerApplication.execute();
-      res
-        .status(AppStatusCode.SUCCESS_CODE)
-        .json({
-          success: true,
-          message: "Data found successfully",
-          data: result,
-        });
-    } catch (error) {
+      res.status(AppStatusCode.SUCCESS_CODE).json({
+        success: true,
+        message: "Data found successfully",
+        data: result,
+      });
+    } catch (_error) {
       res
         .status(AppStatusCode.INTERNAL_ERROR_CODE)
         .json({ success: false, message: AppError.UNKNOWN_ERROR });
@@ -56,7 +54,7 @@ export class AdminLawyerManagementController {
           .status(AppStatusCode.SUCCESS_CODE)
           .json({ success: true, message: "Lawyer rejected successfully" });
       }
-    } catch (error) {
+    } catch (_error) {
       res
         .status(AppStatusCode.INTERNAL_ERROR_CODE)
         .json({ success: false, message: AppError.UNKNOWN_ERROR });
@@ -70,15 +68,13 @@ export class AdminLawyerManagementController {
           parseInt(req.query.page as string),
           parseInt(req.query.limit as string),
         );
-      res
-        .status(AppStatusCode.SUCCESS_CODE)
-        .json({
-          success: true,
-          message: "Data found successfully",
-          data: result.data,
-          totalData: result.totalData,
-        });
-    } catch (error) {
+      res.status(AppStatusCode.SUCCESS_CODE).json({
+        success: true,
+        message: "Data found successfully",
+        data: result.data,
+        totalData: result.totalData,
+      });
+    } catch (_error) {
       res
         .status(AppStatusCode.INTERNAL_ERROR_CODE)
         .json({ success: false, message: AppError.UNKNOWN_ERROR });
@@ -100,7 +96,7 @@ export class AdminLawyerManagementController {
           .status(AppStatusCode.SUCCESS_CODE)
           .json({ success: true, message: "Lawyer unblock successfully" });
       }
-    } catch (error) {
+    } catch (_error) {
       res
         .status(AppStatusCode.INTERNAL_ERROR_CODE)
         .json({ success: false, message: AppError.UNKNOWN_ERROR });
@@ -110,14 +106,12 @@ export class AdminLawyerManagementController {
   async searchLawyer(req: Request, res: Response) {
     try {
       const result = await this._searchLawyerUseCase.execute(req.params.name);
-      res
-        .status(AppStatusCode.SUCCESS_CODE)
-        .json({
-          success: true,
-          message: "Search data found successfully",
-          data: result,
-        });
-    } catch (error) {
+      res.status(AppStatusCode.SUCCESS_CODE).json({
+        success: true,
+        message: "Search data found successfully",
+        data: result,
+      });
+    } catch (_error) {
       res
         .status(AppStatusCode.INTERNAL_ERROR_CODE)
         .json({ success: false, message: AppError.UNKNOWN_ERROR });
@@ -127,14 +121,12 @@ export class AdminLawyerManagementController {
   async filterLawyer(req: Request, res: Response) {
     try {
       const result = await this._filterLawyerUseCase.execute(req.params.status);
-      res
-        .status(AppStatusCode.SUCCESS_CODE)
-        .json({
-          success: true,
-          message: "Filtered data found successfully",
-          data: result,
-        });
-    } catch (error) {
+      res.status(AppStatusCode.SUCCESS_CODE).json({
+        success: true,
+        message: "Filtered data found successfully",
+        data: result,
+      });
+    } catch (_error) {
       res
         .status(AppStatusCode.INTERNAL_ERROR_CODE)
         .json({ success: false, message: AppError.UNKNOWN_ERROR });
@@ -146,14 +138,12 @@ export class AdminLawyerManagementController {
       const result = await this._getLawyerProfileDataUseCase.execute(
         new mongoose.Types.ObjectId(req.params.lawyerId),
       );
-      res
-        .status(AppStatusCode.SUCCESS_CODE)
-        .json({
-          success: true,
-          message: "Lawyer profile found successfully",
-          data: result,
-        });
-    } catch (error) {
+      res.status(AppStatusCode.SUCCESS_CODE).json({
+        success: true,
+        message: "Lawyer profile found successfully",
+        data: result,
+      });
+    } catch (_error) {
       res
         .status(AppStatusCode.INTERNAL_ERROR_CODE)
         .json({ success: false, message: AppError.UNKNOWN_ERROR });

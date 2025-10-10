@@ -2,7 +2,7 @@ import { Types } from "mongoose";
 import { IUserSignup } from "../../../auth/userAuth/domain/userRegisterEntity";
 import { ILawyerSignup } from "../../../auth/lawyerAuth/domain/entity/lawyerEntity";
 
-export interface History {
+export interface IHistory {
   consultationDate: string;
   summaryNote: string;
   consultationMode: string;
@@ -10,7 +10,7 @@ export interface History {
   rating: number;
 }
 
-export interface ConsultationHistoryRequestDto {
+export interface IConsultationHistoryRequestDto {
   _id?: Types.ObjectId;
   date: string;
   time: string;
@@ -31,10 +31,10 @@ export interface ConsultationHistoryRequestDto {
   lawyerDetails: ILawyerSignup;
 }
 
-export interface ConsultationHistoryResponseDto {
+export interface IConsultationHistoryResponseDto {
   userName: string;
   lawyerName: string;
   caseId: number;
   caseDescription: string;
-  history: History;
+  history: IHistory;
 }

@@ -1,8 +1,8 @@
 import { Types } from "mongoose";
-import { IChatEntity, Messages } from "../../domain/entity/chatEntity";
+import { IChatEntity, IMessages } from "../../domain/entity/chatEntity";
 import { chatModel } from "../models/chatModel";
 import { IChatRepository } from "../repositoryInterface/IChatRepository";
-import { LawyerProfileEntity } from "../../../lawyer/domain/entity/lawyerProfileEntity";
+import { ILawyerProfileEntity } from "../../../lawyer/domain/entity/lawyerProfileEntity";
 import { lawyerProfileModel } from "../../../lawyer/infrastructure/models/lawyerProfileModel";
 
 export class ChatRepository implements IChatRepository {
@@ -22,7 +22,7 @@ export class ChatRepository implements IChatRepository {
   async addMessage(
     userId: Types.ObjectId,
     lawyerId: Types.ObjectId,
-    message: Messages,
+    message: IMessages,
   ): Promise<void> {
     await chatModel.updateOne(
       { participants: { $all: [userId, lawyerId] } },
@@ -36,7 +36,7 @@ export class ChatRepository implements IChatRepository {
 
   async findLawyerDetails(
     lawyerId: Types.ObjectId,
-  ): Promise<LawyerProfileEntity | null> {
+  ): Promise<ILawyerProfileEntity | null> {
     return await lawyerProfileModel.findOne({ lawyerId: lawyerId });
   }
 

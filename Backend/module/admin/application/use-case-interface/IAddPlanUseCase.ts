@@ -1,5 +1,5 @@
-import { PlansRequestDto } from "../../domain/dtos/plansDto";
+import { IPlansRequestDto } from "../../domain/dtos/plansDto";
 
 export interface IAddPlanUseCase {
-  execute(data: PlansRequestDto): Promise<void>;
+  execute(data: IPlansRequestDto): Promise<void>;
 }

@@ -1,10 +1,10 @@
-export interface SpecializationRequestDto {
+export interface ISpecializationRequestDto {
   name: string;
   description: string;
   isDeleted: boolean;
 }
 
-export interface SpecializationResponseDto {
+export interface ISpecializationResponseDto {
   name: string;
   description: string;
   isDeleted: boolean;

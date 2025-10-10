@@ -1,4 +1,4 @@
-import { LawyerProfileResponseDto } from "../../domain/dtos/lawyerProfileDto";
+import { ILawyerProfileResponseDto } from "../../domain/dtos/lawyerProfileDto";
 import { ILawyerProfileRequest } from "../mapper/lawyerProfileMapper";
 
 export interface ILawyerAddProfileUseCase {
@@ -11,5 +11,5 @@ export interface ILawyerAddProfileUseCase {
       experienceCertificate?: { path: string }[];
       idProof?: { path: string }[];
     },
-  ): Promise<LawyerProfileResponseDto | null>;
+  ): Promise<ILawyerProfileResponseDto | null>;
 }
