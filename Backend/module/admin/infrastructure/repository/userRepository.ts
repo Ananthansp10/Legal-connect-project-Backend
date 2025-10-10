@@ -5,7 +5,7 @@ import { IUserSignup } from "../../domain/entity/userEntity";
 import { IUserRepository } from "../repositoryInterface/IuserRepository";
 import { BaseRepository } from "./baseRepository";
 import { userProfileModel } from "../../../user/infrastructure/models/userProfileModel";
-import { UserProfileEntitie } from "../../../user/domain/entity/userProfileUserEntity";
+import { IUserProfileEntitie } from "../../../user/domain/entity/userProfileUserEntity";
 
 export class UserRepository
   extends BaseRepository<IUserSignup>
@@ -39,7 +39,7 @@ export class UserRepository
 
   async getUserDetails(
     userId: Types.ObjectId,
-  ): Promise<UserProfileEntitie | null> {
+  ): Promise<IUserProfileEntitie | null> {
     return await userProfileModel.findOne({ userId: userId });
   }
 }

@@ -1,4 +1,4 @@
-export interface GoogleAuthRequestDto {
+export interface IGoogleAuthRequestDto {
   id: string;
   name: string;
   email: string;

@@ -1,6 +1,6 @@
 import { Types } from "mongoose";
 
-export interface ReportsData {
+export interface IReportsData {
   reporterId: Types.ObjectId;
   reporterName: string;
   reason: string;
@@ -8,7 +8,7 @@ export interface ReportsData {
   description: string;
 }
 
-export interface ReportAccountDto {
+export interface IReportAccountDto {
   _id: Types.ObjectId;
   reportedId: Types.ObjectId;
   reportsCount: number;
@@ -17,5 +17,5 @@ export interface ReportAccountDto {
   latestReportReason: string;
   status: string;
   reportedUserProfileImage: string;
-  reports: ReportsData[];
+  reports: IReportsData[];
 }

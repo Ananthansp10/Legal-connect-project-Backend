@@ -2,9 +2,8 @@ import { Types } from "mongoose";
 import { IAppointmentRepository } from "../../infrastructure/repositoryInterface/IAppointmentRepository";
 import {
   IGetTodaysAppointmentsUseCase,
-  TodaysAppointmentResponseDataDto,
+  ITodaysAppointmentResponseDataDto,
 } from "../use-case-interface/IGetTodaysAppointmentUseCase";
-import { AppointmentStatus } from "../../../../common/status/appointmentStatus";
 
 export class GetTodaysAppointmentsUseCase
   implements IGetTodaysAppointmentsUseCase
@@ -13,7 +12,7 @@ export class GetTodaysAppointmentsUseCase
 
   async execute(
     userId: Types.ObjectId,
-  ): Promise<TodaysAppointmentResponseDataDto[] | []> {
+  ): Promise<ITodaysAppointmentResponseDataDto[] | []> {
     const appointments = await this._appointmentRepo.getTodaysAppointment(
       userId,
       new Date().toISOString().split("T")[0],
@@ -28,13 +27,14 @@ export class GetTodaysAppointmentsUseCase
         );
 
         return {
-          _id: appointment._id!,
-          name: lawyerDetails?.personalInfo.name!,
-          profileImage: lawyerDetails?.personalInfo.profileImage!,
+          _id: appointment._id ?? new Types.ObjectId(""),
+          name: lawyerDetails?.personalInfo.name ?? "",
+          profileImage: lawyerDetails?.personalInfo.profileImage ?? "",
           date: appointment.date,
           time: appointment.time,
           mode: appointment.consultationMode,
-          specialization: lawyerDetails?.proffessionalInfo.practiceAreas[0]!,
+          specialization:
+            lawyerDetails?.proffessionalInfo.practiceAreas[0] ?? "",
         };
       }),
     );

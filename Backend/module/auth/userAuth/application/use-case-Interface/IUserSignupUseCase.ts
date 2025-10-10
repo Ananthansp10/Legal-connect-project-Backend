@@ -1,10 +1,10 @@
 import {
-  UserSignupRequestDto,
-  UserSignupResponseDto,
+  IUserSignupRequestDto,
+  IUserSignupResponseDto,
 } from "../../domain/dto/userSignupDto";
 
 export interface IUserSignupUseCase {
   registerUser(
-    data: UserSignupRequestDto,
-  ): Promise<UserSignupResponseDto | null>;
+    data: IUserSignupRequestDto,
+  ): Promise<IUserSignupResponseDto | null>;
 }

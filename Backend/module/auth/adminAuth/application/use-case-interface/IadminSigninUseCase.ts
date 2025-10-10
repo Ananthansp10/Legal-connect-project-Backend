@@ -1,7 +1,7 @@
-import { AdminSignInDto } from "../../domain/dtos/adminSigninDto";
+import { IAdminSignInDto } from "../../domain/dtos/adminSigninDto";
 
 export interface IAdminSigninUseCase {
   execute(
-    data: AdminSignInDto,
+    data: IAdminSignInDto,
   ): Promise<{ accessToken: string; refreshToken: string }>;
 }

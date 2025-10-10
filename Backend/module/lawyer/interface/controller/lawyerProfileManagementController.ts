@@ -3,7 +3,7 @@ import { AppStatusCode } from "../../../../common/statusCode/AppStatusCode";
 import { IGetLawyerProfileUseCase } from "../../application/use-case-interface/IGetLawyerProfileUseCase";
 import { ILawyerAddProfileUseCase } from "../../application/use-case-interface/ILawyerAddProfileUseCase";
 import { Request, Response } from "express";
-import { LawyerProfileEntity } from "../../domain/entity/lawyerProfileEntity";
+import { ILawyerProfileEntity } from "../../domain/entity/lawyerProfileEntity";
 import { IEditLawyerProfileUseCase } from "../../application/use-case-interface/IEditLawyerProfileUseCase";
 import { IGetLawyerProfileImageUseCase } from "../../application/use-case-interface/IGetLawyerProfileImageUseCase";
 import mongoose from "mongoose";
@@ -40,7 +40,7 @@ export class LawyerProfileController {
       res
         .status(AppStatusCode.SUCCESS_CODE)
         .json({ success: true, message: "Profile added successfully" });
-    } catch (error) {
+    } catch (_error) {
       res
         .status(AppStatusCode.INTERNAL_ERROR_CODE)
         .json({ success: false, message: AppError.UNKNOWN_ERROR });
@@ -49,16 +49,14 @@ export class LawyerProfileController {
 
   async getLawyerProfile(req: Request, res: Response) {
     try {
-      const result: LawyerProfileEntity | null =
+      const result: ILawyerProfileEntity | null =
         await this._lawyerGetProfileApplication.execute(req.params.lawyerId);
-      res
-        .status(AppStatusCode.SUCCESS_CODE)
-        .json({
-          success: true,
-          message: "Data found successfully",
-          data: result,
-        });
-    } catch (error) {
+      res.status(AppStatusCode.SUCCESS_CODE).json({
+        success: true,
+        message: "Data found successfully",
+        data: result,
+      });
+    } catch (_error) {
       res
         .status(AppStatusCode.INTERNAL_ERROR_CODE)
         .json({ sucess: false, message: AppError.UNKNOWN_ERROR });
@@ -72,7 +70,7 @@ export class LawyerProfileController {
       res
         .status(AppStatusCode.SUCCESS_CODE)
         .json({ success: true, message: "Profile edited successfully" });
-    } catch (error) {
+    } catch (_error) {
       res
         .status(AppStatusCode.INTERNAL_ERROR_CODE)
         .json({ success: false, message: AppError.UNKNOWN_ERROR });
@@ -84,14 +82,12 @@ export class LawyerProfileController {
       const result = await this._getLawyerProfileImageUseCase.execute(
         new mongoose.Types.ObjectId(req.params.lawyerId),
       );
-      res
-        .status(AppStatusCode.SUCCESS_CODE)
-        .json({
-          success: true,
-          message: "Profile image found successfully",
-          data: result,
-        });
-    } catch (error) {
+      res.status(AppStatusCode.SUCCESS_CODE).json({
+        success: true,
+        message: "Profile image found successfully",
+        data: result,
+      });
+    } catch (_error) {
       res
         .status(AppStatusCode.INTERNAL_ERROR_CODE)
         .json({ success: false, message: AppError.UNKNOWN_ERROR });

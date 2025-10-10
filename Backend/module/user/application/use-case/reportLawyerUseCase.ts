@@ -1,13 +1,13 @@
 import {
   IReportRepository,
-  ReportDataRequestDto,
+  IReportDataRequestDto,
 } from "../../infrastructure/repositoryInterface/IReportReposiitory";
 import { IReportLawyerUseCase } from "../use-case-interface/IReportLawyerUseCase";
 
 export class ReportLawyerUseCase implements IReportLawyerUseCase {
   constructor(private _reportRepo: IReportRepository) {}
 
-  async execute(data: ReportDataRequestDto): Promise<void> {
+  async execute(data: IReportDataRequestDto): Promise<void> {
     const findLawyerReport = await this._reportRepo.findLawyerReportExist(
       data.reportedId,
     );

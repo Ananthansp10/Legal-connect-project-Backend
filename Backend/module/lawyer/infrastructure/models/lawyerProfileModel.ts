@@ -1,7 +1,7 @@
 import mongoose, { Schema } from "mongoose";
-import { LawyerProfileEntity } from "../../domain/entity/lawyerProfileEntity";
+import { ILawyerProfileEntity } from "../../domain/entity/lawyerProfileEntity";
 
-const lawyerProfileSchema = new Schema<LawyerProfileEntity>({
+const lawyerProfileSchema = new Schema<ILawyerProfileEntity>({
   lawyerId: {
     type: Schema.Types.ObjectId,
     ref: "lawyers",
@@ -69,7 +69,7 @@ const lawyerProfileSchema = new Schema<LawyerProfileEntity>({
   },
 });
 
-export const lawyerProfileModel = mongoose.model<LawyerProfileEntity>(
+export const lawyerProfileModel = mongoose.model<ILawyerProfileEntity>(
   "lawyerProfile",
   lawyerProfileSchema,
 );

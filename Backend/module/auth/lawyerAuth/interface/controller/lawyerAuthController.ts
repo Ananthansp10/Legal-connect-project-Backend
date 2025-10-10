@@ -10,7 +10,7 @@ import { ILawyerChangePasswordUseCase } from "../../application/lawyer-use-case-
 import { ILawyerResetPasswordUseCase } from "../../application/lawyer-use-case-interface/IlawyerResetPasswordUseCase";
 import jwt from "jsonwebtoken";
 
-export interface MulterRequest extends Request {
+export interface IMulterRequest extends Request {
   files?: Express.Multer.File[];
 }
 
@@ -23,7 +23,7 @@ export class LawyerAuthController {
     private _lawyerResetPasswordApplication: ILawyerResetPasswordUseCase,
   ) {}
 
-  async registerLawyer(req: MulterRequest, res: Response): Promise<void> {
+  async registerLawyer(req: IMulterRequest, res: Response): Promise<void> {
     try {
       const imageUrl = req?.files?.map((file) => file.path);
 
@@ -32,14 +32,13 @@ export class LawyerAuthController {
       const result =
         await this._lawyerSignupApplication.registerLawyer(requestObj);
 
-      res
-        .status(AppStatusCode.SUCCESS_CODE)
-        .json({
-          success: true,
-          message: "Lawyer registered successfully",
-          data: result,
-        });
+      res.status(AppStatusCode.SUCCESS_CODE).json({
+        success: true,
+        message: "Lawyer registered successfully",
+        data: result,
+      });
     } catch (error) {
+      console.log(error);
       if (error instanceof AppException) {
         res
           .status(error.statusCode)
@@ -64,13 +63,11 @@ export class LawyerAuthController {
           req.body.password,
         );
       cookieTokenService.setAuthCookie(res, accessToken, refreshToken);
-      res
-        .status(AppStatusCode.SUCCESS_CODE)
-        .json({
-          success: true,
-          message: "Login successfully",
-          data: lawyerDetails,
-        });
+      res.status(AppStatusCode.SUCCESS_CODE).json({
+        success: true,
+        message: "Login successfully",
+        data: lawyerDetails,
+      });
     } catch (error) {
       if (error instanceof AppException) {
         res
@@ -99,7 +96,7 @@ export class LawyerAuthController {
       res
         .status(AppStatusCode.SUCCESS_CODE)
         .json({ success: true, message: "Logout successfully" });
-    } catch (error) {
+    } catch (_error) {
       res
         .status(AppStatusCode.INTERNAL_ERROR_CODE)
         .json({ success: false, message: AppError.UNKNOWN_ERROR });
@@ -109,12 +106,10 @@ export class LawyerAuthController {
   async forgotPassword(req: Request, res: Response) {
     try {
       await this._lawyerForgotPasswordApplication.execute(req.body.email);
-      res
-        .status(AppStatusCode.SUCCESS_CODE)
-        .json({
-          success: true,
-          message: "Reset password link has sent to your email",
-        });
+      res.status(AppStatusCode.SUCCESS_CODE).json({
+        success: true,
+        message: "Reset password link has sent to your email",
+      });
     } catch (error) {
       if (error instanceof AppException) {
         res

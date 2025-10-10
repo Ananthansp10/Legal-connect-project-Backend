@@ -1,12 +1,12 @@
 import { Types } from "mongoose";
-import { ChatsDto } from "../../domain/dtos/chatsDto";
+import { IChatsDto } from "../../domain/dtos/chatsDto";
 import { ILawyerChatRepository } from "../../infrastructure/repositoryInterface/ILawyerChatRepository";
 import { IGetLawyerAllChatsUseCase } from "../use-case-interface/IGetLawyerAllChatUseCase";
 
 export class GetLawyerAllChatUseCase implements IGetLawyerAllChatsUseCase {
   constructor(private _chatRepo: ILawyerChatRepository) {}
 
-  async execute(lawyerId: Types.ObjectId): Promise<ChatsDto[] | null> {
+  async execute(lawyerId: Types.ObjectId): Promise<IChatsDto[] | null> {
     const chats = await this._chatRepo.findAllChats(lawyerId);
     if (!chats || chats.length == 0) {
       return null;
@@ -17,9 +17,9 @@ export class GetLawyerAllChatUseCase implements IGetLawyerAllChatsUseCase {
           chat.participants[0],
         );
         return {
-          userId: userDetails?.userId!,
-          name: userDetails?.name!,
-          profileImage: userDetails?.profileImage!,
+          userId: userDetails?.userId ?? new Types.ObjectId(""),
+          name: userDetails?.name ?? "",
+          profileImage: userDetails?.profileImage ?? "",
           lastMessage: chat.messages[chat.messages.length - 1].message,
           lastMessageTime: chat.messages[chat.messages.length - 1].createdAt,
           unreadCount: chat.messages.filter(

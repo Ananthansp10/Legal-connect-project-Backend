@@ -1,6 +1,6 @@
 import { Types } from "mongoose";
-import { SpecData } from "../../infrastructure/repositoryInterface/IEditSpecializationRepository";
+import { ISpecData } from "../../infrastructure/repositoryInterface/IEditSpecializationRepository";
 
 export interface IEditSpecializationUseCase {
-  execute(specId: Types.ObjectId, data: SpecData): Promise<void>;
+  execute(specId: Types.ObjectId, data: ISpecData): Promise<void>;
 }

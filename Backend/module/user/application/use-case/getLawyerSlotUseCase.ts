@@ -2,7 +2,7 @@ import { Types } from "mongoose";
 import { IGetLawyerSlotRepository } from "../../infrastructure/repositoryInterface/IgetLawyerSlotRepository";
 import {
   IGetLawyerSlotUseCase,
-  SlotDataResponseDto,
+  ISlotDataResponseDto,
 } from "../use-case-interface/IGetLawyerSlotUseCase";
 import { generateSlots } from "../../infrastructure/services/generateTimesSlots";
 
@@ -12,7 +12,7 @@ export class GetLawyerSlotUseCase implements IGetLawyerSlotUseCase {
   async execute(
     lawyerId: Types.ObjectId,
     date: string,
-  ): Promise<SlotDataResponseDto[] | undefined> {
+  ): Promise<ISlotDataResponseDto[] | undefined> {
     const rule = await this._getLawyerSlotRepo.findSlot(lawyerId, date);
     const mostPriorityRule = rule.sort((a, b) => b.priority - a.priority);
     let slots;

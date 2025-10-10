@@ -1,14 +1,14 @@
 import { Types } from "mongoose";
 
-interface User {
+interface IUser {
   _id?: Types.ObjectId;
   name: string;
   profileImage: string;
 }
 
-export interface Appointment {
+export interface IAppointment {
   _id?: Types.ObjectId;
-  user: User;
+  user: IUser;
   problem: string;
   date: string;
   time: string;
@@ -26,5 +26,8 @@ export interface IGetAppointmentUseCase {
     appointmentStatus: string,
     startIndex: number,
     endIndex: number,
-  ): Promise<{ appointments: Appointment[]; totalAppointments: number } | null>;
+  ): Promise<{
+    appointments: IAppointment[];
+    totalAppointments: number;
+  } | null>;
 }

@@ -1,6 +1,6 @@
 import { Types } from "mongoose";
-import { UserProfileDataDto } from "../../domain/dtos/userProfileDto";
+import { IUserProfileDataDto } from "../../domain/dtos/userProfileDto";
 
 export interface IGetUserProfileDataUseCase {
-  execute(lawyerId: Types.ObjectId): Promise<UserProfileDataDto | null>;
+  execute(lawyerId: Types.ObjectId): Promise<IUserProfileDataDto | null>;
 }

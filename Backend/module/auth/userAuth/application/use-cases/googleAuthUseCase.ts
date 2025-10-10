@@ -1,4 +1,4 @@
-import { UserSigninDto } from "../../domain/dto/userSigninDto";
+import { IUserSigninDto } from "../../domain/dto/userSigninDto";
 import { ITokenGeneration } from "../../infrastructure/services/ItokenGenerationService";
 import { IGoogleAuthRepository } from "../../infrastructure/repositoryInterface/IGoogleAuthRepository";
 import { IGoogleAuthUseCase } from "../use-case-Interface/IgoogleAuthUseCase";
@@ -7,7 +7,7 @@ import { AppException } from "../../../../../common/error/errorException";
 import { AppError } from "../../../../../common/error/AppEnumError";
 import { IUserSignup } from "../../domain/userRegisterEntity";
 import { AppStatusCode } from "../../../../../common/statusCode/AppStatusCode";
-import { GoogleAuthRequestDto } from "../../domain/dto/googleAuthDto";
+import { IGoogleAuthRequestDto } from "../../domain/dto/googleAuthDto";
 
 export class GoogleAuthUseCase implements IGoogleAuthUseCase {
   constructor(
@@ -15,7 +15,7 @@ export class GoogleAuthUseCase implements IGoogleAuthUseCase {
     private _tokenGenerateService: ITokenGeneration,
   ) {}
 
-  async execute(data: GoogleAuthRequestDto): Promise<UserSigninDto> {
+  async execute(data: IGoogleAuthRequestDto): Promise<IUserSigninDto> {
     try {
       const userExist = await this._googleAuthRepo.findByEmail(data.email);
 
@@ -55,7 +55,7 @@ export class GoogleAuthUseCase implements IGoogleAuthUseCase {
             role: "user",
           });
 
-        const response: UserSigninDto = mapper.toResponse(
+        const response: IUserSigninDto = mapper.toResponse(
           user!,
           accessToken,
           refreshToken,
@@ -75,7 +75,7 @@ export class GoogleAuthUseCase implements IGoogleAuthUseCase {
           role: "user",
         });
 
-      const response: UserSigninDto = mapper.toResponse(
+      const response: IUserSigninDto = mapper.toResponse(
         userExist,
         accessToken,
         refreshToken,

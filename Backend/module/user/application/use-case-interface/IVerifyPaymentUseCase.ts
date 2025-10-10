@@ -1,6 +1,6 @@
 import { Types } from "mongoose";
 
-export interface PaymentDataRequestDto {
+export interface IPaymentDataRequestDto {
   razorpay_payment_id: string;
   razorpay_order_id: string;
   razorpay_signature: string;
@@ -8,5 +8,5 @@ export interface PaymentDataRequestDto {
 }
 
 export interface IVerifyPaymentUseCase {
-  execute(data: PaymentDataRequestDto): Promise<void>;
+  execute(data: IPaymentDataRequestDto): Promise<void>;
 }

@@ -1,17 +1,17 @@
-import { LawyerDetailsDto } from "./lawyerDetailsDto";
-import { RevenueDateChartDto } from "./revenueDateChartDto";
-import { SpecializationCategoryChartDto } from "./specializationCategoryChartDto";
-import { SpecializationReportDto } from "./specializationReportDto";
-import { StateReportDto } from "./stateReportDto";
+import { ILawyerDetailsDto } from "./lawyerDetailsDto";
+import { IRevenueDateChartDto } from "./revenueDateChartDto";
+import { ISpecializationCategoryChartDto } from "./specializationCategoryChartDto";
+import { ISpecializationReportDto } from "./specializationReportDto";
+import { IStateReportDto } from "./stateReportDto";
 
-export interface ReportsDto {
+export interface IReportsDto {
   totalRevenue: number;
   totalAppointments: number;
   totalUsers: number;
   totalSubscribedLawyers: number;
-  subscriptionPlanReport: SpecializationReportDto[];
-  stateReport: StateReportDto[];
-  lawyerDetails: LawyerDetailsDto[];
-  revenueDateChart: RevenueDateChartDto[];
-  specializationChart: SpecializationCategoryChartDto[];
+  subscriptionPlanReport: ISpecializationReportDto[];
+  stateReport: IStateReportDto[];
+  lawyerDetails: ILawyerDetailsDto[];
+  revenueDateChart: IRevenueDateChartDto[];
+  specializationChart: ISpecializationCategoryChartDto[];
 }

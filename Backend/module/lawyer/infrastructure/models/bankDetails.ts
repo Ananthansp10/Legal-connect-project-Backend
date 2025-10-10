@@ -18,5 +18,5 @@ const bankDetailsSchema = new mongoose.Schema({
 
 export const bankDetailsModel = mongoose.model(
   "bankDetails",
-  bankDetailsSchema
+  bankDetailsSchema,
 );

@@ -1,7 +1,7 @@
-import { Reviews } from "../entity/feedbackEntity";
+import { IReviews } from "../entity/feedbackEntity";
 
-export interface ReviewResponseDto {
+export interface IReviewResponseDto {
   reviewsCount: number;
   rating: number;
-  reviews: Reviews[];
+  reviews: IReviews[];
 }

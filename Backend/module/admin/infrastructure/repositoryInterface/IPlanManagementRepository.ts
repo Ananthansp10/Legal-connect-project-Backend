@@ -8,4 +8,9 @@ export interface IPlanManagementRepository {
   setPlanStatus(planId: Types.ObjectId, status: string): Promise<void>;
   deletePlan(planId: Types.ObjectId): Promise<void>;
   getPlans(): Promise<IPlansEntity[] | null>;
+  getActivePlans(): Promise<number>;
+  getInActivePlans(): Promise<number>;
+  getMostPopularPlan(): Promise<string>;
+  getMonthlyIncome(): Promise<number>;
+  searchPlan(planName: string): Promise<IPlansEntity[] | null>;
 }

@@ -1,6 +1,6 @@
 import {
-  ConsultationHistoryRequestDto,
-  ConsultationHistoryResponseDto,
+  IConsultationHistoryRequestDto,
+  IConsultationHistoryResponseDto,
 } from "../../domain/dtos/consultationHistoryDto";
 import { IAppointmentRepository } from "../../infrastructure/repositoryInterface/IAppointmentRepository";
 import { ConsultationHistoryMapper } from "../mapper/consultationHistoryMapper";
@@ -11,8 +11,8 @@ export class GetConsultationHistoryUseCase
 {
   constructor(private _appointmentRepo: IAppointmentRepository) {}
 
-  async execute(caseId: number): Promise<ConsultationHistoryResponseDto[]> {
-    let consultations: ConsultationHistoryRequestDto[] | null =
+  async execute(caseId: number): Promise<IConsultationHistoryResponseDto[]> {
+    let consultations: IConsultationHistoryRequestDto[] | null =
       await this._appointmentRepo.getConsultationHistory(caseId);
     if (!consultations || consultations.length == 0) {
       return [];

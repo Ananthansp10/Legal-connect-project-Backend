@@ -1,12 +1,12 @@
 import { Types } from "mongoose";
-import { LawyerEditProfileResponse } from "../../application/mapper/lawyerEditProfileMapper";
-import { LawyerProfileEntity } from "../../domain/entity/lawyerProfileEntity";
+import { ILawyerEditProfileResponse } from "../../application/mapper/lawyerEditProfileMapper";
+import { ILawyerProfileEntity } from "../../domain/entity/lawyerProfileEntity";
 import { IBaseRepository } from "./IbaseRepository";
 
 export interface IEditLawyerProfileRepository
-  extends IBaseRepository<LawyerProfileEntity> {
+  extends IBaseRepository<ILawyerProfileEntity> {
   editLawyerProfile(
     lawyerId: Types.ObjectId,
-    data: LawyerEditProfileResponse,
+    data: ILawyerEditProfileResponse,
   ): Promise<void>;
 }

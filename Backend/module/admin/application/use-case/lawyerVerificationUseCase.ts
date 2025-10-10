@@ -19,8 +19,8 @@ export class LawyerVerificationUseCase implements ILawyerVerificationUseCase {
       await this._lawyerVerificationRepo.findById(lawyerId);
 
     this._lawyerVerifyEmailService.sendVerificationEmail(
-      lawyer?.email!,
-      lawyer?.name!,
+      lawyer?.email ?? "",
+      lawyer?.name ?? "",
       status,
       reason,
     );

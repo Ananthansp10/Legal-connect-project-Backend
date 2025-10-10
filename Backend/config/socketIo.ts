@@ -14,11 +14,10 @@ const addChatUseCase = new AddChatUseCase(chatRepo);
 const updateChatReadStatusUseCase = new UpdateChatReadStatusUseCase(chatRepo);
 const lawyerChatRepo = new LawyerChatRepository();
 const updateLawyerChatReadStatusUseCase = new UpdateReadStatusUseCase(
-  lawyerChatRepo
+  lawyerChatRepo,
 );
 
 const userSocketMap = new Map<string, string>();
-
 
 export const initSocket = (server: HTTPServer) => {
   io = new SocketIOServer(server, {
@@ -31,29 +30,29 @@ export const initSocket = (server: HTTPServer) => {
   io.on("connection", (socket) => {
     console.log("User connected:", socket.id);
 
-    socket.on('join-room',(role,roomId)=>{
-      socket.join(roomId)
-      const clients = io.sockets.adapter.rooms.get(roomId)
-      if(clients && clients.size>=2){
-        socket.to(roomId).emit('peer-joined')
+    socket.on("join-room", (role, roomId) => {
+      socket.join(roomId);
+      const clients = io.sockets.adapter.rooms.get(roomId);
+      if (clients && clients.size >= 2) {
+        socket.to(roomId).emit("peer-joined");
       }
-    })
+    });
 
-    socket.on('offer',(offer,roomId)=>{
-      socket.to(roomId).emit('offer',offer)
-    })
+    socket.on("offer", (offer, roomId) => {
+      socket.to(roomId).emit("offer", offer);
+    });
 
-    socket.on('answer',(answer,roomId)=>{
-      socket.to(roomId).emit('answer',answer)
-    })
+    socket.on("answer", (answer, roomId) => {
+      socket.to(roomId).emit("answer", answer);
+    });
 
-    socket.on('candidate',(candidate,roomId)=>{
-      socket.to(roomId).emit('candidate',candidate)
-    })
+    socket.on("candidate", (candidate, roomId) => {
+      socket.to(roomId).emit("candidate", candidate);
+    });
 
-    socket.on('send_video_call_message',(message,roomId,role)=>{
-      socket.to(roomId).emit('recieve_video_call_message',message,role)
-    })
+    socket.on("send_video_call_message", (message, roomId, role) => {
+      socket.to(roomId).emit("recieve_video_call_message", message, role);
+    });
 
     socket.on("register", (userId: string) => {
       userSocketMap.set(userId, socket.id);
@@ -75,25 +74,24 @@ export const initSocket = (server: HTTPServer) => {
     socket.on("update_read_status", async ({ userId, lawyerId }) => {
       await updateChatReadStatusUseCase.execute(
         new mongoose.Types.ObjectId(String(userId)),
-        new mongoose.Types.ObjectId(String(lawyerId))
+        new mongoose.Types.ObjectId(String(lawyerId)),
       );
     });
 
     socket.on("update_lawyer_chat_status", async ({ lawyerId, userId }) => {
       await updateLawyerChatReadStatusUseCase.execute(
         new mongoose.Types.ObjectId(String(lawyerId)),
-        new mongoose.Types.ObjectId(String(userId))
+        new mongoose.Types.ObjectId(String(userId)),
       );
     });
 
     socket.on("signal", ({ roomId, data }) => {
-      console.log("yees")
-      socket.to(roomId).emit("signal", { id: socket.id, data });
-    });
+      console.log("yees");
+      socket.to(roomId).emit("signal", { id: socket.id, data });
+    });
 
-    
-    socket.on('disconnect', () => {
-        console.log('User disconnected:', socket.id);
+    socket.on("disconnect", () => {
+      console.log("User disconnected:", socket.id);
     });
 
     socket.on("disconnect", () => {

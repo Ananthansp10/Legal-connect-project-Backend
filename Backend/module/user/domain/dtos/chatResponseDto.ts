@@ -1,6 +1,6 @@
 import { Types } from "mongoose";
 
-export interface ChatResponseDto {
+export interface IChatResponseDto {
   lawyerId: Types.ObjectId;
   name: string;
   profileImage: string;

@@ -1,6 +1,6 @@
 import { Types } from "mongoose";
 
-export interface PlansResponseDto {
+export interface IPlansResponseDto {
   _id?: Types.ObjectId;
   name: string;
   price: number;

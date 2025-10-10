@@ -1,4 +1,4 @@
-export interface TopLawyersDto {
+export interface ITopLawyersDto {
   name: string;
   profileImage: string;
   specialization: string;

@@ -1,5 +1,5 @@
 import { Types } from "mongoose";
-import { BankDetailsDto } from "../../domain/dtos/bankDetailsDto";
+import { IBankDetailsDto } from "../../domain/dtos/bankDetailsDto";
 
 export interface IBankDetailsRepository {
   addBankDetails(
@@ -7,5 +7,5 @@ export interface IBankDetailsRepository {
     contactId: string,
     fundAccountId: string,
   ): Promise<void>;
-  findBankDetails(lawyerId: Types.ObjectId): Promise<BankDetailsDto | null>;
+  findBankDetails(lawyerId: Types.ObjectId): Promise<IBankDetailsDto | null>;
 }

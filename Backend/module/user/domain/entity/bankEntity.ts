@@ -1,6 +1,6 @@
 import { Types } from "mongoose";
 
-export interface BankEntity {
+export interface IBankEntity {
   _id: Types.ObjectId;
   lawyerId: Types.ObjectId;
   contactId: string;

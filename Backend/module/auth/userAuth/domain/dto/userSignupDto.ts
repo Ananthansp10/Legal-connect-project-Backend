@@ -1,4 +1,4 @@
-export interface UserSignupRequestDto {
+export interface IUserSignupRequestDto {
   name: string;
   email: string;
   password: string;
@@ -7,7 +7,7 @@ export interface UserSignupRequestDto {
   isBlock: boolean;
 }
 
-export interface UserSignupResponseDto {
+export interface IUserSignupResponseDto {
   _id: string;
   name: string;
   email: string;

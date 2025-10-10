@@ -1,11 +1,12 @@
 import { Types } from "mongoose";
-import { LawyerProfileEntity } from "../../../lawyer/domain/entity/lawyerProfileEntity";
+import { ILawyerProfileEntity } from "../../../lawyer/domain/entity/lawyerProfileEntity";
 import { lawyerProfileModel } from "../../../lawyer/infrastructure/models/lawyerProfileModel";
 import { IAppointmentEntity } from "../../../user/domain/entity/appointmentEntity";
-import { UserProfileEntitie } from "../../../user/domain/entity/userProfileUserEntity";
+import { IUserProfileEntitie } from "../../../user/domain/entity/userProfileUserEntity";
 import { appointmentModel } from "../../../user/infrastructure/models/appointmentModel";
 import { userProfileModel } from "../../../user/infrastructure/models/userProfileModel";
 import { IAppointmentsRepository } from "../repositoryInterface/IAppointmentsRepository";
+import { IAppointmentDetailsDto } from "../../domain/dtos/appointmentDetailsDto";
 
 export class AppointmentRepository implements IAppointmentsRepository {
   async findAppointments(
@@ -34,13 +35,47 @@ export class AppointmentRepository implements IAppointmentsRepository {
 
   async findUserDetails(
     userId: Types.ObjectId,
-  ): Promise<UserProfileEntitie | null> {
+  ): Promise<IUserProfileEntitie | null> {
     return await userProfileModel.findOne({ userId: userId });
   }
 
   async findLawyerDetails(
     lawyerId: Types.ObjectId,
-  ): Promise<LawyerProfileEntity | null> {
+  ): Promise<ILawyerProfileEntity | null> {
     return await lawyerProfileModel.findOne({ lawyerId: lawyerId });
+  }
+
+  async searchAppointment(
+    name: string,
+  ): Promise<IAppointmentDetailsDto[] | null> {
+    return await appointmentModel.aggregate([
+      {
+        $lookup: {
+          from: "userprofiles",
+          localField: "userId",
+          foreignField: "userId",
+          as: "userDetails",
+        },
+      },
+      {
+        $lookup: {
+          from: "lawyerprofiles",
+          localField: "lawyerId",
+          foreignField: "lawyerId",
+          as: "lawyerDetails",
+        },
+      },
+      {
+        $unwind: "$userDetails",
+      },
+      {
+        $unwind: "$lawyerDetails",
+      },
+      {
+        $match: {
+          "userDetails.name": name,
+        },
+      },
+    ]);
   }
 }

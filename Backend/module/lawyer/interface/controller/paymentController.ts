@@ -17,14 +17,12 @@ export class PaymentController {
         req.body.planId,
         req.body.price,
       );
-      res
-        .status(AppStatusCode.SUCCESS_CODE)
-        .json({
-          success: true,
-          message: "Razorpay order created successfully",
-          data: { ...order, planId: req.body.planId },
-        });
-    } catch (error) {
+      res.status(AppStatusCode.SUCCESS_CODE).json({
+        success: true,
+        message: "Razorpay order created successfully",
+        data: { ...order, planId: req.body.planId },
+      });
+    } catch (_error) {
       res
         .status(AppStatusCode.INTERNAL_ERROR_CODE)
         .json({ success: false, message: AppError.UNKNOWN_ERROR });

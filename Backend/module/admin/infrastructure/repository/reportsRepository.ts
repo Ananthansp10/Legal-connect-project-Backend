@@ -3,11 +3,11 @@ import { lawyerProfileModel } from "../../../lawyer/infrastructure/models/lawyer
 import { subscribersModel } from "../../../lawyer/infrastructure/models/subscribersModel";
 import { appointmentModel } from "../../../user/infrastructure/models/appointmentModel";
 import { userProfileModel } from "../../../user/infrastructure/models/userProfileModel";
-import { LawyerDetailsDto } from "../../domain/dtos/lawyerDetailsDto";
-import { RevenueDateChartDto } from "../../domain/dtos/revenueDateChartDto";
-import { SpecializationCategoryChartDto } from "../../domain/dtos/specializationCategoryChartDto";
-import { SpecializationReportDto } from "../../domain/dtos/specializationReportDto";
-import { StateReportDto } from "../../domain/dtos/stateReportDto";
+import { ILawyerDetailsDto } from "../../domain/dtos/lawyerDetailsDto";
+import { IRevenueDateChartDto } from "../../domain/dtos/revenueDateChartDto";
+import { ISpecializationCategoryChartDto } from "../../domain/dtos/specializationCategoryChartDto";
+import { ISpecializationReportDto } from "../../domain/dtos/specializationReportDto";
+import { IStateReportDto } from "../../domain/dtos/stateReportDto";
 import { IReportsRepository } from "../repositoryInterface/IReportsRepository";
 
 export class ReportsRepository implements IReportsRepository {
@@ -20,7 +20,7 @@ export class ReportsRepository implements IReportsRepository {
         $group: { _id: null, totalRevenue: { $sum: "$plans.price" } },
       },
     ]);
-    return result[0].totalRevenue;
+    return result.length > 0 ? result[0].totalRevenue : 0;
   }
 
   async getTotalAppointments(): Promise<number> {
@@ -35,7 +35,9 @@ export class ReportsRepository implements IReportsRepository {
     return (await subscribersModel.find()).length;
   }
 
-  async getSubscriptionPlanReport(): Promise<SpecializationReportDto[] | null> {
+  async getSubscriptionPlanReport(): Promise<
+    ISpecializationReportDto[] | null
+  > {
     return await subscribersModel.aggregate([
       {
         $unwind: "$plans",
@@ -54,7 +56,7 @@ export class ReportsRepository implements IReportsRepository {
     ]);
   }
 
-  async getStateReport(): Promise<StateReportDto[] | null> {
+  async getStateReport(): Promise<IStateReportDto[] | null> {
     return await userProfileModel.aggregate([
       {
         $group: { _id: "$address.state", usersCount: { $sum: 1 } },
@@ -62,7 +64,7 @@ export class ReportsRepository implements IReportsRepository {
     ]);
   }
 
-  async getLawyerDetails(): Promise<LawyerDetailsDto[] | null> {
+  async getLawyerDetails(): Promise<ILawyerDetailsDto[] | null> {
     return await subscribersModel.aggregate([
       {
         $lookup: {
@@ -131,7 +133,7 @@ export class ReportsRepository implements IReportsRepository {
 
   async getRevenueDateChart(
     dateRange: string,
-  ): Promise<RevenueDateChartDto[] | null> {
+  ): Promise<IRevenueDateChartDto[] | null> {
     let result = [];
     if (dateRange == "Daily") {
       result = await subscribersModel.aggregate([
@@ -274,7 +276,7 @@ export class ReportsRepository implements IReportsRepository {
 
   async getSpecializationChart(
     specializationType: string,
-  ): Promise<SpecializationCategoryChartDto[] | null> {
+  ): Promise<ISpecializationCategoryChartDto[] | null> {
     let result = [];
     if (specializationType == "All") {
       result = await lawyerProfileModel.aggregate([

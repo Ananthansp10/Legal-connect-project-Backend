@@ -1,7 +1,7 @@
 import { Types } from "mongoose";
 import { IReportAccountEntity } from "../../../admin/domain/entity/reportAccountEntity";
 
-export interface ReportDataRequestDto {
+export interface IReportDataRequestDto {
   reportedId: Types.ObjectId;
   userType: string;
   reason: string;
@@ -10,7 +10,7 @@ export interface ReportDataRequestDto {
   status: string;
 }
 
-export interface Reports {
+export interface IReports {
   reason: string;
   description: string;
   reporterId: Types.ObjectId;
@@ -21,5 +21,5 @@ export interface IReportRepository {
   findLawyerReportExist(
     lawyerId: Types.ObjectId,
   ): Promise<IReportAccountEntity | null>;
-  updateLawyerReport(lawyerId: Types.ObjectId, data: Reports): Promise<void>;
+  updateLawyerReport(lawyerId: Types.ObjectId, data: IReports): Promise<void>;
 }

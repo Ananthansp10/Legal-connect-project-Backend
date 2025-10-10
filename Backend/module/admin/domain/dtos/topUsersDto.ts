@@ -1,4 +1,4 @@
-export interface TopUserssDto {
+export interface ITopUserssDto {
   name: string;
   profileImage: string;
   country: string;

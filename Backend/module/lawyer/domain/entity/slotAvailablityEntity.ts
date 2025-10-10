@@ -1,6 +1,6 @@
 import { Types } from "mongoose";
 
-interface BreakTimes {
+interface IBreakTimes {
   startTime: string;
   endTime: string;
 }
@@ -14,7 +14,7 @@ export interface ISlotAvailablityEntity {
   endTime: string;
   startDate?: string;
   endDate?: string;
-  breakTimes: [BreakTimes];
+  breakTimes: [IBreakTimes];
   priority: number;
   bufferTime: number;
   status: boolean;

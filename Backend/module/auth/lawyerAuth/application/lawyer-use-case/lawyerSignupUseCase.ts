@@ -3,8 +3,8 @@ import { AppException } from "../../../../../common/error/errorException";
 import { AppStatusCode } from "../../../../../common/statusCode/AppStatusCode";
 import { IHashService } from "../../../userAuth/infrastructure/services/IhashService";
 import {
-  LawyerSignupRequestDto,
-  LawyerSignupResponseDto,
+  ILawyerSignupRequestDto,
+  ILawyerSignupResponseDto,
 } from "../../domain/dto/lawyerSignupDto";
 import { ILawyerSignup } from "../../domain/entity/lawyerEntity";
 import { ILawyerSignupRepository } from "../../infrastructure/repositoryInterface/ILawyerSignupRepository";
@@ -18,8 +18,8 @@ export class LawyerSignupUseCase implements ILawyerSignupUseCase {
   ) {}
 
   async registerLawyer(
-    data: LawyerSignupRequestDto,
-  ): Promise<LawyerSignupResponseDto> {
+    data: ILawyerSignupRequestDto,
+  ): Promise<ILawyerSignupResponseDto> {
     const emailExist: ILawyerSignup | null = await this._lawyerRepo.findByEmail(
       data.email,
     );

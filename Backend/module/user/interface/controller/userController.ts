@@ -1,6 +1,6 @@
 import { AppError } from "../../../../common/error/AppEnumError";
 import { AppStatusCode } from "../../../../common/statusCode/AppStatusCode";
-import { getLawyerResponse } from "../../application/mapper/getLawyerMapper";
+import { IGetLawyerResponse } from "../../application/mapper/getLawyerMapper";
 import { IGetLawyerDetailsUseCase } from "../../application/use-case-interface/IGetLawyerDetailsUseCase";
 import { IGetLawyerUseCase } from "../../application/use-case-interface/IGetLawyersUseCase";
 import { Request, Response } from "express";
@@ -41,106 +41,136 @@ export class UserController {
     private _getReviewUseCase: IGetReviewUseCase,
   ) {}
 
-  async getLawyers(req: Request, res: Response) {
+  /**
+   * @async
+   * @method getLawyers
+   * @param {Request} req The request object
+   * @param {Response} res The response object
+   * @returns {Promise<void>} The json response containing the lawyers details list or error message
+   */
+  async getLawyers(req: Request, res: Response): Promise<void> {
     try {
-      const result: getLawyerResponse[] | null =
+      const result: IGetLawyerResponse[] | null =
         await this._getLawyerApplication.execute();
-      res
-        .status(AppStatusCode.SUCCESS_CODE)
-        .json({
-          success: true,
-          message: "Lawyers found successfully",
-          data: result,
-        });
-    } catch (error) {
+      res.status(AppStatusCode.SUCCESS_CODE).json({
+        success: true,
+        message: "Lawyers found successfully",
+        data: result,
+      });
+    } catch (_error) {
       res
         .status(AppStatusCode.INTERNAL_ERROR_CODE)
         .json({ success: false, message: "Lawyers not found" });
     }
   }
-
-  async getLawyerDetails(req: Request, res: Response) {
+  /**
+   * @async
+   * @method getLawyerDetails
+   * @param {Request} req The request object with `lawyerId` as params
+   * @param {Response} res The response object
+   * @returns {Promise<void>} The json response containing the lawyer details or error message
+   */
+  async getLawyerDetails(req: Request, res: Response): Promise<void> {
     try {
       let result = await this._getLawyerDetailsApplication.execute(
         req.params.lawyerId,
       );
-      res
-        .status(AppStatusCode.SUCCESS_CODE)
-        .json({
-          success: true,
-          message: "Lawyer Details found successfully",
-          data: result,
-        });
-    } catch (error) {
+      res.status(AppStatusCode.SUCCESS_CODE).json({
+        success: true,
+        message: "Lawyer Details found successfully",
+        data: result,
+      });
+    } catch (_error) {
       res
         .status(AppStatusCode.INTERNAL_ERROR_CODE)
         .json({ success: false, message: AppError.UNKNOWN_ERROR });
     }
   }
-
-  async getSlotDetails(req: Request, res: Response) {
+  /**
+   * @async
+   * @method getSlotDetails
+   * @param {Request} req The request object with `lawyerId` and date as params
+   * @param {Response} res The response object
+   * @returns {Promise<void>} The json response containing time slots of lawyer for that date or error meesage
+   */
+  async getSlotDetails(req: Request, res: Response): Promise<void> {
     try {
       const timeSlots = await this._getLawyerSlotApplication.execute(
         new mongoose.Types.ObjectId(req.params.lawyerId),
         req.params.date,
       );
-      res
-        .status(AppStatusCode.SUCCESS_CODE)
-        .json({
-          success: true,
-          message: "Time slots found",
-          timeSlots: timeSlots,
-        });
-    } catch (error) {
+      res.status(AppStatusCode.SUCCESS_CODE).json({
+        success: true,
+        message: "Time slots found",
+        timeSlots: timeSlots,
+      });
+    } catch (_error) {
       res
         .status(AppStatusCode.INTERNAL_ERROR_CODE)
         .json({ success: false, message: AppError.UNKNOWN_ERROR });
     }
   }
-
-  async filterLawyerBySpecialization(req: Request, res: Response) {
+  /**
+   * @async
+   * @method filterLawyerBySpecialization
+   * @param {Request} req The request object with `specialization` as params
+   * @param {Response} res The response object
+   * @returns {Promise<void>} The json response conatining lawyers list matching the specialization or error message
+   */
+  async filterLawyerBySpecialization(
+    req: Request,
+    res: Response,
+  ): Promise<void> {
     try {
       const result = await this._filterLawyerApplication.execute(
         req.params.specialization,
       );
       if (result) {
-        res
-          .status(AppStatusCode.SUCCESS_CODE)
-          .json({
-            success: true,
-            message: "Data found successfully",
-            data: result,
-          });
+        res.status(AppStatusCode.SUCCESS_CODE).json({
+          success: true,
+          message: "Data found successfully",
+          data: result,
+        });
       }
-    } catch (error) {
+    } catch (_error) {
       res
         .status(AppStatusCode.INTERNAL_ERROR_CODE)
         .json({ success: false, message: AppError.UNKNOWN_ERROR });
     }
   }
-
-  async searchLawyerByName(req: Request, res: Response) {
+  /**
+   * @async
+   * @method searchLawyerByName
+   * @param {Request} req The request object with lawyer `name` as params
+   * @param {Response} res The response object
+   * @returns {Promise<void>} The json response containing lawyers list matching the exact name or error message
+   */
+  async searchLawyerByName(req: Request, res: Response): Promise<void> {
     try {
       const result = await this._searchLawyerApplication.execute(
         req.params.name,
       );
       if (result) {
-        res
-          .status(AppStatusCode.SUCCESS_CODE)
-          .json({
-            success: true,
-            message: "Data found successfully",
-            data: result,
-          });
+        res.status(AppStatusCode.SUCCESS_CODE).json({
+          success: true,
+          message: "Data found successfully",
+          data: result,
+        });
       }
-    } catch (error) {
+    } catch (_error) {
       res
         .status(AppStatusCode.INTERNAL_ERROR_CODE)
         .json({ success: false, message: AppError.UNKNOWN_ERROR });
     }
   }
-
-  async bookAppointment(req: Request, res: Response) {
+  /**
+   * @async
+   * @method bookAppointment
+   * @param {Request} req The request object containing the appointment details in the body and `caseId` as params
+   * @param {Response} res The response object
+   * @returns {Promise<void>} The json response with success message or error message
+   */
+  async bookAppointment(req: Request, res: Response): Promise<void> {
     try {
       await this._bookAppointmentApplication.execute(
         req.body,
@@ -161,8 +191,14 @@ export class UserController {
       }
     }
   }
-
-  async getAppointment(req: Request, res: Response) {
+  /**
+   * @async
+   * @method getAppointment
+   * @param {Request} req The request object containing `userId` and `appointmentStatus` as params and `startIndex` and `limit` as params for pagination
+   * @param {Response} res The response object
+   * @returns {Promise<void>} The json response containing appointments list and total appointments for that appointment status or error message
+   */
+  async getAppointment(req: Request, res: Response): Promise<void> {
     try {
       const result = await this._getAppointmentApplication.execute(
         new mongoose.Types.ObjectId(req.params.userId),
@@ -170,22 +206,26 @@ export class UserController {
         parseInt(req.params.startIndex),
         parseInt(req.params.limit),
       );
-      res
-        .status(AppStatusCode.SUCCESS_CODE)
-        .json({
-          success: true,
-          message: "Appointment found successfully",
-          data: result?.appointments,
-          totalAppointments: result?.totalAppointments,
-        });
-    } catch (error) {
+      res.status(AppStatusCode.SUCCESS_CODE).json({
+        success: true,
+        message: "Appointment found successfully",
+        data: result?.appointments,
+        totalAppointments: result?.totalAppointments,
+      });
+    } catch (_error) {
       res
         .status(AppStatusCode.INTERNAL_ERROR_CODE)
         .json({ success: false, message: AppError.UNKNOWN_ERROR });
     }
   }
-
-  async cancelAppointment(req: Request, res: Response) {
+  /**
+   * @async
+   * @method cancelAppointment
+   * @param {Request} req The request object containing `appointmentId` as params
+   * @param {Response} res The response object
+   * @returns {Promise<void>} The json response containing the success message or error message
+   */
+  async cancelAppointment(req: Request, res: Response): Promise<void> {
     try {
       await this._cancelAppointmentUseCase.execute(
         new mongoose.Types.ObjectId(req.params.appointmentId),
@@ -205,27 +245,37 @@ export class UserController {
       }
     }
   }
-
-  async getTodaysAppointments(req: Request, res: Response) {
+  /**
+   * @async
+   * @method getTodaysAppointments
+   * @param {Request} req The request object with `userId` as params
+   * @param {Response} res The response object
+   * @returns {Promise<void>} The json response containing todays appointments list or error message
+   */
+  async getTodaysAppointments(req: Request, res: Response): Promise<void> {
     try {
       let result = await this._getTodaysAppointmentUseCase.execute(
         new mongoose.Types.ObjectId(req.params.userId),
       );
-      res
-        .status(AppStatusCode.SUCCESS_CODE)
-        .json({
-          success: true,
-          message: "Todays appointments found",
-          data: result,
-        });
-    } catch (error) {
+      res.status(AppStatusCode.SUCCESS_CODE).json({
+        success: true,
+        message: "Todays appointments found",
+        data: result,
+      });
+    } catch (_error) {
       res
         .status(AppStatusCode.INTERNAL_ERROR_CODE)
         .json({ success: false, message: AppError.UNKNOWN_ERROR });
     }
   }
-
-  async resheduleAppointment(req: Request, res: Response) {
+  /**
+   * @async
+   * @method resheduleAppointment
+   * @param {Request} req The request object with `appointmentId' as params
+   * @param {Response} res The response object
+   * @returns {Promise<void>} The json response containing success message or error message
+   */
+  async resheduleAppointment(req: Request, res: Response): Promise<void> {
     try {
       await this._resheduleAppointmentUseCase.execute(
         new mongoose.Types.ObjectId(req.params.appointmentId),
@@ -233,85 +283,109 @@ export class UserController {
       res
         .status(AppStatusCode.SUCCESS_CODE)
         .json({ success: true, message: "Appointment reshedule" });
-    } catch (error) {
+    } catch (_error) {
       res
         .status(AppStatusCode.INTERNAL_ERROR_CODE)
         .json({ success: false, message: AppError.UNKNOWN_ERROR });
     }
   }
-
-  async reportLawyer(req: Request, res: Response) {
+  /**
+   * @async
+   * @method reportLawyer
+   * @param {Request} req The request object with report details as body
+   * @param {Response} res The response object
+   * @returns {Promise<void>} The json response with success message or error message
+   */
+  async reportLawyer(req: Request, res: Response): Promise<void> {
     try {
       await this._reportLawyerUseCase.execute(req.body);
       res
         .status(AppStatusCode.SUCCESS_CODE)
         .json({ success: true, message: "Report lawyer successfully" });
-    } catch (error) {
+    } catch (_error) {
       res
         .status(AppStatusCode.INTERNAL_ERROR_CODE)
         .json({ success: false, message: AppError.UNKNOWN_ERROR });
     }
   }
-
-  async getUserChat(req: Request, res: Response) {
+  /**
+   * @async
+   * @method getUserChat
+   * @param {Request} req The request object with `userId` and `lawyerId` as params
+   * @param {Response} res The response object
+   * @returns {Promise<void>} The json response containing user chat with that lawyer or error meessage
+   */
+  async getUserChat(req: Request, res: Response): Promise<void> {
     try {
       const result = await this._getUserChatUseCase.execute(
         new mongoose.Types.ObjectId(req.params.userId),
         new mongoose.Types.ObjectId(req.params.lawyerId),
       );
-      res
-        .status(AppStatusCode.SUCCESS_CODE)
-        .json({
-          success: true,
-          message: "Message found successfully",
-          data: result,
-        });
-    } catch (error) {
+      res.status(AppStatusCode.SUCCESS_CODE).json({
+        success: true,
+        message: "Message found successfully",
+        data: result,
+      });
+    } catch (_error) {
       res
         .status(AppStatusCode.INTERNAL_ERROR_CODE)
         .json({ success: false, message: AppError.UNKNOWN_ERROR });
     }
   }
-
-  async getUserAllChats(req: Request, res: Response) {
+  /**
+   * @async
+   * @method getUserAllChats
+   * @param {Request} req The request with `userId` as params
+   * @param {Response} res The response object
+   * @returns {Promise<void>} The json response containing all chats of that user or error message
+   */
+  async getUserAllChats(req: Request, res: Response): Promise<void> {
     try {
       const result = await this._getUserAllChatsUseCase.execute(
         new mongoose.Types.ObjectId(req.params.userId),
       );
-      res
-        .status(AppStatusCode.SUCCESS_CODE)
-        .json({
-          success: true,
-          message: "User chat found successfully",
-          data: result,
-        });
-    } catch (error) {
+      res.status(AppStatusCode.SUCCESS_CODE).json({
+        success: true,
+        message: "User chat found successfully",
+        data: result,
+      });
+    } catch (_error) {
       res
         .status(AppStatusCode.INTERNAL_ERROR_CODE)
         .json({ success: false, message: AppError.UNKNOWN_ERROR });
     }
   }
-
-  async getLawyerChatProfile(req: Request, res: Response) {
+  /**
+   * @async
+   * @method getLawyerChatProfile
+   * @param {Request} req The request object with `lawyerId` as params
+   * @param {Response} res The response object
+   * @returns {Promise<void>} The json response containing lawyer chat profile details or error message
+   */
+  async getLawyerChatProfile(req: Request, res: Response): Promise<void> {
     try {
       const result = await this._getLawyerChatProfileUseCase.execute(
         new mongoose.Types.ObjectId(req.params.lawyerId),
       );
-      res
-        .status(AppStatusCode.SUCCESS_CODE)
-        .json({
-          success: true,
-          message: "Lawyer chat profile found successfully",
-          data: result,
-        });
-    } catch (error) {
+      res.status(AppStatusCode.SUCCESS_CODE).json({
+        success: true,
+        message: "Lawyer chat profile found successfully",
+        data: result,
+      });
+    } catch (_error) {
       res
         .status(AppStatusCode.INTERNAL_ERROR_CODE)
         .json({ success: false, message: AppError.UNKNOWN_ERROR });
     }
   }
-
-  async addReview(req: Request, res: Response) {
+  /**
+   * @async
+   * @method addReview
+   * @param {Request} req The request object `lawyerId` and review details as body
+   * @param {Response} res The response object
+   * @returns {Promise<void>} The json response containing the success message or error message
+   */
+  async addReview(req: Request, res: Response): Promise<void> {
     try {
       await this._addReviewUseCase.execute(
         new mongoose.Types.ObjectId(req.params.lawyerId),
@@ -320,26 +394,30 @@ export class UserController {
       res
         .status(AppStatusCode.SUCCESS_CODE)
         .json({ success: true, message: "Review added successfully" });
-    } catch (error) {
+    } catch (_error) {
       res
         .status(AppStatusCode.INTERNAL_ERROR_CODE)
         .json({ success: false, message: AppError.UNKNOWN_ERROR });
     }
   }
-
-  async getReview(req: Request, res: Response) {
+  /**
+   * @async
+   * @method getReview
+   * @param {Request} req The request object with `lawyerId` as params
+   * @param {Response} res The response object
+   * @returns {Promise<void>} The json response containing review details or error message
+   */
+  async getReview(req: Request, res: Response): Promise<void> {
     try {
       const result = await this._getReviewUseCase.execute(
         new mongoose.Types.ObjectId(req.params.lawyerId),
       );
-      res
-        .status(AppStatusCode.SUCCESS_CODE)
-        .json({
-          success: true,
-          message: "Review found successfully",
-          data: result,
-        });
-    } catch (error) {
+      res.status(AppStatusCode.SUCCESS_CODE).json({
+        success: true,
+        message: "Review found successfully",
+        data: result,
+      });
+    } catch (_error) {
       res
         .status(AppStatusCode.INTERNAL_ERROR_CODE)
         .json({ success: false, message: AppError.UNKNOWN_ERROR });

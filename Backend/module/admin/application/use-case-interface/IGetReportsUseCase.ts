@@ -1,8 +1,8 @@
-import { ReportsDto } from "../../domain/dtos/reportsDto";
+import { IReportsDto } from "../../domain/dtos/reportsDto";
 
 export interface IGetReportsUseCase {
   execute(
     revenueDateRange: string,
     specializationType: string,
-  ): Promise<ReportsDto>;
+  ): Promise<IReportsDto>;
 }

@@ -1,11 +1,11 @@
 import { UserProfileMapper } from "../../application/mapper/userProfileMapper";
-import { UserProfileEntitie } from "../../domain/entity/userProfileUserEntity";
+import { IUserProfileEntitie } from "../../domain/entity/userProfileUserEntity";
 import { IEditProfileRepository } from "../repositoryInterface/IEditProfileRepository";
 import { userProfileModel } from "../models/userProfileModel";
 import { BaseRepository } from "./baseRepository";
 
 export class EditProfileRepository
-  extends BaseRepository<UserProfileEntitie>
+  extends BaseRepository<IUserProfileEntitie>
   implements IEditProfileRepository
 {
   constructor() {
@@ -14,7 +14,7 @@ export class EditProfileRepository
 
   async editUserProfile(
     userId: string,
-    data: UserProfileEntitie,
+    data: IUserProfileEntitie,
   ): Promise<UserProfileMapper> {
     return await userProfileModel.updateOne({ userId: userId }, { $set: data });
   }

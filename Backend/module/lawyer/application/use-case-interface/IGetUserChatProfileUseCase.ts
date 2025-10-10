@@ -1,6 +1,6 @@
 import { Types } from "mongoose";
-import { UserChatProfileDto } from "../../domain/dtos/userChatProfileDto";
+import { IUserChatProfileDto } from "../../domain/dtos/userChatProfileDto";
 
 export interface IGetUserChatProfileUseCase {
-  execute(userId: Types.ObjectId): Promise<UserChatProfileDto | null>;
+  execute(userId: Types.ObjectId): Promise<IUserChatProfileDto | null>;
 }

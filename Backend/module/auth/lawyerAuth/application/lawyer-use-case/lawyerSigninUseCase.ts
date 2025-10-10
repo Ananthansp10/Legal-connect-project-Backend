@@ -2,7 +2,7 @@ import { AppError } from "../../../../../common/error/AppEnumError";
 import { AppException } from "../../../../../common/error/errorException";
 import { AppStatusCode } from "../../../../../common/statusCode/AppStatusCode";
 import { ITokenGeneration } from "../../../userAuth/infrastructure/services/ItokenGenerationService";
-import { LawyerSigninResponseDto } from "../../domain/dto/lawyerSigninDto";
+import { ILawyerSigninResponseDto } from "../../domain/dto/lawyerSigninDto";
 import { ILawyerSignup } from "../../domain/entity/lawyerEntity";
 import { ILawyerSigninRepository } from "../../infrastructure/repositoryInterface/ILawyerSigninRepository";
 import { ILawyerSigninUseCase } from "../lawyer-use-case-interface/IlawyerSigninUseCase";
@@ -18,7 +18,7 @@ export class LawyerSigninUseCase implements ILawyerSigninUseCase {
   async execute(
     email: string,
     password: string,
-  ): Promise<LawyerSigninResponseDto> {
+  ): Promise<ILawyerSigninResponseDto> {
     const lawyerExist: ILawyerSignup | null =
       await this._lawyerRepo.findByEmail(email);
 
@@ -62,7 +62,7 @@ export class LawyerSigninUseCase implements ILawyerSigninUseCase {
         role: "lawyer",
       });
 
-    let response: LawyerSigninResponseDto = mapper.toResponse(
+    let response: ILawyerSigninResponseDto = mapper.toResponse(
       lawyerExist,
       accessToken,
       refreshToken,

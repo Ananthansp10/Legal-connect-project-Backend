@@ -1,6 +1,6 @@
 import { Types } from "mongoose";
-import { LawyerProfileEntity } from "../../../lawyer/domain/entity/lawyerProfileEntity";
-import { UserProfileEntitie } from "../../../user/domain/entity/userProfileUserEntity";
+import { ILawyerProfileEntity } from "../../../lawyer/domain/entity/lawyerProfileEntity";
+import { IUserProfileEntitie } from "../../../user/domain/entity/userProfileUserEntity";
 import { IReportAccountEntity } from "../../domain/entity/reportAccountEntity";
 import { reportAccountModel } from "../models/reportAccountsModel";
 import { IReportedAccountsRepository } from "../repositoryInterface/IReportedAccountsRepository";
@@ -34,13 +34,13 @@ export class ReportAccountRepository implements IReportedAccountsRepository {
 
   async findUserDetails(
     userId: Types.ObjectId,
-  ): Promise<UserProfileEntitie | null> {
+  ): Promise<IUserProfileEntitie | null> {
     return await userProfileModel.findOne({ userId: userId });
   }
 
   async findLawyerDetails(
     lawyerId: Types.ObjectId,
-  ): Promise<LawyerProfileEntity | null> {
+  ): Promise<ILawyerProfileEntity | null> {
     return await lawyerProfileModel.findOne({ lawyerId: lawyerId });
   }
 

@@ -1,7 +1,7 @@
 import { Types } from "mongoose";
-import { LawyerProfileEntity } from "../../../lawyer/domain/entity/lawyerProfileEntity";
+import { ILawyerProfileEntity } from "../../../lawyer/domain/entity/lawyerProfileEntity";
 
-export interface getLawyerResponse {
+export interface IGetLawyerResponse {
   lawyerId: Types.ObjectId;
   name: string;
   specialization: string[];
@@ -12,7 +12,7 @@ export interface getLawyerResponse {
 }
 
 export class GetLawyerMapper {
-  static toResponse(data: LawyerProfileEntity[]): getLawyerResponse[] {
+  static toResponse(data: ILawyerProfileEntity[]): IGetLawyerResponse[] {
     return data.map((lawyer) => ({
       lawyerId: lawyer.lawyerId,
       name: lawyer.personalInfo.name,

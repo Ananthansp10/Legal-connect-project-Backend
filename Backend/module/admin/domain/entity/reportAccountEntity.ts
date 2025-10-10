@@ -1,6 +1,6 @@
 import { Types } from "mongoose";
 
-export interface ReportsData {
+export interface IReportsData {
   reason: string;
   description: string;
   reporterId: Types.ObjectId;
@@ -11,6 +11,6 @@ export interface IReportAccountEntity {
   _id?: Types.ObjectId;
   reportedId: Types.ObjectId;
   userType: string;
-  reports: ReportsData[];
+  reports: IReportsData[];
   status: string;
 }

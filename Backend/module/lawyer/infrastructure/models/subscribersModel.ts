@@ -21,6 +21,27 @@ const subscribersSchema = new mongoose.Schema<ISubscribersEntity>({
         type: Number,
         required: true,
       },
+      activationDate: {
+        type: String,
+        required: true,
+      },
+      expireDate: {
+        type: String,
+        required: true,
+      },
+      isActive: {
+        type: Boolean,
+        required: true,
+      },
+      totalAppointments: {
+        type: Number,
+        required: true,
+      },
+      appointmentsCount: {
+        type: Number,
+        required: true,
+        default: 0,
+      },
     },
   ],
 });

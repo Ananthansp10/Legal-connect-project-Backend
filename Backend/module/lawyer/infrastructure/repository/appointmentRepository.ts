@@ -3,9 +3,9 @@ import { IAppointmentEntity } from "../../../user/domain/entity/appointmentEntit
 import { IAppointmentRepository } from "../repositoryInterface/IAppointmentRepository";
 import { appointmentModel } from "../../../user/infrastructure/models/appointmentModel";
 import { AppointmentStatus } from "../../../../common/status/appointmentStatus";
-import { UserProfileEntitie } from "../../../user/domain/entity/userProfileUserEntity";
+import { IUserProfileEntitie } from "../../../user/domain/entity/userProfileUserEntity";
 import { userProfileModel } from "../../../user/infrastructure/models/userProfileModel";
-import { ConsultationHistoryRequestDto } from "../../domain/dtos/consultationHistoryDto";
+import { IConsultationHistoryRequestDto } from "../../domain/dtos/consultationHistoryDto";
 
 export class AppointmentRepository implements IAppointmentRepository {
   async getAppointments(
@@ -77,7 +77,7 @@ export class AppointmentRepository implements IAppointmentRepository {
 
   async findUserDetails(
     userId: Types.ObjectId,
-  ): Promise<UserProfileEntitie | null> {
+  ): Promise<IUserProfileEntitie | null> {
     return await userProfileModel.findOne({ userId: userId });
   }
 
@@ -113,7 +113,7 @@ export class AppointmentRepository implements IAppointmentRepository {
 
   async getConsultationHistory(
     caseId: number,
-  ): Promise<ConsultationHistoryRequestDto[] | null> {
+  ): Promise<IConsultationHistoryRequestDto[] | null> {
     const result = await appointmentModel.aggregate([
       {
         $match: {

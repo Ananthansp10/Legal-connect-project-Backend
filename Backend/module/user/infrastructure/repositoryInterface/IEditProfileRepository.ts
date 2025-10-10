@@ -1,11 +1,11 @@
 import { UserProfileMapper } from "../../application/mapper/userProfileMapper";
-import { UserProfileEntitie } from "../../domain/entity/userProfileUserEntity";
+import { IUserProfileEntitie } from "../../domain/entity/userProfileUserEntity";
 import { BaseRepository } from "../repository/baseRepository";
 
 export interface IEditProfileRepository
-  extends BaseRepository<UserProfileEntitie> {
+  extends BaseRepository<IUserProfileEntitie> {
   editUserProfile(
     userId: string,
-    data: UserProfileEntitie,
+    data: IUserProfileEntitie,
   ): Promise<UserProfileMapper>;
 }
