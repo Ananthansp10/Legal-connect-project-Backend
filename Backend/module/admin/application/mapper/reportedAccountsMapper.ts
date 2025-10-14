@@ -12,7 +12,7 @@ export class ReportedAccountsMapper {
     const results = await Promise.all(
       reportedAccounts?.map(async (accounts) => {
         let reportedAccountDetails;
-        if (accounts.status == "user") {
+        if (accounts.userType == "user") {
           reportedAccountDetails = await reportedAccountRepo.findUserDetails(
             accounts.reportedId,
           );

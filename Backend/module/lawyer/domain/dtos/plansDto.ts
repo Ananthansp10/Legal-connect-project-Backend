@@ -10,3 +10,20 @@ export interface IPlansResponseDto {
   status: boolean;
   isDeleted: boolean;
 }
+
+export interface IPlanDetail {
+  planId: Types.ObjectId;
+  date: string;
+  price: number;
+  activationDate: string;
+  expireDate: string;
+  isActive: boolean;
+  totalAppointments: number;
+  appointmentsCount: number;
+  planName: string;
+}
+
+export interface ISubscriptionPlanResponseDto {
+  lawyerId: Types.ObjectId;
+  plans: IPlanDetail[];
+}

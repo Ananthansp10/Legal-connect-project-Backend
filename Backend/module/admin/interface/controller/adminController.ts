@@ -71,6 +71,7 @@ export class AdminController {
         totalReportedAccounts: result?.totalReportedAccounts,
       });
     } catch (_error) {
+      console.log(_error);
       res
         .status(AppStatusCode.INTERNAL_ERROR_CODE)
         .json({ success: false, message: AppError.UNKNOWN_ERROR });

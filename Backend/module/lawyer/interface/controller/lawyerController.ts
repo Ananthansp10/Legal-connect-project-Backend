@@ -22,6 +22,8 @@ import { IAddNotesUseCase } from "../../application/use-case-interface/IAddNotes
 import { IAddReviewUseCase } from "../../application/use-case-interface/IAddReviewUseCase";
 import { IGetConsultationHistoryUseCase } from "../../application/use-case-interface/IGetConsultationHistoryUseCase";
 import { IFindStarterPlanUseCase } from "../../application/use-case-interface/IFindStarterPlanUseCase";
+import { ISearchAppointmentUseCase } from "../../application/use-case-interface/ISearchAppointmentUseCase";
+import { IGetPurchasedPlansUseCase } from "../../application/use-case-interface/IGetPurchasedPlansUseCase";
 
 export class LawyerController {
   constructor(
@@ -44,6 +46,8 @@ export class LawyerController {
     private _addFeedBackUseCase: IAddReviewUseCase,
     private _getConsultationHistoryUseCase: IGetConsultationHistoryUseCase,
     private _findStarterPlanUseCase: IFindStarterPlanUseCase,
+    private _searchAppointmentUseCase: ISearchAppointmentUseCase,
+    private _getPurchasedPlansUseCase: IGetPurchasedPlansUseCase,
   ) {}
 
   async addSlot(req: Request, res: Response): Promise<void> {
@@ -362,6 +366,41 @@ export class LawyerController {
       res
         .status(AppStatusCode.SUCCESS_CODE)
         .json({ success: true, data: result });
+    } catch (_error) {
+      res
+        .status(AppStatusCode.INTERNAL_ERROR_CODE)
+        .json({ success: false, message: AppError.UNKNOWN_ERROR });
+    }
+  }
+
+  async searchAppointment(req: Request, res: Response) {
+    try {
+      const result = await this._searchAppointmentUseCase.execute(
+        new mongoose.Types.ObjectId(req.params.lawyerId),
+        req.params.userName,
+      );
+      res.status(AppStatusCode.SUCCESS_CODE).json({
+        success: true,
+        message: "Appointments found successfully",
+        data: result,
+      });
+    } catch (_error) {
+      res
+        .status(AppStatusCode.INTERNAL_ERROR_CODE)
+        .json({ success: false, message: AppError.UNKNOWN_ERROR });
+    }
+  }
+
+  async getPurchasedPlans(req: Request, res: Response) {
+    try {
+      const result = await this._getPurchasedPlansUseCase.execute(
+        new mongoose.Types.ObjectId(req.params.lawyerId),
+      );
+      res.status(AppStatusCode.SUCCESS_CODE).json({
+        success: true,
+        message: "purchased plans found successfully",
+        data: result,
+      });
     } catch (_error) {
       res
         .status(AppStatusCode.INTERNAL_ERROR_CODE)

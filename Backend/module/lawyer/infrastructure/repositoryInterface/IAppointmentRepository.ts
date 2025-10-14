@@ -2,6 +2,7 @@ import { Types } from "mongoose";
 import { IAppointmentEntity } from "../../../user/domain/entity/appointmentEntity";
 import { IUserProfileEntitie } from "../../../user/domain/entity/userProfileUserEntity";
 import { IConsultationHistoryRequestDto } from "../../domain/dtos/consultationHistoryDto";
+import { IAppointmentDto } from "../../domain/dtos/appointmentDto";
 
 export interface IAppointmentRepository {
   getAppointments(
@@ -27,4 +28,8 @@ export interface IAppointmentRepository {
   getConsultationHistory(
     caseId: number,
   ): Promise<IConsultationHistoryRequestDto[] | null>;
+  searchAppointment(
+    lawyerId: Types.ObjectId,
+    userName: string,
+  ): Promise<IAppointmentDto[] | null>;
 }

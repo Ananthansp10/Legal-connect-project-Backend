@@ -218,4 +218,18 @@ router.get(
   (req, res) => lawyerController.findStarterPlan(req, res),
 );
 
+router.get(
+  "/search-appointment/:lawyerId/:userName",
+  verifyToken,
+  verifyRole(["lawyer"]),
+  (req, res) => lawyerController.searchAppointment(req, res),
+);
+
+router.get(
+  "/get-purchased-plans/:lawyerId",
+  verifyToken,
+  verifyRole(["lawyer"]),
+  (req, res) => lawyerController.getPurchasedPlans(req, res),
+);
+
 export default router;

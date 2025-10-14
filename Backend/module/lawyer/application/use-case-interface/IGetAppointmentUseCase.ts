@@ -1,12 +1,15 @@
 import { Types } from "mongoose";
 
 interface IUser {
-  _id?: Types.ObjectId;
+  _id?: Types.ObjectId | string;
   name: string;
   profileImage: string;
+  email: string;
+  phoneNumber: string;
+  proffession: string;
 }
 
-export interface IAppointment {
+export interface IAppointmentResponseDto {
   _id?: Types.ObjectId;
   user: IUser;
   problem: string;
@@ -27,7 +30,7 @@ export interface IGetAppointmentUseCase {
     startIndex: number,
     endIndex: number,
   ): Promise<{
-    appointments: IAppointment[];
+    appointments: IAppointmentResponseDto[];
     totalAppointments: number;
   } | null>;
 }

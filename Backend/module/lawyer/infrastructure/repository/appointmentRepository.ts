@@ -6,6 +6,7 @@ import { AppointmentStatus } from "../../../../common/status/appointmentStatus";
 import { IUserProfileEntitie } from "../../../user/domain/entity/userProfileUserEntity";
 import { userProfileModel } from "../../../user/infrastructure/models/userProfileModel";
 import { IConsultationHistoryRequestDto } from "../../domain/dtos/consultationHistoryDto";
+import { IAppointmentDto } from "../../domain/dtos/appointmentDto";
 
 export class AppointmentRepository implements IAppointmentRepository {
   async getAppointments(
@@ -141,6 +142,36 @@ export class AppointmentRepository implements IAppointmentRepository {
       },
       {
         $unwind: "$lawyerDetails",
+      },
+    ]);
+    return result;
+  }
+
+  async searchAppointment(
+    lawyerId: Types.ObjectId,
+    userName: string,
+  ): Promise<IAppointmentDto[] | null> {
+    const result = await appointmentModel.aggregate([
+      {
+        $match: {
+          lawyerId: lawyerId,
+        },
+      },
+      {
+        $lookup: {
+          from: "userprofiles",
+          localField: "userId",
+          foreignField: "userId",
+          as: "userDetails",
+        },
+      },
+      {
+        $unwind: "$userDetails",
+      },
+      {
+        $match: {
+          "userDetails.name": userName,
+        },
       },
     ]);
     return result;
