@@ -22,7 +22,7 @@ const userSocketMap = new Map<string, string>();
 export const initSocket = (server: HTTPServer) => {
   io = new SocketIOServer(server, {
     cors: {
-      origin: "http://localhost:5173",
+      origin: "https://legalconnect.site",
       methods: ["GET", "POST"],
     },
   });
