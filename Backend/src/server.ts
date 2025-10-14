@@ -1,0 +1,11 @@
+import { server } from "./app";
+const port = process.env.PORT;
+import db from "./config/dbConfig";
+//import logger from './logger';
+
+db();
+
+server.listen(port, () => {
+  console.log(`server running in http://localhost:${port}`);
+  //logger.info(`server running in http://localhost:${port}`)
+});
