@@ -38,7 +38,7 @@ const accessLogStream = rfs.createStream("access.log", {
 
 app.use(
   cors({
-    origin: "https://legalconnect.site",
+    origin: ["https://legalconnect.site", "https://www.legalconnect.site"],
     credentials: true,
   }),
 );
