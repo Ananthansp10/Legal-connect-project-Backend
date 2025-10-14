@@ -42,6 +42,9 @@ export class GetAppointmentsUseCase implements IGetAppointmentsUseCase {
           appointmentStatus: appointment.appointmentStatus,
           userProfileImage: userDetails?.profileImage ?? "",
           lawyerProfileImage: lawyerDetails?.personalInfo.profileImage ?? "",
+          note: appointment.notes,
+          feedback: appointment.feedback,
+          rating: appointment.rating,
         };
       }),
     );

@@ -52,6 +52,8 @@ import { AddReviewUseCase } from "../module/lawyer/application/use-case/addRevie
 import { GetConsultationHistoryUseCase } from "../module/lawyer/application/use-case/getConsultationHistoryUseCase";
 import { LawyerAuthController } from "../module/auth/lawyerAuth/interface/controller/lawyerAuthController";
 import { FindStarterPlanUseCase } from "../module/lawyer/application/use-case/findStarterPlanUseCase";
+import { SearchAppointmentUseCase } from "../module/lawyer/application/use-case/searchAppointmentUseCase";
+import { GetPurchasedPlansUseCase } from "../module/lawyer/application/use-case/getPurchasedPlansUseCase";
 
 const lawyerSignupMongoRepo = new LawyerSignupRepository();
 const hashService = new HashService();
@@ -152,6 +154,8 @@ const getConsultationHistoryUseCase = new GetConsultationHistoryUseCase(
   appointmentRepo,
 );
 const findStarterPlanUseCase = new FindStarterPlanUseCase(planRepo);
+const searchAppointmentUseCase = new SearchAppointmentUseCase(appointmentRepo);
+const getPurchasedPlansUseCase = new GetPurchasedPlansUseCase(planRepo);
 
 export const lawyerController = new LawyerController(
   addSlotApplication,
@@ -173,6 +177,8 @@ export const lawyerController = new LawyerController(
   addFeedbackUseCase,
   getConsultationHistoryUseCase,
   findStarterPlanUseCase,
+  searchAppointmentUseCase,
+  getPurchasedPlansUseCase,
 );
 
 const createRazorpayOrderUseCase = new CreateRazorpayOrderUseCase();

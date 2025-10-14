@@ -301,7 +301,7 @@ export class UserController {
       await this._reportLawyerUseCase.execute(req.body);
       res
         .status(AppStatusCode.SUCCESS_CODE)
-        .json({ success: true, message: "Report lawyer successfully" });
+        .json({ success: true, message: "Reported successfully" });
     } catch (_error) {
       res
         .status(AppStatusCode.INTERNAL_ERROR_CODE)

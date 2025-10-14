@@ -19,14 +19,16 @@ export class AddPlanUseCase implements IAddPlanUseCase {
     );
     const lastPlanDetails = planExist?.plans[planExist.plans.length - 1];
     if (planExist) {
-      const planExpireDate = new Date(lastPlanDetails?.expireDate!).setDate(
-        new Date(lastPlanDetails?.expireDate!).getDate() +
+      const planExpireDate = new Date(
+        lastPlanDetails?.expireDate ?? "",
+      ).setDate(
+        new Date(lastPlanDetails?.expireDate ?? "").getDate() +
           planDetails?.duration! +
           1,
       );
-      const activationDate = new Date(lastPlanDetails?.expireDate!).setDate(
-        new Date(lastPlanDetails?.expireDate!).getDate() + 1,
-      );
+      const activationDate = new Date(
+        lastPlanDetails?.expireDate ?? "",
+      ).setDate(new Date(lastPlanDetails?.expireDate ?? "").getDate() + 1);
       let planObj = {
         planId: planId,
         date: currentDate,
@@ -34,7 +36,7 @@ export class AddPlanUseCase implements IAddPlanUseCase {
         activationDate: new Date(activationDate).toISOString().split("T")[0],
         expireDate: new Date(planExpireDate).toISOString().split("T")[0],
         isActive: false,
-        totalAppointments: parseInt(planDetails?.totalAppointments!),
+        totalAppointments: parseInt(planDetails?.totalAppointments ?? "0"),
         appointmentsCount: 0,
       };
       await this._planRepo.updatePlan(lawyerId, planObj);
@@ -49,9 +51,11 @@ export class AddPlanUseCase implements IAddPlanUseCase {
             activationDate: new Date().toISOString().split("T")[0],
             expireDate: expireDate.toISOString().split("T")[0],
             isActive: true,
-            totalAppointments: isNaN(parseInt(planDetails?.totalAppointments!))
+            totalAppointments: isNaN(
+              parseInt(planDetails?.totalAppointments ?? "0"),
+            )
               ? Infinity
-              : parseInt(planDetails?.totalAppointments!),
+              : parseInt(planDetails?.totalAppointments ?? "0"),
             appointmentsCount: 0,
           },
         ],
