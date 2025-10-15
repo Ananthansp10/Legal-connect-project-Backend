@@ -1,0 +1,40 @@
+name: Deploy Backend to AWS EC2
+
+on:
+  push:
+    branches:
+      - main   # or your deployment branch
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up SSH
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.EC2_SSH_KEY }}
+
+      - name: Deploy to EC2
+        run: |
+          ssh -o StrictHostKeyChecking=no ubuntu@${{ secrets.EC2_HOST }} << 'EOF'
+          cd /home/ubuntu/backend/Legal-connect-project-Backend/Backend
+
+          echo "📦 Pulling latest changes..."
+          git pull origin main
+
+          echo "🐳 Rebuilding Docker image..."
+          sudo docker build -t legal-consultation .
+
+          echo "🛑 Stopping old container..."
+          sudo docker stop legal-consultation || true
+          sudo docker rm legal-consultation || true
+
+          echo "🚀 Starting new container..."
+          sudo docker run -d -p 5000:5000 --name legal-consultation --env-file .env legal-consultation
+
+          echo "✅ Deployment complete!"
+          EOF
