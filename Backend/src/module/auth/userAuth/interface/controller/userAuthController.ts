@@ -205,13 +205,13 @@ export class UserAuthController {
         );
       cookieTokenService.setAuthCookie(res, accessToken, refreshToken);
       res.cookie("googleAuthDetails", userData);
-      res.redirect("http://localhost:5173/user-dashboard");
+      res.redirect("https://www.legalconnect.site/user-dashboard");
     } catch (error) {
       if (error instanceof AppException) {
         if (error.message == AppError.USER_ALREADY_EXISTS) {
-          res.redirect("http://localhost:5173/emailExist");
+          res.redirect("https://www.legalconnect.site/emailExist");
         } else {
-          res.redirect("http://localhost:5173/block-page");
+          res.redirect("https://www.legalconnect.site/block-page");
         }
       } else {
         res
