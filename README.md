@@ -26,7 +26,7 @@ This is the backend service for the **Legal Consultation Platform**, providing A
 ## ⚙️ Installation & Setup
 
 ### 1️⃣ Clone the Repository
-git clone https://github.com/Ananthansp10/legal-consultation-backend.git
+git clone https://github.com/Ananthansp10/Legal-connect-project-Backend.git
 
 ### 2️⃣ Install Dependencies
 npm install
