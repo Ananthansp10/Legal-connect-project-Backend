@@ -1,13 +1,11 @@
 import { AppException } from "../../../../common/error/errorException";
 import { AppointmentStatus } from "../../../../common/status/appointmentStatus";
 import { IAppointmentRequestDto } from "../../domain/dtos/appointmentDto";
-import { IAppointmentRepository } from "../../infrastructure/repositoryInterface/IAppointmentRepository";
 import { IBookAppointmentRepository } from "../../infrastructure/repositoryInterface/IbookAppointmentRepository";
 import { IBookAppointmentUseCase } from "../use-case-interface/IBookAppointmentUseCase";
-import moment from 'moment'
 
 export class BookAppointmentUseCase implements IBookAppointmentUseCase {
-  constructor(private _bookAppointmentRepo: IBookAppointmentRepository, private _appointmentRepo: IAppointmentRepository) {}
+  constructor(private _bookAppointmentRepo: IBookAppointmentRepository) {}
 
   async execute(data: IAppointmentRequestDto, caseId: string): Promise<void> {
     try {
@@ -22,14 +20,6 @@ export class BookAppointmentUseCase implements IBookAppointmentUseCase {
       }
       const customCaseId =
         caseId && !isNaN(Number(caseId)) ? parseInt(caseId) : Date.now();
-      let currentDate = new Date(data.date)
-      let startWeek = moment(currentDate).startOf("week").toDate()
-      let endWeek = moment(currentDate).endOf("week").toDate()
-      let count = await this._appointmentRepo.findCancelAppointment(data.lawyerId,data.userId,startWeek,endWeek)
-      if(count.length>2){
-        const discountFee = (data.fee/25)*100
-        await this._bookAppointmentRepo.create({...data,fee:discountFee,appointmentStatus:AppointmentStatus.PENDING,meetStart:false})
-      }
       await this._bookAppointmentRepo.create({
         ...data,
         appointmentStatus: AppointmentStatus.PENDING,

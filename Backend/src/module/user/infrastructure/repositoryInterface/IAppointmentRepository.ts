@@ -30,5 +30,4 @@ export interface IAppointmentRepository {
   ): Promise<IAppointmentEntity[] | null>;
   resheduleAppointment(appointmentId: Types.ObjectId): Promise<void>;
   refundPayment(appointmentId: Types.ObjectId, status: string): Promise<void>;
-  findCancelAppointment(lawyerId: Types.ObjectId, userId: Types.ObjectId,startWeek:Date,endWeek:Date): Promise<IAppointmentEntity[]>;
 }
