@@ -52,19 +52,15 @@ class AdminSpecializationController {
     return __awaiter(this, void 0, void 0, function* () {
       try {
         yield this._addSpecializationApplication.execute(req.body);
-        res
-          .status(AppStatusCode_1.AppStatusCode.SUCCESS_CODE)
-          .json({
-            success: true,
-            message: "Specialization added successfully",
-          });
+        res.status(AppStatusCode_1.AppStatusCode.SUCCESS_CODE).json({
+          success: true,
+          message: "Specialization added successfully",
+        });
       } catch (_error) {
-        res
-          .status(AppStatusCode_1.AppStatusCode.INTERNAL_ERROR_CODE)
-          .json({
-            success: false,
-            message: AppEnumError_1.AppError.UNKNOWN_ERROR,
-          });
+        res.status(AppStatusCode_1.AppStatusCode.INTERNAL_ERROR_CODE).json({
+          success: false,
+          message: AppEnumError_1.AppError.UNKNOWN_ERROR,
+        });
       }
     });
   }
@@ -88,12 +84,10 @@ class AdminSpecializationController {
               : result.totalSpecializations,
         });
       } catch (_error) {
-        res
-          .status(AppStatusCode_1.AppStatusCode.INTERNAL_ERROR_CODE)
-          .json({
-            success: false,
-            message: AppEnumError_1.AppError.UNKNOWN_ERROR,
-          });
+        res.status(AppStatusCode_1.AppStatusCode.INTERNAL_ERROR_CODE).json({
+          success: false,
+          message: AppEnumError_1.AppError.UNKNOWN_ERROR,
+        });
       }
     });
   }
@@ -105,19 +99,15 @@ class AdminSpecializationController {
           description: req.body.description,
           isDeleted: req.body.isDeleted,
         });
-        res
-          .status(AppStatusCode_1.AppStatusCode.SUCCESS_CODE)
-          .json({
-            success: true,
-            message: "Specialization edited successfully",
-          });
+        res.status(AppStatusCode_1.AppStatusCode.SUCCESS_CODE).json({
+          success: true,
+          message: "Specialization edited successfully",
+        });
       } catch (_error) {
-        res
-          .status(AppStatusCode_1.AppStatusCode.INTERNAL_ERROR_CODE)
-          .json({
-            success: false,
-            message: AppEnumError_1.AppError.UNKNOWN_ERROR,
-          });
+        res.status(AppStatusCode_1.AppStatusCode.INTERNAL_ERROR_CODE).json({
+          success: false,
+          message: AppEnumError_1.AppError.UNKNOWN_ERROR,
+        });
       }
     });
   }
@@ -130,12 +120,10 @@ class AdminSpecializationController {
           message: "Specialization deleted successfully",
         });
       } catch (_error) {
-        res
-          .status(AppStatusCode_1.AppStatusCode.INTERNAL_ERROR_CODE)
-          .json({
-            success: false,
-            message: AppEnumError_1.AppError.UNKNOWN_ERROR,
-          });
+        res.status(AppStatusCode_1.AppStatusCode.INTERNAL_ERROR_CODE).json({
+          success: false,
+          message: AppEnumError_1.AppError.UNKNOWN_ERROR,
+        });
       }
     });
   }

@@ -124,4 +124,9 @@ export class AppointmentRepository implements IAppointmentRepository {
       $set: { refundStatus: status },
     });
   }
+
+  async findCancelAppointment(lawyerId: Types.ObjectId, userId: Types.ObjectId,startWeek:Date, endWeek:Date): Promise<IAppointmentEntity[]> {
+    return await appointmentModel.find({lawyerId:lawyerId,userId:userId,appointmentStatus:"Cancelled",date:{$gte:startWeek,lte:endWeek}})
+  }
 }
+
