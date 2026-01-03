@@ -83,12 +83,10 @@ class LawyerAuthController {
             .status(error.statusCode)
             .json({ success: false, message: error.message });
         } else {
-          res
-            .status(AppStatusCode_1.AppStatusCode.INTERNAL_ERROR_CODE)
-            .json({
-              success: false,
-              message: AppEnumError_1.AppError.UNKNOWN_ERROR,
-            });
+          res.status(AppStatusCode_1.AppStatusCode.INTERNAL_ERROR_CODE).json({
+            success: false,
+            message: AppEnumError_1.AppError.UNKNOWN_ERROR,
+          });
         }
       }
     });
@@ -113,12 +111,10 @@ class LawyerAuthController {
             .status(error.statusCode)
             .json({ success: false, message: error.message });
         } else {
-          res
-            .status(AppStatusCode_1.AppStatusCode.INTERNAL_ERROR_CODE)
-            .json({
-              success: false,
-              message: AppEnumError_1.AppError.UNKNOWN_ERROR,
-            });
+          res.status(AppStatusCode_1.AppStatusCode.INTERNAL_ERROR_CODE).json({
+            success: false,
+            message: AppEnumError_1.AppError.UNKNOWN_ERROR,
+          });
         }
       }
     });
@@ -140,12 +136,10 @@ class LawyerAuthController {
           .status(AppStatusCode_1.AppStatusCode.SUCCESS_CODE)
           .json({ success: true, message: "Logout successfully" });
       } catch (_error) {
-        res
-          .status(AppStatusCode_1.AppStatusCode.INTERNAL_ERROR_CODE)
-          .json({
-            success: false,
-            message: AppEnumError_1.AppError.UNKNOWN_ERROR,
-          });
+        res.status(AppStatusCode_1.AppStatusCode.INTERNAL_ERROR_CODE).json({
+          success: false,
+          message: AppEnumError_1.AppError.UNKNOWN_ERROR,
+        });
       }
     });
   }
@@ -163,12 +157,10 @@ class LawyerAuthController {
             .status(error.statusCode)
             .json({ success: false, message: error.message });
         } else {
-          res
-            .status(AppStatusCode_1.AppStatusCode.INTERNAL_ERROR_CODE)
-            .json({
-              success: false,
-              message: AppEnumError_1.AppError.UNKNOWN_ERROR,
-            });
+          res.status(AppStatusCode_1.AppStatusCode.INTERNAL_ERROR_CODE).json({
+            success: false,
+            message: AppEnumError_1.AppError.UNKNOWN_ERROR,
+          });
         }
       }
     });
@@ -195,12 +187,10 @@ class LawyerAuthController {
               .status(AppStatusCode_1.AppStatusCode.UNAUTHORIZED)
               .json({ success: false, message: "Invalid token" });
           }
-          res
-            .status(AppStatusCode_1.AppStatusCode.INTERNAL_ERROR_CODE)
-            .json({
-              success: false,
-              message: AppEnumError_1.AppError.UNKNOWN_ERROR,
-            });
+          res.status(AppStatusCode_1.AppStatusCode.INTERNAL_ERROR_CODE).json({
+            success: false,
+            message: AppEnumError_1.AppError.UNKNOWN_ERROR,
+          });
         }
       }
     });
@@ -222,12 +212,10 @@ class LawyerAuthController {
             .status(error.statusCode)
             .json({ success: false, message: error.message });
         } else {
-          res
-            .status(AppStatusCode_1.AppStatusCode.INTERNAL_ERROR_CODE)
-            .json({
-              success: false,
-              message: AppEnumError_1.AppError.UNKNOWN_ERROR,
-            });
+          res.status(AppStatusCode_1.AppStatusCode.INTERNAL_ERROR_CODE).json({
+            success: false,
+            message: AppEnumError_1.AppError.UNKNOWN_ERROR,
+          });
         }
       }
     });

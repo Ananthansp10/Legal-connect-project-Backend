@@ -10,7 +10,7 @@ export class RefundPayment implements IRefundPayment {
     appointmentId: Types.ObjectId,
     paymentId: string,
   ): Promise<void> {
-    let refund = await (razorpay.payments as any).refund(paymentId, {
+    let refund = await razorpay.payments.refund(paymentId, {
       speed: "normal",
       notes: { reason: "Appointment Cancelled" },
     });

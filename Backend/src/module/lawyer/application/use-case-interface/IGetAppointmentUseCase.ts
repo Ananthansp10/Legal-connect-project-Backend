@@ -25,7 +25,7 @@ export interface IAppointmentResponseDto {
 
 export interface IGetAppointmentUseCase {
   execute(
-    lawyerId: Types.ObjectId,
+    lawyerId: string,
     appointmentStatus: string,
     startIndex: number,
     endIndex: number,

@@ -3,7 +3,7 @@ import { ISlotAvailablityResponseDto } from "../../domain/dtos/slotAvailablityDt
 
 export interface IGetSlotUseCase {
   execute(
-    lawyerId: Types.ObjectId,
+    lawyerId: string,
     type: string,
   ): Promise<ISlotAvailablityResponseDto[] | null>;
 }

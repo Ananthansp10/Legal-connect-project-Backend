@@ -70,12 +70,10 @@ class AdminUserManagementController {
           totalData: result.totalData,
         });
       } catch (_error) {
-        res
-          .status(AppStatusCode_1.AppStatusCode.INTERNAL_ERROR_CODE)
-          .json({
-            success: false,
-            message: AppEnumError_1.AppError.UNKNOWN_ERROR,
-          });
+        res.status(AppStatusCode_1.AppStatusCode.INTERNAL_ERROR_CODE).json({
+          success: false,
+          message: AppEnumError_1.AppError.UNKNOWN_ERROR,
+        });
       }
     });
   }
@@ -96,12 +94,10 @@ class AdminUserManagementController {
             .json({ success: true, message: "User unblocked successfully" });
         }
       } catch (_error) {
-        res
-          .status(AppStatusCode_1.AppStatusCode.INTERNAL_ERROR_CODE)
-          .json({
-            success: false,
-            message: AppEnumError_1.AppError.UNKNOWN_ERROR,
-          });
+        res.status(AppStatusCode_1.AppStatusCode.INTERNAL_ERROR_CODE).json({
+          success: false,
+          message: AppEnumError_1.AppError.UNKNOWN_ERROR,
+        });
       }
     });
   }
@@ -115,12 +111,10 @@ class AdminUserManagementController {
           data: result,
         });
       } catch (_error) {
-        res
-          .status(AppStatusCode_1.AppStatusCode.INTERNAL_ERROR_CODE)
-          .json({
-            success: false,
-            message: AppEnumError_1.AppError.UNKNOWN_ERROR,
-          });
+        res.status(AppStatusCode_1.AppStatusCode.INTERNAL_ERROR_CODE).json({
+          success: false,
+          message: AppEnumError_1.AppError.UNKNOWN_ERROR,
+        });
       }
     });
   }
@@ -134,12 +128,10 @@ class AdminUserManagementController {
           data: result,
         });
       } catch (_error) {
-        res
-          .status(AppStatusCode_1.AppStatusCode.INTERNAL_ERROR_CODE)
-          .json({
-            success: false,
-            message: AppEnumError_1.AppError.UNKNOWN_ERROR,
-          });
+        res.status(AppStatusCode_1.AppStatusCode.INTERNAL_ERROR_CODE).json({
+          success: false,
+          message: AppEnumError_1.AppError.UNKNOWN_ERROR,
+        });
       }
     });
   }
@@ -155,12 +147,10 @@ class AdminUserManagementController {
           data: result,
         });
       } catch (_error) {
-        res
-          .status(AppStatusCode_1.AppStatusCode.INTERNAL_ERROR_CODE)
-          .json({
-            success: false,
-            message: AppEnumError_1.AppError.UNKNOWN_ERROR,
-          });
+        res.status(AppStatusCode_1.AppStatusCode.INTERNAL_ERROR_CODE).json({
+          success: false,
+          message: AppEnumError_1.AppError.UNKNOWN_ERROR,
+        });
       }
     });
   }
