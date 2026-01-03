@@ -121,12 +121,10 @@ class UserController {
           data: result,
         });
       } catch (_error) {
-        res
-          .status(AppStatusCode_1.AppStatusCode.INTERNAL_ERROR_CODE)
-          .json({
-            success: false,
-            message: AppEnumError_1.AppError.UNKNOWN_ERROR,
-          });
+        res.status(AppStatusCode_1.AppStatusCode.INTERNAL_ERROR_CODE).json({
+          success: false,
+          message: AppEnumError_1.AppError.UNKNOWN_ERROR,
+        });
       }
     });
   }
@@ -150,12 +148,10 @@ class UserController {
           timeSlots: timeSlots,
         });
       } catch (_error) {
-        res
-          .status(AppStatusCode_1.AppStatusCode.INTERNAL_ERROR_CODE)
-          .json({
-            success: false,
-            message: AppEnumError_1.AppError.UNKNOWN_ERROR,
-          });
+        res.status(AppStatusCode_1.AppStatusCode.INTERNAL_ERROR_CODE).json({
+          success: false,
+          message: AppEnumError_1.AppError.UNKNOWN_ERROR,
+        });
       }
     });
   }
@@ -180,12 +176,10 @@ class UserController {
           });
         }
       } catch (_error) {
-        res
-          .status(AppStatusCode_1.AppStatusCode.INTERNAL_ERROR_CODE)
-          .json({
-            success: false,
-            message: AppEnumError_1.AppError.UNKNOWN_ERROR,
-          });
+        res.status(AppStatusCode_1.AppStatusCode.INTERNAL_ERROR_CODE).json({
+          success: false,
+          message: AppEnumError_1.AppError.UNKNOWN_ERROR,
+        });
       }
     });
   }
@@ -210,12 +204,10 @@ class UserController {
           });
         }
       } catch (_error) {
-        res
-          .status(AppStatusCode_1.AppStatusCode.INTERNAL_ERROR_CODE)
-          .json({
-            success: false,
-            message: AppEnumError_1.AppError.UNKNOWN_ERROR,
-          });
+        res.status(AppStatusCode_1.AppStatusCode.INTERNAL_ERROR_CODE).json({
+          success: false,
+          message: AppEnumError_1.AppError.UNKNOWN_ERROR,
+        });
       }
     });
   }
@@ -242,12 +234,10 @@ class UserController {
             .status(error.statusCode)
             .json({ success: false, message: error.message });
         } else {
-          res
-            .status(AppStatusCode_1.AppStatusCode.INTERNAL_ERROR_CODE)
-            .json({
-              success: false,
-              message: AppEnumError_1.AppError.UNKNOWN_ERROR,
-            });
+          res.status(AppStatusCode_1.AppStatusCode.INTERNAL_ERROR_CODE).json({
+            success: false,
+            message: AppEnumError_1.AppError.UNKNOWN_ERROR,
+          });
         }
       }
     });
@@ -279,12 +269,10 @@ class UserController {
               : result.totalAppointments,
         });
       } catch (_error) {
-        res
-          .status(AppStatusCode_1.AppStatusCode.INTERNAL_ERROR_CODE)
-          .json({
-            success: false,
-            message: AppEnumError_1.AppError.UNKNOWN_ERROR,
-          });
+        res.status(AppStatusCode_1.AppStatusCode.INTERNAL_ERROR_CODE).json({
+          success: false,
+          message: AppEnumError_1.AppError.UNKNOWN_ERROR,
+        });
       }
     });
   }
@@ -301,24 +289,20 @@ class UserController {
         yield this._cancelAppointmentUseCase.execute(
           new mongoose_1.default.Types.ObjectId(req.params.appointmentId),
         );
-        res
-          .status(AppStatusCode_1.AppStatusCode.SUCCESS_CODE)
-          .json({
-            success: true,
-            message: "Appointment cancelled successfully",
-          });
+        res.status(AppStatusCode_1.AppStatusCode.SUCCESS_CODE).json({
+          success: true,
+          message: "Appointment cancelled successfully",
+        });
       } catch (error) {
         if (error instanceof errorException_1.AppException) {
           res
             .status(error.statusCode)
             .json({ success: false, message: error.message });
         } else {
-          res
-            .status(AppStatusCode_1.AppStatusCode.INTERNAL_ERROR_CODE)
-            .json({
-              success: false,
-              message: AppEnumError_1.AppError.UNKNOWN_ERROR,
-            });
+          res.status(AppStatusCode_1.AppStatusCode.INTERNAL_ERROR_CODE).json({
+            success: false,
+            message: AppEnumError_1.AppError.UNKNOWN_ERROR,
+          });
         }
       }
     });
@@ -342,12 +326,10 @@ class UserController {
           data: result,
         });
       } catch (_error) {
-        res
-          .status(AppStatusCode_1.AppStatusCode.INTERNAL_ERROR_CODE)
-          .json({
-            success: false,
-            message: AppEnumError_1.AppError.UNKNOWN_ERROR,
-          });
+        res.status(AppStatusCode_1.AppStatusCode.INTERNAL_ERROR_CODE).json({
+          success: false,
+          message: AppEnumError_1.AppError.UNKNOWN_ERROR,
+        });
       }
     });
   }
@@ -368,12 +350,10 @@ class UserController {
           .status(AppStatusCode_1.AppStatusCode.SUCCESS_CODE)
           .json({ success: true, message: "Appointment reshedule" });
       } catch (_error) {
-        res
-          .status(AppStatusCode_1.AppStatusCode.INTERNAL_ERROR_CODE)
-          .json({
-            success: false,
-            message: AppEnumError_1.AppError.UNKNOWN_ERROR,
-          });
+        res.status(AppStatusCode_1.AppStatusCode.INTERNAL_ERROR_CODE).json({
+          success: false,
+          message: AppEnumError_1.AppError.UNKNOWN_ERROR,
+        });
       }
     });
   }
@@ -392,12 +372,10 @@ class UserController {
           .status(AppStatusCode_1.AppStatusCode.SUCCESS_CODE)
           .json({ success: true, message: "Reported successfully" });
       } catch (_error) {
-        res
-          .status(AppStatusCode_1.AppStatusCode.INTERNAL_ERROR_CODE)
-          .json({
-            success: false,
-            message: AppEnumError_1.AppError.UNKNOWN_ERROR,
-          });
+        res.status(AppStatusCode_1.AppStatusCode.INTERNAL_ERROR_CODE).json({
+          success: false,
+          message: AppEnumError_1.AppError.UNKNOWN_ERROR,
+        });
       }
     });
   }
@@ -421,12 +399,10 @@ class UserController {
           data: result,
         });
       } catch (_error) {
-        res
-          .status(AppStatusCode_1.AppStatusCode.INTERNAL_ERROR_CODE)
-          .json({
-            success: false,
-            message: AppEnumError_1.AppError.UNKNOWN_ERROR,
-          });
+        res.status(AppStatusCode_1.AppStatusCode.INTERNAL_ERROR_CODE).json({
+          success: false,
+          message: AppEnumError_1.AppError.UNKNOWN_ERROR,
+        });
       }
     });
   }
@@ -449,12 +425,10 @@ class UserController {
           data: result,
         });
       } catch (_error) {
-        res
-          .status(AppStatusCode_1.AppStatusCode.INTERNAL_ERROR_CODE)
-          .json({
-            success: false,
-            message: AppEnumError_1.AppError.UNKNOWN_ERROR,
-          });
+        res.status(AppStatusCode_1.AppStatusCode.INTERNAL_ERROR_CODE).json({
+          success: false,
+          message: AppEnumError_1.AppError.UNKNOWN_ERROR,
+        });
       }
     });
   }
@@ -477,12 +451,10 @@ class UserController {
           data: result,
         });
       } catch (_error) {
-        res
-          .status(AppStatusCode_1.AppStatusCode.INTERNAL_ERROR_CODE)
-          .json({
-            success: false,
-            message: AppEnumError_1.AppError.UNKNOWN_ERROR,
-          });
+        res.status(AppStatusCode_1.AppStatusCode.INTERNAL_ERROR_CODE).json({
+          success: false,
+          message: AppEnumError_1.AppError.UNKNOWN_ERROR,
+        });
       }
     });
   }
@@ -504,12 +476,10 @@ class UserController {
           .status(AppStatusCode_1.AppStatusCode.SUCCESS_CODE)
           .json({ success: true, message: "Review added successfully" });
       } catch (_error) {
-        res
-          .status(AppStatusCode_1.AppStatusCode.INTERNAL_ERROR_CODE)
-          .json({
-            success: false,
-            message: AppEnumError_1.AppError.UNKNOWN_ERROR,
-          });
+        res.status(AppStatusCode_1.AppStatusCode.INTERNAL_ERROR_CODE).json({
+          success: false,
+          message: AppEnumError_1.AppError.UNKNOWN_ERROR,
+        });
       }
     });
   }
@@ -532,12 +502,10 @@ class UserController {
           data: result,
         });
       } catch (_error) {
-        res
-          .status(AppStatusCode_1.AppStatusCode.INTERNAL_ERROR_CODE)
-          .json({
-            success: false,
-            message: AppEnumError_1.AppError.UNKNOWN_ERROR,
-          });
+        res.status(AppStatusCode_1.AppStatusCode.INTERNAL_ERROR_CODE).json({
+          success: false,
+          message: AppEnumError_1.AppError.UNKNOWN_ERROR,
+        });
       }
     });
   }

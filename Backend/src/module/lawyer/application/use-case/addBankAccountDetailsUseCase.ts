@@ -82,13 +82,13 @@ export class AddBankAccountDetailsUseCase
         linkedAccount.data.id,
         fundAccount.data.id,
       );
-    } catch (error: any) {
-      console.error("Razorpay Error:", error.response?.data || error.message);
+    } catch (error) {
+      // console.error("Razorpay Error:", error.response?.data || error.message);
 
-      if (error.response) {
-        console.error("Status:", error.response.status);
-        console.error("Headers:", error.response.headers);
-      }
+      // if (error.response) {
+      //   console.error("Status:", error.response.status);
+      //   console.error("Headers:", error.response.headers);
+      // }
 
       throw error;
     }

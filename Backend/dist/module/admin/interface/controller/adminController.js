@@ -87,12 +87,10 @@ class AdminController {
           data: result,
         });
       } catch (_error) {
-        res
-          .status(AppStatusCode_1.AppStatusCode.INTERNAL_ERROR_CODE)
-          .json({
-            success: false,
-            message: AppEnumError_1.AppError.UNKNOWN_ERROR,
-          });
+        res.status(AppStatusCode_1.AppStatusCode.INTERNAL_ERROR_CODE).json({
+          success: false,
+          message: AppEnumError_1.AppError.UNKNOWN_ERROR,
+        });
       }
     });
   }
@@ -122,12 +120,10 @@ class AdminController {
         });
       } catch (_error) {
         console.log(_error);
-        res
-          .status(AppStatusCode_1.AppStatusCode.INTERNAL_ERROR_CODE)
-          .json({
-            success: false,
-            message: AppEnumError_1.AppError.UNKNOWN_ERROR,
-          });
+        res.status(AppStatusCode_1.AppStatusCode.INTERNAL_ERROR_CODE).json({
+          success: false,
+          message: AppEnumError_1.AppError.UNKNOWN_ERROR,
+        });
       }
     });
   }
@@ -141,12 +137,10 @@ class AdminController {
           .status(AppStatusCode_1.AppStatusCode.SUCCESS_CODE)
           .json({ success: true, message: "Updated Reported Account" });
       } catch (_error) {
-        res
-          .status(AppStatusCode_1.AppStatusCode.INTERNAL_ERROR_CODE)
-          .json({
-            success: false,
-            message: AppEnumError_1.AppError.UNKNOWN_ERROR,
-          });
+        res.status(AppStatusCode_1.AppStatusCode.INTERNAL_ERROR_CODE).json({
+          success: false,
+          message: AppEnumError_1.AppError.UNKNOWN_ERROR,
+        });
       }
     });
   }
@@ -163,12 +157,10 @@ class AdminController {
             .status(error.statusCode)
             .json({ success: false, message: error.message });
         } else {
-          res
-            .status(AppStatusCode_1.AppStatusCode.INTERNAL_ERROR_CODE)
-            .json({
-              success: false,
-              message: AppEnumError_1.AppError.UNKNOWN_ERROR,
-            });
+          res.status(AppStatusCode_1.AppStatusCode.INTERNAL_ERROR_CODE).json({
+            success: false,
+            message: AppEnumError_1.AppError.UNKNOWN_ERROR,
+          });
         }
       }
     });
@@ -184,12 +176,10 @@ class AdminController {
           .status(AppStatusCode_1.AppStatusCode.SUCCESS_CODE)
           .json({ success: true, message: "Plan updated successfully" });
       } catch (_error) {
-        res
-          .status(AppStatusCode_1.AppStatusCode.INTERNAL_ERROR_CODE)
-          .json({
-            success: false,
-            message: AppEnumError_1.AppError.UNKNOWN_ERROR,
-          });
+        res.status(AppStatusCode_1.AppStatusCode.INTERNAL_ERROR_CODE).json({
+          success: false,
+          message: AppEnumError_1.AppError.UNKNOWN_ERROR,
+        });
       }
     });
   }
@@ -208,12 +198,10 @@ class AdminController {
               : "Plan Deactivated",
         });
       } catch (_error) {
-        res
-          .status(AppStatusCode_1.AppStatusCode.INTERNAL_ERROR_CODE)
-          .json({
-            success: false,
-            message: AppEnumError_1.AppError.UNKNOWN_ERROR,
-          });
+        res.status(AppStatusCode_1.AppStatusCode.INTERNAL_ERROR_CODE).json({
+          success: false,
+          message: AppEnumError_1.AppError.UNKNOWN_ERROR,
+        });
       }
     });
   }
@@ -227,12 +215,10 @@ class AdminController {
           .status(AppStatusCode_1.AppStatusCode.SUCCESS_CODE)
           .json({ success: true, message: "Plan deleted successfully" });
       } catch (_error) {
-        res
-          .status(AppStatusCode_1.AppStatusCode.INTERNAL_ERROR_CODE)
-          .json({
-            success: false,
-            message: AppEnumError_1.AppError.UNKNOWN_ERROR,
-          });
+        res.status(AppStatusCode_1.AppStatusCode.INTERNAL_ERROR_CODE).json({
+          success: false,
+          message: AppEnumError_1.AppError.UNKNOWN_ERROR,
+        });
       }
     });
   }
@@ -246,12 +232,10 @@ class AdminController {
           data: result,
         });
       } catch (_error) {
-        res
-          .status(AppStatusCode_1.AppStatusCode.INTERNAL_ERROR_CODE)
-          .json({
-            success: false,
-            message: AppEnumError_1.AppError.UNKNOWN_ERROR,
-          });
+        res.status(AppStatusCode_1.AppStatusCode.INTERNAL_ERROR_CODE).json({
+          success: false,
+          message: AppEnumError_1.AppError.UNKNOWN_ERROR,
+        });
       }
     });
   }
@@ -265,12 +249,10 @@ class AdminController {
           data: result,
         });
       } catch (_error) {
-        res
-          .status(AppStatusCode_1.AppStatusCode.INTERNAL_ERROR_CODE)
-          .json({
-            success: false,
-            message: AppEnumError_1.AppError.UNKNOWN_ERROR,
-          });
+        res.status(AppStatusCode_1.AppStatusCode.INTERNAL_ERROR_CODE).json({
+          success: false,
+          message: AppEnumError_1.AppError.UNKNOWN_ERROR,
+        });
       }
     });
   }
@@ -288,12 +270,10 @@ class AdminController {
         });
       } catch (error) {
         console.log(error);
-        res
-          .status(AppStatusCode_1.AppStatusCode.INTERNAL_ERROR_CODE)
-          .json({
-            success: false,
-            message: AppEnumError_1.AppError.UNKNOWN_ERROR,
-          });
+        res.status(AppStatusCode_1.AppStatusCode.INTERNAL_ERROR_CODE).json({
+          success: false,
+          message: AppEnumError_1.AppError.UNKNOWN_ERROR,
+        });
       }
     });
   }
@@ -309,12 +289,10 @@ class AdminController {
           data: result,
         });
       } catch (_error) {
-        res
-          .status(AppStatusCode_1.AppStatusCode.INTERNAL_ERROR_CODE)
-          .json({
-            success: false,
-            message: AppEnumError_1.AppError.UNKNOWN_ERROR,
-          });
+        res.status(AppStatusCode_1.AppStatusCode.INTERNAL_ERROR_CODE).json({
+          success: false,
+          message: AppEnumError_1.AppError.UNKNOWN_ERROR,
+        });
       }
     });
   }
@@ -328,12 +306,10 @@ class AdminController {
           data: result,
         });
       } catch (_error) {
-        res
-          .status(AppStatusCode_1.AppStatusCode.INTERNAL_ERROR_CODE)
-          .json({
-            success: false,
-            message: AppEnumError_1.AppError.UNKNOWN_ERROR,
-          });
+        res.status(AppStatusCode_1.AppStatusCode.INTERNAL_ERROR_CODE).json({
+          success: false,
+          message: AppEnumError_1.AppError.UNKNOWN_ERROR,
+        });
       }
     });
   }
@@ -347,12 +323,10 @@ class AdminController {
           data: result,
         });
       } catch (_error) {
-        res
-          .status(AppStatusCode_1.AppStatusCode.INTERNAL_ERROR_CODE)
-          .json({
-            success: false,
-            message: AppEnumError_1.AppError.UNKNOWN_ERROR,
-          });
+        res.status(AppStatusCode_1.AppStatusCode.INTERNAL_ERROR_CODE).json({
+          success: false,
+          message: AppEnumError_1.AppError.UNKNOWN_ERROR,
+        });
       }
     });
   }

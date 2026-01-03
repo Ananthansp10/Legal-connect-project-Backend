@@ -52,10 +52,7 @@ export class LawyerController {
 
   async addSlot(req: Request, res: Response): Promise<void> {
     try {
-      await this._addSlotApplication.execute(
-        new mongoose.Types.ObjectId(req.params.lawyerId),
-        req.body,
-      );
+      await this._addSlotApplication.execute(req.params.lawyerId, req.body);
       res
         .status(AppStatusCode.SUCCESS_CODE)
         .json({ success: true, message: "Slot addedd successfully" });
@@ -69,7 +66,7 @@ export class LawyerController {
   async getSlot(req: Request, res: Response): Promise<void> {
     try {
       const result = await this._getSlotApplication.execute(
-        new mongoose.Types.ObjectId(req.params.lawyerId),
+        req.params.lawyerId,
         req.params.type,
       );
       res.status(AppStatusCode.SUCCESS_CODE).json({
@@ -87,7 +84,7 @@ export class LawyerController {
   async updateRuleStatus(req: Request, res: Response): Promise<void> {
     try {
       const result = await this._updateRuleStatusApplication.execute(
-        new mongoose.Types.ObjectId(req.params.ruleId),
+        req.params.ruleId,
         req.params.ruleStatus,
       );
       res.status(AppStatusCode.SUCCESS_CODE).json({
@@ -104,7 +101,7 @@ export class LawyerController {
   async getAppointments(req: Request, res: Response): Promise<void> {
     try {
       const result = await this._getAppointmentUseCase.execute(
-        new mongoose.Types.ObjectId(req.params.lawyerId),
+        req.params.lawyerId,
         req.params.appointmentStatus,
         parseInt(req.params.startIndex),
         parseInt(req.params.limit),

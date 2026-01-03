@@ -1,4 +1,4 @@
-import { Types } from "mongoose";
+import mongoose, { Types } from "mongoose";
 import {
   IAppointmentResponseDto,
   IGetAppointmentUseCase,
@@ -9,7 +9,7 @@ export class GetAppointmentUseCase implements IGetAppointmentUseCase {
   constructor(private _appointmentRepo: IAppointmentRepository) {}
 
   async execute(
-    lawyerId: Types.ObjectId,
+    lawyerId: string,
     appointmentStatus: string,
     startIndex: number,
     endIndex: number,
@@ -19,7 +19,7 @@ export class GetAppointmentUseCase implements IGetAppointmentUseCase {
   } | null> {
     const appointments =
       (await this._appointmentRepo.getAppointments(
-        lawyerId,
+        new mongoose.Types.ObjectId(lawyerId),
         appointmentStatus,
         startIndex,
         endIndex,
